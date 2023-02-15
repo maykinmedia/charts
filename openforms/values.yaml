@@ -248,6 +248,8 @@ nginx:
     repository: nginxinc/nginx-unprivileged
     pullPolicy: IfNotPresent
     tag: stable
+  config:
+    clientMaxBodySize: 10M    
   replicaCount: 1
   podLabels: {}
   securityContext:
