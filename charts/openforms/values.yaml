@@ -55,7 +55,7 @@ ingress:
   enabled: false
   annotations: {}
     # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"  
+    # kubernetes.io/tls-acme: "true"
   ingressClassName: ""
   hosts:
     - host: openformulieren.gemeente.nl
@@ -140,16 +140,16 @@ settings:
   environment: null
 
   cors:
-    # -- if defining the cors hosts, always include the own URL!  
+    # -- if defining the cors hosts, always include the own URL!
     allowAllOrigins: false
     # allowedOrigins:
-    #   - "https://openformulieren.gemeente.nl"    
+    #   - "https://openformulieren.gemeente.nl"
     allowedOrigins: []
 
   csrf:
     trustedOrigins: []
       # - example.com
-      
+
   csp:
     reportSave: false
     extraDefaultSrc: []
@@ -157,12 +157,12 @@ settings:
     extraImgSrc: []
       # - "*.siteimproveanalytics.io"
 
-  throttling: 
+  throttling:
     enable: true
     rateAnonymous: ""
     rateUser: ""
     ratePolling: ""
-  
+
   database:
     host: postgres.gemeente.nl
     port: 5432
@@ -183,7 +183,7 @@ settings:
 
   flower:
     urlPrefix: ""
-    basicAuth: ""    
+    basicAuth: ""
 
   elasticapm:
     url: ""
@@ -235,7 +235,7 @@ worker:
     periodSeconds: 10
     timeoutSeconds: 5
     failureThreshold: 3
-    successThreshold: 1  
+    successThreshold: 1
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -249,7 +249,7 @@ nginx:
     pullPolicy: IfNotPresent
     tag: stable
   config:
-    clientMaxBodySize: 10M    
+    clientMaxBodySize: 10M
   replicaCount: 1
   podLabels: {}
   securityContext:

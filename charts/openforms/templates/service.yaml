@@ -29,8 +29,8 @@ spec:
   selector:
     {{- include "openforms.nginxSelectorLabels" . | nindent 4 }}
 
-{{- if .Values.flower.enabled -}}
 ---
+{{ if .Values.flower.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:

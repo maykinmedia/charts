@@ -46,7 +46,7 @@ spec:
           env:
             {{- if .Values.extraEnvVars }}
             {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-            {{- end }}                
+            {{- end }}
           ports:
             - name: http
               containerPort: 8000
@@ -78,7 +78,7 @@ spec:
               subPath: openforms/media
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
-            {{- end }}            
+            {{- end }}
       volumes:
         - name: media
           persistentVolumeClaim:
@@ -146,7 +146,7 @@ spec:
           env:
             {{- if .Values.extraEnvVars }}
             {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-            {{- end }}  
+            {{- end }}
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openforms.fullname" .) }}
@@ -165,7 +165,7 @@ spec:
               subPath: openforms/media
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
-            {{- end }}           
+            {{- end }}
       volumes:
         - name: media
           persistentVolumeClaim:
@@ -240,7 +240,7 @@ spec:
           env:
             {{- if .Values.extraEnvVars }}
             {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-            {{- end }}              
+            {{- end }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           command:
@@ -254,7 +254,7 @@ spec:
               subPath: openforms/media
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
-            {{- end }}           
+            {{- end }}
       volumes:
         - name: media
           persistentVolumeClaim:
@@ -278,95 +278,6 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-
-{{- if .Values.flower.enabled -}}
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ include "openforms.flowerFullname" . }}
-  labels:
-    {{- include "openforms.flowerLabels" . | nindent 4 }}
-spec:
-  replicas: {{ .Values.flower.replicaCount }}
-  selector:
-    matchLabels:
-      {{- include "openforms.flowerSelectorLabels" . | nindent 6 }}
-  template:
-    metadata:
-      annotations:
-        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
-        {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
-      labels:
-        {{- include "openforms.flowerSelectorLabels" . | nindent 8 }}
-        {{- with .Values.flower.podLabels }}
-            {{- toYaml . | nindent 8 }}
-        {{- end }}
-    spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "openforms.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      containers:
-        - name: {{ include "openforms.flowerFullname" . }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["/celery_flower.sh"]
-          resources:
-            requests:
-              cpu: 10m
-              memory: 150Mi
-          envFrom:
-            - secretRef:
-                name: {{ .Values.existingSecret | default (include "openforms.fullname" .) }}
-            - configMapRef:
-                name: {{ include "openforms.fullname" . }}
-          env:
-            {{- if .Values.extraEnvVars }}
-            {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-            {{- end }}                 
-          ports:
-            - name: http
-              containerPort: 5555
-              protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: 5555
-            {{- toYaml .Values.flower.livenessProbe | nindent 12 }}
-          readinessProbe:
-            tcpSocket:
-              port: 5555
-            {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
-          volumeMounts:
-            {{- if .Values.extraVolumeMounts }}
-            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
-            {{- end }}
-      volumes:
-          {{- if .Values.extraVolumes }}
-          {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
-          {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-{{- end }}
 
 ---
 
@@ -450,3 +361,91 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+---
+{{ if .Values.flower.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openforms.flowerFullname" . }}
+  labels:
+    {{- include "openforms.flowerLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.flower.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "openforms.flowerSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "openforms.flowerSelectorLabels" . | nindent 8 }}
+        {{- with .Values.flower.podLabels }}
+            {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openforms.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "openforms.flowerFullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/celery_flower.sh"]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 150Mi
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openforms.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openforms.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 5555
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 5555
+            {{- toYaml .Values.flower.livenessProbe | nindent 12 }}
+          readinessProbe:
+            tcpSocket:
+              port: 5555
+            {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
+          volumeMounts:
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+          {{- if .Values.extraVolumes }}
+          {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

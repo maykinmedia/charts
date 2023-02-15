@@ -14,9 +14,9 @@ data:
     proxy_pass_request_headers on;
     proxy_http_version 1.1;
     proxy_pass http://{{ include "openforms.fullname" . }}.{{ .Release.Namespace }};
-    {{- if .Values.settings.useXForwardedHost }}    
+    {{- if .Values.settings.useXForwardedHost }}
     proxy_set_header Host $http_host;
-    {{- end }}     
+    {{- end }}
 
   default.conf: |
     # Rate limiting configuration - allow 1 request per second. 10m can track about 80000 clients.
