@@ -1,0 +1,14 @@
+apiVersion: v2
+name: openforms
+description: Snel en eenvoudig slimme formulieren bouwen en publiceren
+
+type: application
+version: 1.0.0
+appVersion: 2.0.1
+
+dependencies:
+  - name: redis
+    version: 17.3.14
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - redis    
