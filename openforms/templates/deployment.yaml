@@ -279,9 +279,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
+{{- if .Values.flower.enabled -}}
 ---
 
-{{- if .Values.flower.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

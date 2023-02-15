@@ -13,7 +13,6 @@ spec:
       name: http
   selector:
     {{- include "openforms.selectorLabels" . | nindent 4 }}
-
 ---
 apiVersion: v1
 kind: Service
@@ -29,8 +28,9 @@ spec:
       name: http
   selector:
     {{- include "openforms.nginxSelectorLabels" . | nindent 4 }}
----
+
 {{- if .Values.flower.enabled -}}
+---
 apiVersion: v1
 kind: Service
 metadata:
