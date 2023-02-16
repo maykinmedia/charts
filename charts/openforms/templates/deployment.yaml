@@ -404,9 +404,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/celery_flower.sh"]
           resources:
-            requests:
-              cpu: 10m
-              memory: 150Mi
+            {{- toYaml .Values.flower.resources | nindent 12 }}
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openforms.fullname" .) }}
