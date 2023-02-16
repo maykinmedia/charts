@@ -49,4 +49,37 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openforms-1.0.2/openforms-1.0.2.tgz
     version: 1.0.2
-generated: "2023-02-16T12:46:44.823641507Z"
+  - apiVersion: v2
+    appVersion: 2.0.3
+    created: "2023-02-16T14:01:44.946442719Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Snel en eenvoudig slimme formulieren bouwen en publiceren
+    digest: 54ff260161778cf772fb5b8aee42902f2273e2a8b441f4ccff6ccd39b087d49d
+    name: openforms
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openforms-1.0.0/openforms-1.0.0.tgz
+    version: 1.0.0
+  openzaak:
+  - apiVersion: v2
+    appVersion: 1.8.1
+    created: "2023-02-16T14:01:45.098814417Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: 667d1e1f2c77da55a0253d60f4743fc141124179a06ddcc5cda2ab434ea5ed03
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.0.0/openzaak-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-02-16T14:01:45.098831017Z"
