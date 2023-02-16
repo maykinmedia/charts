@@ -6,7 +6,7 @@ replicaCount: 1
 image:
   repository: openformulieren/open-forms
   pullPolicy: IfNotPresent
-  # -- uses .Chart.AppVersion by default
+  # uses .Chart.AppVersion by default
   tag: ""
 
 imagePullSecrets: []
@@ -57,11 +57,12 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   ingressClassName: ""
-  hosts:
-    - host: openformulieren.gemeente.nl
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
+  # -- ingress hosts
+  hosts: []
+  #  - host: openformulieren.gemeente.nl
+  #    paths:
+  #      - path: /
+  #        pathType: ImplementationSpecific
   tls: []
   #  - secretName: openforms-tls
   #    hosts:
@@ -100,14 +101,14 @@ persistence:
 
 existingSecret: null
 
-# -- extraEnvVars Array with extra environment variables to add to openforms
+# extraEnvVars Array with extra environment variables to add to openforms
 # e.g:
 # extraEnvVars:
 #   - name: FOO
 #     value: "bar"
 #
 extraEnvVars: []
-# -- extraVolumes Optionally specify extra list of additional volumes
+# extraVolumes Optionally specify extra list of additional volumes
 # e.g:
 # extraVolumes:
 #   - name: verify-certs
@@ -115,14 +116,14 @@ extraEnvVars: []
 #       name: verify-certs
 #
 extraVolumes: []
-# -- extraVolumeMounts Optionally specify extra list of additional volumeMounts
+# extraVolumeMounts Optionally specify extra list of additional volumeMounts
 # e.g:
 # extraVolumeMounts:
 #  - name: verify-certs
 #    mountPath: /etc/ssl/certs/extra-certs/
 extraVolumeMounts: []
-# -- Path to extra certificates or CA (root) certificates, comma seperated
-# If the file does not exist the pod(s) will not start
+# Path to extra certificates or CA (root) certificates, comma seperated
+# Wardning, If the file does not exist the pod(s) will not start
 # e.g.
 # extraVerifyCerts: /etc/ssl/certs/extra-certs/staatdernederlandeng1.pem
 extraVerifyCerts: ""
@@ -134,13 +135,13 @@ settings:
 
   secretKey: SOME-RANDOM-SECRET
 
-  # -- Choises Strict or Lax
+  # Choises Strict or Lax
   cookieSamesite: ""
 
   environment: null
 
   cors:
-    # -- if defining the cors hosts, always include the own URL!
+    # if defining the cors hosts, always include the own URL!
     allowAllOrigins: false
     # allowedOrigins:
     #   - "https://openformulieren.gemeente.nl"
@@ -192,16 +193,23 @@ settings:
   sentry:
     dsn: ""
 
-  # -- These settings only take effect when tags.redis is set to false
+  # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
   cache:
-    default: openforms-redis-master-0:6379/0
-    axes: openforms-redis-master-0:6379/0
-    portalLocker: openforms-redis-master-0:6379/0
+    # e.g.:
+    # default: openforms-redis-master-0:6379/0
+    # axes: openforms-redis-master-0:6379/0
+    # portalLocker: openforms-redis-master-0:6379/0    
+    default: ""
+    axes: ""
+    portalLocker: ""
 
-  # -- These settings only take effect when tags.redis is set to false
+  # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
   celery:
-    brokerUrl: redis://openforms-redis-master:6379/1
-    resultBackend: redis://openforms-redis-master:6379/1
+    # e.g.:
+    # brokerUrl: redis://openforms-redis-master:6379/1
+    # resultBackend: redis://openforms-redis-master:6379/1
+    brokerUrl: ""
+    resultBackend: ""
     logLevel: debug
 
   isHttps: true
@@ -210,6 +218,7 @@ settings:
 
   twoFactorAuthentication: true
 
+  # -- Configure the maximum allowed file upload size
   maxFileUpload: 50M
 
   uwsgi:
