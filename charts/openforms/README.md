@@ -4,19 +4,11 @@
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
-## Installation
-
-First configure the Helm repository:
+## TL;DR
 
 ```console
 helm repo add my-repo https://maykinmedia.github.io/charts/
-helm repo update
-```
-
-Install the Helm chart with:
-
-```console
-helm install my-release -f values.yaml my-repo/openforms
+helm install my-release my-repo/openforms
 ```
 
 
