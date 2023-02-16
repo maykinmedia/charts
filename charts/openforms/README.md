@@ -1,8 +1,24 @@
-# openforms
+# openforms helm chart
 
 ![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
+
+## Installation
+
+First configure the Helm repository:
+
+```console
+helm repo add my-repo https://maykinmedia.github.io/charts/
+helm repo update
+```
+
+Install the Helm chart with:
+
+```console
+helm install my-release -f values.yaml my-repo/openforms
+```
+
 
 ## Requirements
 
@@ -124,32 +140,32 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| settings.allowedHosts | string | `"openformulieren.gemeente.nl"` |  |
-| settings.baseUrl | string | `"https://openformulieren.gemeente.nl"` |  |
+| settings.allowedHosts | string | `""` |  |
+| settings.baseUrl | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |
 | settings.cache.portalLocker | string | `""` |  |
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
-| settings.cookieSamesite | string | `""` |  |
+| settings.cookieSamesite | string | `""` | Choises Strict or Lax |
 | settings.cors.allowAllOrigins | bool | `false` |  |
 | settings.cors.allowedOrigins | list | `[]` |  |
 | settings.csp.extraDefaultSrc | list | `[]` |  |
 | settings.csp.extraImgSrc | list | `[]` |  |
 | settings.csp.reportSave | bool | `false` |  |
 | settings.csrf.trustedOrigins | list | `[]` |  |
-| settings.database.host | string | `"postgres.gemeente.nl"` |  |
-| settings.database.name | string | `"openforms"` |  |
-| settings.database.password | string | `"SUPER-SECRET"` |  |
+| settings.database.host | string | `""` |  |
+| settings.database.name | string | `""` |  |
+| settings.database.password | string | `""` |  |
 | settings.database.port | int | `5432` |  |
 | settings.database.sslmode | string | `"prefer"` |  |
-| settings.database.username | string | `"openforms"` |  |
+| settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
 | settings.djangoSettingsModule | string | `"openforms.conf.docker"` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
-| settings.email.defaultFrom | string | `"noreply@gemeente.nl"` |  |
+| settings.email.defaultFrom | string | `""` |  |
 | settings.email.host | string | `"localhost"` |  |
 | settings.email.password | string | `""` |  |
 | settings.email.port | int | `25` |  |
@@ -161,7 +177,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.isHttps | bool | `true` |  |
 | settings.maxFileUpload | string | `"50M"` | Configure the maximum allowed file upload size |
 | settings.numProxies | int | `1` |  |
-| settings.secretKey | string | `"SOME-RANDOM-SECRET"` |  |
+| settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `""` |  |

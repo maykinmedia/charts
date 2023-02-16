@@ -130,12 +130,13 @@ extraVerifyCerts: ""
 
 settings:
   djangoSettingsModule: openforms.conf.docker
-  allowedHosts: openformulieren.gemeente.nl
-  baseUrl: https://openformulieren.gemeente.nl
+  allowedHosts: ""
+  baseUrl: ""
+  
+  # -- Generate secret key at https://djecrety.ir/
+  secretKey: ""
 
-  secretKey: SOME-RANDOM-SECRET
-
-  # Choises Strict or Lax
+  # -- Choises Strict or Lax
   cookieSamesite: ""
 
   environment: null
@@ -165,11 +166,11 @@ settings:
     ratePolling: ""
 
   database:
-    host: postgres.gemeente.nl
+    host: ""
     port: 5432
-    name: openforms
-    username: openforms
-    password: SUPER-SECRET
+    name: ""
+    username: ""
+    password: ""
     sslmode: prefer
 
   numProxies: 1
@@ -180,7 +181,7 @@ settings:
     username: ""
     password: ""
     useTLS: false
-    defaultFrom: noreply@gemeente.nl
+    defaultFrom: ""
 
   flower:
     urlPrefix: ""
