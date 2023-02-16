@@ -1,8 +1,16 @@
-# openforms
+# openforms helm chart
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.1](https://img.shields.io/badge/AppVersion-2.0.1-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
+
+## TL;DR
+
+```console
+helm repo add my-repo https://maykinmedia.github.io/charts/
+helm install my-release my-repo/openforms
+```
+
 
 ## Requirements
 
@@ -37,10 +45,10 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | beat.service.port | int | `80` |  |
 | beat.service.type | string | `"ClusterIP"` |  |
 | existingSecret | string | `nil` |  |
-| extraEnvVars | list | `[]` | extraEnvVars Array with extra environment variables to add to openforms e.g: extraEnvVars:   - name: FOO     value: "bar" |
-| extraVerifyCerts | string | `""` | Path to extra certificates or CA (root) certificates, comma seperated If the file does not exist the pod(s) will not start e.g. extraVerifyCerts: /etc/ssl/certs/extra-certs/staatdernederlandeng1.pem |
-| extraVolumeMounts | list | `[]` | extraVolumeMounts Optionally specify extra list of additional volumeMounts e.g: extraVolumeMounts:  - name: verify-certs    mountPath: /etc/ssl/certs/extra-certs/ |
-| extraVolumes | list | `[]` | extraVolumes Optionally specify extra list of additional volumes e.g: extraVolumes:   - name: verify-certs     configMap:       name: verify-certs |
+| extraEnvVars | list | `[]` |  |
+| extraVerifyCerts | string | `""` |  |
+| extraVolumeMounts | list | `[]` |  |
+| extraVolumes | list | `[]` |  |
 | flower.enabled | bool | `true` |  |
 | flower.livenessProbe.failureThreshold | int | `6` |  |
 | flower.livenessProbe.initialDelaySeconds | int | `60` |  |
@@ -60,13 +68,11 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openformulieren/open-forms"` |  |
-| image.tag | string | `""` | uses .Chart.AppVersion by default |
+| image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"openformulieren.gemeente.nl"` |  |
-| ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.hosts | list | `[]` | ingress hosts |
 | ingress.ingressClassName | string | `""` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.failureThreshold | int | `6` |  |
@@ -76,6 +82,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
+| nginx.config.clientMaxBodySize | string | `"10M"` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |
@@ -125,28 +132,32 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| settings.allowedHosts | string | `"openformulieren.gemeente.nl"` |  |
-| settings.baseUrl | string | `"https://openformulieren.gemeente.nl"` |  |
-| settings.cache | object | `{"axes":"openforms-redis-master-0:6379/0","default":"openforms-redis-master-0:6379/0","portalLocker":"openforms-redis-master-0:6379/0"}` | These settings only take effect when tags.redis is set to false |
-| settings.celery | object | `{"brokerUrl":"redis://openforms-redis-master:6379/1","logLevel":"debug","resultBackend":"redis://openforms-redis-master:6379/1"}` | These settings only take effect when tags.redis is set to false |
+| settings.allowedHosts | string | `""` |  |
+| settings.baseUrl | string | `""` |  |
+| settings.cache.axes | string | `""` |  |
+| settings.cache.default | string | `""` |  |
+| settings.cache.portalLocker | string | `""` |  |
+| settings.celery.brokerUrl | string | `""` |  |
+| settings.celery.logLevel | string | `"debug"` |  |
+| settings.celery.resultBackend | string | `""` |  |
 | settings.cookieSamesite | string | `""` | Choises Strict or Lax |
-| settings.cors.allowAllOrigins | bool | `false` | if defining the cors hosts, always include the own URL!   |
+| settings.cors.allowAllOrigins | bool | `false` |  |
 | settings.cors.allowedOrigins | list | `[]` |  |
 | settings.csp.extraDefaultSrc | list | `[]` |  |
 | settings.csp.extraImgSrc | list | `[]` |  |
 | settings.csp.reportSave | bool | `false` |  |
 | settings.csrf.trustedOrigins | list | `[]` |  |
-| settings.database.host | string | `"postgres.gemeente.nl"` |  |
-| settings.database.name | string | `"openforms"` |  |
-| settings.database.password | string | `"SUPER-SECRET"` |  |
+| settings.database.host | string | `""` |  |
+| settings.database.name | string | `""` |  |
+| settings.database.password | string | `""` |  |
 | settings.database.port | int | `5432` |  |
 | settings.database.sslmode | string | `"prefer"` |  |
-| settings.database.username | string | `"openforms"` |  |
+| settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
 | settings.djangoSettingsModule | string | `"openforms.conf.docker"` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
-| settings.email.defaultFrom | string | `"noreply@gemeente.nl"` |  |
+| settings.email.defaultFrom | string | `""` |  |
 | settings.email.host | string | `"localhost"` |  |
 | settings.email.password | string | `""` |  |
 | settings.email.port | int | `25` |  |
@@ -156,9 +167,9 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.flower.basicAuth | string | `""` |  |
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
-| settings.maxFileUpload | string | `"50M"` |  |
+| settings.maxFileUpload | string | `"50M"` | Configure the maximum allowed file upload size |
 | settings.numProxies | int | `1` |  |
-| settings.secretKey | string | `"SOME-RANDOM-SECRET"` |  |
+| settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `""` |  |
