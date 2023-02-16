@@ -1,6 +1,6 @@
-# openforms helm chart
+# openforms
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -70,9 +70,9 @@ helm install my-release my-repo/openforms
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
+| ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
 | ingress.hosts | list | `[]` | ingress hosts |
-| ingress.ingressClassName | string | `""` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.failureThreshold | int | `6` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
@@ -167,7 +167,7 @@ helm install my-release my-repo/openforms
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
 | settings.maxFileUpload | string | `"50M"` | Configure the maximum allowed file upload size |
-| settings.numProxies | int | `1` |  |
+| settings.numProxies | int | `1` | use 2 if enabling ingress |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.throttling.enable | bool | `true` |  |
@@ -175,6 +175,7 @@ helm install my-release my-repo/openforms
 | settings.throttling.ratePolling | string | `""` |  |
 | settings.throttling.rateUser | string | `""` |  |
 | settings.twoFactorAuthentication | bool | `true` |  |
+| settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | bool | `false` |  |
 | settings.uwsgi.maxRequests | string | `""` |  |

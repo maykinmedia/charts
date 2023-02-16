@@ -56,7 +56,7 @@ ingress:
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  ingressClassName: ""
+  className: ""
   # -- ingress hosts
   hosts: []
   #  - host: openformulieren.gemeente.nl
