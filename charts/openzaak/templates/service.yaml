@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "openzaak.fullname" . }}
+  labels:
+    {{- include "openzaak.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "openzaak.selectorLabels" . | nindent 4 }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "openzaak.nginxFullname" . }}
+  labels:
+    {{- include "openzaak.nginxLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8080
+      name: http
+  selector:
+    {{- include "openzaak.nginxSelectorLabels" . | nindent 4 }}
+---
+{{ if .Values.flower.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "openzaak.flowerFullname" . }}
+  labels:
+    {{- include "openzaak.flowerLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.flower.service.type }}
+  ports:
+    - port: {{ .Values.flower.service.port }}
+      targetPort: 5555
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "openzaak.flowerSelectorLabels" . | nindent 4 }}
+{{- end }}

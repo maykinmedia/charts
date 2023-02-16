@@ -1,0 +1,357 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openzaak.fullname" . }}
+  labels:
+    {{- include "openzaak.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+  {{- include "openzaak.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+    {{- include "openzaak.selectorLabels" . | nindent 8 }}
+    {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openzaak.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openzaak.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openzaak.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openzaak.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: {{ include "openzaak.fullname" . | quote }}
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: {{ include "openzaak.fullname" . | quote }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: media
+              mountPath: /app/private-media
+              subPath: openzaak/private-media
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openzaak.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openzaak.nginxFullname" . }}
+  labels:
+    {{- include "openzaak.nginxLabels" . | nindent 4 }}
+spec:
+  {{- if not .Values.nginx.autoscaling.enabled }}
+  replicas: {{ .Values.nginx.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "openzaak.nginxSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap-nginx: {{ include (print $.Template.BasePath "/configmap-nginx.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "openzaak.nginxSelectorLabels" . | nindent 8 }}
+        {{- with .Values.nginx.podLabels }}
+            {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openzaak.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: nginx
+          securityContext:
+            {{- toYaml .Values.nginx.securityContext | nindent 12 }}
+          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
+          imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              path: /_health/
+              port: http
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+            {{- toYaml .Values.nginx.resources | nindent 12 }}
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/
+            - name: media
+              mountPath: /app/private-media
+              subPath: openzaak/private-media
+            - name: media
+              mountPath: /app/media
+              subPath: openzaak/media
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openzaak.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        - name: nginx-config
+          configMap:
+            name: {{ include "openzaak.nginxFullname" . }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+---
+{{ if .Values.settings.celery.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openzaak.workerFullname" . }}
+  labels:
+    {{- include "openzaak.workerLabels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.worker.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "openzaak.workerSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+    {{- include "openzaak.workerSelectorLabels" . | nindent 8 }}
+    {{- with .Values.worker.podLabels }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openzaak.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "openzaak.workerFullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openzaak.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openzaak.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openzaak.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+          command:
+            - /celery_worker.sh
+          volumeMounts:
+            - name: media
+              mountPath: /app/private-media
+              subPath: openzaak/private-media
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openzaak.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+---
+{{ if .Values.flower.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openzaak.flowerFullname" . }}
+  labels:
+    {{- include "openzaak.flowerLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.flower.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "openzaak.flowerSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "openzaak.flowerSelectorLabels" . | nindent 8 }}
+        {{- with .Values.flower.podLabels }}
+            {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openzaak.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "openzaak.flowerFullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/celery_flower.sh"]
+          resources:
+            {{- toYaml .Values.flower.resources | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openzaak.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openzaak.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openzaak.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 5555
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 5555
+            {{- toYaml .Values.flower.livenessProbe | nindent 12 }}
+          readinessProbe:
+            tcpSocket:
+              port: 5555
+            {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
+          volumeMounts:
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+          {{- if .Values.extraVolumes }}
+          {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- end }}
+{{- end }}
+
