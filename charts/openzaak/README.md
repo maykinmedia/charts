@@ -1,14 +1,14 @@
-# openforms helm chart
+# openzaak
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.1](https://img.shields.io/badge/AppVersion-1.8.1-informational?style=flat-square)
 
-Snel en eenvoudig slimme formulieren bouwen en publiceren
+Productiewaardige API's voor Zaakgericht Werken
 
 ## TL;DR
 
 ```console
 helm repo add my-repo https://maykinmedia.github.io/charts/
-helm install my-release my-repo/openforms
+helm install my-release my-repo/openzaak
 ```
 
 ## Requirements
@@ -27,22 +27,6 @@ helm install my-release my-repo/openforms
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
-| beat.enabled | bool | `true` |  |
-| beat.livenessProbe.failureThreshold | int | `6` |  |
-| beat.livenessProbe.initialDelaySeconds | int | `60` |  |
-| beat.livenessProbe.periodSeconds | int | `10` |  |
-| beat.livenessProbe.successThreshold | int | `1` |  |
-| beat.livenessProbe.timeoutSeconds | int | `5` |  |
-| beat.podLabels | object | `{}` |  |
-| beat.readinessProbe.failureThreshold | int | `6` |  |
-| beat.readinessProbe.initialDelaySeconds | int | `30` |  |
-| beat.readinessProbe.periodSeconds | int | `10` |  |
-| beat.readinessProbe.successThreshold | int | `1` |  |
-| beat.readinessProbe.timeoutSeconds | int | `5` |  |
-| beat.replicaCount | int | `1` |  |
-| beat.resources | object | `{}` |  |
-| beat.service.port | int | `80` |  |
-| beat.service.type | string | `"ClusterIP"` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` |  |
 | extraVerifyCerts | string | `""` |  |
@@ -66,7 +50,7 @@ helm install my-release my-repo/openforms
 | flower.service.type | string | `"ClusterIP"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"openformulieren/open-forms"` |  |
+| image.repository | string | `"openzaak/open-zaak"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
@@ -81,7 +65,6 @@ helm install my-release my-repo/openforms
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
-| nginx.config.clientMaxBodySize | string | `"10M"` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |
@@ -132,51 +115,42 @@ helm install my-release my-repo/openforms
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
-| settings.baseUrl | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |
 | settings.cache.portalLocker | string | `""` |  |
 | settings.celery.brokerUrl | string | `""` |  |
+| settings.celery.enabled | bool | `true` | Deploy celery (worker), celery is required from openzaak version 1.8.0 |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
-| settings.cookieSamesite | string | `""` | Choises Strict or Lax |
-| settings.cors.allowAllOrigins | bool | `false` |  |
-| settings.cors.allowedOrigins | list | `[]` |  |
-| settings.csp.extraDefaultSrc | list | `[]` |  |
-| settings.csp.extraImgSrc | list | `[]` |  |
-| settings.csp.reportSave | bool | `false` |  |
-| settings.csrf.trustedOrigins | list | `[]` |  |
-| settings.database.host | string | `""` |  |
-| settings.database.name | string | `""` |  |
-| settings.database.password | string | `""` |  |
+| settings.cmis.enabled | bool | `false` |  |
+| settings.cmis.mapperFile | string | `""` |  |
+| settings.database.host | string | `"open-zaak-postgresql"` |  |
+| settings.database.name | string | `"openzaak"` |  |
+| settings.database.password | string | `"SUPER-SECRET"` |  |
 | settings.database.port | int | `5432` |  |
 | settings.database.sslmode | string | `"prefer"` |  |
-| settings.database.username | string | `""` |  |
+| settings.database.username | string | `"postgres"` |  |
 | settings.debug | bool | `false` |  |
-| settings.djangoSettingsModule | string | `"openforms.conf.docker"` |  |
+| settings.djangoSettingsModule | string | `""` |  |
+| settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
-| settings.email.defaultFrom | string | `""` |  |
 | settings.email.host | string | `"localhost"` |  |
 | settings.email.password | string | `""` |  |
 | settings.email.port | int | `25` |  |
 | settings.email.useTLS | bool | `false` |  |
 | settings.email.username | string | `""` |  |
-| settings.environment | string | `nil` |  |
+| settings.environment | string | `""` |  |
 | settings.flower.basicAuth | string | `""` |  |
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
-| settings.maxFileUpload | string | `"50M"` | Configure the maximum allowed file upload size |
-| settings.numProxies | int | `1` |  |
+| settings.jwtExpiry | int | `3600` |  |
+| settings.numProxies | int | `1` | use 2 if enabling ingress |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
-| settings.throttling.enable | bool | `true` |  |
-| settings.throttling.rateAnonymous | string | `""` |  |
-| settings.throttling.ratePolling | string | `""` |  |
-| settings.throttling.rateUser | string | `""` |  |
-| settings.twoFactorAuthentication | bool | `true` |  |
+| settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
-| settings.uwsgi.master | bool | `false` |  |
+| settings.uwsgi.master | string | `""` |  |
 | settings.uwsgi.maxRequests | string | `""` |  |
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |

@@ -4,9 +4,8 @@ tags:
 replicaCount: 1
 
 image:
-  repository: openformulieren/open-forms
+  repository: openzaak/open-zaak
   pullPolicy: IfNotPresent
-  # uses .Chart.AppVersion by default
   tag: ""
 
 imagePullSecrets: []
@@ -74,11 +73,11 @@ resources: {}
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
-  #   cpu: 1000m
-  #   memory: 1Gi
+  #   cpu: 200m
+  #   memory: 256Mi
   # requests:
-  #   cpu: 250m
-  #   memory: 512Mi
+  #   cpu: 100m
+  #   memory: 128Mi
 
 autoscaling:
   enabled: false
@@ -129,53 +128,25 @@ extraVolumeMounts: []
 extraVerifyCerts: ""
 
 settings:
-  djangoSettingsModule: openforms.conf.docker
   allowedHosts: ""
-  baseUrl: ""
+  djangoSettingsModule: ""
   useXForwardedHost: true
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
 
-  # -- Choises Strict or Lax
-  cookieSamesite: ""
-
-  environment: null
-
-  cors:
-    # if defining the cors hosts, always include the own URL!
-    allowAllOrigins: false
-    # allowedOrigins:
-    #   - "https://openformulieren.gemeente.nl"
-    allowedOrigins: []
-
-  csrf:
-    trustedOrigins: []
-      # - example.com
-
-  csp:
-    reportSave: false
-    extraDefaultSrc: []
-      # - siteimproveanalytics.com
-    extraImgSrc: []
-      # - "*.siteimproveanalytics.io"
-
-  throttling:
-    enable: true
-    rateAnonymous: ""
-    rateUser: ""
-    ratePolling: ""
+  environment: ""
 
   database:
-    host: ""
+    host: open-zaak-postgresql
     port: 5432
-    name: ""
-    username: ""
-    password: ""
+    username: postgres
+    password: SUPER-SECRET
+    name: openzaak
     sslmode: prefer
 
   # -- use 2 if enabling ingress
-  numProxies: 1
+  numProxies: 1  
 
   email:
     host: localhost
@@ -183,7 +154,6 @@ settings:
     username: ""
     password: ""
     useTLS: false
-    defaultFrom: ""
 
   flower:
     urlPrefix: ""
@@ -192,40 +162,43 @@ settings:
   elasticapm:
     url: ""
     token: ""
+    serviceName: ""
 
   sentry:
-    dsn: ""
+    dsn: ""    
 
   # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
   cache:
-    # e.g.:
-    # default: openforms-redis-master-0:6379/0
-    # axes: openforms-redis-master-0:6379/0
-    # portalLocker: openforms-redis-master-0:6379/0    
+    # default: openzaak-redis-master-0:6379/0
+    # axes: openzaak-redis-master-0:6379/0
+    # portalLocker: openzaak-redis-master-0:6379/0
     default: ""
     axes: ""
-    portalLocker: ""
+    portalLocker: ""    
 
-  # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
   celery:
+    # -- Deploy celery (worker), celery is required from openzaak version 1.8.0
+    enabled: true
+    # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
     # e.g.:
-    # brokerUrl: redis://openforms-redis-master:6379/1
-    # resultBackend: redis://openforms-redis-master:6379/1
+    # brokerUrl: redis://openzaak-redis-master:6379/1
+    # resultBackend: redis://openzaak-redis-master:6379/1    
     brokerUrl: ""
     resultBackend: ""
-    logLevel: debug
+    logLevel: debug    
+
+  jwtExpiry: 3600
+  
+  cmis:
+    enabled: false
+    mapperFile: ""
 
   isHttps: true
 
   debug: false
 
-  twoFactorAuthentication: true
-
-  # -- Configure the maximum allowed file upload size
-  maxFileUpload: 50M
-
   uwsgi:
-    master: false
+    master: ""
     threads: ""
     processes: ""
     maxRequests: ""
@@ -260,8 +233,6 @@ nginx:
     repository: nginxinc/nginx-unprivileged
     pullPolicy: IfNotPresent
     tag: stable
-  config:
-    clientMaxBodySize: 10M
   replicaCount: 1
   podLabels: {}
   securityContext:
@@ -308,31 +279,10 @@ flower:
     successThreshold: 1
   resources: {}
 
-beat:
-  enabled: true
-  replicaCount: 1
-  podLabels: {}
-  service:
-    type: ClusterIP
-    port: 80
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
-  resources: {}
 
 ##################
 # Redis subchart #
 ##################
-
 redis:
   architecture: standalone
   auth:
