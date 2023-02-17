@@ -1,0 +1,19 @@
+apiVersion: v2
+name: opennotificaties
+description: API voor het routeren van notificaties
+
+type: application
+version: 0.9.0
+appVersion: 1.4.3
+
+dependencies:
+  - name: redis
+    version: 17.3.14
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - redis
+  - name: rabbitmq
+    version: 11.7.1
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - rabbitmq
