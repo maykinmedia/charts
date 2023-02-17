@@ -183,7 +183,7 @@ settings:
     # axes: myredisserver:6379/0
 
   celery:
-    # -- Celery loglevel, choises 'DEBUG|INFO|WARNING|ERROR|CRITICAL|FATAL'
+    # -- Celery loglevel
     logLevel: debug
     # -- Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false
     brokerUrl: ""

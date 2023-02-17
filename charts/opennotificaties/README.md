@@ -11,7 +11,6 @@ helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/opennotificaties
 ```
 
-
 ## Requirements
 
 | Repository | Name | Version |
@@ -126,7 +125,7 @@ helm install my-release my-repo/opennotificaties
 | settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |
 | settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
 | settings.celery.brokerUrl | string | `""` | Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false |
-| settings.celery.logLevel | string | `"debug"` | Celery loglevel, choises 'DEBUG|INFO|WARNING|ERROR|CRITICAL|FATAL' |
+| settings.celery.logLevel | string | `"debug"` | Celery loglevel |
 | settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false |
 | settings.celery.rabbitmqHost | string | `""` | RabbitMQ server hostname |
 | settings.celery.resultBackend | string | `""` | Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false |
