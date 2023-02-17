@@ -8,5 +8,5 @@ This repository contains Helm charts for:
 ```bash
 helm repo add maykinmedia https://maykinmedia.github.io/charts/
 helm search repo maykinmedia
-helm install my-release bitnami/<chart>
+helm install my-release maykinmedia/<chart>
 ```
