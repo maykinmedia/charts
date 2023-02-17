@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "opennotificaties.fullname" . }}
+  labels:
+    {{- include "opennotificaties.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "opennotificaties.selectorLabels" . | nindent 4 }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "opennotificaties.nginxFullname" . }}
+  labels:
+    {{- include "opennotificaties.nginxLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8080
+      name: http
+  selector:
+    {{- include "opennotificaties.nginxSelectorLabels" . | nindent 4 }}
+
+---
+{{ if .Values.flower.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "opennotificaties.flowerFullname" . }}
+  labels:
+    {{- include "opennotificaties.flowerLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.flower.service.type }}
+  ports:
+    - port: {{ .Values.flower.service.port }}
+      targetPort: 5555
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "opennotificaties.flowerSelectorLabels" . | nindent 4 }}
+{{- end }}

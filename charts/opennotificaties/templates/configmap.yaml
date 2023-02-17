@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "opennotificaties.fullname" . }}
+  labels:
+    {{- include "opennotificaties.labels" . | nindent 4 }}
+data:
+  DJANGO_SETTINGS_MODULE: {{ .Values.settings.djangoSettingsModule | toString | quote }}
+  ENVIRONMENT: {{ .Values.settings.environment | default (include "opennotificaties.fullname" .) }}
+  {{- if .Values.extraVerifyCerts }}
+  EXTRA_VERIFY_CERTS: {{ .Values.extraVerifyCerts | toString | quote }}
+  {{- end }}
+  ALLOWED_HOSTS: "{{ include "opennotificaties.fullname" . }},{{ include "opennotificaties.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | toString }}"
+  {{- if .Values.tags.redis }}
+  CACHE_DEFAULT: {{ printf "redis://%s-master:6379/0" (include "common.names.fullname" .Subcharts.redis) | toString | quote }}
+  CACHE_AXES: {{ printf "redis://%s-master:6379/0" (include "common.names.fullname" .Subcharts.redis) | toString | quote }}
+  {{- else }}
+  CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
+  CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
+  {{- end }}
+  CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
+  CELERY_WORKER_CONCURRENCY: {{ .Values.worker.concurrency | toString | quote }}
+  {{- if .Values.tags.rabbitmq }}
+  RABBITMQ_HOST: {{ include "common.names.fullname" .Subcharts.rabbitmq | toString | quote }}
+  {{- else }}
+  RABBITMQ_HOST: {{ .Values.settings.celery.messageBroker | toString | quote }}
+  {{- end }}
+  {{- if .Values.tags.postgresql }}
+  DB_NAME: {{ .Values.postgresql.auth.database | toString | quote }}
+  DB_HOST: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
+  DB_USER: {{ .Values.postgresql.auth.username | toString | quote }}
+  {{- else }}
+  DB_NAME: {{ .Values.settings.database.name | toString | quote }}
+  DB_HOST: {{ .Values.settings.database.host | toString | quote }}
+  DB_USER: {{ .Values.settings.database.username | toString | quote }}
+  {{- end }}
+  DB_PORT: {{ .Values.settings.database.port | toString | quote }}
+  PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
+  DEBUG: {{ if .Values.settings.debug }}"True"{{ else }}"False"{{ end }}
+  NUM_PROXIES: {{ .Values.settings.numProxies | toString | quote }}
+  IS_HTTPS: {{ if .Values.settings.isHttps }}"True"{{ else }}"False"{{ end }}
+  FLOWER_URL_PREFIX: {{ .Values.settings.flower.urlPrefix | toString | quote }}
+  EMAIL_HOST: {{ .Values.settings.email.host | toString | quote }}
+  EMAIL_PORT: {{ .Values.settings.email.port | toString | quote }}
+  {{- if .Values.settings.email.username }}
+  EMAIL_HOST_USER: {{ .Values.settings.email.username | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.email.useTLS }}
+  EMAIL_USE_TLS: "True"
+  {{- end }}
+  {{- if .Values.settings.email.defaultFrom }}
+  DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.elasticapm.url }}
+  ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.master }}
+  UWSGI_MASTER:  {{ if .Values.settings.uwsgi.master }}"1"{{ else }}"0"{{ end }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.threads }}
+  UWSGI_THREADS: {{ .Values.settings.uwsgi.threads  | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.processes }}
+  UWSGI_PROCESSES: {{ .Values.settings.uwsgi.processes | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.maxRequests }}
+  UWSGI_MAX_REQUESTS: {{ .Values.settings.uwsgi.maxRequests | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.harakiri }}
+  UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
+  {{- end }}
