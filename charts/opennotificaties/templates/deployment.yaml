@@ -45,7 +45,7 @@ spec:
                 name: {{ include "opennotificaties.fullname" . }}
           env:
             {{- if .Values.extraEnvVars }}
-            {{- include "openzaak.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           ports:
             - name: http
@@ -71,11 +71,11 @@ spec:
           {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             {{- if .Values.extraVolumeMounts }}
-            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
         {{- if .Values.extraVolumes }}
-        {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -139,7 +139,7 @@ spec:
                 name: {{ include "opennotificaties.fullname" . }}
           env:
             {{- if .Values.extraEnvVars }}
-            {{- include "openzaak.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
@@ -147,11 +147,11 @@ spec:
             - /celery_worker.sh
           volumeMounts:
             {{- if .Values.extraVolumeMounts }}
-            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
         {{- if .Values.extraVolumes }}
-        {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -216,7 +216,7 @@ spec:
                 name: {{ include "opennotificaties.fullname" . }}
           env:
             {{- if .Values.extraEnvVars }}
-            {{- include "openzaak.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           ports:
             - name: http
@@ -232,11 +232,11 @@ spec:
             {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
           volumeMounts:
             {{- if .Values.extraVolumeMounts }}
-            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
         {{- if .Values.extraVolumes }}
-        {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

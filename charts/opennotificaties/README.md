@@ -1,8 +1,15 @@
 # opennotificaties
 
-![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
+![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
 
 API voor het routeren van notificaties
+
+## TL;DR
+
+```console
+helm repo add my-repo https://maykinmedia.github.io/charts/
+helm install my-release my-repo/opennotificaties
+```
 
 ## Requirements
 
@@ -22,10 +29,10 @@ API voor het routeren van notificaties
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | existingSecret | string | `nil` |  |
-| extraEnvVars | list | `[]` |  |
+| extraEnvVars | list | `[]` | Array with extra environment variables to add e.g: extraEnvVars:   - name: FOO     value: "bar" |
 | extraVerifyCerts | string | `""` |  |
 | extraVolumeMounts | list | `[]` |  |
-| extraVolumes | list | `[]` |  |
+| extraVolumes | list | `[]` | Optionally specify extra list of additional volumes e.g: extraVolumes:   - name: verify-certs     configMap:       name: verify-certs |
 | flower.enabled | bool | `true` |  |
 | flower.livenessProbe.failureThreshold | int | `6` |  |
 | flower.livenessProbe.initialDelaySeconds | int | `60` |  |
@@ -117,10 +124,10 @@ API voor het routeren van notificaties
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |
-| settings.cache.portalLocker | string | `""` |  |
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
-| settings.celery.messageBroker | string | `""` |  |
+| settings.celery.publishBrokerUrl | string | `""` |  |
+| settings.celery.rabbitmqHost | string | `""` |  |
 | settings.celery.resultBackend | string | `""` |  |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
@@ -142,6 +149,7 @@ API voor het routeren van notificaties
 | settings.flower.basicAuth | string | `""` |  |
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
+| settings.logNotifications | bool | `true` |  |
 | settings.numProxies | int | `1` |  |
 | settings.secretKey | string | `""` |  |
 | settings.sentry.dsn | string | `""` |  |

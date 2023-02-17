@@ -23,17 +23,14 @@ data:
   {{- if .Values.tags.rabbitmq }}
   RABBITMQ_HOST: {{ include "common.names.fullname" .Subcharts.rabbitmq | toString | quote }}
   {{- else }}
-  RABBITMQ_HOST: {{ .Values.settings.celery.messageBroker | toString | quote }}
+  RABBITMQ_HOST: {{ .Values.settings.celery.rabbitmqHost | toString | quote }}
   {{- end }}
-  {{- if .Values.tags.postgresql }}
-  DB_NAME: {{ .Values.postgresql.auth.database | toString | quote }}
-  DB_HOST: {{ template "postgresql.primary.fullname" .Subcharts.postgresql }}
-  DB_USER: {{ .Values.postgresql.auth.username | toString | quote }}
-  {{- else }}
+  {{- if .Values.logNotifications }}
+  LOG_NOTIFICATIONS_IN_DB: true
+  {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
-  {{- end }}
   DB_PORT: {{ .Values.settings.database.port | toString | quote }}
   PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
   DEBUG: {{ if .Values.settings.debug }}"True"{{ else }}"False"{{ end }}

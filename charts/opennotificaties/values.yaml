@@ -101,14 +101,15 @@ persistence:
 
 existingSecret: null
 
-# extraEnvVars Array with extra environment variables to add to openforms
+# extraEnvVars -- Array with extra environment variables to add
 # e.g:
 # extraEnvVars:
 #   - name: FOO
 #     value: "bar"
 #
 extraEnvVars: []
-# extraVolumes Optionally specify extra list of additional volumes
+
+# extraVolumes -- Optionally specify extra list of additional volumes
 # e.g:
 # extraVolumes:
 #   - name: verify-certs
@@ -116,12 +117,14 @@ extraEnvVars: []
 #       name: verify-certs
 #
 extraVolumes: []
+
 # extraVolumeMounts Optionally specify extra list of additional volumeMounts
 # e.g:
 # extraVolumeMounts:
 #  - name: verify-certs
 #    mountPath: /etc/ssl/certs/extra-certs/
 extraVolumeMounts: []
+
 # Path to extra certificates or CA (root) certificates, comma seperated
 # Wardning, If the file does not exist the pod(s) will not start
 # e.g.
@@ -133,8 +136,14 @@ settings:
   djangoSettingsModule: nrc.conf.docker
   useXForwardedHost: true
 
+  # logNotifications -- When set to true notifications are
+  # saved to the database and accessible from the admin interface
+  logNotifications: true
+
   # secretKey -- Generate secret key at https://djecrety.ir/
   secretKey: ""
+
+  # environment -- sets the 'ENVIRONMENT' variable
   environment: ""
 
   database:
@@ -145,7 +154,7 @@ settings:
     name: ""
     sslmode: prefer
 
-  # use 2 if enabling ingress
+  # numProxies -- use 2 if enabling ingress
   numProxies: 1
 
   email:
@@ -167,23 +176,33 @@ settings:
   sentry:
     dsn: ""
 
-  # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
   cache:
-    # default: opennotificaties-redis-master-0:6379/0
-    # axes: opennotificaties-redis-master-0:6379/0
-    # portalLocker: opennotificaties-redis-master-0:6379/0
+    # cache.default -- Sets 'CACHE_DEFAULT' var, only required when tags.redis is false
     default: ""
+    # cache.default -- Sets 'CACHE_AXES' var, only required when tags.redis is false
     axes: ""
-    portalLocker: ""
+    # When not using the redis subcharts you can set them manually like this:
+    # default: myredisserver:6379/0
+    # axes: myredisserver:6379/0
 
   celery:
-    # brokerUrl: amqp://opennotificaties-rabbitmq:5672//
-    # resultBackend: redis://opennotificaties-redis-master:6379/1
-    # messageBroker: amqp://opennotificaties-rabbitmq:5672/%2F
-    brokerUrl: ""
-    resultBackend: ""
-    messageBroker: ""
+    # celery.loglevel -- Sets the 'CELERY_LOGLEVEL' var:
+    # choises: DEBUG|INFO|WARNING|ERROR|CRITICAL|FATAL
     logLevel: debug
+    # celery.brokerUrl -- Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false
+    brokerUrl: ""
+    # celery.resultBackend -- Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false
+    resultBackend: ""
+    # celery.publishBrokerUrl -- Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false
+    publishBrokerUrl: ""
+    # celery.rabbitmqHost -- RabbitMQ server hostname
+    rabbitmqHost: ""
+    # When not using the rabbitmq / redis subcharts you can set them manually like this:
+    #
+    # brokerUrl: amqp://username:password@myrabbitmqbroker:5672//
+    # resultBackend: redis://myredisserver:6379/1
+    # publishBrokerUrl: amqp://username:password@myrabbitmqbroker::5672/%2F
+    # rabbitmqHost: myrabbitmqbroker
 
   isHttps: true
 
