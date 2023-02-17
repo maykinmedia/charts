@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 0.9.2](https://img.shields.io/badge/Version-0.9.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
+![Version: 0.9.3](https://img.shields.io/badge/Version-0.9.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -31,7 +31,7 @@ helm install my-release my-repo/opennotificaties
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraVerifyCerts | string | `""` | Path to extra certificates or CA (root) certificates, comma seperated Warning, If the file does not exist the pod(s) will not start |
-| extraVolumeMounts | list | `[]` |  |
+| extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | flower.enabled | bool | `true` |  |
 | flower.livenessProbe.failureThreshold | int | `6` |  |
@@ -125,7 +125,7 @@ helm install my-release my-repo/opennotificaties
 | settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |
 | settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
 | settings.celery.brokerUrl | string | `""` | Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false |
-| settings.celery.logLevel | string | `"debug"` | Sets the 'CELERY_LOGLEVEL' var: choises: DEBUG|INFO|WARNING|ERROR|CRITICAL|FATAL |
+| settings.celery.logLevel | string | `"debug"` | Celery loglevel, choises are DEBUG|INFO|WARNING|ERROR|CRITICAL|FATAL |
 | settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false |
 | settings.celery.rabbitmqHost | string | `""` | RabbitMQ server hostname |
 | settings.celery.resultBackend | string | `""` | Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false |

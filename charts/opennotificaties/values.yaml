@@ -116,7 +116,7 @@ extraVolumes: []
 #     configMap:
 #       name: verify-certs
 
-#  -- Optionally specify extra list of additional volumeMounts
+# -- Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
 # e.g:
 # extraVolumeMounts:
@@ -183,8 +183,7 @@ settings:
     # axes: myredisserver:6379/0
 
   celery:
-    # -- Sets the 'CELERY_LOGLEVEL' var:
-    # choises: DEBUG|INFO|WARNING|ERROR|CRITICAL|FATAL
+    # -- Celery loglevel, choises are DEBUG|INFO|WARNING|ERROR|CRITICAL|FATAL
     logLevel: debug
     # -- Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false
     brokerUrl: ""
