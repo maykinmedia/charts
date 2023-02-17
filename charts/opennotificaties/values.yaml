@@ -101,49 +101,46 @@ persistence:
 
 existingSecret: null
 
-# extraEnvVars -- Array with extra environment variables to add
+# -- Array with extra environment variables to add
+extraEnvVars: []
 # e.g:
 # extraEnvVars:
 #   - name: FOO
 #     value: "bar"
-#
-extraEnvVars: []
 
-# extraVolumes -- Optionally specify extra list of additional volumes
+# -- Optionally specify extra list of additional volumes
+extraVolumes: []
 # e.g:
 # extraVolumes:
 #   - name: verify-certs
 #     configMap:
 #       name: verify-certs
-#
-extraVolumes: []
 
-# extraVolumeMounts Optionally specify extra list of additional volumeMounts
+#  -- Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
 # e.g:
 # extraVolumeMounts:
 #  - name: verify-certs
 #    mountPath: /etc/ssl/certs/extra-certs/
-extraVolumeMounts: []
 
-# Path to extra certificates or CA (root) certificates, comma seperated
-# Wardning, If the file does not exist the pod(s) will not start
+# -- Path to extra certificates or CA (root) certificates, comma seperated
+# Warning, If the file does not exist the pod(s) will not start
+extraVerifyCerts: ""
 # e.g.
 # extraVerifyCerts: /etc/ssl/certs/extra-certs/staatdernederlandeng1.pem
-extraVerifyCerts: ""
 
 settings:
   allowedHosts: ""
   djangoSettingsModule: nrc.conf.docker
   useXForwardedHost: true
 
-  # logNotifications -- When set to true notifications are
-  # saved to the database and accessible from the admin interface
+  # -- When set to true notifications are saved to the database and accessible from the admin interface
   logNotifications: true
 
-  # secretKey -- Generate secret key at https://djecrety.ir/
+  # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
 
-  # environment -- sets the 'ENVIRONMENT' variable
+  # -- sets the 'ENVIRONMENT' variable
   environment: ""
 
   database:
@@ -154,7 +151,7 @@ settings:
     name: ""
     sslmode: prefer
 
-  # numProxies -- use 2 if enabling ingress
+  # -- use 2 if enabling ingress
   numProxies: 1
 
   email:
@@ -177,25 +174,25 @@ settings:
     dsn: ""
 
   cache:
-    # cache.default -- Sets 'CACHE_DEFAULT' var, only required when tags.redis is false
+    # -- Sets 'CACHE_DEFAULT' var, only required when tags.redis is false
     default: ""
-    # cache.default -- Sets 'CACHE_AXES' var, only required when tags.redis is false
+    # -- Sets 'CACHE_AXES' var, only required when tags.redis is false
     axes: ""
     # When not using the redis subcharts you can set them manually like this:
     # default: myredisserver:6379/0
     # axes: myredisserver:6379/0
 
   celery:
-    # celery.loglevel -- Sets the 'CELERY_LOGLEVEL' var:
+    # -- Sets the 'CELERY_LOGLEVEL' var:
     # choises: DEBUG|INFO|WARNING|ERROR|CRITICAL|FATAL
     logLevel: debug
-    # celery.brokerUrl -- Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false
+    # -- Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false
     brokerUrl: ""
-    # celery.resultBackend -- Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false
+    # -- Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false
     resultBackend: ""
-    # celery.publishBrokerUrl -- Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false
+    # -- Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false
     publishBrokerUrl: ""
-    # celery.rabbitmqHost -- RabbitMQ server hostname
+    # -- RabbitMQ server hostname
     rabbitmqHost: ""
     # When not using the rabbitmq / redis subcharts you can set them manually like this:
     #

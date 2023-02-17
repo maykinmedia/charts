@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
+![Version: 0.9.2](https://img.shields.io/badge/Version-0.9.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -29,10 +29,10 @@ helm install my-release my-repo/opennotificaties
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | existingSecret | string | `nil` |  |
-| extraEnvVars | list | `[]` | Array with extra environment variables to add e.g: extraEnvVars:   - name: FOO     value: "bar" |
-| extraVerifyCerts | string | `""` |  |
+| extraEnvVars | list | `[]` | Array with extra environment variables to add |
+| extraVerifyCerts | string | `""` | Path to extra certificates or CA (root) certificates, comma seperated Warning, If the file does not exist the pod(s) will not start |
 | extraVolumeMounts | list | `[]` |  |
-| extraVolumes | list | `[]` | Optionally specify extra list of additional volumes e.g: extraVolumes:   - name: verify-certs     configMap:       name: verify-certs |
+| extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | flower.enabled | bool | `true` |  |
 | flower.livenessProbe.failureThreshold | int | `6` |  |
 | flower.livenessProbe.initialDelaySeconds | int | `60` |  |
@@ -122,13 +122,13 @@ helm install my-release my-repo/opennotificaties
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
-| settings.cache.axes | string | `""` |  |
-| settings.cache.default | string | `""` |  |
-| settings.celery.brokerUrl | string | `""` |  |
-| settings.celery.logLevel | string | `"debug"` |  |
-| settings.celery.publishBrokerUrl | string | `""` |  |
-| settings.celery.rabbitmqHost | string | `""` |  |
-| settings.celery.resultBackend | string | `""` |  |
+| settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |
+| settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
+| settings.celery.brokerUrl | string | `""` | Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false |
+| settings.celery.logLevel | string | `"debug"` | Sets the 'CELERY_LOGLEVEL' var: choises: DEBUG|INFO|WARNING|ERROR|CRITICAL|FATAL |
+| settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false |
+| settings.celery.rabbitmqHost | string | `""` | RabbitMQ server hostname |
+| settings.celery.resultBackend | string | `""` | Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
 | settings.database.password | string | `""` |  |
@@ -145,13 +145,13 @@ helm install my-release my-repo/opennotificaties
 | settings.email.port | int | `25` |  |
 | settings.email.useTLS | bool | `false` |  |
 | settings.email.username | string | `""` |  |
-| settings.environment | string | `""` |  |
+| settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.flower.basicAuth | string | `""` |  |
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
-| settings.logNotifications | bool | `true` |  |
-| settings.numProxies | int | `1` |  |
-| settings.secretKey | string | `""` |  |
+| settings.logNotifications | bool | `true` | When set to true notifications are saved to the database and accessible from the admin interface |
+| settings.numProxies | int | `1` | use 2 if enabling ingress |
+| settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |

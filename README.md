@@ -1,8 +1,9 @@
-# Maykinmedia charts
+# Maykin Media charts
 
 This repository contains Helm charts for:
 
 - [openzaak](./charts/openzaak/README.md)
+- [opennotificaties](./charts/opennotificaties/README.md)
 - [openforms](./charts/openforms/README.md)
 
 ```bash
