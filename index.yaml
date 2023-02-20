@@ -1,0 +1,59 @@
+apiVersion: v1
+entries:
+  openforms:
+  - apiVersion: v2
+    appVersion: 2.0.3
+    created: "2023-02-20T14:37:31.574909552Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Snel en eenvoudig slimme formulieren bouwen en publiceren
+    digest: 8440ea1693eeaee06318eac3be548a8c0483790dd01aa89c82b7baba3064b2c1
+    name: openforms
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openforms-1.0.0/openforms-1.0.0.tgz
+    version: 1.0.0
+  opennotificaties:
+  - apiVersion: v2
+    appVersion: 1.4.3
+    created: "2023-02-20T14:37:31.84324218Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - rabbitmq
+      version: 11.7.1
+    description: API voor het routeren van notificaties
+    digest: 8c3dffe02e93fde56f154aff3c62ee1b166892532d81dbea5b9dc155d1880be4
+    name: opennotificaties
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.0.0/opennotificaties-1.0.0.tgz
+    version: 1.0.0
+  openzaak:
+  - apiVersion: v2
+    appVersion: 1.8.1
+    created: "2023-02-20T14:37:31.998581865Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: 7c3269437d74a42a9959b3e5a81c40f99738f840731af00daf895e49190dd12e
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.0.0/openzaak-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-02-20T14:37:31.998592065Z"
