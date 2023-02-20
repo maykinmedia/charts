@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 0.9.3](https://img.shields.io/badge/Version-0.9.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -10,6 +10,7 @@ API voor het routeren van notificaties
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/opennotificaties
 ```
+
 
 ## Requirements
 
@@ -51,7 +52,7 @@ helm install my-release my-repo/opennotificaties
 | flower.service.type | string | `"ClusterIP"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"opennotificaties/open-notificaties"` |  |
+| image.repository | string | `"openzaak/open-notificaties"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
@@ -65,27 +66,6 @@ helm install my-release my-repo/opennotificaties
 | livenessProbe.successThreshold | int | `1` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
-| nginx.autoscaling.enabled | bool | `false` |  |
-| nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
-| nginx.image.tag | string | `"stable"` |  |
-| nginx.livenessProbe.failureThreshold | int | `3` |  |
-| nginx.livenessProbe.initialDelaySeconds | int | `60` |  |
-| nginx.livenessProbe.periodSeconds | int | `10` |  |
-| nginx.livenessProbe.successThreshold | int | `1` |  |
-| nginx.livenessProbe.timeoutSeconds | int | `5` |  |
-| nginx.podLabels | object | `{}` |  |
-| nginx.readinessProbe.failureThreshold | int | `3` |  |
-| nginx.readinessProbe.initialDelaySeconds | int | `30` |  |
-| nginx.readinessProbe.periodSeconds | int | `10` |  |
-| nginx.readinessProbe.successThreshold | int | `1` |  |
-| nginx.readinessProbe.timeoutSeconds | int | `5` |  |
-| nginx.replicaCount | int | `1` |  |
-| nginx.resources | object | `{}` |  |
-| nginx.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| nginx.securityContext.readOnlyRootFilesystem | bool | `false` |  |
-| nginx.securityContext.runAsNonRoot | bool | `true` |  |
-| nginx.securityContext.runAsUser | int | `101` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |

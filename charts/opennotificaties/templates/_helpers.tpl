@@ -69,38 +69,6 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Create a name for NGINX
-We truncate at 57 chars in order to provide space for the "-nginx" suffix
-*/}}
-{{- define "opennotificaties.nginxName" -}}
-{{ include "opennotificaties.name" . | trunc 57 | trimSuffix "-" }}-nginx
-{{- end }}
-
-{{/*
-Create a default fully qualified name for NGINX.
-We truncate at 57 chars in order to provide space for the "-nginx" suffix
-*/}}
-{{- define "opennotificaties.nginxFullname" -}}
-{{ include "opennotificaties.fullname" . | trunc 57 | trimSuffix "-" }}-nginx
-{{- end }}
-
-{{/*
-NGINX labels
-*/}}
-{{- define "opennotificaties.nginxLabels" -}}
-{{ include "opennotificaties.commonLabels" . }}
-{{ include "opennotificaties.nginxSelectorLabels" . }}
-{{- end }}
-
-{{/*
-NGINX selector labels
-*/}}
-{{- define "opennotificaties.nginxSelectorLabels" -}}
-app.kubernetes.io/name: {{ include "opennotificaties.nginxName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
 Create a name for the worker
 We truncate at 56 chars in order to provide space for the "-worker" suffix
 */}}
