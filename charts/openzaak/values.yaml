@@ -129,7 +129,7 @@ extraVerifyCerts: ""
 
 settings:
   allowedHosts: ""
-  djangoSettingsModule: ""
+  djangoSettingsModule: openzaak.conf.docker
   useXForwardedHost: true
 
   # -- Generate secret key at https://djecrety.ir/
