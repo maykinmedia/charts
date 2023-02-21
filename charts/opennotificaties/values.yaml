@@ -93,12 +93,6 @@ tolerations: []
 
 affinity: {}
 
-persistence:
-  enabled: true
-  size: 1Gi
-  storageClassName: ""
-  existingClaim: null
-
 existingSecret: null
 
 # -- Array with extra environment variables to add
@@ -278,9 +272,9 @@ redis:
 
 rabbitmq:
   auth:
-    username: guest
-    password: guest
-    erlangCookie: SUPER-SECRET
+    username: user
+    password: ""
+    erlangCookie: ""
 
   persistence:
     enabled: false

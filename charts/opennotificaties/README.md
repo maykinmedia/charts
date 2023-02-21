@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
+![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -67,16 +67,12 @@ helm install my-release my-repo/opennotificaties
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
-| persistence.enabled | bool | `true` |  |
-| persistence.existingClaim | string | `nil` |  |
-| persistence.size | string | `"1Gi"` |  |
-| persistence.storageClassName | string | `""` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
-| rabbitmq.auth.erlangCookie | string | `"SUPER-SECRET"` |  |
-| rabbitmq.auth.password | string | `"guest"` |  |
-| rabbitmq.auth.username | string | `"guest"` |  |
+| rabbitmq.auth.erlangCookie | string | `""` |  |
+| rabbitmq.auth.password | string | `""` |  |
+| rabbitmq.auth.username | string | `"user"` |  |
 | rabbitmq.persistence.enabled | bool | `false` |  |
 | rabbitmq.persistence.existingClaim | string | `nil` |  |
 | rabbitmq.persistence.size | string | `"1Gi"` |  |
