@@ -17,6 +17,29 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openforms-1.0.0/openforms-1.0.0.tgz
     version: 1.0.0
+  openinwoner:
+  - apiVersion: v2
+    appVersion: "1.3"
+    created: "2023-02-24T10:36:18.24796701Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: elasticsearch
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - elasticsearch
+      version: 19.5.11
+    description: Platform voor gemeenten en overheden om producten inzichtelijker
+      en toegankelijker te maken voor inwoners.
+    digest: a344596ec77d85287d30ea9f56998eafb5ff76314580a6db0285577759ffecba
+    name: openinwoner
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openinwoner-0.9.0/openinwoner-0.9.0.tgz
+    version: 0.9.0
   opennotificaties:
   - apiVersion: v2
     appVersion: 1.4.3
@@ -119,4 +142,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaak-1.0.0/openzaak-1.0.0.tgz
     version: 1.0.0
-generated: "2023-02-21T14:27:54.703653345Z"
+generated: "2023-02-24T10:36:18.24798571Z"
