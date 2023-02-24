@@ -1,0 +1,260 @@
+tags:
+  redis: true
+  elasticsearch: true
+
+replicaCount: 1
+
+image:
+  repository: maykinmedia/open-inwoner
+  pullPolicy: IfNotPresent
+  # -- uses .Chart.AppVersion by default
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podLabels: {}
+
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  className: ""
+  # -- ingress hosts
+  hosts: []
+  #  - host: openinwoner.gemeente.nl
+  #    paths:
+  #      - path: /
+  #        pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: openinwoner-tls
+  #    hosts:
+  #      - openinwoner.gemeente.nl
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 1000m
+  #   memory: 1Gi
+  # requests:
+  #   cpu: 250m
+  #   memory: 512Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClassName: ""
+  existingClaim: null
+
+existingSecret: null
+
+# -- Array with extra environment variables to add
+extraEnvVars: []
+# e.g:
+# extraEnvVars:
+#   - name: FOO
+#     value: "bar"
+
+# -- Optionally specify extra list of additional volumes
+extraVolumes: []
+# e.g:
+# extraVolumes:
+#   - name: verify-certs
+#     configMap:
+#       name: verify-certs
+
+# -- Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# e.g:
+# extraVolumeMounts:
+#  - name: verify-certs
+#    mountPath: /etc/ssl/certs/extra-certs/
+
+settings:
+  allowedHosts: ""
+  djangoSettingsModule: open_inwoner.conf.docker
+  useXForwardedHost: true
+
+  # -- Elasticsearch hostname, only required when tags.elasticsearch is false
+  elasticSearchHost: ""
+
+  # -- Generate secret key at https://djecrety.ir/
+  secretKey: ""
+
+  environment: null
+
+  database:
+    host: ""
+    port: 5432
+    name: ""
+    username: ""
+    password: ""
+    sslmode: prefer
+
+  email:
+    host: localhost
+    port: 25
+    username: ""
+    password: ""
+    useTLS: false
+    defaultFrom: ""
+
+  elasticapm:
+    url: ""
+    token: ""
+
+  sentry:
+    dsn: ""
+
+  cache:
+    # -- Sets 'CACHE_DEFAULT' var, only required when tags.redis is false
+    default: ""
+    # -- Sets 'CACHE_AXES' var, only required when tags.redis is false
+    axes: ""
+    # When not using the redis subcharts you can set them manually like this:
+    # default: myredisserver:6379/0
+    # axes: myredisserver:6379/0
+
+  isHttps: true
+
+  debug: false
+
+  twoFactorAuthentication: true
+
+  uwsgi:
+    master: false
+    threads: ""
+    processes: ""
+    maxRequests: ""
+    harakiri: ""
+
+nginx:
+  image:
+    repository: nginxinc/nginx-unprivileged
+    pullPolicy: IfNotPresent
+    tag: stable
+  config:
+    clientMaxBodySize: 10M
+  replicaCount: 1
+  podLabels: {}
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 101
+  autoscaling:
+    enabled: false
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  resources: {}
+
+
+##################
+# Redis subchart #
+##################
+
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: false
+    resources:
+      requests:
+        cpu: 10m
+        memory: 20Mi
+
+##########################
+# elasticsearch subchart #
+##########################
+
+elasticsearch:
+  master:
+    masterOnly: true
+    replicaCount: 1
+    persistence:
+      enabled: false
+      size: ""
+    resources:
+      limits: {}
+      requests:
+        cpu: 25m
+        memory: 256Mi
+  data:
+    replicaCount: 1
+    persistence:
+      enabled: false
+      size: 8Gi
+  coordinating:
+    replicaCount: 1
+  ingest:
+    enabled: false
+
+

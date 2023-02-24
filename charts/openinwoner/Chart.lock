@@ -1,0 +1,9 @@
+dependencies:
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 17.3.14
+- name: elasticsearch
+  repository: https://charts.bitnami.com/bitnami
+  version: 19.5.11
+digest: sha256:94cbd1c8a6c97a1f280b7b1d8777c2fd0cdfb91d6fdf3068528a70afae3f7279
+generated: "2023-02-24T09:48:33.129941508+01:00"
