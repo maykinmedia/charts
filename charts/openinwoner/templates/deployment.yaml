@@ -51,9 +51,18 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
+          {{- if .Values.settings.loadFixtures }}
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/bash"
+                  - "-c"
+                  - /app/src/manage.py loaddata  /app/src/open_inwoner/conf/fixtures/*.json
+          {{- end }}
           livenessProbe:
             httpGet:
-              path: /admin/
+              path: /
               port: http
               httpHeaders:
                 - name: Host
@@ -61,7 +70,7 @@ spec:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
-              path: /admin/
+              path: /
               port: http
               httpHeaders:
                 - name: Host

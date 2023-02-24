@@ -129,6 +129,9 @@ settings:
   djangoSettingsModule: open_inwoner.conf.docker
   useXForwardedHost: true
 
+  # -- Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json
+  loadFixtures: false
+
   # -- Elasticsearch hostname, only required when tags.elasticsearch is false
   elasticSearchHost: ""
 
@@ -256,5 +259,3 @@ elasticsearch:
     replicaCount: 1
   ingest:
     enabled: false
-
-
