@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "openinwoner.fullname" . }}
+  labels:
+    {{- include "openinwoner.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "openinwoner.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "openinwoner.nginxFullname" . }}
+  labels:
+    {{- include "openinwoner.nginxLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8080
+      name: http
+  selector:
+    {{- include "openinwoner.nginxSelectorLabels" . | nindent 4 }}
