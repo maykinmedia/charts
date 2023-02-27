@@ -7,6 +7,7 @@ This repository contains Helm charts for:
 - [openforms](./charts/openforms/README.md)
 - [openinwoner](./charts/openinwoner/README.md)
 - [openobjecten](./charts/openobjecten/README.md)
+- [openobjecttypes](./charts/openobjecttypes/README.md)
 
 
 ```bash
