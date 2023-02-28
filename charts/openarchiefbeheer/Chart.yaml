@@ -1,6 +1,6 @@
 apiVersion: v2
 name: openarchiefbeheer
-description: API om object definities te beheren
+description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
 type: application
 version: 0.9.0
