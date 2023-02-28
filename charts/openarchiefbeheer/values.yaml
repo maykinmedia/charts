@@ -1,0 +1,228 @@
+tags:
+  redis: true
+
+replicaCount: 1
+
+image:
+  repository: maykinmedia/archiefbeheercomponent
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podLabels: {}
+
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  className: ""
+  # -- ingress hosts
+  hosts: []
+  #  - host: openarchiefbeheer.gemeente.nl
+  #    paths:
+  #      - path: /
+  #        pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: openarchiefbeheer-tls
+  #    hosts:
+  #      - openarchiefbeheer.gemeente.nl
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 200m
+  #   memory: 256Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+existingSecret: null
+
+# -- Array with extra environment variables to add
+extraEnvVars: []
+# e.g:
+# extraEnvVars:
+#   - name: FOO
+#     value: "bar"
+
+# -- Optionally specify extra list of additional volumes
+extraVolumes: []
+# e.g:
+# extraVolumes:
+#   - name: verify-certs
+#     configMap:
+#       name: verify-certs
+
+# -- Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# e.g:
+# extraVolumeMounts:
+#  - name: verify-certs
+#    mountPath: /etc/ssl/certs/extra-certs/
+
+settings:
+  allowedHosts: ""
+  djangoSettingsModule: archiefbeheercomponent.conf.docker
+
+  # -- Generate secret key at https://djecrety.ir/
+  secretKey: ""
+
+  # -- sets the 'ENVIRONMENT' variable
+  environment: ""
+
+  # -- Will run src/manage.py loaddata default_roles at pod startup (see docs)
+  loadDefaultRoles: false
+
+  database:
+    host: ""
+    port: 5432
+    username: ""
+    password: ""
+    name: ""
+    sslmode: prefer
+
+  sentry:
+    dsn: ""
+
+  cache:
+    # -- Sets 'CACHE_DEFAULT' var, only required when tags.redis is false
+    default: ""
+    # -- Sets 'CACHE_AXES' var, only required when tags.redis is false
+    axes: ""
+    # When not using the redis subcharts you can set them manually like this:
+    # default: myredisserver:6379/0
+    # axes: myredisserver:6379/0
+
+  # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
+  celery:
+    # e.g.:
+    # brokerUrl: redis://openforms-redis-master:6379/1
+    # resultBackend: redis://openforms-redis-master:6379/1
+    brokerUrl: ""
+    resultBackend: ""
+    logLevel: debug
+
+  debug: false
+
+  uwsgi:
+    master: ''
+    threads: ''
+    processes: ''
+    maxRequests: ''
+    harakiri: ''
+
+worker:
+  replicaCount: 1
+  concurrency: 4
+  podLabels: {}
+  resources: {}
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
+flower:
+  enabled: true
+  replicaCount: 1
+  podLabels: {}
+  service:
+    type: ClusterIP
+    port: 80
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  resources: {}
+
+##################
+# Redis subchart #
+##################
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: false
+    resources:
+      requests:
+        cpu: 10m
+        memory: 20Mi
