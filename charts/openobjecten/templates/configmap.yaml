@@ -16,6 +16,8 @@ data:
   {{ if .Values.settings.debug }}
   DEBUG: "True"
   {{- end }}
+  TWO_FACTOR_FORCE_OTP_ADMIN: {{ if .Values.settings.twoFactorAuthentication }}"True"{{ else }}"False"{{ end }}
+  TWO_FACTOR_PATCH_ADMIN: {{ if .Values.settings.twoFactorAuthentication }}"True"{{ else }}"False"{{ end }}  
   IS_HTTPS: {{ if .Values.settings.isHttps }}"True"{{ else }}"False"{{ end }}
   EMAIL_HOST: {{ .Values.settings.email.host | toString | quote }}
   EMAIL_PORT: {{ .Values.settings.email.port | toString | quote }}

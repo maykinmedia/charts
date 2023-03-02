@@ -3,5 +3,5 @@ name: openobjecttypes
 description: API om object definities te beheren
 
 type: application
-version: 0.9.1
+version: 0.9.3
 appVersion: 2.1.0

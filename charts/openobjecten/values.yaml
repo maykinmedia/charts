@@ -151,6 +151,8 @@ settings:
 
   debug: false
 
+  twoFactorAuthentication: true
+  
   uwsgi:
     master: ''
     threads: ''
