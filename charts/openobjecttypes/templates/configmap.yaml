@@ -13,7 +13,20 @@ data:
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
   DB_PORT: {{ .Values.settings.database.port | toString | quote }}
   PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
-  DEBUG: {{ if .Values.settings.debug }}"True"{{ else }}"False"{{ end }}
+  {{ if .Values.settings.debug }}
+  DEBUG: "True"
+  {{- end }}
+  EMAIL_HOST: {{ .Values.settings.email.host | toString | quote }}
+  EMAIL_PORT: {{ .Values.settings.email.port | toString | quote }}
+  {{- if .Values.settings.email.username }}
+  EMAIL_HOST_USER: {{ .Values.settings.email.username | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.email.useTLS }}
+  EMAIL_USE_TLS: "True"
+  {{- end }}
+  {{- if .Values.settings.email.defaultFrom }}
+  DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
+  {{- end }}  
   {{- if .Values.settings.elasticapm.url }}
   ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
   {{- end }}

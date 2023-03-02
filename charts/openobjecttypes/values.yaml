@@ -137,6 +137,13 @@ settings:
     name: ""
     sslmode: prefer
 
+  email:
+    host: localhost
+    port: 25
+    username: ""
+    password: ""
+    useTLS: false
+
   sentry:
     dsn: ""
 
@@ -148,3 +155,4 @@ settings:
     processes: ''
     maxRequests: ''
     harakiri: ''
+
