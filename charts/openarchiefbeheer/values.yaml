@@ -167,6 +167,14 @@ settings:
     maxRequests: ''
     harakiri: ''
 
+  email:
+    host: localhost
+    port: 25
+    username: ""
+    password: ""
+    useTLS: false
+    defaultFrom: ""    
+
 worker:
   replicaCount: 1
   concurrency: 4
