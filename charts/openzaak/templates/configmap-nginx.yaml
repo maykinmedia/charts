@@ -9,12 +9,12 @@ data:
     proxy_pass_header Server;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Host $server_name;
     proxy_set_header X-Scheme $scheme;
     proxy_connect_timeout 300s;
     proxy_read_timeout 300s;
     {{- if .Values.settings.useXForwardedHost }}
-    proxy_set_header Host $http_host;
+    proxy_set_header X-Forwarded-Host $http_host;
+    proxy_set_header Host "";
     {{- end }}
 
     proxy_redirect off;
