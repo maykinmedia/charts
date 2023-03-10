@@ -27,6 +27,17 @@ data:
   PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
   DEBUG: {{ if .Values.settings.debug }}"True"{{ else }}"False"{{ end }}
   IS_HTTPS: {{ if .Values.settings.isHttps }}"True"{{ else }}"False"{{ end }}
+  EMAIL_HOST: {{ .Values.settings.email.host | toString | quote }}
+  EMAIL_PORT: {{ .Values.settings.email.port | toString | quote }}
+  {{- if .Values.settings.email.username }}
+  EMAIL_HOST_USER: {{ .Values.settings.email.username | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.email.useTLS }}
+  EMAIL_USE_TLS: "True"
+  {{- end }}
+  {{- if .Values.settings.email.defaultFrom }}
+  DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
+  {{- end }}  
   {{- if .Values.settings.uwsgi.master }}
   UWSGI_MASTER:  {{ if .Values.settings.uwsgi.master }}"1"{{ else }}"0"{{ end }}
   {{- end }}
