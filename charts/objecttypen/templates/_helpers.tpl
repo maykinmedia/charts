@@ -1,7 +1,7 @@
 {{/*
-Expand the name openobjecttypes the chart.
+Expand the name objecttypen the chart.
 */}}
-{{- define "openobjecttypes.name" -}}
+{{- define "objecttypen.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "openobjecttypes.fullname" -}}
+{{- define "objecttypen.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,43 +26,43 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "openobjecttypes.chart" -}}
+{{- define "objecttypen.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "openobjecttypes.commonLabels" -}}
-helm.sh/chart: {{ include "openobjecttypes.chart" . }}
+{{- define "objecttypen.commonLabels" -}}
+helm.sh/chart: {{ include "objecttypen.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-openobjecttypes labels
+objecttypen labels
 */}}
-{{- define "openobjecttypes.labels" -}}
+{{- define "objecttypen.labels" -}}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
-{{ include "openobjecttypes.commonLabels" . }}
-{{ include "openobjecttypes.selectorLabels" . }}
+{{ include "objecttypen.commonLabels" . }}
+{{ include "objecttypen.selectorLabels" . }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
-{{- define "openobjecttypes.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "openobjecttypes.name" . }}
+{{- define "objecttypen.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "objecttypen.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "openobjecttypes.serviceAccountName" -}}
+{{- define "objecttypen.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "openobjecttypes.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "objecttypen.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -71,7 +71,7 @@ Create the name of the service account to use
 {{/*
 Ingress annotations
 */}}
-{{- define "openobjecttypes.ingress.annotations" -}}
+{{- define "objecttypen.ingress.annotations" -}}
   {{- range $key, $val := .Values.ingress.annotations }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
@@ -81,9 +81,9 @@ Ingress annotations
 {{/*
 Renders a value that contains template.
 Usage:
-{{ include "openobjecttypes.tplvalues.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+{{ include "objecttypen.tplvalues.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
 */}}
-{{- define "openobjecttypes.tplvalues.render" -}}
+{{- define "objecttypen.tplvalues.render" -}}
     {{- if typeIs "string" .value }}
         {{- tpl .value .context }}
     {{- else }}

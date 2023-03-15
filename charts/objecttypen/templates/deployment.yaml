@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "openobjecttypes.fullname" . }}
+  name: {{ include "objecttypen.fullname" . }}
   labels:
-    {{- include "openobjecttypes.labels" . | nindent 4 }}
+    {{- include "objecttypen.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-  {{- include "openobjecttypes.selectorLabels" . | nindent 6 }}
+  {{- include "objecttypen.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -20,7 +20,7 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-    {{- include "openobjecttypes.selectorLabels" . | nindent 8 }}
+    {{- include "objecttypen.selectorLabels" . | nindent 8 }}
     {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
     {{- end }}
@@ -29,7 +29,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "openobjecttypes.serviceAccountName" . }}
+      serviceAccountName: {{ include "objecttypen.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -40,12 +40,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - secretRef:
-                name: {{ .Values.existingSecret | default (include "openobjecttypes.fullname" .) }}
+                name: {{ .Values.existingSecret | default (include "objecttypen.fullname" .) }}
             - configMapRef:
-                name: {{ include "openobjecttypes.fullname" . }}
+                name: {{ include "objecttypen.fullname" . }}
           env:
             {{- if .Values.extraEnvVars }}
-            {{- include "openobjecttypes.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- include "objecttypen.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           ports:
             - name: http
@@ -57,7 +57,7 @@ spec:
               port: http
               httpHeaders:
                 - name: Host
-                  value: {{ include "openobjecttypes.fullname" . | quote }}
+                  value: {{ include "objecttypen.fullname" . | quote }}
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
@@ -65,17 +65,17 @@ spec:
               port: http
               httpHeaders:
                 - name: Host
-                  value: {{ include "openobjecttypes.fullname" . | quote }}
+                  value: {{ include "objecttypen.fullname" . | quote }}
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
           {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             {{- if .Values.extraVolumeMounts }}
-            {{- include "openobjecttypes.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- include "objecttypen.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
         {{- if .Values.extraVolumes }}
-        {{- include "openobjecttypes.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- include "objecttypen.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

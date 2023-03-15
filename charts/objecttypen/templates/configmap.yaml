@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "openobjecttypes.fullname" . }}
+  name: {{ include "objecttypen.fullname" . }}
   labels:
-    {{- include "openobjecttypes.labels" . | nindent 4 }}
+    {{- include "objecttypen.labels" . | nindent 4 }}
 data:
   DJANGO_SETTINGS_MODULE: {{ .Values.settings.djangoSettingsModule | toString | quote }}
-  ENVIRONMENT: {{ .Values.settings.environment | default (include "openobjecttypes.fullname" .) }}
-  ALLOWED_HOSTS: "{{ include "openobjecttypes.fullname" . }},{{ include "openobjecttypes.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | toString }}"
+  ENVIRONMENT: {{ .Values.settings.environment | default (include "objecttypen.fullname" .) }}
+  ALLOWED_HOSTS: "{{ include "objecttypen.fullname" . }},{{ include "objecttypen.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | toString }}"
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
@@ -17,7 +17,7 @@ data:
   DEBUG: "True"
   {{- end }}
   TWO_FACTOR_FORCE_OTP_ADMIN: {{ if .Values.settings.twoFactorAuthentication }}"True"{{ else }}"False"{{ end }}
-  TWO_FACTOR_PATCH_ADMIN: {{ if .Values.settings.twoFactorAuthentication }}"True"{{ else }}"False"{{ end }}   
+  TWO_FACTOR_PATCH_ADMIN: {{ if .Values.settings.twoFactorAuthentication }}"True"{{ else }}"False"{{ end }}
   EMAIL_HOST: {{ .Values.settings.email.host | toString | quote }}
   EMAIL_PORT: {{ .Values.settings.email.port | toString | quote }}
   {{- if .Values.settings.email.username }}
@@ -28,7 +28,7 @@ data:
   {{- end }}
   {{- if .Values.settings.email.defaultFrom }}
   DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
-  {{- end }}  
+  {{- end }}
   {{- if .Values.settings.elasticapm.url }}
   ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
   {{- end }}

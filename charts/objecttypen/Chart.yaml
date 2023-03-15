@@ -1,7 +1,7 @@
 apiVersion: v2
-name: openobjecttypes
+name: objecttypen
 description: API om object definities te beheren
 
 type: application
-version: 0.9.3
+version: 0.9.5
 appVersion: 2.1.0

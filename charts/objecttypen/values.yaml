@@ -29,6 +29,8 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
+automountServiceAccountToken: true
+
 livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 10
@@ -55,14 +57,14 @@ ingress:
   className: ""
   # -- ingress hosts
   hosts: []
-  #  - host: openobjecttypes.gemeente.nl
+  #  - host: objecttypen.gemeente.nl
   #    paths:
   #      - path: /
   #        pathType: ImplementationSpecific
   tls: []
-  #  - secretName: openobjecttypes-tls
+  #  - secretName: objecttypen-tls
   #    hosts:
-  #      - openobjecttypes.gemeente.nl
+  #      - objecttypen.gemeente.nl
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
