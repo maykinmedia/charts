@@ -1,6 +1,6 @@
 # objecttypen
 
-![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
+![Version: 0.9.5](https://img.shields.io/badge/Version-0.9.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
 
 API om object definities te beheren
 
@@ -10,12 +10,12 @@ API om object definities te beheren
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/objecttypen
 ```
-
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| automountServiceAccountToken | bool | `true` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -73,13 +73,19 @@ helm install my-release my-repo/objecttypen
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
+| settings.email.host | string | `"localhost"` |  |
+| settings.email.password | string | `""` |  |
+| settings.email.port | int | `25` |  |
+| settings.email.useTLS | bool | `false` |  |
+| settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
-| settings.useXForwardedHost | bool | `true` |  |
+| settings.twoFactorAuthentication | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
 | settings.uwsgi.maxRequests | string | `""` |  |
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
 | tolerations | list | `[]` |  |
+

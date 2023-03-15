@@ -118,7 +118,6 @@ extraVolumeMounts: []
 settings:
   allowedHosts: ""
   djangoSettingsModule: objecttypes.conf.docker
-  useXForwardedHost: true
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
