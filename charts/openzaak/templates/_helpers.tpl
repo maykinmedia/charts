@@ -54,7 +54,6 @@ Selector labels
 */}}
 {{- define "openzaak.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "openzaak.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -97,7 +96,6 @@ NGINX selector labels
 */}}
 {{- define "openzaak.nginxSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openzaak.nginxName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -129,7 +127,6 @@ Worker selector labels
 */}}
 {{- define "openzaak.workerSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openzaak.workerName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -161,7 +158,6 @@ Beat selector labels
 */}}
 {{- define "openzaak.beatSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openzaak.beatName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -193,7 +189,6 @@ Flower selector labels
 */}}
 {{- define "openzaak.flowerSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openzaak.flowerName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
