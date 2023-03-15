@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "openobjecttypes.fullname" . }}
+  name: {{ include "objecttypen.fullname" . }}
   labels:
-    {{- include "openobjecttypes.labels" . | nindent 4 }}
+    {{- include "objecttypen.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "openobjecttypes.fullname" . }}
+    name: {{ include "objecttypen.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

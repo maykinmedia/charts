@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "openobjecttypes.fullname" . }}
+  name: {{ include "objecttypen.fullname" . }}
   labels:
-    {{- include "openobjecttypes.labels" . | nindent 4 }}
+    {{- include "objecttypen.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "openobjecttypes.selectorLabels" . | nindent 4 }}
+    {{- include "objecttypen.selectorLabels" . | nindent 4 }}
