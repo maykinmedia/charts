@@ -132,7 +132,7 @@ settings:
   djangoSettingsModule: openforms.conf.docker
   allowedHosts: ""
   baseUrl: ""
-  useXForwardedHost: true
+  useXForwardedHost: false
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
