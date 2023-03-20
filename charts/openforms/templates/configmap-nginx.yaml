@@ -87,6 +87,6 @@ data:
 
       location ~* .(eot|otf|svg|ttf|woff|woff2)$ {
           add_header 'Access-Control-Allow-Origin' '*';
-          proxy_pass http://{{ include "openforms.fullname" . }}.{{ .Release.Namespace }};
+          include conf.d/proxy;
       }
     }
