@@ -30,8 +30,6 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
-automountServiceAccountToken: true
-
 livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 10
@@ -152,7 +150,7 @@ settings:
   debug: false
 
   twoFactorAuthentication: true
-  
+
   uwsgi:
     master: ''
     threads: ''
