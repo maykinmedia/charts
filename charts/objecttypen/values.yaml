@@ -105,7 +105,7 @@ autoscaling:
   targetMemoryUtilizationPercentage: 80
 
 pdb:
-  create: true
+  create: false
   minAvailable: 1
   maxUnavailable: ""
 
