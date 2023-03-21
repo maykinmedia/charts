@@ -13,6 +13,7 @@ serviceAccount:
   create: true
   annotations: {}
   name: ""
+  automountServiceAccountToken: true
 
 podAnnotations: {}
 
