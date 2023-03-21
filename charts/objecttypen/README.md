@@ -10,6 +10,7 @@ API om object definities te beheren
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/objecttypen
 ```
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -42,6 +43,9 @@ helm install my-release my-repo/objecttypen
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| pdb.create | bool | `true` |  |
+| pdb.maxUnavailable | string | `""` |  |
+| pdb.minAvailable | int | `1` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |

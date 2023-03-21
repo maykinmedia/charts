@@ -35,7 +35,6 @@ Common labels
 */}}
 {{- define "objecttypen.commonLabels" -}}
 helm.sh/chart: {{ include "objecttypen.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -54,7 +53,6 @@ Selector labels
 */}}
 {{- define "objecttypen.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "objecttypen.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
