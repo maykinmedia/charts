@@ -71,7 +71,7 @@ metadata:
     {{- include "objecttypen.labels" $ | nindent 4 }}
   annotations:
     {{- range $key, $value := .annotations }}
-    {{ $key }}: {{ $value }}
+    {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
   ingressClassName: {{ .className }}
@@ -91,7 +91,7 @@ spec:
           {{- range .paths }}
           - path: {{ .path }}
           {{- end }}
-            pathType: {{ .pathType }}
+            pathType: {{ .pathType }} 
             backend:
               service:
                 name: {{ .servicename }}
