@@ -1,6 +1,6 @@
 # objecttypen
 
-![Version: 0.9.8](https://img.shields.io/badge/Version-0.9.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
+![Version: 0.9.9](https://img.shields.io/badge/Version-0.9.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
 
 API om object definities te beheren
 
@@ -22,6 +22,7 @@ helm install my-release my-repo/objecttypen
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
+| extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | fullnameOverride | string | `""` |  |
