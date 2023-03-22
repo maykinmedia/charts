@@ -3,6 +3,16 @@ entries:
   objecten:
   - apiVersion: v2
     appVersion: 2.1.1
+    created: "2023-03-22T13:21:01.961921085Z"
+    description: API om objecten te beheren die behoren bij een bepaald objecttype
+    digest: be210ce316fbe422a6b6ba525485e2d67d5f255ad66a824fbe6f4f7c94d5f931
+    name: objecten
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecten-0.9.4/objecten-0.9.4.tgz
+    version: 0.9.4
+  - apiVersion: v2
+    appVersion: 2.1.1
     created: "2023-03-22T12:52:28.382209973Z"
     description: API om objecten te beheren die behoren bij een bepaald objecttype
     digest: 90f622a557405f38762a0837d4cff69a73bb69a86e50050aa602ba9c4fecdeff
@@ -389,4 +399,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaak-1.0.0/openzaak-1.0.0.tgz
     version: 1.0.0
-generated: "2023-03-22T12:52:28.382294078Z"
+generated: "2023-03-22T13:21:01.962113388Z"
