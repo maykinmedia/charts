@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "openobjecten.fullname" . }}
+  name: {{ include "objecten.fullname" . }}
   labels:
-    {{- include "openobjecten.labels" . | nindent 4 }}
+    {{- include "objecten.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-  {{- include "openobjecten.selectorLabels" . | nindent 6 }}
+  {{- include "objecten.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -20,7 +20,7 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-    {{- include "openobjecten.selectorLabels" . | nindent 8 }}
+    {{- include "objecten.selectorLabels" . | nindent 8 }}
     {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
     {{- end }}
@@ -29,7 +29,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "openobjecten.serviceAccountName" . }}
+      serviceAccountName: {{ include "objecten.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -40,12 +40,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - secretRef:
-                name: {{ .Values.existingSecret | default (include "openobjecten.fullname" .) }}
+                name: {{ .Values.existingSecret | default (include "objecten.fullname" .) }}
             - configMapRef:
-                name: {{ include "openobjecten.fullname" . }}
+                name: {{ include "objecten.fullname" . }}
           env:
             {{- if .Values.extraEnvVars }}
-            {{- include "openobjecten.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- include "objecten.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           ports:
             - name: http
@@ -57,7 +57,7 @@ spec:
               port: http
               httpHeaders:
                 - name: Host
-                  value: {{ include "openobjecten.fullname" . | quote }}
+                  value: {{ include "objecten.fullname" . | quote }}
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
@@ -65,17 +65,17 @@ spec:
               port: http
               httpHeaders:
                 - name: Host
-                  value: {{ include "openobjecten.fullname" . | quote }}
+                  value: {{ include "objecten.fullname" . | quote }}
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
           {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             {{- if .Values.extraVolumeMounts }}
-            {{- include "openobjecten.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- include "objecten.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
         {{- if .Values.extraVolumes }}
-        {{- include "openobjecten.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- include "objecten.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

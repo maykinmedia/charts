@@ -1,7 +1,7 @@
 {{/*
-Expand the name openobjecten the chart.
+Expand the name objecten the chart.
 */}}
-{{- define "openobjecten.name" -}}
+{{- define "objecten.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "openobjecten.fullname" -}}
+{{- define "objecten.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,43 +26,43 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "openobjecten.chart" -}}
+{{- define "objecten.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "openobjecten.commonLabels" -}}
-helm.sh/chart: {{ include "openobjecten.chart" . }}
+{{- define "objecten.commonLabels" -}}
+helm.sh/chart: {{ include "objecten.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-openobjecten labels
+objecten labels
 */}}
-{{- define "openobjecten.labels" -}}
+{{- define "objecten.labels" -}}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
-{{ include "openobjecten.commonLabels" . }}
-{{ include "openobjecten.selectorLabels" . }}
+{{ include "objecten.commonLabels" . }}
+{{ include "objecten.selectorLabels" . }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
-{{- define "openobjecten.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "openobjecten.name" . }}
+{{- define "objecten.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "objecten.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "openobjecten.serviceAccountName" -}}
+{{- define "objecten.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "openobjecten.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "objecten.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -71,7 +71,7 @@ Create the name of the service account to use
 {{/*
 Ingress annotations
 */}}
-{{- define "openobjecten.ingress.annotations" -}}
+{{- define "objecten.ingress.annotations" -}}
   {{- range $key, $val := .Values.ingress.annotations }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
@@ -81,9 +81,9 @@ Ingress annotations
 {{/*
 Renders a value that contains template.
 Usage:
-{{ include "openobjecten.tplvalues.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+{{ include "objecten.tplvalues.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
 */}}
-{{- define "openobjecten.tplvalues.render" -}}
+{{- define "objecten.tplvalues.render" -}}
     {{- if typeIs "string" .value }}
         {{- tpl .value .context }}
     {{- else }}

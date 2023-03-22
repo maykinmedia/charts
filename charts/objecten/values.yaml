@@ -55,14 +55,14 @@ ingress:
   className: ""
   # -- ingress hosts
   hosts: []
-  #  - host: openobjecten.gemeente.nl
+  #  - host: objecten.gemeente.nl
   #    paths:
   #      - path: /
   #        pathType: ImplementationSpecific
   tls: []
-  #  - secretName: openobjecten-tls
+  #  - secretName: objecten-tls
   #    hosts:
-  #      - openobjecten.gemeente.nl
+  #      - objecten.gemeente.nl
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
