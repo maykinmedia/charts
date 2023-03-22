@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 0.9.4](https://img.shields.io/badge/Version-0.9.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
+![Version: 0.9.5](https://img.shields.io/badge/Version-0.9.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -10,7 +10,6 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/objecten
 ```
-
 
 ## Values
 
@@ -24,6 +23,7 @@ helm install my-release my-repo/objecten
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
+| extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | fullnameOverride | string | `""` |  |
@@ -43,6 +43,9 @@ helm install my-release my-repo/objecten
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| pdb.create | bool | `false` |  |
+| pdb.maxUnavailable | string | `""` |  |
+| pdb.minAvailable | int | `1` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
@@ -60,6 +63,7 @@ helm install my-release my-repo/objecten
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.automountServiceAccountToken | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |

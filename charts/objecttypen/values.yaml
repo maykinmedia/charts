@@ -74,16 +74,16 @@ extraIngress: []
 #      appgw.ingress.kubernetes.io/ssl-redirect: "true"
 #    className: azure-application-gateway
 #    hosts:
-#      - host: objecttypen.test.opengem.nl
+#      - host: objecttypen.gemeente.nl
 #        paths:
 #          - path: /
 #        pathType: ImplementationSpecific
 #        servicename: objecttypen
 #        portNumber: 8000
 #    tls:
-#      - secretName: objecttypen-test-tls
+#      - secretName: objecttypen-tls
 #        hosts:
-#          - "objecttypen.test.opengem.nl"
+#          - "objecttypen.gemeente.nl"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

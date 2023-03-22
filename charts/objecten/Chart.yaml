@@ -3,5 +3,5 @@ name: objecten
 description: API om objecten te beheren die behoren bij een bepaald objecttype
 
 type: application
-version: 0.9.4
+version: 0.9.5
 appVersion: 2.1.1

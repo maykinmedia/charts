@@ -6,7 +6,7 @@ This repository contains Helm charts for:
 - [opennotificaties](./charts/opennotificaties/README.md)
 - [openforms](./charts/openforms/README.md)
 - [openinwoner](./charts/openinwoner/README.md)
-- [openobjecten](./charts/openobjecten/README.md)
+- [openobjecten](./charts/objecten/README.md)
 - [objecttypen](./charts/objecttypen/README.md)
 - [openarchiefbeheer](./charts/openarchiefbeheer/README.md)
 
