@@ -68,7 +68,7 @@ metadata:
   {{- range $key, $value := .Values.extraIngress }}
   name: {{ .name }}
   labels:
-    {{- include "objecttypen.labels" $ | nindent 4 }}
+    {{- include "objecten.labels" $ | nindent 4 }}
   annotations:
     {{- range $key, $value := .annotations }}
     {{ $key }}: {{ $value | quote }}
