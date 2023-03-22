@@ -16,6 +16,7 @@ serviceAccount:
   create: true
   annotations: {}
   name: ""
+  automountServiceAccountToken: true
 
 podAnnotations: {}
 
@@ -67,6 +68,26 @@ ingress:
   #    hosts:
   #      - openformulieren.gemeente.nl
 
+# -- Specify extra ingresses, for example if you have multiple ingress classes
+extraIngress: []
+# e.g:
+# extraIngress:
+#  - name: openzaak-azuregateway
+#    annotations:
+#      appgw.ingress.kubernetes.io/ssl-redirect: "true"
+#    className: azure-application-gateway
+#    hosts:
+#      - host: openzaak.gemeente.nl
+#        paths:
+#          - path: /
+#        pathType: ImplementationSpecific
+#        servicename: openzaak
+#        portNumber: 8000
+#    tls:
+#      - secretName: openzaak-tls
+#        hosts:
+#          - "openzaak.gemeente.nl"
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -85,6 +106,11 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
+
+pdb:
+  create: false
+  minAvailable: 1
+  maxUnavailable: ""
 
 nodeSelector: {}
 

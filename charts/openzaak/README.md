@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.1](https://img.shields.io/badge/AppVersion-1.8.1-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.1](https://img.shields.io/badge/AppVersion-1.8.1-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -29,6 +29,7 @@ helm install my-release my-repo/openzaak
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` |  |
+| extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
 | extraVerifyCerts | string | `""` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
@@ -86,6 +87,9 @@ helm install my-release my-repo/openzaak
 | nginx.securityContext.runAsNonRoot | bool | `true` |  |
 | nginx.securityContext.runAsUser | int | `101` |  |
 | nodeSelector | object | `{}` |  |
+| pdb.create | bool | `false` |  |
+| pdb.maxUnavailable | string | `""` |  |
+| pdb.minAvailable | int | `1` |  |
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |
 | persistence.size | string | `"1Gi"` |  |
@@ -112,6 +116,7 @@ helm install my-release my-repo/openzaak
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.automountServiceAccountToken | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
@@ -131,7 +136,7 @@ helm install my-release my-repo/openzaak
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `"postgres"` |  |
 | settings.debug | bool | `false` |  |
-| settings.djangoSettingsModule | string | `""` |  |
+| settings.djangoSettingsModule | string | `"openzaak.conf.docker"` |  |
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
