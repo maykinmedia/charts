@@ -1,5 +1,5 @@
 apiVersion: v2
-name: openobjecten
+name: objecten
 description: API om objecten te beheren die behoren bij een bepaald objecttype
 
 type: application

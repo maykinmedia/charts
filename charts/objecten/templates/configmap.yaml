@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "openobjecten.fullname" . }}
+  name: {{ include "objecten.fullname" . }}
   labels:
-    {{- include "openobjecten.labels" . | nindent 4 }}
+    {{- include "objecten.labels" . | nindent 4 }}
 data:
   DJANGO_SETTINGS_MODULE: {{ .Values.settings.djangoSettingsModule | toString | quote }}
-  ENVIRONMENT: {{ .Values.settings.environment | default (include "openobjecten.fullname" .) }}
-  ALLOWED_HOSTS: "{{ include "openobjecten.fullname" . }},{{ include "openobjecten.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | toString }}"
+  ENVIRONMENT: {{ .Values.settings.environment | default (include "objecten.fullname" .) }}
+  ALLOWED_HOSTS: "{{ include "objecten.fullname" . }},{{ include "objecten.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | toString }}"
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
