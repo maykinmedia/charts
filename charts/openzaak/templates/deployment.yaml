@@ -169,7 +169,7 @@ spec:
           {{- end }}
         - name: nginx-config
           configMap:
-            name: {{ include "openzaak.nginxFullname" . }}
+            name: {{ if .Values.nginx.existingConfigmap }}{{ .Values.nginx.existingConfigmap  }}{{- else }}{{ include "openzaak.nginxFullname" . }}{{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

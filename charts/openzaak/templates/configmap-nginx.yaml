@@ -1,3 +1,4 @@
+{{- if not .Values.nginx.existingConfigmap }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -82,3 +83,4 @@ data:
       error_page  413              /413.json;
       error_page  500 502 503 504  /500.json;
     }
+{{- end }}

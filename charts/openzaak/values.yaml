@@ -259,6 +259,8 @@ nginx:
     repository: nginxinc/nginx-unprivileged
     pullPolicy: IfNotPresent
     tag: stable
+  # -- mount existing nginx vhost config
+  existingConfigmap: null
   replicaCount: 1
   podLabels: {}
   securityContext:
