@@ -259,6 +259,9 @@ nginx:
     repository: nginxinc/nginx-unprivileged
     pullPolicy: IfNotPresent
     tag: stable
+  service:
+    type: ClusterIP
+    port: 80    
   # -- mount existing nginx vhost config
   existingConfigmap: null
   replicaCount: 1
@@ -290,9 +293,6 @@ flower:
   enabled: true
   replicaCount: 1
   podLabels: {}
-  service:
-    type: ClusterIP
-    port: 80
   livenessProbe:
     initialDelaySeconds: 60
     periodSeconds: 10
