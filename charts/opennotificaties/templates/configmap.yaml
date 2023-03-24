@@ -26,7 +26,7 @@ data:
   RABBITMQ_HOST: {{ .Values.settings.celery.rabbitmqHost | toString | quote }}
   {{- end }}
   {{- if .Values.settings.logNotifications }}
-  LOG_NOTIFICATIONS_IN_DB: true
+  LOG_NOTIFICATIONS_IN_DB: "True"
   {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.settings.database.host | toString | quote }}
