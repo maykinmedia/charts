@@ -54,7 +54,6 @@ Selector labels
 */}}
 {{- define "openinwoner.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "openinwoner.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -97,7 +96,6 @@ NGINX selector labels
 */}}
 {{- define "openinwoner.nginxSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openinwoner.nginxName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -129,7 +127,6 @@ Worker selector labels
 */}}
 {{- define "openinwoner.workerSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openinwoner.workerName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -161,7 +158,6 @@ Beat selector labels
 */}}
 {{- define "openinwoner.beatSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openinwoner.beatName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -193,7 +189,6 @@ Flower selector labels
 */}}
 {{- define "openinwoner.flowerSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openinwoner.flowerName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*

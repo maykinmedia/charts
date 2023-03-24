@@ -35,6 +35,7 @@ Common labels
 */}}
 {{- define "objecten.commonLabels" -}}
 helm.sh/chart: {{ include "objecten.chart" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*

@@ -7,7 +7,7 @@ metadata:
 data:
   DJANGO_SETTINGS_MODULE: {{ .Values.settings.djangoSettingsModule | toString | quote }}
   ENVIRONMENT: {{ .Values.settings.environment | default (include "openinwoner.fullname" .) }}
-  ALLOWED_HOSTS: "{{ include "openinwoner.fullname" . }},{{ include "openinwoner.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | toString }}"
+  ALLOWED_HOSTS: "{{ include "openinwoner.fullname" . }},{{ include "openinwoner.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
   {{- if .Values.tags.elasticsearch }}
   ES_HOST: {{ include "elasticsearch.master.servicename" .Subcharts.elasticsearch | toString | quote }}
   {{ else }}

@@ -54,7 +54,6 @@ Selector labels
 */}}
 {{- define "openarchiefbeheer.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "openarchiefbeheer.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -97,7 +96,6 @@ Worker selector labels
 */}}
 {{- define "openarchiefbeheer.workerSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openarchiefbeheer.workerName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -129,7 +127,6 @@ Flower selector labels
 */}}
 {{- define "openarchiefbeheer.flowerSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openarchiefbeheer.flowerName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*

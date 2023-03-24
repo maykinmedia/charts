@@ -54,7 +54,6 @@ Selector labels
 */}}
 {{- define "opennotificaties.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "opennotificaties.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -97,7 +96,6 @@ Worker selector labels
 */}}
 {{- define "opennotificaties.workerSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "opennotificaties.workerName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -129,7 +127,6 @@ Beat selector labels
 */}}
 {{- define "opennotificaties.beatSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "opennotificaties.beatName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -161,7 +158,6 @@ Flower selector labels
 */}}
 {{- define "opennotificaties.flowerSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "opennotificaties.flowerName" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
