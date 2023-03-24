@@ -172,7 +172,7 @@ settings:
     sslmode: prefer
 
   # -- use 2 if enabling ingress
-  numProxies: 1  
+  numProxies: 1
 
   email:
     host: localhost
@@ -191,7 +191,7 @@ settings:
     serviceName: ""
 
   sentry:
-    dsn: ""    
+    dsn: ""
 
   # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
   cache:
@@ -200,7 +200,7 @@ settings:
     # portalLocker: openzaak-redis-master-0:6379/0
     default: ""
     axes: ""
-    portalLocker: ""    
+    portalLocker: ""
 
   celery:
     # -- Deploy celery (worker), celery is required from openzaak version 1.8.0
@@ -208,13 +208,13 @@ settings:
     # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
     # e.g.:
     # brokerUrl: redis://openzaak-redis-master:6379/1
-    # resultBackend: redis://openzaak-redis-master:6379/1    
+    # resultBackend: redis://openzaak-redis-master:6379/1
     brokerUrl: ""
     resultBackend: ""
-    logLevel: debug    
+    logLevel: debug
 
   jwtExpiry: 3600
-  
+
   cmis:
     enabled: false
     mapperFile: ""
@@ -261,7 +261,7 @@ nginx:
     tag: stable
   service:
     type: ClusterIP
-    port: 80    
+    port: 80
   # -- mount existing nginx vhost config
   existingConfigmap: null
   replicaCount: 1
