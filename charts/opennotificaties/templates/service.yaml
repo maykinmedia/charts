@@ -13,22 +13,3 @@ spec:
       name: http
   selector:
     {{- include "opennotificaties.selectorLabels" . | nindent 4 }}
-
----
-{{ if .Values.flower.enabled -}}
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "opennotificaties.flowerFullname" . }}
-  labels:
-    {{- include "opennotificaties.flowerLabels" . | nindent 4 }}
-spec:
-  type: {{ .Values.flower.service.type }}
-  ports:
-    - port: {{ .Values.flower.service.port }}
-      targetPort: 5555
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "opennotificaties.flowerSelectorLabels" . | nindent 4 }}
-{{- end }}

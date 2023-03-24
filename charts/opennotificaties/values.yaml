@@ -233,9 +233,6 @@ flower:
   enabled: true
   replicaCount: 1
   podLabels: {}
-  service:
-    type: ClusterIP
-    port: 80
   livenessProbe:
     initialDelaySeconds: 60
     periodSeconds: 10

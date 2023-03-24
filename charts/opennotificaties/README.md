@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
+![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -47,8 +47,6 @@ helm install my-release my-repo/opennotificaties
 | flower.readinessProbe.timeoutSeconds | int | `5` |  |
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
-| flower.service.port | int | `80` |  |
-| flower.service.type | string | `"ClusterIP"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openzaak/open-notificaties"` |  |
