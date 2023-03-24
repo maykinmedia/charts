@@ -1,3 +1,4 @@
+{{- if not .Values.nginx.existingConfigmap }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -92,3 +93,4 @@ data:
           include conf.d/proxy;
       }
     }
+{{- end }}

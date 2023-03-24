@@ -28,22 +28,3 @@ spec:
       name: http
   selector:
     {{- include "openforms.nginxSelectorLabels" . | nindent 4 }}
-
----
-{{ if .Values.flower.enabled -}}
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "openforms.flowerFullname" . }}
-  labels:
-    {{- include "openforms.flowerLabels" . | nindent 4 }}
-spec:
-  type: {{ .Values.flower.service.type }}
-  ports:
-    - port: {{ .Values.flower.service.port }}
-      targetPort: 5555
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "openforms.flowerSelectorLabels" . | nindent 4 }}
-{{- end }}

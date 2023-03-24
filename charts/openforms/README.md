@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
+![Version: 1.0.6](https://img.shields.io/badge/Version-1.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -10,7 +10,6 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/openforms
 ```
-
 ## Requirements
 
 | Repository | Name | Version |
@@ -41,8 +40,6 @@ helm install my-release my-repo/openforms
 | beat.readinessProbe.timeoutSeconds | int | `5` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
-| beat.service.port | int | `80` |  |
-| beat.service.type | string | `"ClusterIP"` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` |  |
 | extraVerifyCerts | string | `""` |  |
@@ -62,8 +59,6 @@ helm install my-release my-repo/openforms
 | flower.readinessProbe.timeoutSeconds | int | `5` |  |
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
-| flower.service.port | int | `80` |  |
-| flower.service.type | string | `"ClusterIP"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openformulieren/open-forms"` |  |
@@ -82,6 +77,7 @@ helm install my-release my-repo/openforms
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
 | nginx.config.clientMaxBodySize | string | `"10M"` |  |
+| nginx.existingConfigmap | string | `nil` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |
@@ -102,6 +98,8 @@ helm install my-release my-repo/openforms
 | nginx.securityContext.readOnlyRootFilesystem | bool | `false` |  |
 | nginx.securityContext.runAsNonRoot | bool | `true` |  |
 | nginx.securityContext.runAsUser | int | `101` |  |
+| nginx.service.port | int | `80` |  |
+| nginx.service.type | string | `"ClusterIP"` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |
@@ -175,7 +173,7 @@ helm install my-release my-repo/openforms
 | settings.throttling.ratePolling | string | `""` |  |
 | settings.throttling.rateUser | string | `""` |  |
 | settings.twoFactorAuthentication | bool | `true` |  |
-| settings.useXForwardedHost | bool | `true` |  |
+| settings.useXForwardedHost | bool | `false` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | bool | `false` |  |
 | settings.uwsgi.maxRequests | string | `""` |  |

@@ -201,7 +201,7 @@ settings:
     # e.g.:
     # default: openforms-redis-master-0:6379/0
     # axes: openforms-redis-master-0:6379/0
-    # portalLocker: openforms-redis-master-0:6379/0    
+    # portalLocker: openforms-redis-master-0:6379/0
     default: ""
     axes: ""
     portalLocker: ""
@@ -260,8 +260,12 @@ nginx:
     repository: nginxinc/nginx-unprivileged
     pullPolicy: IfNotPresent
     tag: stable
+  existingConfigmap: null
   config:
     clientMaxBodySize: 10M
+  service:
+    type: ClusterIP
+    port: 80
   replicaCount: 1
   podLabels: {}
   securityContext:
@@ -291,9 +295,6 @@ flower:
   enabled: true
   replicaCount: 1
   podLabels: {}
-  service:
-    type: ClusterIP
-    port: 80
   livenessProbe:
     initialDelaySeconds: 60
     periodSeconds: 10
@@ -312,9 +313,6 @@ beat:
   enabled: true
   replicaCount: 1
   podLabels: {}
-  service:
-    type: ClusterIP
-    port: 80
   livenessProbe:
     initialDelaySeconds: 60
     periodSeconds: 10
