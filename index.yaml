@@ -135,6 +135,23 @@ entries:
   openarchiefbeheer:
   - apiVersion: v2
     appVersion: 1.1.1
+    created: "2023-03-29T11:24:03.445963728Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik
+      met Zaakgericht werken
+    digest: 98e1afd9d1eb07e580597382346247ff70e3da421de27a7c5f3d84b407b91a66
+    name: openarchiefbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openarchiefbeheer-0.9.4/openarchiefbeheer-0.9.4.tgz
+    version: 0.9.4
+  - apiVersion: v2
+    appVersion: 1.1.1
     created: "2023-03-24T10:45:25.364857273Z"
     dependencies:
     - name: redis
@@ -631,4 +648,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaak-1.0.0/openzaak-1.0.0.tgz
     version: 1.0.0
-generated: "2023-03-24T15:59:20.349569784Z"
+generated: "2023-03-29T11:24:03.446108031Z"
