@@ -1,8 +1,8 @@
 # openarchiefbeheer
 
-![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.1](https://img.shields.io/badge/AppVersion-1.1.1-informational?style=flat-square)
+![Version: 0.9.4](https://img.shields.io/badge/Version-0.9.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.1](https://img.shields.io/badge/AppVersion-1.1.1-informational?style=flat-square)
 
-API om object definities te beheren
+Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
 ## TL;DR
 
@@ -10,6 +10,7 @@ API om object definities te beheren
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/openarchiefbeheer
 ```
+
 
 ## Requirements
 
@@ -102,6 +103,12 @@ helm install my-release my-repo/openarchiefbeheer
 | settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
 | settings.djangoSettingsModule | string | `"archiefbeheercomponent.conf.docker"` |  |
+| settings.email.defaultFrom | string | `""` |  |
+| settings.email.host | string | `"localhost"` |  |
+| settings.email.password | string | `""` |  |
+| settings.email.port | int | `25` |  |
+| settings.email.useTLS | bool | `false` |  |
+| settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.loadDefaultRoles | bool | `false` | Will run src/manage.py loaddata default_roles at pod startup (see docs) |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |

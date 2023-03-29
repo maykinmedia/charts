@@ -173,7 +173,7 @@ settings:
     username: ""
     password: ""
     useTLS: false
-    defaultFrom: ""    
+    defaultFrom: ""
 
 worker:
   replicaCount: 1
