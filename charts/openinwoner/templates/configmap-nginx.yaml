@@ -16,6 +16,8 @@ data:
     proxy_pass http://{{ include "openinwoner.fullname" . }}.{{ .Release.Namespace }};
     {{- if .Values.settings.useXForwardedHost }}
     proxy_set_header X-Forwarded-Host $http_host;
+    {{ else }}
+    proxy_set_header Host $http_host;
     {{- end }}
 
   default.conf: |
