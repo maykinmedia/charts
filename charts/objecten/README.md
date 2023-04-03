@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 0.9.5](https://img.shields.io/badge/Version-0.9.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
+![Version: 0.9.8](https://img.shields.io/badge/Version-0.9.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -10,7 +10,6 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/objecten
 ```
-
 ## Values
 
 | Key | Type | Default | Description |
@@ -87,7 +86,8 @@ helm install my-release my-repo/objecten
 | settings.isHttps | bool | `true` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
-| settings.twoFactorAuthentication | bool | `true` |  |
+| settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` | Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC. |
+| settings.twoFactorAuthentication.patchAdmin | bool | `true` | Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC. |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
