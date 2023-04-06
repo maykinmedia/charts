@@ -1,6 +1,6 @@
 # openinwoner
 
-![Version: 0.9.4](https://img.shields.io/badge/Version-0.9.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3](https://img.shields.io/badge/AppVersion-1.3-informational?style=flat-square)
+![Version: 0.9.5](https://img.shields.io/badge/Version-0.9.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3](https://img.shields.io/badge/AppVersion-1.3-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
@@ -10,6 +10,7 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/openinwoner
 ```
+
 ## Requirements
 
 | Repository | Name | Version |
@@ -135,7 +136,8 @@ helm install my-release my-repo/openinwoner
 | settings.loadFixtures | bool | `false` | Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
-| settings.twoFactorAuthentication | bool | `true` |  |
+| settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` | Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC. |
+| settings.twoFactorAuthentication.patchAdmin | bool | `true` | Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC. |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | bool | `false` |  |

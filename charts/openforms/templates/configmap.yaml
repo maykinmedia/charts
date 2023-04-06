@@ -69,8 +69,8 @@ data:
   {{- if .Values.settings.elasticapm.url }}
   ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
   {{- end }}
-  TWO_FACTOR_FORCE_OTP_ADMIN: {{ if .Values.settings.twoFactorAuthentication }}"True"{{ else }}"False"{{ end }}
-  TWO_FACTOR_PATCH_ADMIN: {{ if .Values.settings.twoFactorAuthentication }}"True"{{ else }}"False"{{ end }}
+  TWO_FACTOR_FORCE_OTP_ADMIN: {{ if .Values.settings.twoFactorAuthentication.forceOtpAdmin }}"True"{{ else }}"False"{{ end }}
+  TWO_FACTOR_PATCH_ADMIN: {{ if .Values.settings.twoFactorAuthentication.patchAdmin }}"True"{{ else }}"False"{{ end }}
   CELERY_WORKER_CONCURRENCY: {{ .Values.worker.concurrency | toString | quote }}
   MAX_FILE_UPLOAD_SIZE: {{ .Values.settings.maxFileUpload | toString | quote }}
   ENABLE_THROTTLING: {{ if .Values.settings.throttling.enable }}"True"{{ else }}"False"{{ end }}
