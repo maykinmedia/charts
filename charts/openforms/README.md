@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.0.6](https://img.shields.io/badge/Version-1.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
+![Version: 1.0.7](https://img.shields.io/badge/Version-1.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -10,6 +10,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/openforms
 ```
+
 ## Requirements
 
 | Repository | Name | Version |
@@ -172,7 +173,8 @@ helm install my-release my-repo/openforms
 | settings.throttling.rateAnonymous | string | `""` |  |
 | settings.throttling.ratePolling | string | `""` |  |
 | settings.throttling.rateUser | string | `""` |  |
-| settings.twoFactorAuthentication | bool | `true` |  |
+| settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` | Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC. |
+| settings.twoFactorAuthentication.patchAdmin | bool | `true` | Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC. |
 | settings.useXForwardedHost | bool | `false` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | bool | `false` |  |
