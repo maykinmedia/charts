@@ -1,0 +1,14 @@
+apiVersion: v2
+name: openklant
+description: Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
+
+type: application
+version: 0.0.1
+appVersion: "0.1"
+
+dependencies:
+  - name: redis
+    version: 17.3.14
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - redis
