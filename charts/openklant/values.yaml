@@ -144,7 +144,7 @@ extraVolumeMounts: []
 
 settings:
   allowedHosts: ""
-  djangoSettingsModule: objects.conf.docker
+  djangoSettingsModule: openklant.conf.docker
   useXForwardedHost: true
 
   # -- Generate secret key at https://djecrety.ir/
