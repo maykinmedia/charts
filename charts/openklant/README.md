@@ -1,6 +1,6 @@
 # openklant
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1](https://img.shields.io/badge/AppVersion-0.1-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1](https://img.shields.io/badge/AppVersion-0.1-informational?style=flat-square)
 
 Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
 
@@ -80,7 +80,7 @@ helm install my-release my-repo/openklant
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
-| settings.djangoSettingsModule | string | `"objects.conf.docker"` |  |
+| settings.djangoSettingsModule | string | `"openklant.conf.docker"` |  |
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
