@@ -50,6 +50,7 @@ readinessProbe:
 service:
   type: ClusterIP
   port: 80
+  annotations: { }
 
 ingress:
   enabled: false
@@ -127,6 +128,9 @@ extraVolumeMounts: []
 # e.g.
 # extraVerifyCerts: /etc/ssl/certs/extra-certs/staatdernederlandeng1.pem
 extraVerifyCerts: ""
+
+# Extra objects to deploy (value evaluated as a template)
+extraDeploy: [ ]
 
 settings:
   djangoSettingsModule: openforms.conf.docker
