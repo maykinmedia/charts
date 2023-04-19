@@ -72,10 +72,10 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /app/private_media
-              subPath: openforms/private_media
+              subPath: {{ .Values.persistence.mediaMountSubpath }}
             - name: media
               mountPath: /app/media
-              subPath: openforms/media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
@@ -159,10 +159,10 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /app/private_media
-              subPath: openforms/private_media
+              subPath: {{ .Values.persistence.mediaMountSubpath }}
             - name: media
               mountPath: /app/media
-              subPath: openforms/media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
@@ -248,10 +248,10 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /app/private_media
-              subPath: openforms/private_media
+              subPath: {{ .Values.persistence.mediaMountSubpath }}
             - name: media
               mountPath: /app/media
-              subPath: openforms/media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
@@ -334,10 +334,10 @@ spec:
               mountPath: /etc/nginx/conf.d/
             - name: media
               mountPath: /app/private_media
-              subPath: openforms/private_media
+              subPath: {{ .Values.persistence.mediaMountSubpath }}
             - name: media
               mountPath: /app/media
-              subPath: openforms/media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath }}
       volumes:
         - name: media
           persistentVolumeClaim:
