@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.0.8](https://img.shields.io/badge/Version-1.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
+![Version: 1.0.9](https://img.shields.io/badge/Version-1.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -43,6 +43,7 @@ helm install my-release my-repo/openforms
 | beat.resources | object | `{}` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` |  |
+| extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
 | extraVerifyCerts | string | `""` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
