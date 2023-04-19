@@ -21,9 +21,9 @@ metadata:
   labels:
     {{- include "openforms.nginxLabels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.nginx.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.nginx.service.port }}
       targetPort: 8080
       name: http
   selector:
