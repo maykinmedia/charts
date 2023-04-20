@@ -50,7 +50,6 @@ readinessProbe:
 service:
   type: ClusterIP
   port: 80
-  annotations: { }
 
 ingress:
   enabled: false
@@ -155,7 +154,7 @@ extraVolumeMounts: []
 extraVerifyCerts: ""
 
 # Extra objects to deploy (value evaluated as a template)
-extraDeploy: [ ]
+extraDeploy: []
 
 settings:
   allowedHosts: ""
@@ -266,6 +265,7 @@ nginx:
   service:
     type: ClusterIP
     port: 80
+    annotations: {}
   # -- mount existing nginx vhost config
   existingConfigmap: null
   replicaCount: 1
