@@ -5,7 +5,7 @@ tags:
 replicaCount: 1
 
 image:
-  repository: openzaak/open-notificaties
+  repository: opennotificaties/open-notificaties
   pullPolicy: IfNotPresent
   tag: ""
 
@@ -67,6 +67,26 @@ ingress:
   #  - secretName: opennotificaties-tls
   #    hosts:
   #      - opennotificaties.gemeente.nl
+
+# -- Specify extra ingresses, for example if you have multiple ingress classes
+extraIngress: []
+# e.g:
+# extraIngress:
+#  - name: opennotificaties-azuregateway
+#    annotations:
+#      appgw.ingress.kubernetes.io/ssl-redirect: "true"
+#    className: azure-application-gateway
+#    hosts:
+#      - host: opennotificaties.gemeente.nl
+#        paths:
+#          - path: /
+#        pathType: ImplementationSpecific
+#        servicename: opennotificaties
+#        portNumber: 8000
+#    tls:
+#      - secretName: opennotificaties-tls
+#        hosts:
+#          - "opennotificaties.gemeente.nl"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
