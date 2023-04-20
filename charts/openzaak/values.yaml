@@ -123,6 +123,7 @@ persistence:
   size: 1Gi
   storageClassName: ""
   existingClaim: null
+  privateMediaMountSubpath: openzaak/private_media
 
 existingSecret: null
 

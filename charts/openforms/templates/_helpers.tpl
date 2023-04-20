@@ -53,7 +53,7 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 Selector labels
 */}}
 {{- define "openforms.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "openforms.name" . }}
+app.kubernetes.io/name: {{ include "openforms.fullname" . }}
 {{- end }}
 
 {{/*
@@ -95,7 +95,7 @@ NGINX labels
 NGINX selector labels
 */}}
 {{- define "openforms.nginxSelectorLabels" -}}
-app.kubernetes.io/name: {{ include "openforms.nginxName" . }}
+app.kubernetes.io/name: {{ include "openforms.nginxFullname" . }}
 {{- end }}
 
 {{/*
@@ -126,7 +126,7 @@ Worker labels
 Worker selector labels
 */}}
 {{- define "openforms.workerSelectorLabels" -}}
-app.kubernetes.io/name: {{ include "openforms.workerName" . }}
+app.kubernetes.io/name: {{ include "openforms.workerFullname" . }}
 {{- end }}
 
 {{/*
@@ -157,7 +157,7 @@ Beat labels
 Beat selector labels
 */}}
 {{- define "openforms.beatSelectorLabels" -}}
-app.kubernetes.io/name: {{ include "openforms.beatName" . }}
+app.kubernetes.io/name: {{ include "openforms.beatFullname" . }}
 {{- end }}
 
 {{/*
@@ -188,7 +188,7 @@ Flower labels
 Flower selector labels
 */}}
 {{- define "openforms.flowerSelectorLabels" -}}
-app.kubernetes.io/name: {{ include "openforms.flowerName" . }}
+app.kubernetes.io/name: {{ include "openforms.flowerFullname" . }}
 {{- end }}
 
 {{/*
