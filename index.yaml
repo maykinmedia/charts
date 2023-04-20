@@ -617,6 +617,27 @@ entries:
   opennotificaties:
   - apiVersion: v2
     appVersion: 1.4.3
+    created: "2023-04-20T09:10:44.889990681Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - rabbitmq
+      version: 11.7.1
+    description: API voor het routeren van notificaties
+    digest: 92c616b9a647ab26f7b0f20a6f71d67c11dd6d68e4e339cc3e9deb6f45a2099d
+    name: opennotificaties
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.0.7/opennotificaties-1.0.7.tgz
+    version: 1.0.7
+  - apiVersion: v2
+    appVersion: 1.4.3
     created: "2023-03-24T15:59:20.349490883Z"
     dependencies:
     - name: redis
@@ -891,4 +912,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaak-1.0.0/openzaak-1.0.0.tgz
     version: 1.0.0
-generated: "2023-04-20T08:35:53.197077973Z"
+generated: "2023-04-20T09:10:44.890120782Z"
