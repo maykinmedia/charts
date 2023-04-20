@@ -5,7 +5,7 @@ tags:
 replicaCount: 1
 
 image:
-  repository: opennotificaties/open-notificaties
+  repository: openzaak/open-notificaties
   pullPolicy: IfNotPresent
   tag: ""
 
