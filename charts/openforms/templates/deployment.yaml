@@ -72,7 +72,7 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /app/private_media
-              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/media" }}
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/private_media" }}
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
@@ -159,7 +159,7 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /app/private_media
-              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/media" }}
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/private_media" }}
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
@@ -248,7 +248,7 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /app/private_media
-              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/media" }}
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/private_media" }}
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath | default "openforms/media" }}
@@ -334,7 +334,7 @@ spec:
               mountPath: /etc/nginx/conf.d/
             - name: media
               mountPath: /app/private_media
-              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/media" }}
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/private_media" }}
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
