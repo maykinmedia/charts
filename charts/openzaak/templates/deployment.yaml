@@ -72,7 +72,7 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /app/private-media
-              subPath: openzaak/private-media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openzaak/private_media" }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
@@ -155,10 +155,7 @@ spec:
               mountPath: /etc/nginx/conf.d/
             - name: media
               mountPath: /app/private-media
-              subPath: openzaak/private-media
-            - name: media
-              mountPath: /app/media
-              subPath: openzaak/media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openzaak/private_media" }}
       volumes:
         - name: media
           persistentVolumeClaim:
@@ -241,7 +238,7 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /app/private-media
-              subPath: openzaak/private-media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openzaak/private_media" }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
