@@ -1,0 +1,5 @@
+{{- range .Values.extraDeploy }}
+---
+{{ include "openzaak.tplvalues.render" (dict "value" . "context" $) }}
+{{- end }}
+  

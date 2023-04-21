@@ -154,6 +154,9 @@ extraVolumeMounts: []
 # extraVerifyCerts: /etc/ssl/certs/extra-certs/staatdernederlandeng1.pem
 extraVerifyCerts: ""
 
+# Extra objects to deploy (value evaluated as a template)
+extraDeploy: []
+
 settings:
   allowedHosts: ""
   djangoSettingsModule: openzaak.conf.docker
@@ -263,6 +266,7 @@ nginx:
   service:
     type: ClusterIP
     port: 80
+    annotations: {}
   # -- mount existing nginx vhost config
   existingConfigmap: null
   replicaCount: 1

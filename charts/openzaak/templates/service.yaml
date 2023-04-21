@@ -22,6 +22,12 @@ metadata:
   name: {{ include "openzaak.nginxFullname" . }}
   labels:
     {{- include "openzaak.nginxLabels" . | nindent 4 }}
+  {{- with .Values.nginx.service.annotations }}
+  annotations:
+    {{- range $key, $value := . }}
+    {{ $key }} : {{ tpl ($value | toString) $ }}
+    {{- end }}
+  {{- end }}
 spec:
   type: {{ .Values.nginx.service.type }}
   ports:
