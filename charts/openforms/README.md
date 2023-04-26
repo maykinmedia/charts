@@ -10,6 +10,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/openforms
 ```
+
 ## Requirements
 
 | Repository | Name | Version |

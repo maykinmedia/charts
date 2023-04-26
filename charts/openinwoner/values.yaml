@@ -18,6 +18,7 @@ serviceAccount:
   create: true
   annotations: {}
   name: ""
+  automountServiceAccountToken: true
 
 podAnnotations: {}
 
@@ -69,6 +70,25 @@ ingress:
   #    hosts:
   #      - openinwoner.gemeente.nl
 
+extraIngress: []
+# e.g:
+# extraIngress:
+#  - name: openinwoner-azuregateway
+#    annotations:
+#      appgw.ingress.kubernetes.io/ssl-redirect: "true"
+#    className: azure-application-gateway
+#    hosts:
+#      - host: openinwoner.gemeente.nl
+#        paths:
+#          - path: /
+#            pathType: ImplementationSpecific
+#            servicename: openklant
+#            portNumber: 8000
+#    tls:
+#      - secretName: openinwoner-tls
+#        hosts:
+#          - "openinwoner.gemeente.nl"
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -87,6 +107,11 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
+
+pdb:
+  create: false
+  minAvailable: 1
+  maxUnavailable: ""
 
 nodeSelector: {}
 

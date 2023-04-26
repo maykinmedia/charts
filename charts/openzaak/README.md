@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.2](https://img.shields.io/badge/AppVersion-1.8.2-informational?style=flat-square)
+![Version: 1.0.9](https://img.shields.io/badge/Version-1.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.2](https://img.shields.io/badge/AppVersion-1.8.2-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -8,8 +8,10 @@ Productiewaardige API's voor Zaakgericht Werken
 
 ```console
 helm repo add my-repo https://maykinmedia.github.io/charts/
-helm install my-release my-repo/openzaak
+helm install my-release my-repo/opennotificaties
 ```
+
+
 ## Requirements
 
 | Repository | Name | Version |
@@ -27,6 +29,7 @@ helm install my-release my-repo/openzaak
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | existingSecret | string | `nil` |  |
+| extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
 | extraVerifyCerts | string | `""` |  |
@@ -46,8 +49,6 @@ helm install my-release my-repo/openzaak
 | flower.readinessProbe.timeoutSeconds | int | `5` |  |
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
-| flower.service.port | int | `80` |  |
-| flower.service.type | string | `"ClusterIP"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openzaak/open-zaak"` |  |
@@ -86,12 +87,16 @@ helm install my-release my-repo/openzaak
 | nginx.securityContext.readOnlyRootFilesystem | bool | `false` |  |
 | nginx.securityContext.runAsNonRoot | bool | `true` |  |
 | nginx.securityContext.runAsUser | int | `101` |  |
+| nginx.service.annotations | object | `{}` |  |
+| nginx.service.port | int | `80` |  |
+| nginx.service.type | string | `"ClusterIP"` |  |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
 | pdb.minAvailable | int | `1` |  |
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |
+| persistence.privateMediaMountSubpath | string | `"openzaak/private_media"` |  |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClassName | string | `""` |  |
 | podAnnotations | object | `{}` |  |

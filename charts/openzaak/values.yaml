@@ -80,9 +80,9 @@ extraIngress: []
 #      - host: openzaak.gemeente.nl
 #        paths:
 #          - path: /
-#        pathType: ImplementationSpecific
-#        servicename: openzaak
-#        portNumber: 8000
+#            pathType: ImplementationSpecific
+#            servicename: openzaak
+#            portNumber: 8000
 #    tls:
 #      - secretName: openzaak-tls
 #        hosts:

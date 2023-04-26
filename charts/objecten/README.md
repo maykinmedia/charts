@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 0.9.8](https://img.shields.io/badge/Version-0.9.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
+![Version: 0.9.9](https://img.shields.io/badge/Version-0.9.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -10,6 +10,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/objecten
 ```
+
 ## Values
 
 | Key | Type | Default | Description |

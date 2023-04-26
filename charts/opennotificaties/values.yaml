@@ -17,6 +17,7 @@ serviceAccount:
   create: true
   annotations: {}
   name: ""
+  automountServiceAccountToken: true
 
 podAnnotations: {}
 
@@ -80,9 +81,9 @@ extraIngress: []
 #      - host: opennotificaties.gemeente.nl
 #        paths:
 #          - path: /
-#        pathType: ImplementationSpecific
-#        servicename: opennotificaties
-#        portNumber: 8000
+#            pathType: ImplementationSpecific
+#            servicename: opennotificaties
+#            portNumber: 8000
 #    tls:
 #      - secretName: opennotificaties-tls
 #        hosts:
@@ -110,7 +111,7 @@ autoscaling:
 pdb:
   create: false
   minAvailable: 1
-  maxUnavailable: ""  
+  maxUnavailable: ""
 
 nodeSelector: {}
 

@@ -80,9 +80,9 @@ extraIngress: []
 #      - host: openklant.gemeente.nl
 #        paths:
 #          - path: /
-#        pathType: ImplementationSpecific
-#        servicename: openklant
-#        portNumber: 8000
+#            pathType: ImplementationSpecific
+#            servicename: openklant
+#            portNumber: 8000
 #    tls:
 #      - secretName: openklant-tls
 #        hosts:
