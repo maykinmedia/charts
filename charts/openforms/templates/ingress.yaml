@@ -89,13 +89,13 @@ spec:
         paths:
           {{- range .paths }}
           - path: {{ .path }}
-          {{- end }}
             pathType: {{ .pathType }}
             backend:
               service:
                 name: {{ .servicename }}
                 port:
                   number: {{ .portNumber }}
+          {{- end }}
       {{- end }}
 {{- end }}
 {{- end }}

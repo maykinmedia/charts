@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
+![Version: 1.1.6](https://img.shields.io/badge/Version-1.1.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -10,7 +10,6 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/openforms
 ```
-
 ## Requirements
 
 | Repository | Name | Version |
@@ -42,6 +41,7 @@ helm install my-release my-repo/openforms
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
 | existingSecret | string | `nil` |  |
+| extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
 | extraVerifyCerts | string | `""` |  |
@@ -100,9 +100,13 @@ helm install my-release my-repo/openforms
 | nginx.securityContext.readOnlyRootFilesystem | bool | `false` |  |
 | nginx.securityContext.runAsNonRoot | bool | `true` |  |
 | nginx.securityContext.runAsUser | int | `101` |  |
+| nginx.service.annotations | object | `{}` |  |
 | nginx.service.port | int | `80` |  |
 | nginx.service.type | string | `"ClusterIP"` |  |
 | nodeSelector | object | `{}` |  |
+| pdb.create | bool | `false` |  |
+| pdb.maxUnavailable | string | `""` |  |
+| pdb.minAvailable | int | `1` |  |
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |
 | persistence.mediaMountSubpath | string | `"openforms/media"` |  |
@@ -131,6 +135,7 @@ helm install my-release my-repo/openforms
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.automountServiceAccountToken | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
