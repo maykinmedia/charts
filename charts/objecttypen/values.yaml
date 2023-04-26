@@ -77,9 +77,9 @@ extraIngress: []
 #      - host: objecttypen.gemeente.nl
 #        paths:
 #          - path: /
-#        pathType: ImplementationSpecific
-#        servicename: objecttypen
-#        portNumber: 8000
+#            pathType: ImplementationSpecific
+#            servicename: objecttypen
+#            portNumber: 8000
 #    tls:
 #      - secretName: objecttypen-tls
 #        hosts:

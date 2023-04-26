@@ -59,3 +59,43 @@ spec:
           {{- end }}
     {{- end }}
 {{- end }}
+---
+{{ if .Values.extraIngress -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  {{- range $key, $value := .Values.extraIngress }}
+  name: {{ .name }}
+  labels:
+    {{- include "openinwoner.labels" $ | nindent 4 }}
+  annotations:
+    {{- range $key, $value := .annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  ingressClassName: {{ .className }}
+  tls:
+  - hosts:
+    {{- range $hosts := .tls }}
+    {{- range $k := .hosts }}
+      - {{ . }}
+    {{- end }}
+    secretName: {{ .secretName }}
+    {{- end }}
+  rules:
+      {{- range .hosts }}
+    - host: {{ .host }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ .servicename }}
+                port:
+                  number: {{ .portNumber }}
+          {{- end }}
+      {{- end }}
+{{- end }}
+{{- end }}
