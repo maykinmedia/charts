@@ -241,6 +241,12 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
+          livenessProbe:
+            exec:
+              command:
+                - python
+                - /app/bin/check_celery_worker_liveness.py
+            {{- toYaml .Values.worker.livenessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           command:
