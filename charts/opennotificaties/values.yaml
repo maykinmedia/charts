@@ -298,8 +298,18 @@ rabbitmq:
     username: user
     password: ""
     erlangCookie: ""
-
   persistence:
     enabled: false
     size: 1Gi
     existingClaim: null
+  resources: {}
+    # limits:
+    #   memory: 1000Mi
+    #   cpu: 500m
+    # requests:
+    #   memory: 600Mi
+    #   cpu: 200m    
+  rbac:
+    create: false
+  clustering:
+    enabled: false
