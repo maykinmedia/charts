@@ -285,12 +285,6 @@ worker:
     # timeoutSeconds: 5
     # failureThreshold: 3
     # successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
-    successThreshold: 1
   autoscaling:
     enabled: false
     minReplicas: 1
