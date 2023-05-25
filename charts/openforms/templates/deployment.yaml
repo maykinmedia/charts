@@ -241,8 +241,10 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
+            {{- if .Values.worker.livenessProbe }}
           livenessProbe:
             {{- toYaml .Values.worker.livenessProbe | nindent 12 }}
+            {{- end }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           command:
