@@ -214,6 +214,8 @@ settings:
     maxRequests: ""
     harakiri: ""
 
+  digidMock: ""
+
 nginx:
   image:
     repository: nginxinc/nginx-unprivileged
