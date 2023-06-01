@@ -9,6 +9,7 @@ This repository contains Helm charts for:
 - [openobjecten](./charts/objecten/README.md)
 - [objecttypen](./charts/objecttypen/README.md)
 - [openarchiefbeheer](./charts/openarchiefbeheer/README.md)
+- [openklant](./charts/openklant/README.md)
 
 
 ```bash
