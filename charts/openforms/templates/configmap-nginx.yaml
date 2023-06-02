@@ -100,8 +100,8 @@ data:
       }
 
 
-      location ~* .(eot|otf|svg|ttf|woff|woff2)$ {
-          add_header 'Access-Control-Allow-Origin' '*';
+      location ~* ^/static/.*\.(eot|ttf|woff|woff2|svg)$ {
+          add_header Access-Control-Allow-Origin *;
           include conf.d/proxy;
       }
     }
