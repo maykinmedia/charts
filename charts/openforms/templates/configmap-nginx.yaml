@@ -27,7 +27,7 @@ data:
 
     {{ if .Values.settings.cors.allowedOriginsNginx | default false }}
     map $http_origin $allow_origin {
-    ~^https?://(.*\.)?({{  join "|" .Values.settings.cors.allowedOrigins | toString }})(:\d+)?$ $http_origin;
+    ~^https?://(.*\.)?({{ join "|" .Values.settings.cors.allowedOrigins | toString | regexReplaceAll "(https?://|http://)" ""  }})(:\d+)?$ $http_origin;
     # NGINX won't set empty string headers, so if no match, header is unset.
     default "";
     }
