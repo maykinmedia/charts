@@ -190,6 +190,9 @@ settings:
   cors:
     # if defining the cors hosts, always include the own URL!
     allowAllOrigins: false
+    # Override headers in nginx
+    # Will add Access-Control-Allow-Origin header for defined allowedOrigins in Nginx (not recommended)
+    allowedOriginsNginx: false
     # allowedOrigins:
     #   - "https://openformulieren.gemeente.nl"
     allowedOrigins: []

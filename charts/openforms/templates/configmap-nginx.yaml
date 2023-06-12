@@ -24,6 +24,15 @@ data:
   default.conf: |
     # Rate limiting configuration - allow 1 request per second. 10m can track about 80000 clients.
     limit_req_zone $binary_remote_addr zone={{ include "openforms.fullname" . }}.{{ .Release.Namespace }}_discover:10m rate=1r/s;
+
+    {{ if .Values.settings.cors.allowedOriginsNginx | default false }}
+    map $http_origin $allow_origin {
+    ~^https?://(.*\.)?({{ join "|" .Values.settings.cors.allowedOrigins | toString | replace "https://" "" | replace "http://" "" }})(:\d+)?$ $http_origin;
+    # NGINX won't set empty string headers, so if no match, header is unset.
+    default "";
+    }
+    {{- end }}
+
     server {
         listen 8080 default_server;
         server_name {{ .Values.settings.allowedHosts  | replace "," " "}} localhost;
@@ -60,6 +69,9 @@ data:
         gzip_vary           on;
 
         location / {
+            {{- if .Values.settings.cors.allowedOriginsNginx | default false }}
+            add_header 'Access-Control-Allow-Origin' $allow_origin;
+            {{ end }}
             include conf.d/proxy;
         }
 
@@ -88,8 +100,8 @@ data:
       }
 
 
-      location ~* .(eot|otf|svg|ttf|woff|woff2)$ {
-          add_header 'Access-Control-Allow-Origin' '*';
+      location ~* ^/static/.*\.(eot|ttf|woff|woff2|svg)$ {
+          add_header Access-Control-Allow-Origin *;
           include conf.d/proxy;
       }
     }
