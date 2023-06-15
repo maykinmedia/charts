@@ -185,6 +185,8 @@ settings:
     url: ""
     token: ""
 
+  digidMock: ""
+
   sentry:
     dsn: ""
 
