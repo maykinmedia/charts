@@ -3,5 +3,5 @@ name: objecttypen
 description: API om object definities te beheren
 
 type: application
-version: 1.0.4
+version: 1.0.5
 appVersion: 2.1.0
