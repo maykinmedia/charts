@@ -118,7 +118,21 @@ tolerations: []
 
 affinity: {}
 
+# Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
+
+# This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
+# ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
+# Using this feature requires you to define existingSecret
+azureVaultSecret:
+  # The name of the Azure Key Vault, setting this will create the AzureVaultSecret
+  vaultName: null
+  # The name of the Multi Key Value Secret
+  objectName: ""
+  # Make sure this matches the content of the secret, can be either 'application/x-json' or 'application/x-yaml'
+  contentType: ""
+  # You must set .Values.existingSecret
+  secretName: "{{ .Values.existingSecret }}"
 
 # -- Array with extra environment variables to add
 extraEnvVars: []
