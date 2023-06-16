@@ -206,3 +206,18 @@ settings:
     processes: ''
     maxRequests: ''
     harakiri: ''
+
+##################
+# Redis subchart #
+##################
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: false
+    resources:
+      requests:
+        cpu: 10m
+        memory: 20Mi
