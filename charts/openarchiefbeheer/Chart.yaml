@@ -3,7 +3,7 @@ name: openarchiefbeheer
 description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
 type: application
-version: 0.9.5
+version: 0.9.6
 appVersion: 1.1.1
 
 dependencies:
