@@ -166,7 +166,6 @@ extraVolumeMounts: []
 settings:
   allowedHosts: ""
   djangoSettingsModule: open_inwoner.conf.docker
-  useXForwardedHost: true
 
   # -- Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json
   loadFixtures: false
