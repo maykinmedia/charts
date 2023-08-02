@@ -68,6 +68,37 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create a name for the worker
+We truncate at 56 chars in order to provide space for the "-worker" suffix
+*/}}
+{{- define "openklant.workerName" -}}
+{{ include "openklant.name" . | trunc 56 | trimSuffix "-" }}-worker
+{{- end }}
+
+{{/*
+Create a default fully qualified name for the worker.
+We truncate at 56 chars in order to provide space for the "-worker" suffix
+*/}}
+{{- define "openklant.workerFullname" -}}
+{{ include "openklant.fullname" . | trunc 56 | trimSuffix "-" }}-worker
+{{- end }}
+
+{{/*
+Worker labels
+*/}}
+{{- define "openklant.workerLabels" -}}
+{{ include "openklant.commonLabels" . }}
+{{ include "openklant.workerSelectorLabels" . }}
+{{- end }}
+
+{{/*
+Worker selector labels
+*/}}
+{{- define "openklant.workerSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openklant.workerName" . }}
+{{- end }}
+
+{{/*
 Ingress annotations
 */}}
 {{- define "openklant.ingress.annotations" -}}

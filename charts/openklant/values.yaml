@@ -207,6 +207,39 @@ settings:
     maxRequests: ''
     harakiri: ''
 
+  # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
+  celery:
+    # e.g.:
+    # brokerUrl: redis://openklant-redis-master:6379/1
+    # resultBackend: redis://openklant-redis-master:6379/1
+    brokerUrl: ""
+    resultBackend: ""
+    logLevel: debug
+
+worker:
+  replicaCount: 1
+  concurrency: 4
+  podLabels: { }
+  resources: { }
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
 ##################
 # Redis subchart #
 ##################
@@ -221,3 +254,4 @@ redis:
       requests:
         cpu: 10m
         memory: 20Mi
+
