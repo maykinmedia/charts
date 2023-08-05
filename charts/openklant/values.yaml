@@ -192,6 +192,8 @@ settings:
 
   isHttps: true
 
+  notificationsDisabled: false
+
   debug: false
 
   twoFactorAuthentication:
