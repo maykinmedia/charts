@@ -844,6 +844,23 @@ entries:
     version: 0.9.0
   openklant:
   - apiVersion: v2
+    appVersion: 0.5-pre
+    created: "2023-08-05T11:51:43.931331956Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten
+      API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
+    digest: f4dff51d78a73feedad3d276a1860607896639f21d422b30b6bce48ddeb0da8b
+    name: openklant
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openklant-1.3.0/openklant-1.3.0.tgz
+    version: 1.3.0
+  - apiVersion: v2
     appVersion: 0.4-pre
     created: "2023-08-03T19:00:12.962603528Z"
     dependencies:
@@ -1392,4 +1409,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaak-1.0.0/openzaak-1.0.0.tgz
     version: 1.0.0
-generated: "2023-08-03T19:00:12.962832029Z"
+generated: "2023-08-05T11:51:43.931982569Z"
