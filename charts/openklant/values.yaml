@@ -6,7 +6,7 @@ replicaCount: 1
 image:
   repository: maykinmedia/open-klant
   pullPolicy: Always
-  tag: ""
+#  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
