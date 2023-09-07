@@ -276,6 +276,9 @@ settings:
   # -- Configure the maximum allowed file upload size
   maxFileUpload: 50M
 
+  # -- Configure the maximum allowed size for importing forms in the admin
+  maxImportSize: 20M
+
   uwsgi:
     master: false
     threads: ""
