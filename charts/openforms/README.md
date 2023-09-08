@@ -175,6 +175,7 @@ helm install my-release my-repo/openforms
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
 | settings.maxFileUpload | string | `"50M"` | Configure the maximum allowed file upload size |
+| settings.maxImportSize | string | `"20M"` | Configure the maximum allowed form import size |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
