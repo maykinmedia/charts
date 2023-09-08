@@ -92,7 +92,7 @@ data:
       }
 
       location = /admin/forms/form/import/ {
-        client_max_body_size {{ .Values.settings.maxImportSize }};
+        client_max_body_size {{ .Values.settings.maxImportSize | default "20M" }};
         include conf.d/proxy;
       }
 
