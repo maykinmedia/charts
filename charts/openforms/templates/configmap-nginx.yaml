@@ -91,6 +91,11 @@ data:
         include conf.d/proxy;
       }
 
+      location = /admin/forms/form/import/ {
+        client_max_body_size {{ .Values.settings.maxImportSize | default "20M" }};
+        include conf.d/proxy;
+      }
+
       # Metadata endpoints - rate limit them to prevent abuse, as they generate XML
       # on the fly.
       location /discovery/ {
