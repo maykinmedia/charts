@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "openzaaktypebeheer.fullname" .}}
+data:
+  SECRET_KEY: "{{ .Values.settings.secretKey }}"
+  DEBUG: "{{ .Values.settings.isDebug }}"
+  ALLOWED_HOSTS: "{{ include "openzaaktypebeheer.fullname" . }},{{ include "openzaaktypebeheer.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
+  IS_HTTPS: "{{ .Values.settings.isHttps }}"
+  DB_NAME: "{{ .Values.settings.database.name }}"
+  DB_USER: "{{ .Values.settings.database.user }}"
+  DB_PASSWORD: "{{ .Values.settings.database.password }}"
+  DB_HOST: "{{ .Values.settings.database.host }}"
+  DB_PORT: "{{ .Values.settings.database.port }}"
+  EMAIL_HOST: "{{ .Values.settings.email.host }}"
+  EMAIL_PORT: "{{ .Values.settings.email.port }}"
+  EMAIL_HOST_USER: "{{ .Values.settings.email.hostUser }}"
+  EMAIL_HOST_PASSWORD: "{{ .Values.settings.email.hostPassword }}"
+  EMAIL_USE_TLS: "{{ .Values.settings.email.useTLS }}"
+  DEFAULT_FROM_EMAIL: "{{ .Values.settings.email.defaultFrom }}"
+  LOG_STDOUT: "{{ .Values.settings.logStdout }}"
+  SESSION_COOKIE_SAMESITE: "{{ .Values.settings.cookie.sessionCookieSamesite }}"
+  SESSION_COOKIE_SECURE: "{{ .Values.settings.cookie.sessionCookieSecure }}"
+  CSRF_COOKIE_SAMESITE: "{{ .Values.settings.cookie.csrfCookieSamesite }}"
+  CSRF_COOKIE_SECURE: "{{ .Values.settings.cookie.csrfCookieSecure }}"
+  ENVIRONMENT: "{{ .Values.settings.environment }}"
+  ENABLE_ADMIN_NAV_SIDEBAR: "{{ .Values.settings.enableAdminNavSidebar }}"
+  TWO_FACTOR_FORCE_OTP_ADMIN: "{{ .Values.settings.twoFactorAuthentication.forceOtpAdmin }}"
+  TWO_FACTOR_PATCH_ADMIN: "{{ .Values.settings.twoFactorAuthentication.patchAdmin }}"
+  SUBPATH: "{{ .Values.settings.subpath }}"
+  OIDC_REDIRECT_ALLOWED_HOSTS: "{{ .Values.settings.oidc.redirectAllowedHosts }}"
+  ENABLE_THROTTLING: "{{ .Values.settings.throttling.enable }}"
+  THROTTLE_RATE_ANON: "{{ .Values.settings.throttling.rateAnonymous }}"
+  THROTTLE_RATE_USER: "{{ .Values.settings.throttling.rateUser }}"
+  CORS_ALLOWED_ORIGINS: "{{ .Values.settings.cors.allowedOrigins }}"
+  CORS_ALLOWED_ORIGIN_REGEXES: "{{ .Values.settings.cors.allowedOriginsRegexes }}"
+  CORS_ALLOW_ALL_ORIGINS: "{{ .Values.settings.cors.allowAllOrigins }}"
+  CORS_EXTRA_ALLOW_HEADERS: "{{ .Values.settings.cors.extraAllowHeaders }}"
+  CSRF_TRUSTED_ORIGINS: "{{ .Values.settings.csrf.trustedOrigins }}"
+  VITE_BASE_API_URL: "{{ .Values.settings.ui.viteBaseApiUrl }}"
+  {{- if .Values.tags.redis }}
+  CACHE_DEFAULT: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  CACHE_AXES: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  {{- else }}
+  CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
+  CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
+  {{- end }}
