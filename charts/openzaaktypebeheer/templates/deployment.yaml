@@ -40,6 +40,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "openzaaktypebeheer.fullname" . }}
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openzaaktypebeheer.fullname" .) }}
           ports:
             - name: http
               containerPort: 8000
@@ -62,10 +64,10 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /app/media
-              name: media
+              name: {{ include "openzaaktypebeheer.fullname" . }}
               subPath: {{ .Values.persistence.mediaMountSubpath }}
       volumes:
-        - name: media
+        - name: {{ include "openzaaktypebeheer.fullname" . }}
           persistentVolumeClaim:
           {{- if .Values.persistence.enabled }}
             claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openzaaktypebeheer.fullname" . }}{{- end }}

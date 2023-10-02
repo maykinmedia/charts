@@ -3,19 +3,16 @@ kind: ConfigMap
 metadata:
   name: {{ include "openzaaktypebeheer.fullname" .}}
 data:
-  SECRET_KEY: "{{ .Values.settings.secretKey }}"
   DEBUG: "{{ .Values.settings.isDebug }}"
   ALLOWED_HOSTS: "{{ include "openzaaktypebeheer.fullname" . }},{{ include "openzaaktypebeheer.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
   IS_HTTPS: "{{ .Values.settings.isHttps }}"
   DB_NAME: "{{ .Values.settings.database.name }}"
   DB_USER: "{{ .Values.settings.database.user }}"
-  DB_PASSWORD: "{{ .Values.settings.database.password }}"
   DB_HOST: "{{ .Values.settings.database.host }}"
   DB_PORT: "{{ .Values.settings.database.port }}"
   EMAIL_HOST: "{{ .Values.settings.email.host }}"
   EMAIL_PORT: "{{ .Values.settings.email.port }}"
   EMAIL_HOST_USER: "{{ .Values.settings.email.hostUser }}"
-  EMAIL_HOST_PASSWORD: "{{ .Values.settings.email.hostPassword }}"
   EMAIL_USE_TLS: "{{ .Values.settings.email.useTLS }}"
   DEFAULT_FROM_EMAIL: "{{ .Values.settings.email.defaultFrom }}"
   LOG_STDOUT: "{{ .Values.settings.logStdout }}"

@@ -34,22 +34,20 @@ Create chart name and version as used by the chart label.
 {{/*
 Common labels
 */}}
-{{- define "openzaaktypebeheer.labels" -}}
+{{- define "openzaaktypebeheer.commonLabels" -}}
 helm.sh/chart: {{ include "openzaaktypebeheer.chart" . }}
-{{ include "openzaaktypebeheer.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "openzaaktypebeheer.uiLabels" -}}
-helm.sh/chart: {{ include "openzaaktypebeheer.chart" . }}
-{{ include "openzaaktypebeheer.selectorLabels" . }}
+{{/*
+Labels
+*/}}
+{{- define "openzaaktypebeheer.labels" -}}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "openzaaktypebeheer.commonLabels" . }}
+{{ include "openzaaktypebeheer.selectorLabels" . }}
 {{- end }}
 
 {{/*
@@ -91,7 +89,7 @@ We truncate at 57 chars in order to provide space for the "-nginx" suffix
 NGINX labels
 */}}
 {{- define "openzaaktypebeheer.nginxLabels" -}}
-{{ include "openzaaktypebeheer.labels" . }}
+{{ include "openzaaktypebeheer.commonLabels" . }}
 {{ include "openzaaktypebeheer.nginxSelectorLabels" . }}
 {{- end }}
 

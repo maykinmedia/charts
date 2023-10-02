@@ -95,6 +95,9 @@ settings:
   isDebug: false
   subpath: null
 
+  sentry:
+    dsn: ""
+
   cache:
     default: ""
     axes: ""
@@ -151,11 +154,9 @@ nginx:
     pullPolicy: IfNotPresent
     tag: stable
   existingConfigmap: null
-  config:
-    clientMaxBodySize: 10M
   service:
     type: ClusterIP
-    port: 80
+    port: 8080
     annotations: {}
   replicaCount: 1
   podLabels: {}
