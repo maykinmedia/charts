@@ -1,0 +1,17 @@
+apiVersion: v2
+name: openzaaktypebeheer
+description: An app to manage the relations between 'zaaktypen' and 'informatieobjecttypen'.
+home: https://github.com/maykinmedia/open-zaaktypebeheer
+type: application
+# Chart version
+version: 0.1.0
+# Open Zaaktypebeheer version
+appVersion: "0.1.0"
+
+dependencies:
+  - name: redis
+    version: 17.3.14
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - redis
+
