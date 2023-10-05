@@ -22,7 +22,10 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "openzaaktypebeheer.selectorLabels" . | nindent 8 }}
+    {{- include "objecten.selectorLabels" . | nindent 8 }}
+    {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
