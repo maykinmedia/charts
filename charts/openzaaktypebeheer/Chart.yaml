@@ -4,7 +4,7 @@ description: An app to manage the relations between 'zaaktypen' and 'informatieo
 home: https://github.com/maykinmedia/open-zaaktypebeheer
 type: application
 # Chart version
-version: 0.1.1
+version: 0.1.2
 # Open Zaaktypebeheer version
 appVersion: "0.1.0"
 
