@@ -15,7 +15,7 @@ data:
           try_files $uri $uri/ /static/ui/index.html;
       }
 
-      location ~ ^/admin|static|assets|api/ {
+      location ~ ^/admin|oidc|static|assets|api/ {
         proxy_pass http://{{ include "openzaaktypebeheer.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.port }};
         proxy_pass_header Server;
         proxy_set_header X-Real-IP $remote_addr;
