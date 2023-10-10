@@ -100,7 +100,7 @@ azureVaultSecret:
 
 # Django settings
 settings:
-  djangoSettingsModule: openforms.conf.docker
+  djangoSettingsModule: open_zaaktypebeheer.conf.docker
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
   allowedHosts: ""
