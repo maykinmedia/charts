@@ -1462,6 +1462,23 @@ entries:
   openzaaktypebeheer:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2023-10-10T08:24:47.784312797Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: An app to manage the relations between 'zaaktypen' and 'informatieobjecttypen'.
+    digest: 377b43b0fcda09617ebc823eb6a34e2a795fa1ae1725c4c440d3313991feec5e
+    home: https://github.com/maykinmedia/open-zaaktypebeheer
+    name: openzaaktypebeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.4/openzaaktypebeheer-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2023-10-05T08:29:07.433240134Z"
     dependencies:
     - name: redis
@@ -1528,4 +1545,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2023-10-05T08:29:07.433473037Z"
+generated: "2023-10-10T08:24:47.784708585Z"
