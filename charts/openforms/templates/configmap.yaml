@@ -101,3 +101,4 @@ data:
   {{- if .Values.settings.uwsgi.harakiri }}
   UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
   {{- end }}
+  ESCAPE_REGISTRATION_OUTPUT: {{ if .Values.settings.escapeRegistrationOutput }}"True"{{ else }}"False"{{ end }}

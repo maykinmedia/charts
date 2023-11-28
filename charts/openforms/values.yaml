@@ -178,6 +178,7 @@ settings:
   allowedHosts: ""
   baseUrl: ""
   useXForwardedHost: false
+  escapeRegistrationOutput: false
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
