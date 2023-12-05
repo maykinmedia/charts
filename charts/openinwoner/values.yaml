@@ -163,6 +163,9 @@ extraVolumeMounts: []
 #  - name: verify-certs
 #    mountPath: /etc/ssl/certs/extra-certs/
 
+# Extra objects to deploy (value evaluated as a template)
+extraDeploy: []
+
 settings:
   allowedHosts: ""
   djangoSettingsModule: open_inwoner.conf.docker
@@ -236,6 +239,10 @@ nginx:
     tag: stable
   config:
     clientMaxBodySize: 10M
+  service:
+    type: ClusterIP
+    port: 80
+    annotations: {}
   replicaCount: 1
   podLabels: {}
   securityContext:

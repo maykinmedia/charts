@@ -1,6 +1,6 @@
 # openinwoner
 
-![Version: 0.9.6](https://img.shields.io/badge/Version-0.9.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3](https://img.shields.io/badge/AppVersion-1.3-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.3](https://img.shields.io/badge/AppVersion-1.8.3-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
@@ -41,6 +41,7 @@ helm install my-release my-repo/openinwoner
 | elasticsearch.master.resources.requests.cpu | string | `"25m"` |  |
 | elasticsearch.master.resources.requests.memory | string | `"256Mi"` |  |
 | existingSecret | string | `nil` |  |
+| extraDeploy | list | `[]` | Optionally specify additional resources to deploy |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` |  |
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
@@ -83,6 +84,9 @@ helm install my-release my-repo/openinwoner
 | nginx.securityContext.readOnlyRootFilesystem | bool | `false` |  |
 | nginx.securityContext.runAsNonRoot | bool | `true` |  |
 | nginx.securityContext.runAsUser | int | `101` |  |
+| nginx.service.annotations | object | `{}` | Optionally specify extra annotations |
+| nginx.service.port | int | `80` | |
+| nginx.service.type | string | `"ClusterIP"` | | 
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
