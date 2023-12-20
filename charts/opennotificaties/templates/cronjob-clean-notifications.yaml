@@ -49,7 +49,10 @@ spec:
                 {{- end }}             
               resources:
               {{- toYaml .Values.settings.cleanOldNotifications.cronjob.resources | nindent 16 }}                
-              command: /src/manage.py clean_old_notifications
+              command: 
+                - "/bin/bash"
+                - "-c"
+                - /src/manage.py clean_old_notifications
           {{- with .Values.nodeSelector }}
           nodeSelector:
           {{- toYaml . | nindent 12 }}
