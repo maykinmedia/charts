@@ -28,6 +28,9 @@ data:
   {{- if .Values.settings.logNotifications }}
   LOG_NOTIFICATIONS_IN_DB: "True"
   {{- end }}
+  {{- if .Values.settings.cleanOldNotifications.daysRetained }}  
+  NOTIFICATION_NUMBER_OF_DAYS_RETAINED: {{ Values.settings.cleanOldNotifications.daysRetained | toString | quote }}
+  {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}

@@ -170,6 +170,14 @@ settings:
 
   # -- When set to true notifications are saved to the database and accessible from the admin interface
   logNotifications: true
+  cleanOldNotifications:
+    enabled: false
+    daysRetained: ""
+    cronjob:
+      schedule: "0 0 * * *"
+
+      historyLimit: 1
+  
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
