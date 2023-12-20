@@ -177,6 +177,7 @@ settings:
       schedule: "0 0 * * *"
 
       historyLimit: 1
+      resources: {}
   
 
   # -- Generate secret key at https://djecrety.ir/
