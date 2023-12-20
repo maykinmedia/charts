@@ -1,0 +1,65 @@
+{{ if .Values.settings.cleanOldNotifications.enabled -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "opennotificaties.fullname" . }}-clean-old-notificatons
+  labels:
+    {{- include "opennotificaties.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.settings.cleanOldNotifications.cronjob.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: {{ .Values.settings.cleanOldNotifications.cronjob.historyLimit }}
+  failedJobsHistoryLimit: {{ .Values.settings.cleanOldNotifications.cronjob.historyLimit }}  
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+            checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+          {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+          labels:
+        {{- include "opennotificaties.selectorLabels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+            {{- toYaml . | nindent 8 }}
+        {{- end }}
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          serviceAccountName: {{ include "opennotificaties.serviceAccountName" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 8 }}
+          containers:
+            - name: {{ .Chart.Name }}
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 12 }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              envFrom:
+                - secretRef:
+                    name: {{ .Values.existingSecret | default (include "opennotificaties.fullname" .) }}
+                - configMapRef:
+                    name: {{ include "opennotificaties.fullname" . }}
+              env:
+                {{- if .Values.extraEnvVars }}
+                {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+                {{- end }}
+              resources:
+              {{- toYaml .Values.resources | nindent 12 }}
+              command: /src/manage.py clean_old_notifications
+          nodeSelector:
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+{{- end }}
