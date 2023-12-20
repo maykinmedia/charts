@@ -171,11 +171,13 @@ settings:
   # -- When set to true notifications are saved to the database and accessible from the admin interface
   logNotifications: true
   cleanOldNotifications:
-    enabled: true
+    # -- Clean logged notifications
+    enabled: false
+    # -- Number of days to retain logged notifications, default is 30 days
     daysRetained: ""
     cronjob:
+      # -- Schedule to run the clean logged notifications cronjob
       schedule: "0 0 * * *"
-
       historyLimit: 1
       resources: {}
   

@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.0.9](https://img.shields.io/badge/Version-1.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.3](https://img.shields.io/badge/AppVersion-1.4.3-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.1](https://img.shields.io/badge/AppVersion-1.5.1-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -28,6 +28,10 @@ helm install my-release my-repo/opennotificaties
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| azureVaultSecret.contentType | string | `""` |  |
+| azureVaultSecret.objectName | string | `""` |  |
+| azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
+| azureVaultSecret.vaultName | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
@@ -74,9 +78,12 @@ helm install my-release my-repo/opennotificaties
 | rabbitmq.auth.erlangCookie | string | `""` |  |
 | rabbitmq.auth.password | string | `""` |  |
 | rabbitmq.auth.username | string | `"user"` |  |
+| rabbitmq.clustering.enabled | bool | `false` |  |
 | rabbitmq.persistence.enabled | bool | `false` |  |
 | rabbitmq.persistence.existingClaim | string | `nil` |  |
 | rabbitmq.persistence.size | string | `"1Gi"` |  |
+| rabbitmq.rbac.create | bool | `false` |  |
+| rabbitmq.resources | object | `{}` |  |
 | readinessProbe.failureThreshold | int | `6` |  |
 | readinessProbe.initialDelaySeconds | int | `30` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
@@ -107,6 +114,11 @@ helm install my-release my-repo/opennotificaties
 | settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false |
 | settings.celery.rabbitmqHost | string | `""` | RabbitMQ server hostname |
 | settings.celery.resultBackend | string | `""` | Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false |
+| settings.cleanOldNotifications.cronjob.historyLimit | int | `1` |  |
+| settings.cleanOldNotifications.cronjob.resources | object | `{}` |  |
+| settings.cleanOldNotifications.cronjob.schedule | string | `"0 0 * * *"` | Schedule to run the clean logged notifications cronjob |
+| settings.cleanOldNotifications.daysRetained | string | `""` | Number of days to retain logged notifications, default is 30 days |
+| settings.cleanOldNotifications.enabled | bool | `false` | Clean logged notifications |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
 | settings.database.password | string | `""` |  |
