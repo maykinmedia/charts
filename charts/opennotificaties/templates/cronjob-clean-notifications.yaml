@@ -52,7 +52,7 @@ spec:
               command: 
                 - "/bin/bash"
                 - "-c"
-                - /src/manage.py clean_old_notifications
+                -  /app/src/manage.py clean_old_notifications
           {{- with .Values.nodeSelector }}
           nodeSelector:
           {{- toYaml . | nindent 12 }}
