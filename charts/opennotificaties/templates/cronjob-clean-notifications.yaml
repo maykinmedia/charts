@@ -15,28 +15,27 @@ spec:
       template:
         metadata:
           annotations:
-            checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-            checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
           {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
+          {{- toYaml . | nindent 12 }}
           {{- end }}
           labels:
-        {{- include "opennotificaties.selectorLabels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-            {{- toYaml . | nindent 8 }}
-        {{- end }}
+            {{- include "opennotificaties.labels" . | nindent 12 }}       
+            {{- with .Values.podAnnotations }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}               
         spec:
           {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           serviceAccountName: {{ include "opennotificaties.serviceAccountName" . }}
           securityContext:
-            {{- toYaml .Values.podSecurityContext | nindent 8 }}
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}    
+          restartPolicy: OnFailure      
           containers:
             - name: {{ .Chart.Name }}
               securityContext:
-                {{- toYaml .Values.securityContext | nindent 12 }}
+                {{- toYaml .Values.securityContext | nindent 16 }}            
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               envFrom:
@@ -47,19 +46,20 @@ spec:
               env:
                 {{- if .Values.extraEnvVars }}
                 {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-                {{- end }}
+                {{- end }}             
               resources:
-              {{- toYaml .Values.resources | nindent 12 }}
+              {{- toYaml .Values.settings.cleanOldNotifications.cronjob.resources | nindent 16 }}                
               command: /src/manage.py clean_old_notifications
+          {{- with .Values.nodeSelector }}
           nodeSelector:
-          {{- toYaml . | nindent 8 }}
+          {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.affinity }}
           affinity:
-          {{- toYaml . | nindent 8 }}
+          {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.tolerations }}
           tolerations:
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}              
 {{- end }}
