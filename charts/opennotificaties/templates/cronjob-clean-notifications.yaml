@@ -45,7 +45,7 @@ spec:
                     name: {{ include "opennotificaties.fullname" . }}
               env:
                 {{- if .Values.extraEnvVars }}
-                {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+                {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
                 {{- end }}
               resources:
               {{- toYaml .Values.settings.cleanOldNotifications.cronjob.resources | nindent 16 }}
