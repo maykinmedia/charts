@@ -53,6 +53,14 @@ spec:
                 - "/bin/bash"
                 - "-c"
                 -  /app/src/manage.py clean_old_notifications
+              volumeMounts:
+                {{- if .Values.extraVolumeMounts }}
+                {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
+                {{- end }}
+          volumes:
+            {{- if .Values.extraVolumes }}
+            {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
+            {{- end }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
           {{- toYaml . | nindent 12 }}
