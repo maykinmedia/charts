@@ -20,10 +20,16 @@ metadata:
   name: {{ include "openinwoner.nginxFullname" . }}
   labels:
     {{- include "openinwoner.nginxLabels" . | nindent 4 }}
+  {{- with .Values.nginx.service.annotations }}
+  annotations:
+    {{- range $key, $value := . }}
+    {{ $key }} : {{ tpl ($value | toString) $ }}
+    {{- end }}
+  {{- end }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.nginx.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.nginx.service.port }}
       targetPort: 8080
       name: http
   selector:

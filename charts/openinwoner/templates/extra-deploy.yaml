@@ -1,0 +1,4 @@
+{{- range .Values.extraDeploy }}
+---
+{{ include "openinwoner.tplvalues.render" (dict "value" . "context" $) }}
+{{- end }}
