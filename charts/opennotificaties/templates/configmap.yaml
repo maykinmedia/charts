@@ -52,6 +52,7 @@ data:
   DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
   {{- end }}
   {{- if .Values.settings.elasticapm.url }}
+  ELASTIC_APM_SERVER_URL: {{ .Values.settings.elasticapm.url | toString |  quote }}
   ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
   {{- end }}
   {{- if .Values.settings.uwsgi.master }}
