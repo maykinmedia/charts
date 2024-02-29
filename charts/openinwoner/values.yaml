@@ -124,6 +124,8 @@ persistence:
   size: 1Gi
   storageClassName: ""
   existingClaim: null
+  mediaMountSubpath: openinwoner/media
+  privateMediaMountSubpath: openinwoner/private_media
 
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
