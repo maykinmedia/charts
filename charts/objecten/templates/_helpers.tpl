@@ -68,6 +68,37 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create a name for NGINX
+We truncate at 57 chars in order to provide space for the "-nginx" suffix
+*/}}
+{{- define "objecten.nginxName" -}}
+{{ include "objecten.name" . | trunc 57 | trimSuffix "-" }}-nginx
+{{- end }}
+
+{{/*
+Create a default fully qualified name for NGINX.
+We truncate at 57 chars in order to provide space for the "-nginx" suffix
+*/}}
+{{- define "objecten.nginxFullname" -}}
+{{ include "objecten.fullname" . | trunc 57 | trimSuffix "-" }}-nginx
+{{- end }}
+
+{{/*
+NGINX labels
+*/}}
+{{- define "objecten.nginxLabels" -}}
+{{ include "objecten.commonLabels" . }}
+{{ include "objecten.nginxSelectorLabels" . }}
+{{- end }}
+
+{{/*
+NGINX selector labels
+*/}}
+{{- define "objecten.nginxSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "objecten.nginxFullname" . }}
+{{- end }}
+
+{{/*
 Ingress annotations
 */}}
 {{- define "objecten.ingress.annotations" -}}

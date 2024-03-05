@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 0.9.9](https://img.shields.io/badge/Version-0.9.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -10,6 +10,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/objecten
 ```
+
 
 ## Values
 
@@ -21,6 +22,10 @@ helm install my-release my-repo/objecten
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| azureVaultSecret.contentType | string | `""` |  |
+| azureVaultSecret.objectName | string | `""` |  |
+| azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
+| azureVaultSecret.vaultName | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
@@ -42,10 +47,41 @@ helm install my-release my-repo/objecten
 | livenessProbe.successThreshold | int | `1` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
+| nginx.autoscaling.enabled | bool | `false` |  |
+| nginx.config.clientMaxBodySize | string | `"10M"` |  |
+| nginx.existingConfigmap | string | `nil` |  |
+| nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
+| nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
+| nginx.image.tag | string | `"stable"` |  |
+| nginx.livenessProbe.failureThreshold | int | `3` |  |
+| nginx.livenessProbe.initialDelaySeconds | int | `60` |  |
+| nginx.livenessProbe.periodSeconds | int | `10` |  |
+| nginx.livenessProbe.successThreshold | int | `1` |  |
+| nginx.livenessProbe.timeoutSeconds | int | `5` |  |
+| nginx.podLabels | object | `{}` |  |
+| nginx.readinessProbe.failureThreshold | int | `3` |  |
+| nginx.readinessProbe.initialDelaySeconds | int | `30` |  |
+| nginx.readinessProbe.periodSeconds | int | `10` |  |
+| nginx.readinessProbe.successThreshold | int | `1` |  |
+| nginx.readinessProbe.timeoutSeconds | int | `5` |  |
+| nginx.replicaCount | int | `1` |  |
+| nginx.resources | object | `{}` |  |
+| nginx.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| nginx.securityContext.readOnlyRootFilesystem | bool | `false` |  |
+| nginx.securityContext.runAsNonRoot | bool | `true` |  |
+| nginx.securityContext.runAsUser | int | `101` |  |
+| nginx.service.annotations | object | `{}` |  |
+| nginx.service.port | int | `80` |  |
+| nginx.service.type | string | `"ClusterIP"` |  |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
 | pdb.minAvailable | int | `1` |  |
+| persistence.enabled | bool | `true` |  |
+| persistence.existingClaim | string | `nil` |  |
+| persistence.mediaMountSubpath | string | `"objecten/media"` |  |
+| persistence.size | string | `"1Gi"` |  |
+| persistence.storageClassName | string | `""` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
