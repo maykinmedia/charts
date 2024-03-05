@@ -75,7 +75,7 @@ spec:
               subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openzaak/private_media" }}
             - name: media
               mountPath: /app/media
-              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openzaak/media" }}              
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openzaak/media" }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
@@ -161,7 +161,7 @@ spec:
               subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openzaak/private_media" }}
             - name: media
               mountPath: /app/media
-              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openzaak/media" }}              
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openzaak/media" }}
       volumes:
         - name: media
           persistentVolumeClaim:
@@ -247,7 +247,7 @@ spec:
               subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openzaak/private_media" }}
             - name: media
               mountPath: /app/media
-              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openzaak/media" }}                 
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openzaak/media" }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}

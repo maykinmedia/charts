@@ -123,6 +123,7 @@ persistence:
   size: 1Gi
   storageClassName: ""
   existingClaim: null
+  mediaMountSubpath: openforms/media
   privateMediaMountSubpath: openzaak/private_media
 
 # Existing Secret must be defined for AzureVaultSecret to work

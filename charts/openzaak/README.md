@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.0.9](https://img.shields.io/badge/Version-1.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.2](https://img.shields.io/badge/AppVersion-1.8.2-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -28,6 +28,10 @@ helm install my-release my-repo/opennotificaties
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| azureVaultSecret.contentType | string | `""` |  |
+| azureVaultSecret.objectName | string | `""` |  |
+| azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
+| azureVaultSecret.vaultName | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
@@ -96,6 +100,7 @@ helm install my-release my-repo/opennotificaties
 | pdb.minAvailable | int | `1` |  |
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |
+| persistence.mediaMountSubpath | string | `"openforms/media"` |  |
 | persistence.privateMediaMountSubpath | string | `"openzaak/private_media"` |  |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClassName | string | `""` |  |
