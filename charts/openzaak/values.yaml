@@ -64,7 +64,7 @@ ingress:
   #      - path: /
   #        pathType: ImplementationSpecific
   tls: []
-  #  - secretName: openforms-tls
+  #  - secretName: openzaak-tls
   #    hosts:
   #      - openformulieren.gemeente.nl
 
@@ -123,7 +123,7 @@ persistence:
   size: 1Gi
   storageClassName: ""
   existingClaim: null
-  mediaMountSubpath: openforms/media
+  mediaMountSubpath: openzaak/media
   privateMediaMountSubpath: openzaak/private_media
 
 # Existing Secret must be defined for AzureVaultSecret to work
@@ -142,7 +142,7 @@ azureVaultSecret:
   # You must set .Values.existingSecret
   secretName: "{{ .Values.existingSecret }}"
 
-# extraEnvVars Array with extra environment variables to add to openforms
+# extraEnvVars Array with extra environment variables to add to openzaak
 # e.g:
 # extraEnvVars:
 #   - name: FOO
