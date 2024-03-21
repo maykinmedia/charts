@@ -163,7 +163,7 @@ extraVolumeMounts: []
 settings:
   allowedHosts: ""
   djangoSettingsModule: objects.conf.docker
-  useXForwardedHost: true
+  useXForwardedHost: false
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
@@ -210,40 +210,3 @@ settings:
     processes: ''
     maxRequests: ''
     harakiri: ''
-
-nginx:
-  image:
-    repository: nginxinc/nginx-unprivileged
-    pullPolicy: IfNotPresent
-    tag: stable
-  existingConfigmap: null
-  config:
-    clientMaxBodySize: 10M
-  service:
-    type: ClusterIP
-    port: 80
-    annotations: {}
-  replicaCount: 1
-  podLabels: {}
-  securityContext:
-    capabilities:
-      drop:
-      - ALL
-    readOnlyRootFilesystem: false
-    runAsNonRoot: true
-    runAsUser: 101
-  autoscaling:
-    enabled: false
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
-    successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
-    successThreshold: 1
-  resources: {}

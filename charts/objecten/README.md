@@ -11,7 +11,6 @@ helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/objecten
 ```
 
-
 ## Values
 
 | Key | Type | Default | Description |
@@ -47,32 +46,6 @@ helm install my-release my-repo/objecten
 | livenessProbe.successThreshold | int | `1` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
-| nginx.autoscaling.enabled | bool | `false` |  |
-| nginx.config.clientMaxBodySize | string | `"10M"` |  |
-| nginx.existingConfigmap | string | `nil` |  |
-| nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
-| nginx.image.tag | string | `"stable"` |  |
-| nginx.livenessProbe.failureThreshold | int | `3` |  |
-| nginx.livenessProbe.initialDelaySeconds | int | `60` |  |
-| nginx.livenessProbe.periodSeconds | int | `10` |  |
-| nginx.livenessProbe.successThreshold | int | `1` |  |
-| nginx.livenessProbe.timeoutSeconds | int | `5` |  |
-| nginx.podLabels | object | `{}` |  |
-| nginx.readinessProbe.failureThreshold | int | `3` |  |
-| nginx.readinessProbe.initialDelaySeconds | int | `30` |  |
-| nginx.readinessProbe.periodSeconds | int | `10` |  |
-| nginx.readinessProbe.successThreshold | int | `1` |  |
-| nginx.readinessProbe.timeoutSeconds | int | `5` |  |
-| nginx.replicaCount | int | `1` |  |
-| nginx.resources | object | `{}` |  |
-| nginx.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| nginx.securityContext.readOnlyRootFilesystem | bool | `false` |  |
-| nginx.securityContext.runAsNonRoot | bool | `true` |  |
-| nginx.securityContext.runAsUser | int | `101` |  |
-| nginx.service.annotations | object | `{}` |  |
-| nginx.service.port | int | `80` |  |
-| nginx.service.type | string | `"ClusterIP"` |  |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
@@ -125,7 +98,7 @@ helm install my-release my-repo/objecten
 | settings.sentry.dsn | string | `""` |  |
 | settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` | Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC. |
 | settings.twoFactorAuthentication.patchAdmin | bool | `true` | Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC. |
-| settings.useXForwardedHost | bool | `true` |  |
+| settings.useXForwardedHost | bool | `false` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
 | settings.uwsgi.maxRequests | string | `""` |  |
