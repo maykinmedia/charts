@@ -57,6 +57,68 @@ app.kubernetes.io/name: {{ include "objecten.name" . }}
 {{- end }}
 
 {{/*
+Create a name for the worker
+We truncate at 56 chars in order to provide space for the "-worker" suffix
+*/}}
+{{- define "objecten.workerName" -}}
+{{ include "objecten.name" . | trunc 56 | trimSuffix "-" }}-worker
+{{- end }}
+
+{{/*
+Create a default fully qualified name for the worker.
+We truncate at 56 chars in order to provide space for the "-worker" suffix
+*/}}
+{{- define "objecten.workerFullname" -}}
+{{ include "objecten.fullname" . | trunc 56 | trimSuffix "-" }}-worker
+{{- end }}
+
+{{/*
+Worker labels
+*/}}
+{{- define "objecten.workerLabels" -}}
+{{ include "objecten.commonLabels" . }}
+{{ include "objecten.workerSelectorLabels" . }}
+{{- end }}
+
+{{/*
+Worker selector labels
+*/}}
+{{- define "objecten.workerSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "objecten.workerName" . }}
+{{- end }}
+
+{{/*
+Create a name for Flower
+We truncate at 56 chars in order to provide space for the "-flower" suffix
+*/}}
+{{- define "objecten.flowerName" -}}
+{{ include "objecten.name" . | trunc 56 | trimSuffix "-" }}-flower
+{{- end }}
+
+{{/*
+Create a default fully qualified name for Flower.
+We truncate at 56 chars in order to provide space for the "-flower" suffix
+*/}}
+{{- define "objecten.flowerFullname" -}}
+{{ include "objecten.fullname" . | trunc 56 | trimSuffix "-" }}-flower
+{{- end }}
+
+{{/*
+Flower labels
+*/}}
+{{- define "objecten.flowerLabels" -}}
+{{ include "objecten.commonLabels" . }}
+{{ include "objecten.flowerSelectorLabels" . }}
+{{- end }}
+
+{{/*
+Flower selector labels
+*/}}
+{{- define "objecten.flowerSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "objecten.flowerName" . }}
+{{- end  }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "objecten.serviceAccountName" -}}
