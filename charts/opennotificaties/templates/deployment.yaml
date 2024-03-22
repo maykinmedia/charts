@@ -70,10 +70,20 @@ spec:
           resources:
           {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "opennotificaties/media" }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "opennotificaties.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
         {{- if .Values.extraVolumes }}
         {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
@@ -145,15 +155,18 @@ spec:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           command:
             - /celery_worker.sh
-          volumeMounts:
-            {{- if .Values.extraVolumeMounts }}
-            {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
-            {{- end }}
       volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "opennotificaties.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
         {{- if .Values.extraVolumes }}
         {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.nodeSelector }}        
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -230,11 +243,14 @@ spec:
             tcpSocket:
               port: 5555
             {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
-          volumeMounts:
-            {{- if .Values.extraVolumeMounts }}
-            {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
-            {{- end }}
       volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "opennotificaties.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
         {{- if .Values.extraVolumes }}
         {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
