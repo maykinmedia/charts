@@ -1,3 +1,6 @@
+tags:
+  redis: true
+
 replicaCount: 1
 
 image:
@@ -165,6 +168,9 @@ settings:
   djangoSettingsModule: objects.conf.docker
   useXForwardedHost: false
 
+  # -- Disable two factor authentication
+  disable2fa: false
+
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
 
@@ -194,15 +200,28 @@ settings:
   sentry:
     dsn: ""
 
+  # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
+  cache:
+    # e.g.:
+    # default: openforms-redis-master-0:6379/0
+    # axes: openforms-redis-master-0:6379/0
+    # oidc: openforms-redis-master-0:6379/0
+    default: ""
+    axes: ""
+    oidc: ""
+
+  # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
+  celery:
+    # e.g.:
+    # brokerUrl: redis://openforms-redis-master:6379/1
+    # resultBackend: redis://openforms-redis-master:6379/1
+    brokerUrl: ""
+    resultBackend: ""
+    logLevel: debug
+
   isHttps: true
 
   debug: false
-
-  twoFactorAuthentication:
-      # -- Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC.
-      forceOtpAdmin: true
-      # -- Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC.
-      patchAdmin: true
 
   uwsgi:
     master: ''
@@ -210,3 +229,63 @@ settings:
     processes: ''
     maxRequests: ''
     harakiri: ''
+
+worker:
+  replicaCount: 1
+  concurrency: 4
+  podLabels: {}
+  resources: {}
+  # Defaults to 60s
+  maxWorkerLivenessDelta: ""
+  livenessProbe: {}
+    # exec:
+    #   command:
+    #     - python
+    #     - /app/bin/check_celery_worker_liveness.py
+    # initialDelaySeconds: 60
+    # # Periodeseconds should not exceed maxWorkerLivenessDelta
+    # periodSeconds: 10
+    # timeoutSeconds: 5
+    # failureThreshold: 3
+    # successThreshold: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
+flower:
+  enabled: true
+  replicaCount: 1
+  podLabels: {}
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  resources: {}
+
+
+##################
+# Redis subchart #
+##################
+
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: false
+    resources:
+      requests:
+        cpu: 10m
+        memory: 20Mi
