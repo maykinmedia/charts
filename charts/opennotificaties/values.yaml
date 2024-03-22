@@ -119,6 +119,13 @@ tolerations: []
 
 affinity: {}
 
+persistence:
+  enabled: true
+  size: 512Mi
+  storageClassName: ""
+  existingClaim: null
+  mediaMountSubpath: opennotificaties/media
+
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
 
@@ -181,6 +188,12 @@ settings:
       historyLimit: 1
       resources: {}
   
+  # -- The maximum number of automatic retries. After this amount of retries, Open Notificaties stops trying to deliver the message. Application default is 5.
+  maxRetries: ""
+  # --  If specified, a factor applied to the exponential backoff. This allows you to tune how quickly automatic retries are performed. Application default is 3.
+  retryBackoff: ""
+  # -- An upper limit to the exponential backoff time. Application default is 48.
+  retryBackoffMax: ""
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
