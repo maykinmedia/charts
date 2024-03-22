@@ -31,6 +31,15 @@ data:
   {{- if .Values.settings.cleanOldNotifications.daysRetained }}
   NOTIFICATION_NUMBER_OF_DAYS_RETAINED: {{ .Values.settings.cleanOldNotifications.daysRetained | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.maxRetries }}
+  NOTIFICATION_DELIVERY_MAX_RETRIES: {{ .Values.settings.maxRetries | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.retryBackoff }}
+  NOTIFICATION_DELIVERY_RETRY_BACKOFF: {{ .Values.settings.retryBackoff | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.retryBackoffMax }}
+  NOTIFICATION_DELIVERY_RETRY_BACKOFF_MAX: {{ .Values.settings.retryBackoffMax | toString | quote }}
+  {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
