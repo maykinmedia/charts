@@ -232,6 +232,8 @@ settings:
     resultBackend: ""
     logLevel: debug
 
+  notificationsDisabled: false
+
   jwtExpiry: 3600
 
   cmis:
