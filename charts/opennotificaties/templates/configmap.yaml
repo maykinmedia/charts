@@ -79,3 +79,17 @@ data:
   {{- if .Values.settings.uwsgi.harakiri }}
   UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
   {{- end }}
+  {{ if .Values.configuration.enabled -}}
+  SITES_CONFIG_ENABLE: {{ .Values.configuration.sites.enabled | toString | quote }}
+  OPENNOTIFICATIES_DOMAIN: {{ .Values.global.configuration.notificatiesDomain | default .Values.configuration.sites.notificatiesDomain | toString | quote }}
+  OPENNOTIFICATIES_ORGANIZATION: {{ .Values.global.configuration.organization | default .Values.configuration.sites.organization | toString | quote }}
+  AUTHORIZATION_CONFIG_ENABLE: {{ .Values.configuration.openzaakAuthorization.enabled | toString | quote }}
+  AUTORISATIES_API_ROOT: {{ .Values.global.configuration.openzaakAutorisatiesApi | default .Values.configuration.openzaakAuthorization.ApiRoot | toString | quote }}
+  NOTIF_OPENZAAK_CLIENT_ID: {{ .Values.global.configuration.notificatiesOpenzaakClientId | default .Values.configuration.openzaakAuthorization.notificationOpenzaakClientId | toString | quote }}
+  OPENZAAK_NOTIF_CONFIG_ENABLE: {{ .Values.configuration.notificaties.enabled | toString | quote }}
+  OPENZAAK_NOTIF_CLIENT_ID: {{ .Values.global.configuration.openzaakNotificatiesClientId | default .Values.configuration.notificaties.openzaakNotifcationClientId | toString | quote }}
+  {{- end }}
+  {{ if .Values.configuration.superuser.username }}
+  OPENNOTIFICATIES_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
+  OPENNOTIFICATIES_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
+  {{- end }}  

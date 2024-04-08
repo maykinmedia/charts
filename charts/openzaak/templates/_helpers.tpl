@@ -192,6 +192,37 @@ app.kubernetes.io/name: {{ include "openzaak.flowerName" . }}
 {{- end }}
 
 {{/*
+Create a name for Config cronjob
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openzaak.configName" -}}
+{{ include "openzaak.name" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+Create a default fully qualified name for config.
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openzaak.configFullname" -}}
+{{ include "openzaak.fullname" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+config labels
+*/}}
+{{- define "openzaak.configLabels" -}}
+{{ include "openzaak.commonLabels" . }}
+{{ include "openzaak.configSelectorLabels" . }}
+{{- end }}
+
+{{/*
+config selector labels
+*/}}
+{{- define "openzaak.configSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openzaak.configName" . }}
+{{- end }}
+
+{{/*
 Ingress annotations
 */}}
 {{- define "openzaak.ingress.annotations" -}}

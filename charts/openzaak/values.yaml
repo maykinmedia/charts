@@ -1,3 +1,46 @@
+global:
+  configuration:
+    organization: Gemeente Example
+    openzaakDomain: openzaak.example.com
+    openzaakAutorisatiesApi: https://openzaak.example.nl/autorisaties/api/v1/
+    notificatiesDomain: notificaties.example.nl
+    notificatiesApi: http://opennotificaties.example.nl/api/v1/
+    notificatiesOpenzaakClientId: notif-client-id
+    notificatiesOpenzaakSecret: notif-secret
+    openzaakNotificatiesClientId: oz-client-id
+    openzaakNotificatiesSecret: oz-secret
+
+configuration:
+  enabled: true
+  sites:
+    enabled: true
+    openzaakDomain: openzaak.example.com
+    organization: Gemeente Example
+  notificatiesAuthorization:
+    enabled: true
+    notificationOpenzaakClientId: notif-client-id
+    notifcationOpenzaakSecret: notif-secret
+  notificaties:
+    enabled: true
+    ApiRoot: http://opennotificaties.example.nl/api/v1/
+    openzaakNotifcationClientId: oz-client-id
+    openzaakNotificationSecret: oz-secret
+  selectieLijst:
+    enabled: true
+    ApiRoot: https://selectielijst.openzaak.nl/api/v1/
+    ApiOas:  https://selectielijst.openzaak.nl/api/v1/schema/openapi.yaml
+    AllowedYears: [2017, 2020]
+    DefaultYear: 2020
+  superuser:
+    username: ""
+    password: ""
+    email: ""
+  cronjob:
+    # -- Schedule to run the clean logged notifications cronjob
+    schedule: "0 0 * * *"
+    historyLimit: 1
+    resources: {}
+
 tags:
   redis: true
 

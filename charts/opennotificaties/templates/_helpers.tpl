@@ -161,6 +161,37 @@ app.kubernetes.io/name: {{ include "opennotificaties.flowerName" . }}
 {{- end }}
 
 {{/*
+Create a name for Config cronjob
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "opennotificaties.configName" -}}
+{{ include "opennotificaties.name" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+Create a default fully qualified name for config.
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "opennotificaties.configFullname" -}}
+{{ include "opennotificaties.fullname" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+config labels
+*/}}
+{{- define "opennotificaties.configLabels" -}}
+{{ include "opennotificaties.commonLabels" . }}
+{{ include "opennotificaties.configSelectorLabels" . }}
+{{- end }}
+
+{{/*
+config selector labels
+*/}}
+{{- define "opennotificaties.configSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "opennotificaties.configName" . }}
+{{- end }}
+
+{{/*
 Ingress annotations
 */}}
 {{- define "opennotificaties.ingress.annotations" -}}

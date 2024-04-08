@@ -1,0 +1,780 @@
+tags:
+  openzaak: true
+  opennotificaties: true
+
+global:
+  configuration:
+    organization: Gemeente Example
+    openzaakDomain: openzaak.example.com
+    openzaakAutorisatiesApi: https://openzaak.example.nl/autorisaties/api/v1/
+    notificatiesDomain: notificaties.example.nl
+    notificatiesApi: http://opennotificaties.example.nl/api/v1/
+    notificatiesOpenzaakClientId: notif-client-id
+    notificatiesOpenzaakSecret: notif-secret
+    openzaakNotificatiesClientId: oz-client-id
+    openzaakNotificatiesSecret: oz-secret
+
+
+
+openzaak:
+  enabled: true
+
+  configuration:
+    enabled: true
+    sites:
+      enabled: true
+      openzaakDomain: openzaak.example.com
+      organization: Gemeente Example
+    notificatiesAuthorization:
+      enabled: true
+      notificationOpenzaakClientId: notif-client-id
+      notifcationOpenzaakSecret: notif-secret
+    notificaties:
+      enabled: true
+      ApiRoot: http://opennotificaties.example.nl/api/v1/
+      openzaakNotifcationClientId: oz-client-id
+      openzaakNotificationSecret: oz-secret
+    selectieLijst:
+      enabled: true
+      ApiRoot: https://selectielijst.openzaak.nl/api/v1/
+      ApiOas:  https://selectielijst.openzaak.nl/api/v1/schema/openapi.yaml
+      AllowedYears: [2017, 2020]
+      DefaultYear: 2020
+    superuser:
+      username: ""
+      password: ""
+      email: ""
+    cronjob:
+      # -- Schedule to run the clean logged notifications cronjob
+      schedule: "0 0 * * *"
+      historyLimit: 1
+      resources: {}
+
+  tags:
+    redis: true
+
+  replicaCount: 1
+
+  image:
+    repository: openzaak/open-zaak
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+    automountServiceAccountToken: true
+
+  podAnnotations: {}
+
+  podLabels: {}
+
+  podSecurityContext:
+    fsGroup: 1000
+
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 1000
+
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    className: ""
+    # -- ingress hosts
+    hosts: []
+    #  - host: openformulieren.gemeente.nl
+    #    paths:
+    #      - path: /
+    #        pathType: ImplementationSpecific
+    tls: []
+    #  - secretName: openzaak-tls
+    #    hosts:
+    #      - openformulieren.gemeente.nl
+
+  # -- Specify extra ingresses, for example if you have multiple ingress classes
+  extraIngress: []
+  # e.g:
+  # extraIngress:
+  #  - name: openzaak-azuregateway
+  #    annotations:
+  #      appgw.ingress.kubernetes.io/ssl-redirect: "true"
+  #    className: azure-application-gateway
+  #    hosts:
+  #      - host: openzaak.gemeente.nl
+  #        paths:
+  #          - path: /
+  #            pathType: ImplementationSpecific
+  #            servicename: openzaak
+  #            portNumber: 8000
+  #    tls:
+  #      - secretName: openzaak-tls
+  #        hosts:
+  #          - "openzaak.gemeente.nl"
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 200m
+    #   memory: 256Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
+  pdb:
+    create: false
+    minAvailable: 1
+    maxUnavailable: ""
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClassName: ""
+    existingClaim: null
+    mediaMountSubpath: openzaak/media
+    privateMediaMountSubpath: openzaak/private_media
+
+  # Existing Secret must be defined for AzureVaultSecret to work
+  existingSecret: null
+
+  # This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
+  # ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
+  # Using this feature requires you to define existingSecret
+  azureVaultSecret:
+    # The name of the Azure Key Vault, setting this will create the AzureVaultSecret
+    vaultName: null
+    # The name of the Multi Key Value Secret
+    objectName: ""
+    # Make sure this matches the content of the secret, can be either 'application/x-json' or 'application/x-yaml'
+    contentType: ""
+    # You must set .Values.existingSecret
+    secretName: "{{ .Values.existingSecret }}"
+
+  # extraEnvVars Array with extra environment variables to add to openzaak
+  # e.g:
+  # extraEnvVars:
+  #   - name: FOO
+  #     value: "bar"
+  #
+  extraEnvVars: []
+  # extraVolumes Optionally specify extra list of additional volumes
+  # e.g:
+  # extraVolumes:
+  #   - name: verify-certs
+  #     configMap:
+  #       name: verify-certs
+  #
+  extraVolumes: []
+  # extraVolumeMounts Optionally specify extra list of additional volumeMounts
+  # e.g:
+  # extraVolumeMounts:
+  #  - name: verify-certs
+  #    mountPath: /etc/ssl/certs/extra-certs/
+  extraVolumeMounts: []
+  # Path to extra certificates or CA (root) certificates, comma seperated
+  # Wardning, If the file does not exist the pod(s) will not start
+  # e.g.
+  # extraVerifyCerts: /etc/ssl/certs/extra-certs/staatdernederlandeng1.pem
+  extraVerifyCerts: ""
+
+  # Extra objects to deploy (value evaluated as a template)
+  extraDeploy: []
+
+  settings:
+    allowedHosts: ""
+    djangoSettingsModule: openzaak.conf.docker
+    useXForwardedHost: true
+
+    # -- Generate secret key at https://djecrety.ir/
+    secretKey: ""
+
+    environment: ""
+
+    database:
+      host: open-zaak-postgresql
+      port: 5432
+      username: postgres
+      password: SUPER-SECRET
+      name: openzaak
+      sslmode: prefer
+
+    # -- use 2 if enabling ingress
+    numProxies: 1
+
+    email:
+      host: localhost
+      port: 25
+      username: ""
+      password: ""
+      useTLS: false
+
+    flower:
+      urlPrefix: ""
+      basicAuth: ""
+
+    elasticapm:
+      url: ""
+      token: ""
+      serviceName: ""
+
+    sentry:
+      dsn: ""
+
+    # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
+    cache:
+      # default: openzaak-redis-master-0:6379/0
+      # axes: openzaak-redis-master-0:6379/0
+      # portalLocker: openzaak-redis-master-0:6379/0
+      default: ""
+      axes: ""
+      portalLocker: ""
+
+    celery:
+      # -- Deploy celery (worker), celery is required from openzaak version 1.8.0
+      enabled: true
+      # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
+      # e.g.:
+      # brokerUrl: redis://openzaak-redis-master:6379/1
+      # resultBackend: redis://openzaak-redis-master:6379/1
+      brokerUrl: ""
+      resultBackend: ""
+      logLevel: debug
+
+    notificationsDisabled: false
+
+    jwtExpiry: 3600
+
+    cmis:
+      enabled: false
+      mapperFile: ""
+
+    isHttps: true
+
+    debug: false
+
+    uwsgi:
+      master: ""
+      threads: ""
+      processes: ""
+      maxRequests: ""
+      harakiri: ""
+
+  worker:
+    replicaCount: 1
+    concurrency: 4
+    podLabels: {}
+    resources: {}
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 100
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
+
+  nginx:
+    image:
+      repository: nginxinc/nginx-unprivileged
+      pullPolicy: IfNotPresent
+      tag: stable
+    service:
+      type: ClusterIP
+      port: 80
+      annotations: {}
+    # -- mount existing nginx vhost config
+    existingConfigmap: null
+    replicaCount: 1
+    podLabels: {}
+    securityContext:
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: false
+      runAsNonRoot: true
+      runAsUser: 101
+    autoscaling:
+      enabled: false
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    resources: {}
+
+  flower:
+    enabled: true
+    replicaCount: 1
+    podLabels: {}
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
+    readinessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
+    resources: {}
+
+
+  ##################
+  # Redis subchart #
+  ##################
+  redis:
+    architecture: standalone
+    auth:
+      enabled: false
+    master:
+      persistence:
+        enabled: false
+      resources:
+        requests:
+          cpu: 10m
+          memory: 20Mi
+
+opennotificaties:
+  enabled: true
+
+  configuration:
+    enabled: true
+    sites:
+      enabled: true
+      notificatiesDomain: notificaties.example.nl
+      organization: Gemeente Example
+    openzaakAuthorization:
+      enabled: true
+      ApiRoot: http://opennotificaties.example.nl/api/v1/
+      notificationOpenzaakClientId: notif-client-id
+      notifcationOpenzaakSecret: notif-secret
+    notificaties:
+      enabled: true
+      openzaakNotifcationClientId: oz-client-id
+      openzaakNotificationSecret: oz-secret
+    superuser:
+      username: ""
+      password: ""
+      email: ""    
+    cronjob:
+      # -- Schedule to run the clean logged notifications cronjob
+      schedule: "0 0 * * *"
+      historyLimit: 1
+      resources: {}
+
+  tags:
+    redis: true
+    rabbitmq: true
+
+  replicaCount: 1
+
+  image:
+    repository: openzaak/open-notificaties
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+    automountServiceAccountToken: true
+
+  podAnnotations: {}
+
+  podLabels: {}
+
+  podSecurityContext:
+    fsGroup: 1000
+
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 1000
+
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    className: ""
+    # -- ingress hosts
+    hosts: []
+    #  - host: opennotificaties.gemeente.nl
+    #    paths:
+    #      - path: /
+    #        pathType: ImplementationSpecific
+    tls: []
+    #  - secretName: opennotificaties-tls
+    #    hosts:
+    #      - opennotificaties.gemeente.nl
+
+  # -- Specify extra ingresses, for example if you have multiple ingress classes
+  extraIngress: []
+  # e.g:
+  # extraIngress:
+  #  - name: opennotificaties-azuregateway
+  #    annotations:
+  #      appgw.ingress.kubernetes.io/ssl-redirect: "true"
+  #    className: azure-application-gateway
+  #    hosts:
+  #      - host: opennotificaties.gemeente.nl
+  #        paths:
+  #          - path: /
+  #            pathType: ImplementationSpecific
+  #            servicename: opennotificaties
+  #            portNumber: 8000
+  #    tls:
+  #      - secretName: opennotificaties-tls
+  #        hosts:
+  #          - "opennotificaties.gemeente.nl"
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 200m
+    #   memory: 256Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
+  pdb:
+    create: false
+    minAvailable: 1
+    maxUnavailable: ""
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  persistence:
+    enabled: true
+    size: 512Mi
+    storageClassName: ""
+    existingClaim: null
+    mediaMountSubpath: opennotificaties/media
+
+  # Existing Secret must be defined for AzureVaultSecret to work
+  existingSecret: null
+
+  # This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
+  # ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
+  # Using this feature requires you to define existingSecret
+  azureVaultSecret:
+    # The name of the Azure Key Vault, setting this will create the AzureVaultSecret
+    vaultName: null
+    # The name of the Multi Key Value Secret
+    objectName: ""
+    # Make sure this matches the content of the secret, can be either 'application/x-json' or 'application/x-yaml'
+    contentType: ""
+    # You must set .Values.existingSecret
+    secretName: "{{ .Values.existingSecret }}"
+
+  # -- Array with extra environment variables to add
+  extraEnvVars: []
+  # e.g:
+  # extraEnvVars:
+  #   - name: FOO
+  #     value: "bar"
+
+  # -- Optionally specify extra list of additional volumes
+  extraVolumes: []
+  # e.g:
+  # extraVolumes:
+  #   - name: verify-certs
+  #     configMap:
+  #       name: verify-certs
+
+  # -- Optionally specify extra list of additional volumeMounts
+  extraVolumeMounts: []
+  # e.g:
+  # extraVolumeMounts:
+  #  - name: verify-certs
+  #    mountPath: /etc/ssl/certs/extra-certs/
+
+  # -- Path to extra certificates or CA (root) certificates, comma seperated
+  # Warning, If the file does not exist the pod(s) will not start
+  extraVerifyCerts: ""
+  # e.g.
+  # extraVerifyCerts: /etc/ssl/certs/extra-certs/staatdernederlandeng1.pem
+
+  settings:
+    allowedHosts: ""
+    djangoSettingsModule: nrc.conf.docker
+    useXForwardedHost: true
+
+    # -- When set to true notifications are saved to the database and accessible from the admin interface
+    logNotifications: true
+    cleanOldNotifications:
+      # -- Clean logged notifications
+      enabled: false
+      # -- Number of days to retain logged notifications, default is 30 days
+      daysRetained: ""
+      cronjob:
+        # -- Schedule to run the clean logged notifications cronjob
+        schedule: "0 0 * * *"
+        historyLimit: 1
+        resources: {}
+
+    # -- The maximum number of automatic retries. After this amount of retries, Open Notificaties stops trying to deliver the message. Application default is 5.
+    maxRetries: ""
+    # --  If specified, a factor applied to the exponential backoff. This allows you to tune how quickly automatic retries are performed. Application default is 3.
+    retryBackoff: ""
+    # -- An upper limit to the exponential backoff time. Application default is 48.
+    retryBackoffMax: ""
+
+    # -- Generate secret key at https://djecrety.ir/
+    secretKey: ""
+
+    # -- sets the 'ENVIRONMENT' variable
+    environment: ""
+
+    database:
+      host: ""
+      port: 5432
+      username: ""
+      password: ""
+      name: ""
+      sslmode: prefer
+
+    # -- use 2 if enabling ingress
+    numProxies: 1
+
+    email:
+      host: localhost
+      port: 25
+      username: ""
+      password: ""
+      useTLS: false
+
+    flower:
+      urlPrefix: ""
+      basicAuth: ""
+
+    elasticapm:
+      url: ""
+      token: ""
+      serviceName: ""
+
+    sentry:
+      dsn: ""
+
+    cache:
+      # -- Sets 'CACHE_DEFAULT' var, only required when tags.redis is false
+      default: ""
+      # -- Sets 'CACHE_AXES' var, only required when tags.redis is false
+      axes: ""
+      # When not using the redis subcharts you can set them manually like this:
+      # default: myredisserver:6379/0
+      # axes: myredisserver:6379/0
+
+    celery:
+      # -- Celery loglevel
+      logLevel: debug
+      # -- Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false
+      brokerUrl: ""
+      # -- Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false
+      resultBackend: ""
+      # -- Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false
+      publishBrokerUrl: ""
+      # -- RabbitMQ server hostname
+      rabbitmqHost: ""
+      # When not using the rabbitmq / redis subcharts you can set them manually like this:
+      #
+      # brokerUrl: amqp://username:password@myrabbitmqbroker:5672//
+      # resultBackend: redis://myredisserver:6379/1
+      # publishBrokerUrl: amqp://username:password@myrabbitmqbroker::5672/%2F
+      # rabbitmqHost: myrabbitmqbroker
+
+    isHttps: true
+
+    debug: false
+
+    uwsgi:
+      master: ''
+      threads: ''
+      processes: ''
+      maxRequests: ''
+      harakiri: ''
+
+  worker:
+    replicaCount: 1
+    concurrency: 4
+    podLabels: {}
+    resources: {}
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 100
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
+
+  flower:
+    enabled: true
+    replicaCount: 1
+    podLabels: {}
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
+    readinessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
+    resources: {}
+
+  ##################
+  # Redis subchart #
+  ##################
+
+  redis:
+    architecture: standalone
+    auth:
+      enabled: false
+    master:
+      persistence:
+        enabled: false
+      resources:
+        requests:
+          cpu: 10m
+          memory: 20Mi
+
+  #####################
+  # RabbitMQ subchart #
+  #####################
+
+  rabbitmq:
+    auth:
+      username: user
+      password: ""
+      erlangCookie: ""
+    persistence:
+      enabled: false
+      size: 1Gi
+      existingClaim: null
+    resources: {}
+      # limits:
+      #   memory: 1000Mi
+      #   cpu: 500m
+      # requests:
+      #   memory: 600Mi
+      #   cpu: 200m    
+    rbac:
+      create: false
+    clustering:
+      enabled: false
