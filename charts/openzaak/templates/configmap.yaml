@@ -81,3 +81,30 @@ data:
   {{- if .Values.settings.notificationsDisabled }}
   NOTIFICATIONS_DISABLED: "True"
   {{- end }}
+  {{ if .Values.configuration.enabled -}}
+  SITES_CONFIG_ENABLE: {{ if .Values.configuration.sites.enabled }}"True"{{ else }}"False"{{ end }}
+  {{- if .Values.configuration.sites.enabled }}
+  OPENZAAK_DOMAIN: {{ .Values.global.configuration.openzaakDomain | default .Values.configuration.sites.openzaakDomain | toString | quote }}
+  OPENZAAK_ORGANIZATION: {{ .Values.global.configuration.organization | default .Values.configuration.sites.organization | toString | quote }}
+  {{- end }}
+  NOTIF_OPENZAAK_CONFIG_ENABLE: {{ if .Values.configuration.notificatiesAuthorization.enabled }}"True"{{ else }}"False"{{ end }}
+  {{ if .Values.configuration.notificatiesAuthorization.enabled }}  
+  NOTIF_OPENZAAK_CLIENT_ID: {{ .Values.global.configuration.notificatiesOpenzaakClientId | default .Values.configuration.notificatiesAuthorization.notificationOpenzaakClientId | toString | quote }}
+  {{- end }}
+  OPENZAAK_NOTIF_CONFIG_ENABLE: {{ if .Values.configuration.notificaties.enabled }}"True"{{ else }}"False"{{ end }}
+  {{ if .Values.configuration.notificaties.enabled }}
+  NOTIF_API_ROOT: {{ .Values.global.configuration.notificatiesApi | default .Values.configuration.notificaties.ApiRoot | toString | quote }}
+  OPENZAAK_NOTIF_CLIENT_ID: {{ .Values.global.configuration.openzaakNotificatiesClientId | default .Values.configuration.notificaties.openzaakNotifcationClientId | toString | quote }}
+  {{- end }}
+  OPENZAAK_SELECTIELIJST_CONFIG_ENABLE: {{ if .Values.configuration.selectieLijst.enabled }}"True"{{ else }}"False"{{ end }}
+  {{- if .Values.configuration.selectieLijst.enabled }}
+  SELECTIELIJST_API_ROOT: {{ .Values.configuration.selectieLijst.ApiRoot | toString | quote }}
+  SELECTIELIJST_API_OAS: {{ .Values.configuration.selectieLijst.ApiOas | toString | quote }}
+  SELECTIELIJST_ALLOWED_YEARS: {{ .Values.configuration.selectieLijst.AllowedYears | toString | quote }}
+  SELECTIELIJST_DEFAULT_YEAR: {{ .Values.configuration.selectieLijst.DefaultYear | toString | quote }}
+  {{- end }}
+  {{- end }}
+  {{ if .Values.configuration.superuser.username }}
+  OPENZAAK_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
+  OPENZAAK_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
+  {{- end }}
