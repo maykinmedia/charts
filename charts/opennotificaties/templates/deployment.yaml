@@ -32,6 +32,25 @@ spec:
       serviceAccountName: {{ include "opennotificaties.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.configuration.initContainer.enabled }}
+      initContainers:
+        - name: {{ .Chart.Name }}-config
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 16 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.global.existingConfigSecret | default (include "opennotificaties.fullname" .) }}
+            - configMapRef:
+                name: {{ include "opennotificaties.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
+            {{- end }}
+          command:
+            - /setup_configuration.sh
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -166,7 +185,7 @@ spec:
         {{- if .Values.extraVolumes }}
         {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
-      {{- with .Values.nodeSelector }}        
+      {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}

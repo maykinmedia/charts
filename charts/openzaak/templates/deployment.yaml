@@ -32,6 +32,35 @@ spec:
       serviceAccountName: {{ include "openzaak.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.configuration.initContainer.enabled }}
+      initContainers:
+        - name: {{ .Chart.Name }}-config
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 16 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.global.existingConfigSecret | default (include "openzaak.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openzaak.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openzaak.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
+            {{- end }}
+          command:
+            - /setup_configuration.sh
+          volumeMounts:
+            - name: media
+              mountPath: /app/private-media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openzaak/private_media" }}
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openzaak/media" }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
