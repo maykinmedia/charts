@@ -1,4 +1,4 @@
-{{ if .Values.configuration.enabled -}}
+{{ if and .Values.configuration.enabled .Values.configuration.cronjob.enabled -}}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -50,7 +50,14 @@ spec:
               resources:
               {{- toYaml .Values.configuration.cronjob.resources | nindent 16 }}
               command:
-                - /setup_configuration.sh
+                - "/bin/bash"
+                - "-c"
+              args:
+              - |
+                /setup_configuration.sh
+                {{- if .Values.configuration.notificaties.registerKanalen }}
+                /app/src/manage.py register_kanalen
+                {{- end }}
               volumeMounts:
                 - name: media
                   mountPath: /app/private-media

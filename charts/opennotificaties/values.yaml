@@ -14,23 +14,28 @@ configuration:
   enabled: true
   sites:
     enabled: true
-    notificatiesDomain: notificaties.example.nl
-    organization: Gemeente Example
+    notificatiesDomain: ""
+    organization: ""
   openzaakAuthorization:
     enabled: true
-    ApiRoot: http://opennotificaties.example.nl/api/v1/
-    notificationOpenzaakClientId: notif-client-id
-    notifcationOpenzaakSecret: notif-secret
+    ApiRoot: ""
+    notificationOpenzaakClientId: ""
+    notifcationOpenzaakSecret: ""
   notificaties:
     enabled: true
-    openzaakNotifcationClientId: oz-client-id
-    openzaakNotificationSecret: oz-secret
+    openzaakNotifcationClientId: ""
+    openzaakNotificationSecret: ""
   superuser:
     username: ""
     password: ""
-    email: ""    
+    email: ""
+  initContainer:
+    # -- Run the setup configuration command in a init container
+    enabled: false
   cronjob:
-    # -- Schedule to run the clean logged notifications cronjob
+    # -- Run the setup configuration command as a cronjob
+    enabled: true
+    # -- Schedule to run the configuration command
     schedule: "0 0 * * *"
     historyLimit: 1
     resources: {}
@@ -224,7 +229,7 @@ settings:
       schedule: "0 0 * * *"
       historyLimit: 1
       resources: {}
-  
+
   # -- The maximum number of automatic retries. After this amount of retries, Open Notificaties stops trying to deliver the message. Application default is 5.
   maxRetries: ""
   # --  If specified, a factor applied to the exponential backoff. This allows you to tune how quickly automatic retries are performed. Application default is 3.
@@ -383,7 +388,7 @@ rabbitmq:
     #   cpu: 500m
     # requests:
     #   memory: 600Mi
-    #   cpu: 200m    
+    #   cpu: 200m
   rbac:
     create: false
   clustering:

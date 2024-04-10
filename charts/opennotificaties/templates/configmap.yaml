@@ -92,4 +92,4 @@ data:
   {{ if .Values.configuration.superuser.username }}
   OPENNOTIFICATIES_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
   OPENNOTIFICATIES_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
-  {{- end }}  
+  {{- end }}

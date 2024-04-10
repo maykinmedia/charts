@@ -14,29 +14,36 @@ configuration:
   enabled: true
   sites:
     enabled: true
-    openzaakDomain: openzaak.example.com
-    organization: Gemeente Example
+    openzaakDomain: ""
+    organization: ""
   notificatiesAuthorization:
     enabled: true
-    notificationOpenzaakClientId: notif-client-id
-    notifcationOpenzaakSecret: notif-secret
+    notificationOpenzaakClientId: ""
+    notifcationOpenzaakSecret: ""
   notificaties:
     enabled: true
-    ApiRoot: http://opennotificaties.example.nl/api/v1/
-    openzaakNotifcationClientId: oz-client-id
-    openzaakNotificationSecret: oz-secret
+    ApiRoot: ""
+    openzaakNotifcationClientId: ""
+    openzaakNotificationSecret: ""
+    # Run the manage.py register_kanalen command, runs in cron job only
+    registerKanalen: false
   selectieLijst:
-    enabled: true
+    enabled: false
     ApiRoot: https://selectielijst.openzaak.nl/api/v1/
-    ApiOas:  https://selectielijst.openzaak.nl/api/v1/schema/openapi.yaml
+    ApiOas: https://selectielijst.openzaak.nl/api/v1/schema/openapi.yaml
     AllowedYears: [2017, 2020]
     DefaultYear: 2020
   superuser:
     username: ""
     password: ""
     email: ""
+  initContainer:
+    # -- Run the setup configuration command in a init container
+    enabled: false
   cronjob:
-    # -- Schedule to run the clean logged notifications cronjob
+    # -- Run the setup configuration command as a cronjob
+    enabled: true
+    # -- Schedule to run the configuration command
     schedule: "0 0 * * *"
     historyLimit: 1
     resources: {}
