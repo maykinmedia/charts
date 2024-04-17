@@ -701,6 +701,28 @@ entries:
   openinwoner:
   - apiVersion: v2
     appVersion: 1.13.1
+    created: "2024-04-17T09:28:20.767219492Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: elasticsearch
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - elasticsearch
+      version: 19.5.11
+    description: Platform voor gemeenten en overheden om producten inzichtelijker
+      en toegankelijker te maken voor inwoners.
+    digest: cb16b22b5e0c39dcf404047f68178819c2c9a7304b400df7c4af709a07f81b90
+    name: openinwoner
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openinwoner-1.2.2/openinwoner-1.2.2.tgz
+    version: 1.2.2
+  - apiVersion: v2
+    appVersion: 1.13.1
     created: "2024-02-29T13:13:06.737849491Z"
     dependencies:
     - name: redis
@@ -2060,4 +2082,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-10T14:52:39.983111585Z"
+generated: "2024-04-17T09:28:20.767619797Z"
