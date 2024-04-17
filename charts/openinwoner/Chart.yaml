@@ -4,7 +4,7 @@ description: Platform voor gemeenten en overheden om producten inzichtelijker en
 
 type: application
 version: 1.2.2
-appVersion: "1.13.1"
+appVersion: "1.15.4"
 
 dependencies:
   - name: redis
