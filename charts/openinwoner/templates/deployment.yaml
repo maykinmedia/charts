@@ -62,7 +62,7 @@ spec:
           {{- end }}
           livenessProbe:
             httpGet:
-              path: /
+              path: /admin/
               port: http
               httpHeaders:
                 - name: Host
@@ -70,7 +70,7 @@ spec:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
-              path: /
+              path: /admin/
               port: http
               httpHeaders:
                 - name: Host
