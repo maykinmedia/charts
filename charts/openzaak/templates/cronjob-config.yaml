@@ -40,7 +40,7 @@ spec:
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               envFrom:
                 - secretRef:
-                    name: {{ .Values.global.existingConfigSecret | default (include "openzaak.fullname" .) }}
+                    name: {{ .Values.existingSecret | default (include "openzaak.fullname" .) }}
                 - configMapRef:
                     name: {{ include "openzaak.fullname" . }}
               env:

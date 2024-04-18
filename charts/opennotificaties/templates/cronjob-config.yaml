@@ -40,7 +40,7 @@ spec:
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               envFrom:
                 - secretRef:
-                    name: {{ .Values.global.existingConfigSecret | default (include "opennotificaties.fullname" .) }}
+                    name: {{ .Values.existingSecret | default (include "opennotificaties.fullname" .) }}
                 - configMapRef:
                     name: {{ include "opennotificaties.fullname" . }}
               env:
