@@ -66,7 +66,7 @@ spec:
                   mountPath: /app/media
                   subPath: {{ .Values.persistence.mediaMountSubpath  | default "openzaak/media" }}
                 {{- if .Values.extraVolumeMounts }}
-                {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+                {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
                 {{- end }}
           volumes:
             - name: media
@@ -77,7 +77,7 @@ spec:
               emptyDir: { }
               {{- end }}
             {{- if .Values.extraVolumes }}
-            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
             {{- end }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
