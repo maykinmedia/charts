@@ -294,18 +294,17 @@ worker:
   resources: {}
   # Defaults to 60s
   maxWorkerLivenessDelta: ""
-  # check_celery_worker_liveness.py is currently only availble in openforms 'latest' and >= 2.2.0
-  livenessProbe: {}
-    # exec:
-    #   command:
-    #     - python
-    #     - /app/bin/check_celery_worker_liveness.py
-    # initialDelaySeconds: 60
-    # # Periodeseconds should not exceed maxWorkerLivenessDelta
-    # periodSeconds: 10
-    # timeoutSeconds: 5
-    # failureThreshold: 3
-    # successThreshold: 1
+  livenessProbe:
+    exec:
+      command:
+        - python
+        - /app/bin/check_celery_worker_liveness.py
+    initialDelaySeconds: 60
+    # Periodeseconds should not exceed maxWorkerLivenessDelta
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
   autoscaling:
     enabled: false
     minReplicas: 1
