@@ -11,6 +11,9 @@ data:
   {{- end }}  
   ENVIRONMENT: {{ .Values.settings.environment | default (include "openarchiefbeheer.fullname" .) }}
   ALLOWED_HOSTS: "{{ include "openarchiefbeheer.fullname" . }},{{ include "openarchiefbeheer.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
+  REACT_APP_API_URL: {{ .Values.settings.react.apiUrl | toString | quote }}
+  REACT_APP_API_PATH: {{ .Values.settings.react.apiPath | toString | quote }}
+  REACT_APP_ZAAK_URL_TEMPLATE: {{ .Values.settings.react.zaakUrlTemplate | toString | quote }}
   {{- if .Values.tags.redis }}
   CACHE_DEFAULT: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
   CACHE_AXES: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
@@ -41,18 +44,62 @@ data:
   {{- if .Values.settings.email.defaultFrom }}
   DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.uwsgi.master }}
-  UWSGI_MASTER:  {{ if .Values.settings.uwsgi.master }}"1"{{ else }}"0"{{ end }}
+  {{- if .Values.settings.cookie.sessionCookieSamesite }}
+  SESSION_COOKIE_SAMESITE: "{{ .Values.settings.cookie.sessionCookieSamesite }}"
   {{- end }}
-  {{- if .Values.settings.uwsgi.threads }}
-  UWSGI_THREADS: {{ .Values.settings.uwsgi.threads  | toString | quote }}
+    {{- if .Values.settings.cookie.sessionCookieSecure }}
+  SESSION_COOKIE_SECURE: "{{ .Values.settings.cookie.sessionCookieSecure }}"
   {{- end }}
-  {{- if .Values.settings.uwsgi.processes }}
-  UWSGI_PROCESSES: {{ .Values.settings.uwsgi.processes | toString | quote }}
+    {{- if .Values.settings.cookie.csrfCookieSamesite }}
+  CSRF_COOKIE_SAMESITE: "{{ .Values.settings.cookie.csrfCookieSamesite }}"
   {{- end }}
-  {{- if .Values.settings.uwsgi.maxRequests }}
-  UWSGI_MAX_REQUESTS: {{ .Values.settings.uwsgi.maxRequests | toString | quote }}
+    {{- if .Values.settings.cookie.csrfCookieSecure }}
+  CSRF_COOKIE_SECURE: "{{ .Values.settings.cookie.csrfCookieSecure }}"
   {{- end }}
-  {{- if .Values.settings.uwsgi.harakiri }}
-  UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
+    {{- if .Values.settings.enableAdminNavSidebar }}
+  ENABLE_ADMIN_NAV_SIDEBAR: "{{ .Values.settings.enableAdminNavSidebar }}"
   {{- end }}
+    {{- if .Values.settings.twoFactorAuthentication.forceOtpAdmin }}
+  TWO_FACTOR_FORCE_OTP_ADMIN: "{{ .Values.settings.twoFactorAuthentication.forceOtpAdmin }}"
+  {{- end }}
+    {{- if .Values.settings.twoFactorAuthentication.patchAdmin }}
+  TWO_FACTOR_PATCH_ADMIN: "{{ .Values.settings.twoFactorAuthentication.patchAdmin }}"
+  {{- end }}
+    {{- if .Values.settings.subpath }}
+  SUBPATH: "{{ .Values.settings.subpath }}"
+  {{- end }}
+    {{- if .Values.settings.throttling.enable }}
+  ENABLE_THROTTLING: "{{ .Values.settings.throttling.enable }}"
+  {{- end }}
+    {{- if .Values.settings.throttling.rateAnonymous }}
+  THROTTLE_RATE_ANON: "{{ .Values.settings.throttling.rateAnonymous }}"
+  {{- end }}
+    {{- if .Values.settings.throttling.rateUser }}
+  THROTTLE_RATE_USER: "{{ .Values.settings.throttling.rateUser }}"
+  {{- end }}
+    {{- if .Values.settings.cors.allowedOrigins }}
+  CORS_ALLOWED_ORIGINS: "{{ .Values.settings.cors.allowedOrigins }}"
+  {{- end }}
+    {{- if .Values.settings.cors.allowedOriginsRegexes }}
+  CORS_ALLOWED_ORIGIN_REGEXES: "{{ .Values.settings.cors.allowedOriginsRegexes }}"
+  {{- end }}
+    {{- if .Values.settings.cors.allowAllOrigins }}
+  CORS_ALLOW_ALL_ORIGINS: "{{ .Values.settings.cors.allowAllOrigins }}"
+  {{- end }}
+    {{- if .Values.settings.cors.extraAllowHeaders }}
+  CORS_EXTRA_ALLOW_HEADERS: "{{ .Values.settings.cors.extraAllowHeaders }}"
+  {{- end }}
+    {{- if .Values.settings.csrf.trustedOrigins }}
+  CSRF_TRUSTED_ORIGINS: "{{ .Values.settings.csrf.trustedOrigins }}"
+  {{- end }}
+  {{- if .Values.tags.redis }}
+  CACHE_DEFAULT: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  CACHE_AXES: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  {{- else }}
+  CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
+  CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.requestsReadTimeout }}
+  REQUESTS_READ_TIMEOUT: {{ .Values.settings.requestsReadTimeout | toString | quote }}
+  {{- end }}
+  

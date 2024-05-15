@@ -182,3 +182,34 @@ Usage:
         {{- tpl (.value | toYaml) .context }}
     {{- end }}
 {{- end -}}
+
+{{/*
+Create a name for the celery beat
+We truncate at 56 chars in order to provide space for the "-beat" suffix
+*/}}
+{{- define "openarchiefbeheer.beatName" -}}
+{{ include "openarchiefbeheer.name" . | trunc 56 | trimSuffix "-" }}-beat
+{{- end }}
+
+{{/*
+Create a default fully qualified name for celery beat.
+We truncate at 56 chars in order to provide space for the "-worker" suffix
+*/}}
+{{- define "openarchiefbeheer.beatFullname" -}}
+{{ include "openarchiefbeheer.fullname" . | trunc 56 | trimSuffix "-" }}-beat
+{{- end }}
+
+{{/*
+Beat labels
+*/}}
+{{- define "openarchiefbeheer.beatLabels" -}}
+{{ include "openarchiefbeheer.commonLabels" . }}
+{{ include "openarchiefbeheer.beatSelectorLabels" . }}
+{{- end }}
+
+{{/*
+Beat selector labels
+*/}}
+{{- define "openarchiefbeheer.beatSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openarchiefbeheer.beatFullname" . }}
+{{- end }}

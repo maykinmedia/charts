@@ -4,7 +4,7 @@ tags:
 replicaCount: 1
 
 image:
-  repository: maykinmedia/archiefbeheercomponent
+  repository: maykinmedia/open-archiefbeheer
   pullPolicy: IfNotPresent
   tag: ""
 
@@ -33,19 +33,8 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
-livenessProbe:
-  initialDelaySeconds: 60
-  periodSeconds: 10
-  timeoutSeconds: 5
-  failureThreshold: 6
-  successThreshold: 1
-
-readinessProbe:
-  initialDelaySeconds: 30
-  periodSeconds: 10
-  timeoutSeconds: 5
-  failureThreshold: 6
-  successThreshold: 1
+livenessProbe: {}
+readinessProbe: {}
 
 service:
   type: ClusterIP
@@ -128,6 +117,7 @@ persistence:
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
 
+
 # This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
 # ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
 # Using this feature requires you to define existingSecret
@@ -141,41 +131,17 @@ azureVaultSecret:
   # You must set .Values.existingSecret
   secretName: "{{ .Values.existingSecret }}"
 
-# -- Array with extra environment variables to add
 extraEnvVars: []
-# e.g:
-# extraEnvVars:
-#   - name: FOO
-#     value: "bar"
-
-# -- Optionally specify extra list of additional volumes
 extraVolumes: []
-# e.g:
-# extraVolumes:
-#   - name: verify-certs
-#     configMap:
-#       name: verify-certs
-
-# -- Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
-# e.g:
-# extraVolumeMounts:
-#  - name: verify-certs
-#    mountPath: /etc/ssl/certs/extra-certs/
 
 settings:
   allowedHosts: ""
-  djangoSettingsModule: archiefbeheercomponent.conf.docker
-  useXForwardedHost: true
-
+  djangoSettingsModule: openarchiefbeheer.conf.docker
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
-
-  # -- sets the 'ENVIRONMENT' variable
   environment: ""
-
-  # -- Will run src/manage.py loaddata default_roles at pod startup (see docs)
-  loadDefaultRoles: false
+  requestsReadTimeout: "30"
 
   database:
     host: ""
@@ -185,35 +151,43 @@ settings:
     name: ""
     sslmode: prefer
 
+  cookie:
+    sessionCookieSamesite: 'Lax'
+    sessionCookieSecure: true
+    csrfCookieSamesite: 'Lax'
+    csrfCookieSecure: true
+
+  cors:
+    allowedOrigins: ""
+    allowedOriginsRegexes: ""
+    allowAllOrigins: false
+    extraAllowHeaders: ""
+
+  throttling:
+    enable: true
+    rateAnonymous: "2500/hour"
+    rateUser: "15000/hour"
+
+  twoFactorAuthentication:
+    forceOtpAdmin: true
+    patchAdmin: true
+
+  csrf:
+    trustedOrigins: ""
+
   sentry:
     dsn: ""
 
   cache:
-    # -- Sets 'CACHE_DEFAULT' var, only required when tags.redis is false
     default: ""
-    # -- Sets 'CACHE_AXES' var, only required when tags.redis is false
     axes: ""
-    # When not using the redis subcharts you can set them manually like this:
-    # default: myredisserver:6379/0
-    # axes: myredisserver:6379/0
 
-  # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
   celery:
-    # e.g.:
-    # brokerUrl: redis://openforms-redis-master:6379/1
-    # resultBackend: redis://openforms-redis-master:6379/1
     brokerUrl: ""
     resultBackend: ""
     logLevel: debug
 
   debug: false
-
-  uwsgi:
-    master: ''
-    threads: ''
-    processes: ''
-    maxRequests: ''
-    harakiri: ''
 
   email:
     host: localhost
@@ -222,24 +196,26 @@ settings:
     password: ""
     useTLS: false
     defaultFrom: ""
+    
+  uwsgi:
+    master: ''
+    threads: ''
+    processes: ''
+    maxRequests: ''
+    harakiri: ''
+
+  react:
+    apiUrl: ""
+    apiPath: "/api/v1"
+    zaakUrlTemplate: ""
 
 worker:
   replicaCount: 1
   concurrency: 4
   podLabels: {}
   resources: {}
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
-    successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
-    successThreshold: 1
+  livenessProbe: {}
+  readinessProbe: {}
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -254,18 +230,16 @@ flower:
   service:
     type: ClusterIP
     port: 80
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
+  livenessProbe: {}
+  readinessProbe: {}
+  resources: {}
+
+beat:
+  enabled: true
+  replicaCount: 1
+  podLabels: {}
+  livenessProbe: {}
+  readinessProbe: {}
   resources: {}
 
 nginx:
@@ -273,12 +247,11 @@ nginx:
     repository: nginxinc/nginx-unprivileged
     pullPolicy: IfNotPresent
     tag: stable
+  existingConfigmap: null
   service:
     type: ClusterIP
-    port: 80
+    port: 9000
     annotations: {}
-  # -- mount existing nginx vhost config
-  existingConfigmap: null
   replicaCount: 1
   podLabels: {}
   securityContext:
@@ -290,18 +263,8 @@ nginx:
     runAsUser: 101
   autoscaling:
     enabled: false
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
-    successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
-    successThreshold: 1
+  livenessProbe: {}
+  readinessProbe: {}
   resources: {}
 
 ##################
