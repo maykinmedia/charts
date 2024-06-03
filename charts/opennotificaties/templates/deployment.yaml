@@ -32,7 +32,7 @@ spec:
       serviceAccountName: {{ include "opennotificaties.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.configuration.initContainer.enabled }}
+      {{- if and .Values.global.configuration.enabled .Values.configuration.enabled .Values.configuration.initContainer.enabled }}
       initContainers:
         - name: {{ .Chart.Name }}-config
           securityContext:
