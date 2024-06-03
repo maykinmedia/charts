@@ -1263,6 +1263,27 @@ entries:
   opennotificaties:
   - apiVersion: v2
     appVersion: 1.5.2
+    created: "2024-06-03T13:05:55.906283582Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - rabbitmq
+      version: 11.7.1
+    description: API voor het routeren van notificaties
+    digest: 5d002f072c0d1c03fcd0c3416766283c508a88fa7cb31a99a7767a0d61860e05
+    name: opennotificaties
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.3.2/opennotificaties-1.3.2.tgz
+    version: 1.3.2
+  - apiVersion: v2
+    appVersion: 1.5.2
     created: "2024-04-18T14:33:52.981776708Z"
     dependencies:
     - name: redis
@@ -1810,6 +1831,22 @@ entries:
   openzaak:
   - apiVersion: v2
     appVersion: 1.12.1
+    created: "2024-06-03T13:05:56.05331678Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: ad147931dc742b80f57172c2698e66617c90fbb9d20d231c037ba0c6d55da196
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.3.2/openzaak-1.3.2.tgz
+    version: 1.3.2
+  - apiVersion: v2
+    appVersion: 1.12.1
     created: "2024-04-18T14:33:53.153686052Z"
     dependencies:
     - name: redis
@@ -2201,4 +2238,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-06T09:10:14.31262859Z"
+generated: "2024-06-03T13:05:56.053720644Z"
