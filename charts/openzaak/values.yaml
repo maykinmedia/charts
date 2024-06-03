@@ -1,5 +1,6 @@
 global:
   configuration:
+    enabled: true
     organization: Gemeente Example
     openzaakDomain: openzaak.example.com
     openzaakAutorisatiesApi: https://openzaak.example.nl/autorisaties/api/v1/
