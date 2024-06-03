@@ -79,7 +79,7 @@ data:
   {{- if .Values.settings.uwsgi.harakiri }}
   UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
   {{- end }}
-  {{ if .Values.configuration.enabled -}}
+  {{ if and .Values.global.configuration.enabled .Values.configuration.enabled -}}
   SITES_CONFIG_ENABLE: {{ .Values.configuration.sites.enabled | toString | quote }}
   OPENNOTIFICATIES_DOMAIN: {{ .Values.global.configuration.notificatiesDomain | default .Values.configuration.sites.notificatiesDomain | toString | quote }}
   OPENNOTIFICATIES_ORGANIZATION: {{ .Values.global.configuration.organization | default .Values.configuration.sites.organization | toString | quote }}
