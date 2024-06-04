@@ -16,10 +16,17 @@ data:
   {{- if .Values.tags.redis }}
   CACHE_DEFAULT: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
   CACHE_AXES: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  CACHE_OIDC: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  CELERY_BROKER_URL: {{ printf "redis://%s-master.%s:6379/1" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  CELERY_RESULT_BACKEND: {{ printf "redis://%s-master.%s:6379/1" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
   {{ else }}
   CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
   CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
+  CACHE_OIDC: {{ .Values.settings.cache.oidc | toString | quote }}
+  CELERY_BROKER_URL: {{ .Values.settings.celery.brokerUrl | toString | quote }}
+  CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackendl | toString | quote }}
   {{- end }}
+  CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
   DIGID_MOCK: {{ .Values.settings.digidMock | toString | quote }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.settings.database.host | toString | quote }}

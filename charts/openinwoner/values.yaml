@@ -217,6 +217,15 @@ settings:
     # default: myredisserver:6379/0
     # axes: myredisserver:6379/0
 
+  # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
+  celery:
+    # e.g.:
+    # brokerUrl: redis://openforms-redis-master:6379/1
+    # resultBackend: redis://openforms-redis-master:6379/1
+    brokerUrl: ""
+    resultBackend: ""
+    logLevel: debug
+
   isHttps: true
 
   debug: false
@@ -233,6 +242,31 @@ settings:
     processes: ""
     maxRequests: ""
     harakiri: ""
+
+worker:
+  replicaCount: 1
+  concurrency: 4
+  podLabels: {}
+  resources: {}
+  # Defaults to 60s
+  maxWorkerLivenessDelta: ""
+  # livenessProbe:
+  #   exec:
+  #     command:
+  #       - python
+  #       - /app/bin/check_celery_worker_liveness.py
+  #   initialDelaySeconds: 60
+  #   # Periodeseconds should not exceed maxWorkerLivenessDelta
+  #   periodSeconds: 10
+  #   timeoutSeconds: 5
+  #   failureThreshold: 3
+  #   successThreshold: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
 
 nginx:
   image:
