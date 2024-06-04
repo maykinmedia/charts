@@ -250,41 +250,23 @@ worker:
   resources: {}
   # Defaults to 60s
   maxWorkerLivenessDelta: ""
-  livenessProbe: {}
-    # exec:
-    #   command:
-    #     - python
-    #     - /app/bin/check_celery_worker_liveness.py
-    # initialDelaySeconds: 60
-    # # Periodeseconds should not exceed maxWorkerLivenessDelta
-    # periodSeconds: 10
-    # timeoutSeconds: 5
-    # failureThreshold: 3
-    # successThreshold: 1
+  # livenessProbe:
+  #   exec:
+  #     command:
+  #       - python
+  #       - /app/bin/check_celery_worker_liveness.py
+  #   initialDelaySeconds: 60
+  #   # Periodeseconds should not exceed maxWorkerLivenessDelta
+  #   periodSeconds: 10
+  #   timeoutSeconds: 5
+  #   failureThreshold: 3
+  #   successThreshold: 1
   autoscaling:
     enabled: false
     minReplicas: 1
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
-
-beat:
-  enabled: true
-  replicaCount: 1
-  podLabels: {}
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
-  resources: {}
 
 nginx:
   image:
