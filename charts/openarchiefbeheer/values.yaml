@@ -223,6 +223,7 @@ settings:
   react:
     apiUrl: ""
     apiPath: "/api/v1"
+    zaakUrlTemplate: ""
 
 worker:
   replicaCount: 1
