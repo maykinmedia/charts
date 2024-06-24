@@ -184,38 +184,6 @@ Usage:
 {{- end -}}
 
 {{/*
-Create a name for NGINX
-We truncate at 57 chars in order to provide space for the "-nginx" suffix
-*/}}
-{{- define "openarchiefbeheer.nginxName" -}}
-{{ include "openarchiefbeheer.name" . | trunc 57 | trimSuffix "-" }}-nginx
-{{- end }}
-
-{{/*
-Create a default fully qualified name for NGINX.
-We truncate at 57 chars in order to provide space for the "-nginx" suffix
-*/}}
-{{- define "openarchiefbeheer.nginxFullname" -}}
-{{ include "openarchiefbeheer.fullname" . | trunc 57 | trimSuffix "-" }}-nginx
-{{- end }}
-
-{{/*
-NGINX labels
-*/}}
-{{- define "openarchiefbeheer.nginxLabels" -}}
-{{ include "openarchiefbeheer.commonLabels" . }}
-{{ include "openarchiefbeheer.nginxSelectorLabels" . }}
-{{- end }}
-
-{{/*
-NGINX selector labels
-*/}}
-{{- define "openarchiefbeheer.nginxSelectorLabels" -}}
-app.kubernetes.io/name: {{ include "openarchiefbeheer.nginxFullname" . }}
-{{- end }}
-
-
-{{/*
 Create a name for the celery beat
 We truncate at 56 chars in order to provide space for the "-beat" suffix
 */}}
