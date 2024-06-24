@@ -161,6 +161,9 @@ spec:
             - name: nginx-config
               mountPath: /etc/nginx/conf.d/
             - name: media
+              mountPath: /app/private-media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openarchiefbeheer/private_media" }}
+            - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openarchiefbeheer/media" }}
       volumes:
