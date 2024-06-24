@@ -117,12 +117,6 @@ persistence:
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
 
-persistence:
-  enabled: true
-  size: 1Gi
-  storageClassName: ""
-  existingClaim: null
-  mediaMountSubpath: openarchiefbeheer/media
 
 # This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
 # ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
@@ -147,6 +141,7 @@ settings:
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
   environment: ""
+  requestsReadTimeout: "30"
 
   database:
     host: ""

@@ -96,4 +96,7 @@ data:
   CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
   CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.requestsReadTimeout }}
+  REQUESTS_READ_TIMEOUT: {{ .Values.settings.requestsReadTimeout | toString | quote }}
+  {{- end }}
   
