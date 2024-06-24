@@ -1,3 +1,5 @@
+---
+# Deployment of both frontend and backend (they are in the same image)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -33,7 +35,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "openarchiefbeheer.fullname" . }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -49,17 +51,8 @@ spec:
             {{- end }}
           ports:
             - name: http
-              containerPort: 8000
+              containerPort: 8080
               protocol: TCP
-          {{- if .Values.settings.loadDefaultRoles }}
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - "/bin/bash"
-                  - "-c"
-                  - /app/src/manage.py loaddata default_roles
-          {{- end }}
           livenessProbe:
             httpGet:
               path: /
@@ -77,21 +70,21 @@ spec:
                   value: {{ include "openarchiefbeheer.fullname" . | quote }}
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
-          {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: media
+            - name:  {{ include "openarchiefbeheer.fullname" . }}
               mountPath: /app/private-media
               subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openarchiefbeheer/private_media" }}
-            - name: media
-              mountPath: /app/media
+            - name: {{ include "openarchiefbeheer.fullname" . }}
+              mountPath:  /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openarchiefbeheer/media" }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openarchiefbeheer.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
-        - name: media
-          persistentVolumeClaim:
+        - name: {{ include "openarchiefbeheer.fullname" . }}
           {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
             claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openarchiefbeheer.fullname" . }}{{- end }}
           {{- else }}
           emptyDir: { }
@@ -113,6 +106,8 @@ spec:
       {{- end }}
 
 ---
+
+# Deployment Nginx
 
 apiVersion: apps/v1
 kind: Deployment
@@ -148,7 +143,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: nginx
+        - name: {{ include "openarchiefbeheer.nginxFullname" . }}
           securityContext:
             {{- toYaml .Values.nginx.securityContext | nindent 12 }}
           image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
@@ -159,7 +154,7 @@ spec:
               port: http
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 9000
           resources:
             {{- toYaml .Values.nginx.resources | nindent 12 }}
           volumeMounts:
@@ -173,8 +168,8 @@ spec:
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openarchiefbeheer/media" }}
       volumes:
         - name: media
-          persistentVolumeClaim:
           {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
             claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openarchiefbeheer.fullname" . }}{{- end }}
           {{- else }}
           emptyDir: { }
@@ -197,6 +192,7 @@ spec:
 
 ---
 
+# Deployment celery
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -246,6 +242,10 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- include "openarchiefbeheer.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
+            {{- if .Values.worker.livenessProbe }}
+          livenessProbe:
+            {{- toYaml .Values.worker.livenessProbe | nindent 12 }}
+            {{- end }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           command:
@@ -285,31 +285,32 @@ spec:
       {{- end }}
 
 ---
-{{ if .Values.flower.enabled -}}
+# Deployment celery beat
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "openarchiefbeheer.flowerFullname" . }}
+  name: {{ include "openarchiefbeheer.beatFullname" . }}
   labels:
-    {{- include "openarchiefbeheer.flowerLabels" . | nindent 4 }}
+  {{- include "openarchiefbeheer.beatLabels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.flower.replicaCount }}
+  replicas: {{ .Values.beat.replicaCount }}
   selector:
     matchLabels:
-      {{- include "openarchiefbeheer.flowerSelectorLabels" . | nindent 6 }}
+      {{- include "openarchiefbeheer.beatSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
         checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "openarchiefbeheer.flowerSelectorLabels" . | nindent 8 }}
-        {{- with .Values.flower.podLabels }}
-            {{- toYaml . | nindent 8 }}
-        {{- end }}
+    {{- include "openarchiefbeheer.beatSelectorLabels" . | nindent 8 }}
+    {{- with .Values.beat.podLabels }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -319,35 +320,24 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ include "openarchiefbeheer.flowerFullname" . }}
+        - name: {{ include "openarchiefbeheer.beatFullname" . }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["/celery_flower.sh"]
-          resources:
-            {{- toYaml .Values.flower.resources | nindent 12 }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openarchiefbeheer.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openarchiefbeheer.fullname" .) }}
             - configMapRef:
                 name: {{ include "openarchiefbeheer.fullname" . }}
-          env:
-            {{- if .Values.extraEnvVars }}
-            {{- include "openarchiefbeheer.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-            {{- end }}
-          ports:
-            - name: http
-              containerPort: 5555
-              protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: 5555
-            {{- toYaml .Values.flower.livenessProbe | nindent 12 }}
-          readinessProbe:
-            tcpSocket:
-              port: 5555
-            {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.beat.resources | nindent 12 }}
+          command:
+            - /celery_beat.sh
           volumeMounts:
             - name: media
               mountPath: /app/private-media
@@ -381,4 +371,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-{{- end }}
