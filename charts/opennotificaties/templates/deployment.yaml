@@ -49,7 +49,14 @@ spec:
             {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
             {{- end }}
           command:
-            - /setup_configuration.sh
+            - /usr/local/bin/python
+          args:
+            - /app/src/manage.py
+            - setup_configuration
+            - --no-selftest
+            {{- if or .Values.global.configuration.overwrite .Values.configuration.overwrite }}
+            - --overwrite
+            {{- end }}
         {{- end }}
       containers:
         - name: {{ .Chart.Name }}

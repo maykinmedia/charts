@@ -82,6 +82,7 @@ data:
   NOTIFICATIONS_DISABLED: "True"
   {{- end }}
   {{ if and .Values.global.configuration.enabled .Values.configuration.enabled -}}
+  DEMO_CONFIG_ENABLE: "False"
   SITES_CONFIG_ENABLE: {{ if .Values.configuration.sites.enabled }}"True"{{ else }}"False"{{ end }}
   {{- if .Values.configuration.sites.enabled }}
   OPENZAAK_DOMAIN: {{ .Values.global.configuration.openzaakDomain | default .Values.configuration.sites.openzaakDomain | toString | quote }}
