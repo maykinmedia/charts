@@ -6,6 +6,9 @@ metadata:
     {{- include "openarchiefbeheer.labels" . | nindent 4 }}
 data:
   DJANGO_SETTINGS_MODULE: {{ .Values.settings.djangoSettingsModule | toString | quote }}
+  {{- if .Values.settings.useXForwardedHost }}
+  USE_X_FORWARDED_HOST: "True"
+  {{- end }}  
   ENVIRONMENT: {{ .Values.settings.environment | default (include "openarchiefbeheer.fullname" .) }}
   ALLOWED_HOSTS: "{{ include "openarchiefbeheer.fullname" . }},{{ include "openarchiefbeheer.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
   {{- if .Values.tags.redis }}

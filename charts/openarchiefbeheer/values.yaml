@@ -166,6 +166,7 @@ extraVolumeMounts: []
 settings:
   allowedHosts: ""
   djangoSettingsModule: archiefbeheercomponent.conf.docker
+  useXForwardedHost: true
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
