@@ -186,6 +186,16 @@ settings:
   sentry:
     dsn: ""
 
+  # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
+  cache:
+    # e.g.:
+    # default: openforms-redis-master-0:6379/0
+    # axes: openforms-redis-master-0:6379/0
+    # oidc: openforms-redis-master-0:6379/0
+    default: ""
+    axes: ""
+    oidc: ""
+
   debug: false
 
   twoFactorAuthentication:
@@ -200,3 +210,19 @@ settings:
     processes: ''
     maxRequests: ''
     harakiri: ''
+
+##################
+# Redis subchart #
+##################
+
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: false
+    resources:
+      requests:
+        cpu: 10m
+        memory: 20Mi
