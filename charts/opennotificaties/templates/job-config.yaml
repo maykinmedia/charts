@@ -43,7 +43,7 @@ spec:
             {{- include "opennotificaties.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           resources:
-          {{- toYaml .Values.configuration.cronjob.resources | nindent 12 }}
+          {{- toYaml .Values.configuration.job.resources | nindent 12 }}
           command:
             - "/bin/bash"
             - "-c"

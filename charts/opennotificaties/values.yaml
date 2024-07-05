@@ -1,6 +1,6 @@
 global:
   configuration:
-    enabled: true
+    enabled: false
     overwrite: true
     organization: Gemeente Example
     openzaakAutorisatiesApi: https://openzaak.example.nl/autorisaties/api/v1/
@@ -11,19 +11,19 @@ global:
     openzaakNotificatiesSecret: oz-secret
 
 configuration:
-  enabled: true
+  enabled: false
   overwrite: true
   sites:
-    enabled: true
+    enabled: false
     notificatiesDomain: ""
     organization: ""
   openzaakAuthorization:
-    enabled: true
+    enabled: false
     ApiRoot: ""
     notificationOpenzaakClientId: ""
     notifcationOpenzaakSecret: ""
   notificaties:
-    enabled: true
+    enabled: false
     openzaakNotifcationClientId: ""
     openzaakNotificationSecret: ""
   superuser:
@@ -32,12 +32,20 @@ configuration:
     email: ""
   initContainer:
     # -- Run the setup configuration command in a init container
-    enabled: false
+    enabled: true
   job:
     # -- Run the setup configuration command as a job
-    enabled: true
+    enabled: false
     backoffLimit: 6
     restartPolicy: OnFailure
+    resources: {}
+      # limits:
+      #   cpu: 200m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi  
+          
 tags:
   redis: true
   rabbitmq: true

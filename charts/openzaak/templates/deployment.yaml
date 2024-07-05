@@ -52,9 +52,10 @@ spec:
             - "/bin/bash"
             - "-c"
           args:
-              /wait_for_db.sh
-              /app/src/manage.py migrate
-              /app/src/manage.py setup_configuration --no-selftest {{- if or .Values.global.configuration.overwrite .Values.configuration.overwrite }} --overwrite{{- end }}
+          - |
+            /wait_for_db.sh
+            /app/src/manage.py migrate
+            /app/src/manage.py setup_configuration --no-selftest {{- if or .Values.global.configuration.overwrite .Values.configuration.overwrite }} --overwrite{{- end }}
           volumeMounts:
             - name: media
               mountPath: /app/private-media
