@@ -3,8 +3,8 @@ name: openarchiefbeheer
 description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
 type: application
-version: 0.9.8
-appVersion: 1.1.5
+version: 1.0.0
+appVersion: 0.1.0
 
 dependencies:
   - name: redis
