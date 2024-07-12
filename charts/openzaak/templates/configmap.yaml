@@ -86,7 +86,7 @@ data:
   SITES_CONFIG_ENABLE: {{ if .Values.configuration.sites.enabled }}"True"{{ else }}"False"{{ end }}
   {{- if .Values.configuration.sites.enabled }}
   OPENZAAK_DOMAIN: {{ .Values.configuration.sites.openzaakDomain | toString | quote }}
-  OPENZAAK_ORGANIZATION: {{ .Values.configuration.sites.organization | toString | quote }}
+  OPENZAAK_ORGANIZATION: {{ .Values.global.configuration.organization | .Values.configuration.sites.organization | toString | quote }}
   {{- end }}
   NOTIF_OPENZAAK_CONFIG_ENABLE: {{ if .Values.configuration.notificatiesAuthorization.enabled }}"True"{{ else }}"False"{{ end }}
   {{- if .Values.configuration.notificatiesAuthorization.enabled }}
