@@ -84,7 +84,7 @@ data:
   SITES_CONFIG_ENABLE: {{ if .Values.configuration.sites.enabled }}"True"{{ else }}"False"{{ end }}
   {{- if .Values.configuration.sites.enabled }}
   OPENNOTIFICATIES_DOMAIN: {{ .Values.global.configuration.notificatiesDomain | default .Values.configuration.sites.notificatiesDomain | toString | quote }}
-  OPENNOTIFICATIES_ORGANIZATION: {{ {{ .Values.global.configuration.organization | default .Values.configuration.sites.organization | toString | quote }}
+  OPENNOTIFICATIES_ORGANIZATION: {{ .Values.global.configuration.organization | default .Values.configuration.sites.organization | toString | quote }}
   {{- end }}
   AUTHORIZATION_CONFIG_ENABLE: {{ if .Values.configuration.openzaakAuthorization.enabled }}"True"{{ else }}"False"{{ end }}
   {{ if .Values.configuration.openzaakAuthorization.enabled -}}
