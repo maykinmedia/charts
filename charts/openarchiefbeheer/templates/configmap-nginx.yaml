@@ -8,7 +8,7 @@ metadata:
 data:
   default.conf: |
     server {
-      listen 9000 default_server;
+      listen 8080 default_server;
       server_name  {{ .Values.settings.allowedHosts  | replace "," " "}} localhost;
 
       location ~ ^/admin|static|assets|api/ {

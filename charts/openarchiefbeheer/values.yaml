@@ -263,7 +263,7 @@ nginx:
   existingConfigmap: null
   service:
     type: ClusterIP
-    port: 9000
+    port: 8080
     annotations: {}
   replicaCount: 1
   podLabels: {}
