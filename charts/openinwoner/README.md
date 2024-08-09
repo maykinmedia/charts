@@ -1,6 +1,6 @@
 # openinwoner
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.3](https://img.shields.io/badge/AppVersion-1.8.3-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.19.0](https://img.shields.io/badge/AppVersion-1.19.0-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
@@ -28,6 +28,16 @@ helm install my-release my-repo/openinwoner
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| azureVaultSecret.contentType | string | `""` |  |
+| azureVaultSecret.objectName | string | `""` |  |
+| azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
+| azureVaultSecret.vaultName | string | `nil` |  |
+| beat.podLabels | object | `{}` |  |
+| beat.replicaCount | int | `1` |  |
+| beat.resources | object | `{}` |  |
+| celeryMonitor.podLabels | object | `{}` |  |
+| celeryMonitor.replicaCount | int | `1` |  |
+| celeryMonitor.resources | object | `{}` |  |
 | elasticsearch.coordinating.replicaCount | int | `1` |  |
 | elasticsearch.data.persistence.enabled | bool | `false` |  |
 | elasticsearch.data.persistence.size | string | `"8Gi"` |  |
@@ -41,7 +51,7 @@ helm install my-release my-repo/openinwoner
 | elasticsearch.master.resources.requests.cpu | string | `"25m"` |  |
 | elasticsearch.master.resources.requests.memory | string | `"256Mi"` |  |
 | existingSecret | string | `nil` |  |
-| extraDeploy | list | `[]` | Optionally specify additional resources to deploy |
+| extraDeploy | list | `[]` | Extra objects to deploy (value evaluated as a template) |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` |  |
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
@@ -84,9 +94,9 @@ helm install my-release my-repo/openinwoner
 | nginx.securityContext.readOnlyRootFilesystem | bool | `false` |  |
 | nginx.securityContext.runAsNonRoot | bool | `true` |  |
 | nginx.securityContext.runAsUser | int | `101` |  |
-| nginx.service.annotations | object | `{}` | Optionally specify extra annotations |
-| nginx.service.port | int | `80` | |
-| nginx.service.type | string | `"ClusterIP"` | | 
+| nginx.service.annotations | object | `{}` |  |
+| nginx.service.port | int | `80` |  |
+| nginx.service.type | string | `"ClusterIP"` |  |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
@@ -123,8 +133,12 @@ helm install my-release my-repo/openinwoner
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
+| settings.brpVersion | string | `""` |  |
 | settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |
 | settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
+| settings.celery.brokerUrl | string | `""` |  |
+| settings.celery.logLevel | string | `"debug"` |  |
+| settings.celery.resultBackend | string | `""` |  |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
 | settings.database.password | string | `""` |  |
@@ -132,7 +146,9 @@ helm install my-release my-repo/openinwoner
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
+| settings.digidMock | string | `""` |  |
 | settings.djangoSettingsModule | string | `"open_inwoner.conf.docker"` |  |
+| settings.eherkenningMock | string | `""` |  |
 | settings.elasticSearchHost | string | `""` | Elasticsearch hostname, only required when tags.elasticsearch is false |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
@@ -147,9 +163,8 @@ helm install my-release my-repo/openinwoner
 | settings.loadFixtures | bool | `false` | Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
-| settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` | Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC. |
-| settings.twoFactorAuthentication.patchAdmin | bool | `true` | Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC. |
-| settings.useXForwardedHost | bool | `true` |  |
+| settings.smsgateway.apikey | string | `""` |  |
+| settings.smsgateway.backend | string | `""` | For example "open_inwoner.accounts.gateways.MessageBird" |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | bool | `false` |  |
 | settings.uwsgi.maxRequests | string | `""` |  |
@@ -158,4 +173,21 @@ helm install my-release my-repo/openinwoner
 | tags.elasticsearch | bool | `true` |  |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
+| worker.autoscaling.enabled | bool | `false` |  |
+| worker.autoscaling.maxReplicas | int | `100` |  |
+| worker.autoscaling.minReplicas | int | `1` |  |
+| worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| worker.concurrency | int | `4` |  |
+| worker.livenessProbe.exec.command[0] | string | `"python"` |  |
+| worker.livenessProbe.exec.command[1] | string | `"/app/bin/check_celery_worker_liveness.py"` |  |
+| worker.livenessProbe.failureThreshold | int | `3` |  |
+| worker.livenessProbe.initialDelaySeconds | int | `60` |  |
+| worker.livenessProbe.periodSeconds | int | `10` |  |
+| worker.livenessProbe.successThreshold | int | `1` |  |
+| worker.livenessProbe.timeoutSeconds | int | `5` |  |
+| worker.maxWorkerLivenessDelta | string | `""` |  |
+| worker.podLabels | object | `{}` |  |
+| worker.replicaCount | int | `1` |  |
+| worker.resources | object | `{}` |  |
 
