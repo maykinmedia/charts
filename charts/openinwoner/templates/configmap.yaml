@@ -28,6 +28,13 @@ data:
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
   DIGID_MOCK: {{ .Values.settings.digidMock | toString | quote }}
+  EHERKENNING_MOCK: {{ .Values.settings.eherkenningdMock | toString | quote }}
+  {{- if .Values.settings.smsgateway.backend }}
+  ACCOUNTS_SMS_GATEWAY_BACKEND:  {{ .Values.settings.smsgateway.backend | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.brpVersion }}
+  BRP_VERSION: {{ .Values.settings.brpVersion | toString | quote }}
+  {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
@@ -49,8 +56,6 @@ data:
   {{- if .Values.settings.elasticapm.url }}
   ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
   {{- end }}
-  TWO_FACTOR_FORCE_OTP_ADMIN: {{ if .Values.settings.twoFactorAuthentication.forceOtpAdmin }}"True"{{ else }}"False"{{ end }}
-  TWO_FACTOR_PATCH_ADMIN: {{ if .Values.settings.twoFactorAuthentication.patchAdmin }}"True"{{ else }}"False"{{ end }}
   {{- if .Values.settings.uwsgi.master }}
   UWSGI_MASTER:  {{ if .Values.settings.uwsgi.master }}"1"{{ else }}"0"{{ end }}
   {{- end }}

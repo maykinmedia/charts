@@ -165,7 +165,7 @@ extraVolumeMounts: []
 #  - name: verify-certs
 #    mountPath: /etc/ssl/certs/extra-certs/
 
-# Extra objects to deploy (value evaluated as a template)
+# -- Extra objects to deploy (value evaluated as a template)
 extraDeploy: []
 
 settings:
@@ -203,7 +203,15 @@ settings:
     url: ""
     token: ""
 
+  smsgateway:
+    # -- For example "open_inwoner.accounts.gateways.MessageBird"
+    backend: ""
+    apikey: ""
+
+  brpVersion: ""
+
   digidMock: ""
+  eherkenningMock: ""
 
   sentry:
     dsn: ""
@@ -230,12 +238,6 @@ settings:
 
   debug: false
 
-  twoFactorAuthentication:
-      # -- Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC.
-      forceOtpAdmin: true
-      # -- Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC.
-      patchAdmin: true
-
   uwsgi:
     master: false
     threads: ""
@@ -250,23 +252,33 @@ worker:
   resources: {}
   # Defaults to 60s
   maxWorkerLivenessDelta: ""
-  # livenessProbe:
-  #   exec:
-  #     command:
-  #       - python
-  #       - /app/bin/check_celery_worker_liveness.py
-  #   initialDelaySeconds: 60
-  #   # Periodeseconds should not exceed maxWorkerLivenessDelta
-  #   periodSeconds: 10
-  #   timeoutSeconds: 5
-  #   failureThreshold: 3
-  #   successThreshold: 1
+  livenessProbe:
+    exec:
+      command:
+        - python
+        - /app/bin/check_celery_worker_liveness.py
+    initialDelaySeconds: 60
+    # Periodeseconds should not exceed maxWorkerLivenessDelta
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
   autoscaling:
     enabled: false
     minReplicas: 1
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+
+beat:
+  replicaCount: 1
+  podLabels: {}
+  resources: {}
+
+celeryMonitor:
+  replicaCount: 1
+  podLabels: {}
+  resources: {}
 
 nginx:
   image:

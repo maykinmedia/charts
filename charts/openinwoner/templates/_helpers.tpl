@@ -161,34 +161,34 @@ app.kubernetes.io/name: {{ include "openinwoner.beatName" . }}
 {{- end }}
 
 {{/*
-Create a name for Flower
-We truncate at 56 chars in order to provide space for the "-flower" suffix
+Create a name for Celery Monitor
+We truncate at 56 chars in order to provide space for the "-celery-monitor" suffix
 */}}
-{{- define "openinwoner.flowerName" -}}
-{{ include "openinwoner.name" . | trunc 56 | trimSuffix "-" }}-flower
+{{- define "openinwoner.celeryMonitorName" -}}
+{{ include "openinwoner.name" . | trunc 56 | trimSuffix "-" }}-celery-monitor
 {{- end }}
 
 {{/*
-Create a default fully qualified name for Flower.
-We truncate at 56 chars in order to provide space for the "-flower" suffix
+Create a default fully qualified name for celeryMonitor.
+We truncate at 56 chars in order to provide space for the "-celeryMonitor" suffix
 */}}
-{{- define "openinwoner.flowerFullname" -}}
-{{ include "openinwoner.fullname" . | trunc 56 | trimSuffix "-" }}-flower
+{{- define "openinwoner.celeryMonitorFullname" -}}
+{{ include "openinwoner.fullname" . | trunc 56 | trimSuffix "-" }}-celery-monitor
 {{- end }}
 
 {{/*
-Flower labels
+celeryMonitor labels
 */}}
-{{- define "openinwoner.flowerLabels" -}}
+{{- define "openinwoner.celeryMonitorLabels" -}}
 {{ include "openinwoner.commonLabels" . }}
-{{ include "openinwoner.flowerSelectorLabels" . }}
+{{ include "openinwoner.celeryMonitorSelectorLabels" . }}
 {{- end }}
 
 {{/*
-Flower selector labels
+celeryMonitor selector labels
 */}}
-{{- define "openinwoner.flowerSelectorLabels" -}}
-app.kubernetes.io/name: {{ include "openinwoner.flowerName" . }}
+{{- define "openinwoner.celeryMonitorSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openinwoner.celeryMonitorName" . }}
 {{- end }}
 
 {{/*
