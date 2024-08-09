@@ -28,7 +28,7 @@ data:
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
   DIGID_MOCK: {{ .Values.settings.digidMock | toString | quote }}
-  EHERKENNING_MOCK: {{ .Values.settings.eherkenningdMock | toString | quote }}
+  EHERKENNING_MOCK: {{ .Values.settings.eherkenningMock | toString | quote }}
   {{- if .Values.settings.smsgateway.backend }}
   ACCOUNTS_SMS_GATEWAY_BACKEND:  {{ .Values.settings.smsgateway.backend | toString | quote }}
   {{- end }}
