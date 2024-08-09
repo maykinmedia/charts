@@ -51,7 +51,7 @@ spec:
             {{- end }}
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8000
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -154,7 +154,7 @@ spec:
               port: http
           ports:
             - name: http
-              containerPort: 9000
+              containerPort: 8080
           resources:
             {{- toYaml .Values.nginx.resources | nindent 12 }}
           volumeMounts:

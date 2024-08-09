@@ -102,4 +102,7 @@ data:
   {{- if .Values.settings.requestsReadTimeout }}
   REQUESTS_READ_TIMEOUT: {{ .Values.settings.requestsReadTimeout | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.frontendUrl }}
+  FRONTEND_URL: {{ .Values.settings.frontendUrl | toString | quote }}
+  {{- end }}
   
