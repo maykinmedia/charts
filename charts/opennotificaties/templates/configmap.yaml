@@ -41,11 +41,14 @@ data:
   NOTIFICATION_DELIVERY_RETRY_BACKOFF_MAX: {{ .Values.settings.retryBackoffMax | toString | quote }}
   {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
-  DB_HOST: {{ .Values.settings.database.host | toString | quote }}
+  DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
   DB_PORT: {{ .Values.settings.database.port | toString | quote }}
   PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
   DEBUG: {{ if .Values.settings.debug }}"True"{{ else }}"False"{{ end }}
+  {{ if .Values.settings.disable2fa }}
+  DISABLE_2FA: "True"
+  {{- end }}
   NUM_PROXIES: {{ .Values.settings.numProxies | toString | quote }}
   IS_HTTPS: {{ if .Values.settings.isHttps }}"True"{{ else }}"False"{{ end }}
   FLOWER_URL_PREFIX: {{ .Values.settings.flower.urlPrefix | toString | quote }}

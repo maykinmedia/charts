@@ -1,3 +1,8 @@
+global:
+  settings:
+    # -- Global databasehost, overrides setting.database.host
+    databaseHost: ""
+
 tags:
   redis: true
 
@@ -244,9 +249,9 @@ worker:
         - /app/bin/check_celery_worker_liveness.py
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
-    periodSeconds: 10
+    periodSeconds: 50
     timeoutSeconds: 5
-    failureThreshold: 3
+    failureThreshold: 10
     successThreshold: 1
   autoscaling:
     enabled: false
