@@ -1,6 +1,6 @@
 # openinwoner
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.19.0](https://img.shields.io/badge/AppVersion-1.19.0-informational?style=flat-square)
+![Version: 1.5.1](https://img.shields.io/badge/Version-1.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.20.0](https://img.shields.io/badge/AppVersion-1.20.0-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
@@ -39,13 +39,15 @@ helm install my-release my-repo/openinwoner
 | celeryMonitor.replicaCount | int | `1` |  |
 | celeryMonitor.resources | object | `{}` |  |
 | elasticsearch.coordinating.replicaCount | int | `1` |  |
-| elasticsearch.data.persistence.enabled | bool | `false` |  |
+| elasticsearch.data.persistence.enabled | bool | `true` |  |
 | elasticsearch.data.persistence.size | string | `"8Gi"` |  |
+| elasticsearch.data.persistence.storageClass | string | `""` |  |
 | elasticsearch.data.replicaCount | int | `1` |  |
 | elasticsearch.ingest.enabled | bool | `false` |  |
 | elasticsearch.master.masterOnly | bool | `true` |  |
-| elasticsearch.master.persistence.enabled | bool | `false` |  |
-| elasticsearch.master.persistence.size | string | `""` |  |
+| elasticsearch.master.persistence.enabled | bool | `true` |  |
+| elasticsearch.master.persistence.size | string | `"8Gi"` |  |
+| elasticsearch.master.persistence.storageClass | string | `""` |  |
 | elasticsearch.master.replicaCount | int | `1` |  |
 | elasticsearch.master.resources.limits | object | `{}` |  |
 | elasticsearch.master.resources.requests.cpu | string | `"25m"` |  |
@@ -57,6 +59,7 @@ helm install my-release my-repo/openinwoner
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | fullnameOverride | string | `""` |  |
+| global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"maykinmedia/open-inwoner"` |  |
 | image.tag | string | `""` | uses .Chart.AppVersion by default |
@@ -181,9 +184,9 @@ helm install my-release my-repo/openinwoner
 | worker.concurrency | int | `4` |  |
 | worker.livenessProbe.exec.command[0] | string | `"python"` |  |
 | worker.livenessProbe.exec.command[1] | string | `"/app/bin/check_celery_worker_liveness.py"` |  |
-| worker.livenessProbe.failureThreshold | int | `3` |  |
+| worker.livenessProbe.failureThreshold | int | `10` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
-| worker.livenessProbe.periodSeconds | int | `10` |  |
+| worker.livenessProbe.periodSeconds | int | `50` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
 | worker.livenessProbe.timeoutSeconds | int | `5` |  |
 | worker.maxWorkerLivenessDelta | string | `""` |  |
