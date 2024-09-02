@@ -415,6 +415,23 @@ entries:
     version: 0.9.1
   openforms:
   - apiVersion: v2
+    appVersion: 2.7.4
+    created: "2024-09-02T12:35:40.015109744Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Snel en eenvoudig slimme formulieren bouwen en publiceren
+    digest: d0ddb8443928f1b954a066319350a30da7e715d0ee7da863dd6f9cedbeba30c3
+    icon: https://open-forms.readthedocs.io/en/stable/_static/logo.svg
+    name: openforms
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openforms-1.4.0/openforms-1.4.0.tgz
+    version: 1.4.0
+  - apiVersion: v2
     appVersion: 2.5.6
     created: "2024-04-19T07:16:54.885131482Z"
     dependencies:
@@ -2493,4 +2510,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-13T14:38:54.992041009Z"
+generated: "2024-09-02T12:35:40.015611027Z"
