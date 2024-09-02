@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.1.6](https://img.shields.io/badge/Version-1.1.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
+![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.4](https://img.shields.io/badge/AppVersion-2.7.4-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -27,6 +27,10 @@ helm install my-release my-repo/openforms
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| azureVaultSecret.contentType | string | `""` |  |
+| azureVaultSecret.objectName | string | `""` |  |
+| azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
+| azureVaultSecret.vaultName | string | `nil` |  |
 | beat.enabled | bool | `true` |  |
 | beat.livenessProbe.failureThreshold | int | `6` |  |
 | beat.livenessProbe.initialDelaySeconds | int | `60` |  |
@@ -63,6 +67,7 @@ helm install my-release my-repo/openforms
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openformulieren/open-forms"` |  |
 | image.tag | string | `""` |  |
@@ -124,7 +129,9 @@ helm install my-release my-repo/openforms
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | redis.architecture | string | `"standalone"` |  |
 | redis.auth.enabled | bool | `false` |  |
-| redis.master.persistence.enabled | bool | `false` |  |
+| redis.master.persistence.enabled | bool | `true` |  |
+| redis.master.persistence.size | string | `"8Gi"` |  |
+| redis.master.persistence.storageClass | string | `""` |  |
 | redis.master.resources.requests.cpu | string | `"10m"` |  |
 | redis.master.resources.requests.memory | string | `"20Mi"` |  |
 | replicaCount | int | `1` |  |
@@ -150,6 +157,7 @@ helm install my-release my-repo/openforms
 | settings.cookieSamesite | string | `""` | Choises Strict or Lax |
 | settings.cors.allowAllOrigins | bool | `false` |  |
 | settings.cors.allowedOrigins | list | `[]` |  |
+| settings.cors.allowedOriginsNginx | bool | `false` |  |
 | settings.csp.extraDefaultSrc | list | `[]` |  |
 | settings.csp.extraImgSrc | list | `[]` |  |
 | settings.csp.reportSave | bool | `false` |  |
@@ -171,20 +179,20 @@ helm install my-release my-repo/openforms
 | settings.email.useTLS | bool | `false` |  |
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `nil` |  |
+| settings.escapeRegistrationOutput | bool | `false` |  |
 | settings.flower.basicAuth | string | `""` |  |
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
 | settings.maxFileUpload | string | `"50M"` | Configure the maximum allowed file upload size |
-| settings.maxImportSize | string | `"20M"` | Configure the maximum allowed form import size |
+| settings.maxImportSize | string | `"20M"` | Configure the maximum allowed size for importing forms in the admin |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
+| settings.oidc | object | `{"useLegacyDigidEndpoint":false,"useLegacyEndpont":false,"useLegacyOrgEndpoint":false}` | https://open-forms.readthedocs.io/en/latest/changelog.html#upgrade-notes |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `""` |  |
 | settings.throttling.ratePolling | string | `""` |  |
 | settings.throttling.rateUser | string | `""` |  |
-| settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` | Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC. |
-| settings.twoFactorAuthentication.patchAdmin | bool | `true` | Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC. |
 | settings.useXForwardedHost | bool | `false` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | bool | `false` |  |
@@ -199,17 +207,15 @@ helm install my-release my-repo/openforms
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
-| worker.livenessProbe.failureThreshold | int | `3` |  |
+| worker.livenessProbe.exec.command[0] | string | `"python"` |  |
+| worker.livenessProbe.exec.command[1] | string | `"/app/bin/check_celery_worker_liveness.py"` |  |
+| worker.livenessProbe.failureThreshold | int | `10` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
-| worker.livenessProbe.periodSeconds | int | `10` |  |
+| worker.livenessProbe.periodSeconds | int | `50` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
-| worker.livenessProbe.timeoutSeconds | int | `5` |  |
+| worker.livenessProbe.timeoutSeconds | int | `15` |  |
+| worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
-| worker.readinessProbe.failureThreshold | int | `3` |  |
-| worker.readinessProbe.initialDelaySeconds | int | `30` |  |
-| worker.readinessProbe.periodSeconds | int | `10` |  |
-| worker.readinessProbe.successThreshold | int | `1` |  |
-| worker.readinessProbe.timeoutSeconds | int | `5` |  |
-| worker.replicaCount | int | `1` |  |
+| worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
 

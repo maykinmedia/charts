@@ -51,6 +51,7 @@ data:
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.settings.database.host | toString | quote }}
+  DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
   DB_PORT: {{ .Values.settings.database.port | toString | quote }}
   PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
@@ -72,8 +73,6 @@ data:
   {{- if .Values.settings.elasticapm.url }}
   ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
   {{- end }}
-  TWO_FACTOR_FORCE_OTP_ADMIN: {{ if .Values.settings.twoFactorAuthentication.forceOtpAdmin }}"True"{{ else }}"False"{{ end }}
-  TWO_FACTOR_PATCH_ADMIN: {{ if .Values.settings.twoFactorAuthentication.patchAdmin }}"True"{{ else }}"False"{{ end }}
   CELERY_WORKER_CONCURRENCY: {{ .Values.worker.concurrency | toString | quote }}
   MAX_FILE_UPLOAD_SIZE: {{ .Values.settings.maxFileUpload | toString | quote }}
   ENABLE_THROTTLING: {{ if .Values.settings.throttling.enable }}"True"{{ else }}"False"{{ end }}
@@ -102,3 +101,6 @@ data:
   UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
   {{- end }}
   ESCAPE_REGISTRATION_OUTPUT: {{ if .Values.settings.escapeRegistrationOutput }}"True"{{ else }}"False"{{ end }}
+  USE_LEGACY_OIDC_ENDPOINTS: {{ if .Values.settings.oidc.useLegacyEndpont }}"True"{{ else }}"False"{{ end }}
+  USE_LEGACY_DIGID_EH_OIDC_ENDPOINTS: {{ if .Values.settings.oidc.useLegacyDigidEndpoint }}"True"{{ else }}"False"{{ end }}
+  USE_LEGACY_ORG_OIDC_ENDPOINTS: {{ if .Values.settings.oidc.useLegacyOrgEndpoint }}"True"{{ else }}"False"{{ end }}
