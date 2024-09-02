@@ -1,10 +1,11 @@
-tags:
-  redis: true
 
 global:
   settings:
     # -- Global databasehost, overrides setting.database.host
     databaseHost: ""
+
+tags:
+  redis: true
 
 replicaCount: 1
 
