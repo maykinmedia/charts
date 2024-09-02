@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
+![Version: 1.3.6](https://img.shields.io/badge/Version-1.3.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.13.0](https://img.shields.io/badge/AppVersion-1.13.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -10,7 +10,6 @@ Productiewaardige API's voor Zaakgericht Werken
 helm repo add my-repo https://maykinmedia.github.io/charts/
 helm install my-release my-repo/opennotificaties
 ```
-
 
 ## Requirements
 
@@ -32,6 +31,33 @@ helm install my-release my-repo/opennotificaties
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| configuration.enabled | bool | `false` |  |
+| configuration.initContainer.enabled | bool | `true` | Run the setup configuration command in a init container |
+| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
+| configuration.job.resources | object | `{}` |  |
+| configuration.job.restartPolicy | string | `"OnFailure"` |  |
+| configuration.notificaties.ApiRoot | string | `""` |  |
+| configuration.notificaties.enabled | bool | `false` |  |
+| configuration.notificaties.openzaakNotifcationClientId | string | `""` |  |
+| configuration.notificaties.openzaakNotificationSecret | string | `""` |  |
+| configuration.notificaties.registerKanalen | bool | `false` |  |
+| configuration.notificatiesAuthorization.enabled | bool | `false` |  |
+| configuration.notificatiesAuthorization.notifcationOpenzaakSecret | string | `""` |  |
+| configuration.notificatiesAuthorization.notificationOpenzaakClientId | string | `""` |  |
+| configuration.overwrite | bool | `true` |  |
+| configuration.selectieLijst.AllowedYears[0] | int | `2017` |  |
+| configuration.selectieLijst.AllowedYears[1] | int | `2020` |  |
+| configuration.selectieLijst.ApiOas | string | `"https://selectielijst.openzaak.nl/api/v1/schema/openapi.yaml"` |  |
+| configuration.selectieLijst.ApiRoot | string | `"https://selectielijst.openzaak.nl/api/v1/"` |  |
+| configuration.selectieLijst.DefaultYear | int | `2020` |  |
+| configuration.selectieLijst.enabled | bool | `false` |  |
+| configuration.sites.enabled | bool | `false` |  |
+| configuration.sites.openzaakDomain | string | `""` |  |
+| configuration.sites.organization | string | `""` |  |
+| configuration.superuser.email | string | `""` |  |
+| configuration.superuser.password | string | `""` |  |
+| configuration.superuser.username | string | `""` |  |
 | existingSecret | string | `nil` |  |
 | extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
@@ -54,6 +80,16 @@ helm install my-release my-repo/opennotificaties
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global.configuration.enabled | bool | `false` |  |
+| global.configuration.notificatiesApi | string | `"http://opennotificaties.example.nl/api/v1/"` |  |
+| global.configuration.notificatiesOpenzaakClientId | string | `"notif-client-id"` |  |
+| global.configuration.notificatiesOpenzaakSecret | string | `"notif-secret"` |  |
+| global.configuration.openzaakAutorisatiesApi | string | `"https://openzaak.example.nl/autorisaties/api/v1/"` |  |
+| global.configuration.openzaakNotificatiesClientId | string | `"oz-client-id"` |  |
+| global.configuration.openzaakNotificatiesSecret | string | `"oz-secret"` |  |
+| global.configuration.organization | string | `"Gemeente Example"` |  |
+| global.configuration.overwrite | bool | `true` |  |
+| global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openzaak/open-zaak"` |  |
 | image.tag | string | `""` |  |
@@ -146,6 +182,7 @@ helm install my-release my-repo/opennotificaties
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `"postgres"` |  |
 | settings.debug | bool | `false` |  |
+| settings.disable2fa | bool | `false` | Disable two factor authentication |
 | settings.djangoSettingsModule | string | `"openzaak.conf.docker"` |  |
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
@@ -160,6 +197,7 @@ helm install my-release my-repo/opennotificaties
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
 | settings.jwtExpiry | int | `3600` |  |
+| settings.notificationsDisabled | bool | `false` |  |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |

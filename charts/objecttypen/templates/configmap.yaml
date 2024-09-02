@@ -18,15 +18,16 @@ data:
   CACHE_OIDC: {{ .Values.settings.cache.oidc | toString | quote }}
   {{- end }}  
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
-  DB_HOST: {{ .Values.settings.database.host | toString | quote }}
+  DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
   DB_PORT: {{ .Values.settings.database.port | toString | quote }}
   PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
   {{ if .Values.settings.debug }}
   DEBUG: "True"
   {{- end }}
-  TWO_FACTOR_FORCE_OTP_ADMIN: {{ if .Values.settings.twoFactorAuthentication.forceOtpAdmin }}"True"{{ else }}"False"{{ end }}
-  TWO_FACTOR_PATCH_ADMIN: {{ if .Values.settings.twoFactorAuthentication.patchAdmin }}"True"{{ else }}"False"{{ end }}
+  {{ if .Values.settings.disable2fa }}
+  DISABLE_2FA: "True"
+  {{- end }}
   EMAIL_HOST: {{ .Values.settings.email.host | toString | quote }}
   EMAIL_PORT: {{ .Values.settings.email.port | toString | quote }}
   {{- if .Values.settings.email.username }}

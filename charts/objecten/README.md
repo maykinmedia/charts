@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.3.1](https://img.shields.io/badge/Version-2.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.1](https://img.shields.io/badge/AppVersion-2.3.1-informational?style=flat-square)
+![Version: 2.4.2](https://img.shields.io/badge/Version-2.4.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.1](https://img.shields.io/badge/AppVersion-2.4.1-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -51,6 +51,7 @@ helm install my-release my-repo/objecten
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"maykinmedia/objects-api"` |  |
 | image.tag | string | `""` |  |
@@ -142,7 +143,13 @@ helm install my-release my-repo/objecten
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
-| worker.livenessProbe | object | `{}` |  |
+| worker.livenessProbe.exec.command[0] | string | `"python"` |  |
+| worker.livenessProbe.exec.command[1] | string | `"/app/bin/check_celery_worker_liveness.py"` |  |
+| worker.livenessProbe.failureThreshold | int | `10` |  |
+| worker.livenessProbe.initialDelaySeconds | int | `60` |  |
+| worker.livenessProbe.periodSeconds | int | `50` |  |
+| worker.livenessProbe.successThreshold | int | `1` |  |
+| worker.livenessProbe.timeoutSeconds | int | `5` |  |
 | worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `1` |  |

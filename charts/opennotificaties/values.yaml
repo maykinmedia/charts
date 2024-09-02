@@ -10,6 +10,10 @@ global:
     openzaakNotificatiesClientId: oz-client-id
     openzaakNotificatiesSecret: oz-secret
 
+  settings:
+    # -- Global databasehost, overrides setting.database.host
+    databaseHost: ""
+
 configuration:
   enabled: false
   overwrite: true
@@ -44,8 +48,8 @@ configuration:
       #   memory: 256Mi
       # requests:
       #   cpu: 100m
-      #   memory: 128Mi  
-          
+      #   memory: 128Mi
+
 tags:
   redis: true
   rabbitmq: true
@@ -260,6 +264,9 @@ settings:
   # -- use 2 if enabling ingress
   numProxies: 1
 
+  # -- Disable two factor authentication
+  disable2fa: false
+
   email:
     host: localhost
     port: 25
@@ -318,7 +325,7 @@ settings:
     harakiri: ''
 
 worker:
-  replicaCount: 1
+  replicaCount: 2
   concurrency: 4
   podLabels: {}
   resources: {}

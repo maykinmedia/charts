@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.1](https://img.shields.io/badge/AppVersion-1.5.1-informational?style=flat-square)
+![Version: 1.3.6](https://img.shields.io/badge/Version-1.3.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -32,6 +32,26 @@ helm install my-release my-repo/opennotificaties
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| configuration.enabled | bool | `false` |  |
+| configuration.initContainer.enabled | bool | `true` | Run the setup configuration command in a init container |
+| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
+| configuration.job.resources | object | `{}` |  |
+| configuration.job.restartPolicy | string | `"OnFailure"` |  |
+| configuration.notificaties.enabled | bool | `false` |  |
+| configuration.notificaties.openzaakNotifcationClientId | string | `""` |  |
+| configuration.notificaties.openzaakNotificationSecret | string | `""` |  |
+| configuration.openzaakAuthorization.ApiRoot | string | `""` |  |
+| configuration.openzaakAuthorization.enabled | bool | `false` |  |
+| configuration.openzaakAuthorization.notifcationOpenzaakSecret | string | `""` |  |
+| configuration.openzaakAuthorization.notificationOpenzaakClientId | string | `""` |  |
+| configuration.overwrite | bool | `true` |  |
+| configuration.sites.enabled | bool | `false` |  |
+| configuration.sites.notificatiesDomain | string | `""` |  |
+| configuration.sites.organization | string | `""` |  |
+| configuration.superuser.email | string | `""` |  |
+| configuration.superuser.password | string | `""` |  |
+| configuration.superuser.username | string | `""` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
@@ -53,6 +73,16 @@ helm install my-release my-repo/opennotificaties
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global.configuration.enabled | bool | `false` |  |
+| global.configuration.notificatiesApi | string | `"http://opennotificaties.example.nl/api/v1/"` |  |
+| global.configuration.notificatiesOpenzaakClientId | string | `"notif-client-id"` |  |
+| global.configuration.notificatiesOpenzaakSecret | string | `"notif-secret"` |  |
+| global.configuration.openzaakAutorisatiesApi | string | `"https://openzaak.example.nl/autorisaties/api/v1/"` |  |
+| global.configuration.openzaakNotificatiesClientId | string | `"oz-client-id"` |  |
+| global.configuration.openzaakNotificatiesSecret | string | `"oz-secret"` |  |
+| global.configuration.organization | string | `"Gemeente Example"` |  |
+| global.configuration.overwrite | bool | `true` |  |
+| global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openzaak/open-notificaties"` |  |
 | image.tag | string | `""` |  |
@@ -72,6 +102,11 @@ helm install my-release my-repo/opennotificaties
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
 | pdb.minAvailable | int | `1` |  |
+| persistence.enabled | bool | `true` |  |
+| persistence.existingClaim | string | `nil` |  |
+| persistence.mediaMountSubpath | string | `"opennotificaties/media"` |  |
+| persistence.size | string | `"512Mi"` |  |
+| persistence.storageClassName | string | `""` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
@@ -126,6 +161,7 @@ helm install my-release my-repo/opennotificaties
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
+| settings.disable2fa | bool | `false` | Disable two factor authentication |
 | settings.djangoSettingsModule | string | `"nrc.conf.docker"` |  |
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
@@ -140,7 +176,10 @@ helm install my-release my-repo/opennotificaties
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
 | settings.logNotifications | bool | `true` | When set to true notifications are saved to the database and accessible from the admin interface |
+| settings.maxRetries | string | `""` | The maximum number of automatic retries. After this amount of retries, Open Notificaties stops trying to deliver the message. Application default is 5. |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
+| settings.retryBackoff | string | `""` | If specified, a factor applied to the exponential backoff. This allows you to tune how quickly automatic retries are performed. Application default is 3. |
+| settings.retryBackoffMax | string | `""` | An upper limit to the exponential backoff time. Application default is 48. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.useXForwardedHost | bool | `true` |  |
@@ -169,6 +208,6 @@ helm install my-release my-repo/opennotificaties
 | worker.readinessProbe.periodSeconds | int | `10` |  |
 | worker.readinessProbe.successThreshold | int | `1` |  |
 | worker.readinessProbe.timeoutSeconds | int | `5` |  |
-| worker.replicaCount | int | `1` |  |
+| worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
 

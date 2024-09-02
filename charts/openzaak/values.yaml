@@ -10,6 +10,10 @@ global:
     openzaakNotificatiesClientId: oz-client-id
     openzaakNotificatiesSecret: oz-secret
 
+  settings:
+    # -- Global databasehost, overrides setting.database.host
+    databaseHost: ""
+
 configuration:
   enabled: false
   overwrite: true
@@ -52,7 +56,7 @@ configuration:
       #   memory: 256Mi
       # requests:
       #   cpu: 100m
-      #   memory: 128Mi    
+      #   memory: 128Mi
 
 tags:
   redis: true
@@ -306,6 +310,9 @@ settings:
     processes: ""
     maxRequests: ""
     harakiri: ""
+
+  # -- Disable two factor authentication
+  disable2fa: false
 
 worker:
   replicaCount: 1
