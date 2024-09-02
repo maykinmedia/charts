@@ -36,7 +36,7 @@ data:
   BRP_VERSION: {{ .Values.settings.brpVersion | toString | quote }}
   {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
-  DB_HOST: {{ .Values.settings.database.host | toString | quote }}
+  DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
   DB_PORT: {{ .Values.settings.database.port | toString | quote }}
   PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}

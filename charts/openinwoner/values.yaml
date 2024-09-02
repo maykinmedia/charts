@@ -1,3 +1,8 @@
+global:
+  settings:
+    # -- Global databasehost, overrides setting.database.host
+    databaseHost: ""
+
 tags:
   redis: true
   elasticsearch: true
@@ -259,9 +264,9 @@ worker:
         - /app/bin/check_celery_worker_liveness.py
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
-    periodSeconds: 10
+    periodSeconds: 50
     timeoutSeconds: 5
-    failureThreshold: 3
+    failureThreshold: 10
     successThreshold: 1
   autoscaling:
     enabled: false
@@ -342,8 +347,9 @@ elasticsearch:
     masterOnly: true
     replicaCount: 1
     persistence:
-      enabled: false
-      size: ""
+      enabled: true
+      storageClass: ""
+      size: "8Gi"
     resources:
       limits: {}
       requests:
@@ -352,7 +358,8 @@ elasticsearch:
   data:
     replicaCount: 1
     persistence:
-      enabled: false
+      enabled: true
+      storageClass: ""
       size: 8Gi
   coordinating:
     replicaCount: 1
