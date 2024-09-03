@@ -39,6 +39,9 @@ data:
   {{- if .Values.settings.cmis.mapperFile }}
   CMIS_MAPPER_FILE: {{ .Values.settings.cmis.mapperFile | toString | quote }}
   {{- end }}
+  {{ if .Values.worker.maxWorkerLivenessDelta }}
+  MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
+  {{- end }}  
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
