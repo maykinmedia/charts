@@ -319,17 +319,17 @@ worker:
   concurrency: 4
   podLabels: {}
   resources: {}
+  maxWorkerLivenessDelta: ""
   livenessProbe:
+    exec:
+      command:
+        - python
+        - /app/bin/check_celery_worker_liveness.py
     initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
-    successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
+    # Periodeseconds should not exceed maxWorkerLivenessDelta
+    periodSeconds: 50
+    timeoutSeconds: 15
+    failureThreshold: 10
     successThreshold: 1
   autoscaling:
     enabled: false
