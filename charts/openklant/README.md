@@ -1,6 +1,6 @@
 # openklant
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1](https://img.shields.io/badge/AppVersion-0.1-informational?style=flat-square)
+![Version: 1.3.3](https://img.shields.io/badge/Version-1.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.5-pre](https://img.shields.io/badge/AppVersion-0.5--pre-informational?style=flat-square)
 
 Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
 
@@ -27,15 +27,18 @@ helm install my-release my-repo/openklant
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| azureVaultSecret.contentType | string | `""` |  |
+| azureVaultSecret.objectName | string | `""` |  |
+| azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
+| azureVaultSecret.vaultName | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | fullnameOverride | string | `""` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"maykinmedia/open-klant"` |  |
-| image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -60,6 +63,13 @@ helm install my-release my-repo/openklant
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.successThreshold | int | `1` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
+| redis.architecture | string | `"standalone"` |  |
+| redis.auth.enabled | bool | `false` |  |
+| redis.master.persistence.enabled | bool | `true` |  |
+| redis.master.persistence.size | string | `"8Gi"` |  |
+| redis.master.persistence.storageClass | string | `""` |  |
+| redis.master.resources.requests.cpu | string | `"10m"` |  |
+| redis.master.resources.requests.memory | string | `"20Mi"` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |
@@ -94,6 +104,7 @@ helm install my-release my-repo/openklant
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
+| settings.notificationsDisabled | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` | Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC. |
@@ -106,4 +117,23 @@ helm install my-release my-repo/openklant
 | settings.uwsgi.threads | string | `""` |  |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
+| worker.autoscaling.enabled | bool | `false` |  |
+| worker.autoscaling.maxReplicas | int | `100` |  |
+| worker.autoscaling.minReplicas | int | `1` |  |
+| worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| worker.concurrency | int | `4` |  |
+| worker.livenessProbe.failureThreshold | int | `3` |  |
+| worker.livenessProbe.initialDelaySeconds | int | `60` |  |
+| worker.livenessProbe.periodSeconds | int | `10` |  |
+| worker.livenessProbe.successThreshold | int | `1` |  |
+| worker.livenessProbe.timeoutSeconds | int | `5` |  |
+| worker.podLabels | object | `{}` |  |
+| worker.readinessProbe.failureThreshold | int | `3` |  |
+| worker.readinessProbe.initialDelaySeconds | int | `30` |  |
+| worker.readinessProbe.periodSeconds | int | `10` |  |
+| worker.readinessProbe.successThreshold | int | `1` |  |
+| worker.readinessProbe.timeoutSeconds | int | `5` |  |
+| worker.replicaCount | int | `1` |  |
+| worker.resources | object | `{}` |  |
 
