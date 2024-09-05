@@ -251,7 +251,9 @@ redis:
     enabled: false
   master:
     persistence:
-      enabled: false
+      enabled: true
+      size: 8Gi
+      storageClass: ""
     resources:
       requests:
         cpu: 10m

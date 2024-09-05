@@ -1,15 +1,10 @@
-# openarchiefbeheer
+# openzaaktypebeheer
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0-beta.12](https://img.shields.io/badge/AppVersion-0.1.0--beta.12-informational?style=flat-square)
+![Version: 0.1.8](https://img.shields.io/badge/Version-0.1.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.2](https://img.shields.io/badge/AppVersion-0.1.2-informational?style=flat-square)
 
-Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
+An app to manage the relations between 'zaaktypen' and 'informatieobjecttypen'.
 
-## TL;DR
-
-```console
-helm repo add my-repo https://maykinmedia.github.io/charts/
-helm install my-release my-repo/openarchiefbeheer
-```
+**Homepage:** <https://github.com/maykinmedia/open-zaaktypebeheer>
 
 ## Requirements
 
@@ -31,49 +26,35 @@ helm install my-release my-repo/openarchiefbeheer
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
-| beat.enabled | bool | `true` |  |
-| beat.livenessProbe | object | `{}` |  |
-| beat.podLabels | object | `{}` |  |
-| beat.readinessProbe | object | `{}` |  |
-| beat.replicaCount | int | `1` |  |
-| beat.resources | object | `{}` |  |
 | existingSecret | string | `nil` |  |
-| extraEnvVars | list | `[]` |  |
 | extraIngress | list | `[]` |  |
-| extraVolumeMounts | list | `[]` |  |
-| extraVolumes | list | `[]` |  |
-| flower.enabled | bool | `true` |  |
-| flower.livenessProbe | object | `{}` |  |
-| flower.podLabels | object | `{}` |  |
-| flower.readinessProbe | object | `{}` |  |
-| flower.replicaCount | int | `1` |  |
-| flower.resources | object | `{}` |  |
-| flower.service.port | int | `80` |  |
-| flower.service.type | string | `"ClusterIP"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"maykinmedia/open-archiefbeheer"` |  |
+| image.repository | string | `"maykinmedia/open-zaaktypebeheer"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
-| ingress.hosts | list | `[]` | ingress hosts |
+| ingress.hosts | list | `[]` |  |
 | ingress.tls | list | `[]` |  |
-| livenessProbe.failureThreshold | int | `6` |  |
-| livenessProbe.initialDelaySeconds | int | `60` |  |
-| livenessProbe.periodSeconds | int | `10` |  |
-| livenessProbe.successThreshold | int | `1` |  |
-| livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
 | nginx.existingConfigmap | string | `nil` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |
-| nginx.livenessProbe | object | `{}` |  |
+| nginx.livenessProbe.failureThreshold | int | `3` |  |
+| nginx.livenessProbe.initialDelaySeconds | int | `60` |  |
+| nginx.livenessProbe.periodSeconds | int | `10` |  |
+| nginx.livenessProbe.successThreshold | int | `1` |  |
+| nginx.livenessProbe.timeoutSeconds | int | `5` |  |
 | nginx.podLabels | object | `{}` |  |
-| nginx.readinessProbe | object | `{}` |  |
+| nginx.readinessProbe.failureThreshold | int | `3` |  |
+| nginx.readinessProbe.initialDelaySeconds | int | `30` |  |
+| nginx.readinessProbe.periodSeconds | int | `10` |  |
+| nginx.readinessProbe.successThreshold | int | `1` |  |
+| nginx.readinessProbe.timeoutSeconds | int | `5` |  |
 | nginx.replicaCount | int | `1` |  |
 | nginx.resources | object | `{}` |  |
 | nginx.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
@@ -84,23 +65,13 @@ helm install my-release my-repo/openarchiefbeheer
 | nginx.service.port | int | `8080` |  |
 | nginx.service.type | string | `"ClusterIP"` |  |
 | nodeSelector | object | `{}` |  |
-| pdb.create | bool | `false` |  |
-| pdb.maxUnavailable | string | `""` |  |
-| pdb.minAvailable | int | `1` |  |
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |
-| persistence.mediaMountSubpath | string | `"openarchiefbeheer/media"` |  |
-| persistence.privateMediaMountSubpath | string | `"openarchiefbeheer/private_media"` |  |
+| persistence.mediaMountSubpath | string | `"openzaaktypebeheer/media"` |  |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClassName | string | `""` |  |
 | podAnnotations | object | `{}` |  |
-| podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
-| readinessProbe.failureThreshold | int | `6` |  |
-| readinessProbe.initialDelaySeconds | int | `30` |  |
-| readinessProbe.periodSeconds | int | `10` |  |
-| readinessProbe.successThreshold | int | `1` |  |
-| readinessProbe.timeoutSeconds | int | `5` |  |
 | redis.architecture | string | `"standalone"` |  |
 | redis.auth.enabled | bool | `false` |  |
 | redis.master.persistence.enabled | bool | `true` |  |
@@ -117,15 +88,11 @@ helm install my-release my-repo/openarchiefbeheer
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.automountServiceAccountToken | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |
-| settings.celery.brokerUrl | string | `""` |  |
-| settings.celery.logLevel | string | `"debug"` |  |
-| settings.celery.resultBackend | string | `""` |  |
 | settings.cookie.csrfCookieSamesite | string | `"Lax"` |  |
 | settings.cookie.csrfCookieSecure | bool | `true` |  |
 | settings.cookie.sessionCookieSamesite | string | `"Lax"` |  |
@@ -140,44 +107,29 @@ helm install my-release my-repo/openarchiefbeheer
 | settings.database.password | string | `""` |  |
 | settings.database.port | int | `5432` |  |
 | settings.database.sslmode | string | `"prefer"` |  |
-| settings.database.username | string | `""` |  |
-| settings.debug | bool | `false` |  |
-| settings.djangoSettingsModule | string | `"openarchiefbeheer.conf.docker"` |  |
+| settings.database.user | string | `""` |  |
+| settings.djangoSettingsModule | string | `"open_zaaktypebeheer.conf.docker"` |  |
 | settings.email.defaultFrom | string | `""` |  |
 | settings.email.host | string | `"localhost"` |  |
-| settings.email.password | string | `""` |  |
+| settings.email.hostPassword | string | `""` |  |
+| settings.email.hostUser | string | `""` |  |
 | settings.email.port | int | `25` |  |
 | settings.email.useTLS | bool | `false` |  |
-| settings.email.username | string | `""` |  |
+| settings.enableAdminNavSidebar | bool | `false` |  |
 | settings.environment | string | `""` |  |
-| settings.frontendUrl | string | `""` |  |
-| settings.react.apiPath | string | `"/api/v1"` |  |
-| settings.react.apiUrl | string | `""` |  |
-| settings.react.zaakUrlTemplate | string | `""` |  |
-| settings.requestsReadTimeout | string | `"30"` |  |
+| settings.isDebug | bool | `false` |  |
+| settings.isHttps | bool | `true` |  |
+| settings.logStdout | bool | `false` |  |
+| settings.oidc.redirectAllowedHosts | string | `""` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.subpath | string | `nil` |  |
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `"2500/hour"` |  |
 | settings.throttling.rateUser | string | `"15000/hour"` |  |
 | settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` |  |
 | settings.twoFactorAuthentication.patchAdmin | bool | `true` |  |
-| settings.uwsgi.harakiri | string | `""` |  |
-| settings.uwsgi.master | string | `""` |  |
-| settings.uwsgi.maxRequests | string | `""` |  |
-| settings.uwsgi.processes | string | `""` |  |
-| settings.uwsgi.threads | string | `""` |  |
+| settings.ui.viteBaseApiUrl | string | `""` |  |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
-| worker.autoscaling.enabled | bool | `false` |  |
-| worker.autoscaling.maxReplicas | int | `100` |  |
-| worker.autoscaling.minReplicas | int | `1` |  |
-| worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
-| worker.concurrency | int | `4` |  |
-| worker.livenessProbe | object | `{}` |  |
-| worker.podLabels | object | `{}` |  |
-| worker.readinessProbe | object | `{}` |  |
-| worker.replicaCount | int | `1` |  |
-| worker.resources | object | `{}` |  |
 
