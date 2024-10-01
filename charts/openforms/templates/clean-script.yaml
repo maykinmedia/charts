@@ -1,0 +1,74 @@
+{{ if .Values.settings.cleanLogs.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+metadata:
+  name: {{ include "openforms.fullname" . }}-clean-logs
+  labels:
+    {{- include "openforms.labels" . | nindent 4 }}
+data:
+  clean_logs.py: |-
+    from datetime import timedelta
+
+    from django.utils import timezone
+    from django_yubin.models import Message
+    from timeline_logger.models import TimelineLog
+
+    DAYS = {{ .Values.settings.cleanLogs.daysRetained }}
+
+    period = timedelta(weeks=DAYS // 7)
+    limit_datetime = timezone.now() - period
+
+    # Deleting the logs one day at a time, going backwards in time
+    total_logs = TimelineLog.objects.filter(timestamp__lt=limit_datetime).count()
+
+    print(f"\nTotal number of logs to delete: {total_logs}\n")
+
+    current_datetime = limit_datetime
+    previous_timestamp = current_datetime - timedelta(days=1)
+
+    deleted_logs_count = 0
+    while TimelineLog.objects.filter(timestamp__lt=limit_datetime).exists():
+        logs_to_delete = TimelineLog.objects.filter(
+            timestamp__gte=previous_timestamp, timestamp__lt=current_datetime
+        )
+        count = logs_to_delete.count()
+        deleted_logs_count += count
+
+        logs_to_delete.delete()
+
+        print(
+            f"Deleted {count} logs (from {previous_timestamp} to {current_datetime}). "
+            f"Progress: {deleted_logs_count} / {total_logs}"
+        )
+
+        current_datetime = previous_timestamp
+        previous_timestamp = current_datetime - timedelta(days=1)
+
+    # Deleting the messages one day at a time, going backwards in time
+    total_messages = Message.objects.filter(date_created__lt=limit_datetime).count()
+
+    print(f"\nTotal number of messages to delete: {total_messages}\n")
+
+    current_datetime = limit_datetime
+    previous_timestamp = current_datetime - timedelta(days=1)
+
+    deleted_messages = 0
+    while Message.objects.filter(date_created__lt=limit_datetime).exists():
+        messages_to_delete = Message.objects.filter(
+            date_created__gte=previous_timestamp, date_created__lt=current_datetime
+        )
+
+        count = messages_to_delete.count()
+        deleted_messages += count
+
+        messages_to_delete.delete()
+
+        print(
+            f"Deleted {count} messages (from {previous_timestamp} to {current_datetime}). "
+            f"Progress: {deleted_messages} / {total_messages}"
+        )
+
+        current_datetime = previous_timestamp
+        previous_timestamp = current_datetime - timedelta(days=1)
+{{- end }}        

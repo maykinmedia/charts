@@ -1,0 +1,85 @@
+{{ if .Values.settings.cleanLogs.enabled -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "openforms.fullname" . }}-clean-logs
+  labels:
+    {{- include "openforms.commonLabels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.settings.cleanLogs.cronjob.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: {{ .Values.settings.cleanLogs.cronjob.historyLimit }}
+  failedJobsHistoryLimit: {{ .Values.settings.cleanLogs.cronjob.historyLimit }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+          {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- include "openforms.commonLabels" . | nindent 12 }}
+            {{- with .Values.podAnnotations }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "openforms.serviceAccountName" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          restartPolicy: OnFailure
+          containers:
+            - name: {{ .Chart.Name }}
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              envFrom:
+                - secretRef:
+                    name: {{ .Values.existingSecret | default (include "openforms.fullname" .) }}
+                - configMapRef:
+                    name: {{ include "openforms.fullname" . }}
+              env:
+                {{- if .Values.extraEnvVars }}
+                {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
+                {{- end }}
+              resources:
+              {{- toYaml .Values.settings.cleanLogs.cronjob.resources | nindent 16 }}
+              command:
+                - "/bin/bash"
+                - "-c"
+                # - /usr/bin/sleep 10000
+                -  /app/src/manage.py shell < /app/scripts/clean_logs.py
+              volumeMounts:
+                {{- if .Values.extraVolumeMounts }}
+                {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
+                {{- end }}
+                - name: clean-logs
+                  mountPath: /app/scripts/
+                  readOnly: true
+          volumes:
+            {{- if .Values.extraVolumes }}
+            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
+            {{- end }}
+            - name: clean-logs
+              configMap:
+                name: {{ include "openforms.fullname" . }}-clean-logs
+                defaultMode: 0755                      
+          {{- with .Values.nodeSelector }}
+
+          nodeSelector:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}
