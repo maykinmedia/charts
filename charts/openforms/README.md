@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.4.2](https://img.shields.io/badge/Version-1.4.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.4](https://img.shields.io/badge/AppVersion-2.7.4-informational?style=flat-square)
+![Version: 1.4.3](https://img.shields.io/badge/Version-1.4.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.8](https://img.shields.io/badge/AppVersion-2.7.8-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -154,6 +154,11 @@ helm install my-release my-repo/openforms
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
+| settings.cleanLogs.cronjob.historyLimit | int | `1` |  |
+| settings.cleanLogs.cronjob.resources | object | `{}` |  |
+| settings.cleanLogs.cronjob.schedule | string | `"0 0 * * *"` | Schedule to run the clean logs cronjob |
+| settings.cleanLogs.daysRetained | int | `90` | Number of days to retain logs |
+| settings.cleanLogs.enabled | bool | `true` | Clean Logs, Messages, Timelog Entries |
 | settings.cookieSamesite | string | `""` | Choises Strict or Lax |
 | settings.cors.allowAllOrigins | bool | `false` |  |
 | settings.cors.allowedOrigins | list | `[]` |  |
