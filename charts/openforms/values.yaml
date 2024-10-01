@@ -188,7 +188,7 @@ settings:
 
   cleanLogs:
     # -- Clean Logs, Messages, Timelog Entries
-    enabled: true
+    enabled: false
     # -- Number of days to retain logs
     daysRetained: 90
     cronjob:
