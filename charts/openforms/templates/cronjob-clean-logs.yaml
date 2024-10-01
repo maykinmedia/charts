@@ -52,25 +52,37 @@ spec:
               command:
                 - "/bin/bash"
                 - "-c"
-                # - /usr/bin/sleep 10000
+
                 -  /app/src/manage.py shell < /app/scripts/clean_logs.py
               volumeMounts:
+                - name: media
+                  mountPath: /app/private_media
+                  subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/private_media" }}
+                - name: media
+                  mountPath: /app/media
+                  subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
+                - name: clean-logs
+                  mountPath: /app/scripts/
+                  readOnly: true                  
                 {{- if .Values.extraVolumeMounts }}
                 {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
                 {{- end }}
-                - name: clean-logs
-                  mountPath: /app/scripts/
-                  readOnly: true
           volumes:
-            {{- if .Values.extraVolumes }}
-            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
-            {{- end }}
+            - name: media
+              persistentVolumeClaim:
+              {{- if .Values.persistence.enabled }}
+                claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openforms.fullname" . }}{{- end }}
+              {{- else }}
+              emptyDir: { }
+              {{- end }}
             - name: clean-logs
               configMap:
                 name: {{ include "openforms.fullname" . }}-clean-logs
-                defaultMode: 0755                      
+                defaultMode: 0755              
+            {{- if .Values.extraVolumes }}
+            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
+            {{- end }}
           {{- with .Values.nodeSelector }}
-
           nodeSelector:
           {{- toYaml . | nindent 12 }}
           {{- end }}
