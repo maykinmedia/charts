@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.4.1](https://img.shields.io/badge/Version-1.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -32,6 +32,19 @@ helm install my-release my-repo/opennotificaties
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| beat.livenessProbe.failureThreshold | int | `6` |  |
+| beat.livenessProbe.initialDelaySeconds | int | `60` |  |
+| beat.livenessProbe.periodSeconds | int | `10` |  |
+| beat.livenessProbe.successThreshold | int | `1` |  |
+| beat.livenessProbe.timeoutSeconds | int | `5` |  |
+| beat.podLabels | object | `{}` |  |
+| beat.readinessProbe.failureThreshold | int | `6` |  |
+| beat.readinessProbe.initialDelaySeconds | int | `30` |  |
+| beat.readinessProbe.periodSeconds | int | `10` |  |
+| beat.readinessProbe.successThreshold | int | `1` |  |
+| beat.readinessProbe.timeoutSeconds | int | `5` |  |
+| beat.replicaCount | int | `1` |  |
+| beat.resources | object | `{}` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.initContainer.enabled | bool | `true` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
@@ -58,7 +71,7 @@ helm install my-release my-repo/opennotificaties
 | extraVerifyCerts | string | `""` | Path to extra certificates or CA (root) certificates, comma seperated Warning, If the file does not exist the pod(s) will not start |
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
-| flower.enabled | bool | `true` |  |
+| flower.enabled | bool | `false` |  |
 | flower.livenessProbe.failureThreshold | int | `6` |  |
 | flower.livenessProbe.initialDelaySeconds | int | `60` |  |
 | flower.livenessProbe.periodSeconds | int | `10` |  |

@@ -349,7 +349,7 @@ worker:
     targetMemoryUtilizationPercentage: 80
 
 flower:
-  enabled: true
+  enabled: false
   replicaCount: 1
   podLabels: {}
   livenessProbe:
@@ -365,6 +365,23 @@ flower:
     failureThreshold: 6
     successThreshold: 1
   resources: {}
+
+beat:
+  replicaCount: 1
+  podLabels: {}
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  resources: {}  
 
 ##################
 # Redis subchart #
