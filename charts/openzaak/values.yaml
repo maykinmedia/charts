@@ -282,8 +282,6 @@ settings:
     portalLocker: ""
 
   celery:
-    # -- Deploy celery (worker), celery is required from openzaak version 1.8.0
-    enabled: true
     # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
     # e.g.:
     # brokerUrl: redis://openzaak-redis-master:6379/1
@@ -375,7 +373,7 @@ nginx:
   resources: {}
 
 flower:
-  enabled: true
+  enabled: false
   replicaCount: 1
   podLabels: {}
   livenessProbe:
@@ -392,6 +390,22 @@ flower:
     successThreshold: 1
   resources: {}
 
+beat:
+  replicaCount: 1
+  podLabels: {}
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  resources: {}
 
 ##################
 # Redis subchart #
