@@ -201,6 +201,7 @@ settings:
     username: ""
     password: ""
     useTLS: false
+    defaultFrom: ""
 
   sentry:
     dsn: ""

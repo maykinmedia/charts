@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.4.3](https://img.shields.io/badge/Version-2.4.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.1](https://img.shields.io/badge/AppVersion-2.4.1-informational?style=flat-square)
+![Version: 2.4.4](https://img.shields.io/badge/Version-2.4.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.1](https://img.shields.io/badge/AppVersion-2.4.1-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -122,6 +122,7 @@ helm install my-release my-repo/objecten
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
+| settings.email.defaultFrom | string | `""` |  |
 | settings.email.host | string | `"localhost"` |  |
 | settings.email.password | string | `""` |  |
 | settings.email.port | int | `25` |  |

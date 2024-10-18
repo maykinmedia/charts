@@ -1,6 +1,6 @@
 # objecttypen
 
-![Version: 1.1.2](https://img.shields.io/badge/Version-1.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
+![Version: 1.1.3](https://img.shields.io/badge/Version-1.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
 
 API om object definities te beheren
 
@@ -100,6 +100,7 @@ helm install my-release my-repo/objecttypen
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
+| settings.email.defaultFrom | string | `""` |  |
 | settings.email.host | string | `"localhost"` |  |
 | settings.email.password | string | `""` |  |
 | settings.email.port | int | `25` |  |
