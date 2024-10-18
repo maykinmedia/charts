@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.4.1](https://img.shields.io/badge/Version-1.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.14.0](https://img.shields.io/badge/AppVersion-1.14.0-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.15.0](https://img.shields.io/badge/AppVersion-1.15.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -8,7 +8,7 @@ Productiewaardige API's voor Zaakgericht Werken
 
 ```console
 helm repo add my-repo https://maykinmedia.github.io/charts/
-helm install my-release my-repo/opennotificaties
+helm install my-release my-repo/openzaak
 ```
 
 ## Requirements
@@ -31,6 +31,19 @@ helm install my-release my-repo/opennotificaties
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| beat.livenessProbe.failureThreshold | int | `6` |  |
+| beat.livenessProbe.initialDelaySeconds | int | `60` |  |
+| beat.livenessProbe.periodSeconds | int | `10` |  |
+| beat.livenessProbe.successThreshold | int | `1` |  |
+| beat.livenessProbe.timeoutSeconds | int | `5` |  |
+| beat.podLabels | object | `{}` |  |
+| beat.readinessProbe.failureThreshold | int | `6` |  |
+| beat.readinessProbe.initialDelaySeconds | int | `30` |  |
+| beat.readinessProbe.periodSeconds | int | `10` |  |
+| beat.readinessProbe.successThreshold | int | `1` |  |
+| beat.readinessProbe.timeoutSeconds | int | `5` |  |
+| beat.replicaCount | int | `1` |  |
+| beat.resources | object | `{}` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.initContainer.enabled | bool | `true` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
@@ -65,7 +78,7 @@ helm install my-release my-repo/opennotificaties
 | extraVerifyCerts | string | `""` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
-| flower.enabled | bool | `true` |  |
+| flower.enabled | bool | `false` |  |
 | flower.livenessProbe.failureThreshold | int | `6` |  |
 | flower.livenessProbe.initialDelaySeconds | int | `60` |  |
 | flower.livenessProbe.periodSeconds | int | `10` |  |
@@ -172,7 +185,6 @@ helm install my-release my-repo/opennotificaties
 | settings.cache.default | string | `""` |  |
 | settings.cache.portalLocker | string | `""` |  |
 | settings.celery.brokerUrl | string | `""` |  |
-| settings.celery.enabled | bool | `true` | Deploy celery (worker), celery is required from openzaak version 1.8.0 |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
 | settings.cmis.enabled | bool | `false` |  |
