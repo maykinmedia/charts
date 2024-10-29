@@ -225,6 +225,8 @@ settings:
     resultBackend: ""
     logLevel: debug
 
+  notificationsDisabled: false
+
   isHttps: true
 
   debug: false

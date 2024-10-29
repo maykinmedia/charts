@@ -69,3 +69,6 @@ data:
   {{- if .Values.settings.uwsgi.harakiri }}
   UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.notificationsDisabled }}
+  NOTIFICATIONS_DISABLED: "True"
+  {{- end }}
