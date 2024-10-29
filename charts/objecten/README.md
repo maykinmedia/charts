@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.4.4](https://img.shields.io/badge/Version-2.4.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.1](https://img.shields.io/badge/AppVersion-2.4.1-informational?style=flat-square)
+![Version: 2.4.5](https://img.shields.io/badge/Version-2.4.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.4](https://img.shields.io/badge/AppVersion-2.4.4-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
