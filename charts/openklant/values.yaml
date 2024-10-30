@@ -202,11 +202,8 @@ settings:
 
   debug: false
 
-  twoFactorAuthentication:
-      # -- Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC.
-      forceOtpAdmin: true
-      # -- Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC.
-      patchAdmin: true
+  # -- Disable two factor authentication
+  disable2fa: false
 
   uwsgi:
     master: ''

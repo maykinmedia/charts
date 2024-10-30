@@ -1,6 +1,6 @@
 # openklant
 
-![Version: 1.3.4](https://img.shields.io/badge/Version-1.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.0](https://img.shields.io/badge/AppVersion-2.3.0-informational?style=flat-square)
+![Version: 1.3.5](https://img.shields.io/badge/Version-1.3.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.0](https://img.shields.io/badge/AppVersion-2.3.0-informational?style=flat-square)
 
 Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
 
@@ -94,6 +94,7 @@ helm install my-release my-repo/openklant
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
+| settings.disable2fa | bool | `false` | Disable two factor authentication |
 | settings.djangoSettingsModule | string | `"openklant.conf.docker"` |  |
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
@@ -109,8 +110,6 @@ helm install my-release my-repo/openklant
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
-| settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` | Enforce 2 Factor Authentication in the admin or not. Default True. You'll probably want to disable this when using OIDC. |
-| settings.twoFactorAuthentication.patchAdmin | bool | `true` | Whether to use the 2 Factor Authentication login flow for the admin or not. Default True. You'll probably want to disable this when using OIDC. |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
