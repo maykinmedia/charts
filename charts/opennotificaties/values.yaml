@@ -273,6 +273,7 @@ settings:
     username: ""
     password: ""
     useTLS: false
+    defaultFrom: ""
 
   flower:
     urlPrefix: ""
