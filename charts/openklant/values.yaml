@@ -1,3 +1,8 @@
+global:
+  settings:
+    # -- Global databasehost, overrides setting.database.host
+    databaseHost: ""
+
 tags:
   redis: true
 
@@ -186,6 +191,7 @@ settings:
     username: ""
     password: ""
     useTLS: false
+    defaultFrom: ""
 
   sentry:
     dsn: ""
