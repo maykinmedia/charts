@@ -56,6 +56,10 @@ data:
 
         location / {
             include conf.d/proxy;
+            {{- if .Values.nginx.config.basicAuth.enabled }}
+            auth_basic "{{ include "openinwoner.fullname" . }}";
+            auth_basic_user_file /etc/.basicauth/.basicauth;
+            {{- end }}
         }
 
         location /_health/ {

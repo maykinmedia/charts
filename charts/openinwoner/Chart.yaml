@@ -3,8 +3,8 @@ name: openinwoner
 description: Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
 type: application
-version: 1.5.2
-appVersion: "1.20.0"
+version: 1.5.3
+appVersion: "1.21.3"
 icon: https://docs.openinwoner.nl/en/latest/_static/logo.png
 
 dependencies:
