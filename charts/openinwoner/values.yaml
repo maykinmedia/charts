@@ -292,6 +292,13 @@ nginx:
     tag: stable
   config:
     clientMaxBodySize: 10M
+    # -- Configure nginx basic authentication, only use if you are unable to set it on your ingress controller
+    basicAuth:
+      # -- Enables nginx basic password authentication
+      enabled: false
+      # -- You need to generate the encrypted basic auth password yourself
+      users: |-
+        usernameexample:$apr1$5QwE2Ysc$ycRucgmLt0iQMMxcnu4CA/
   service:
     type: ClusterIP
     port: 80

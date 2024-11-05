@@ -1,0 +1,12 @@
+{{- if .Values.nginx.config.basicAuth.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+metadata:
+  name: {{ include "openinwoner.fullname" . }}-basic-auth
+  labels:
+    {{- include "openinwoner.labels" . | nindent 4 }}
+stringData:
+  .basicauth: |-
+    {{- include "common.tplvalues.render" (dict "value" .Values.nginx.config.basicAuth.users "context" $) | nindent 4 }}
+{{- end }}

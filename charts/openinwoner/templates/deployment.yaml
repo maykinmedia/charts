@@ -389,6 +389,7 @@ spec:
     metadata:
       annotations:
         checksum/configmap-nginx: {{ include (print $.Template.BasePath "/configmap-nginx.yaml") . | sha256sum }}
+        checksum/basic-auth-nginx: {{ include (print $.Template.BasePath "/basic-auth-nginx.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -423,6 +424,10 @@ spec:
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/conf.d/
+              {{- if .Values.nginx.config.basicAuth.enabled }}
+            - name: nginx-basic-auth
+              mountPath: /etc/.basicauth
+              {{- end }}
             - name: media
               mountPath: /app/private_media
               subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openinwoner/private_media" }}
@@ -440,6 +445,11 @@ spec:
         - name: nginx-config
           configMap:
             name: {{ include "openinwoner.nginxFullname" . }}
+          {{- if .Values.nginx.config.basicAuth.enabled }}
+        - name: nginx-basic-auth
+          secret:
+            secretName: {{ include "openinwoner.fullname" . }}-basic-auth
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
