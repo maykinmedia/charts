@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "registratie-component.fullname" . }}
+  labels:
+    {{- include "registratie-component.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "registratie-component.selectorLabels" . | nindent 4 }}
