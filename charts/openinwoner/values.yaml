@@ -250,6 +250,9 @@ settings:
     maxRequests: ""
     harakiri: ""
 
+  # -- Runs a init container that will run /app/src/manage.py search_index --rebuild -f. You might want to enable this one time for new deployments if you want to prevent 500 errors when using the search function
+  searchInexInitContainer: false
+
 worker:
   replicaCount: 1
   concurrency: 4
