@@ -237,6 +237,15 @@ settings:
   # -- Disable two factor authentication
   disable2fa: false
 
+  # -- Display environment information in the header in the admin. Defaults to True. Environment information is only displayed to logged in users.
+  showLabelEnvironment: false
+  # -- Environment information to display, defaults to the value of ENVIRONMENT. Only displayed when SHOW_ENVIRONMENT is set to True. You can set this to strings like OpenGem PROD or simply PROD, depending on your needs.
+  environmentLabelName: ""
+  # --  CSS color value for the environment information background color. Defaults to orange, example values can be specified in HEX format too, e.g.: #FF0000 for red.
+  environmentLabelBackgroundColor: ""
+  # -- CSS color value for the environment information text color. Defaults to black. Follows the same rules as ENVIRONMENT_BACKGROUND_COLOR.
+  environmentLabelForegroundColor: ""
+
 nginx:
   image:
     repository: nginxinc/nginx-unprivileged

@@ -65,3 +65,13 @@ data:
   {{ if .Values.settings.disable2fa }}
   DISABLE_2FA: "True"
   {{- end }}
+  SHOW_ENVIRONMENT: {{ if .Values.settings.showLabelEnvironment }}"True"{{ else }}"False"{{ end }}
+  {{- if .Values.settings.environmentLabelName }}
+  ENVIRONMENT_LABEL: {{ .Values.settings.environmentLabelName | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.environmentLabelBackgroundColor }}
+  ENVIRONMENT_BACKGROUND_COLOR: {{ .Values.settings.environmentLabelBackgroundColor | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.environmentLabelForegroundColor }}
+  ENVIRONMENT_FOREGROUND_COLOR: {{ .Values.settings.environmentLabelForegroundColor | toString | quote }}
+  {{- end }}
