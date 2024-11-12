@@ -1,15 +1,8 @@
 # openforms
 
-![Version: 1.4.4](https://img.shields.io/badge/Version-1.4.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.8](https://img.shields.io/badge/AppVersion-2.7.8-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.8.1](https://img.shields.io/badge/AppVersion-2.8.1-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
-
-## TL;DR
-
-```console
-helm repo add my-repo https://maykinmedia.github.io/charts/
-helm install my-release my-repo/openforms
-```
 
 ## Requirements
 
@@ -31,18 +24,7 @@ helm install my-release my-repo/openforms
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
-| beat.enabled | bool | `true` |  |
-| beat.livenessProbe.failureThreshold | int | `6` |  |
-| beat.livenessProbe.initialDelaySeconds | int | `60` |  |
-| beat.livenessProbe.periodSeconds | int | `10` |  |
-| beat.livenessProbe.successThreshold | int | `1` |  |
-| beat.livenessProbe.timeoutSeconds | int | `5` |  |
 | beat.podLabels | object | `{}` |  |
-| beat.readinessProbe.failureThreshold | int | `6` |  |
-| beat.readinessProbe.initialDelaySeconds | int | `30` |  |
-| beat.readinessProbe.periodSeconds | int | `10` |  |
-| beat.readinessProbe.successThreshold | int | `1` |  |
-| beat.readinessProbe.timeoutSeconds | int | `5` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
 | existingSecret | string | `nil` |  |
@@ -184,6 +166,9 @@ helm install my-release my-repo/openforms
 | settings.email.useTLS | bool | `false` |  |
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `nil` |  |
+| settings.environmentLabelBackgroundColor | string | `""` | CSS color value for the environment information background color. Defaults to orange, example values can be specified in HEX format too, e.g.: #FF0000 for red. |
+| settings.environmentLabelForegroundColor | string | `""` | CSS color value for the environment information text color. Defaults to black. Follows the same rules as ENVIRONMENT_BACKGROUND_COLOR. |
+| settings.environmentLabelName | string | `""` | Environment information to display, defaults to the value of ENVIRONMENT. Only displayed when SHOW_ENVIRONMENT is set to True. You can set this to strings like OpenGem PROD or simply PROD, depending on your needs. |
 | settings.escapeRegistrationOutput | bool | `false` |  |
 | settings.flower.basicAuth | string | `""` |  |
 | settings.flower.urlPrefix | string | `""` |  |
@@ -194,6 +179,7 @@ helm install my-release my-repo/openforms
 | settings.oidc | object | `{"useLegacyDigidEndpoint":false,"useLegacyEndpont":false,"useLegacyOrgEndpoint":false}` | https://open-forms.readthedocs.io/en/latest/changelog.html#upgrade-notes |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.showLabelEnvironment | bool | `false` | Display environment information in the header in the admin. Defaults to True. Environment information is only displayed to logged in users. |
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `""` |  |
 | settings.throttling.ratePolling | string | `""` |  |

@@ -103,3 +103,13 @@ data:
   USE_LEGACY_OIDC_ENDPOINTS: {{ if .Values.settings.oidc.useLegacyEndpont }}"True"{{ else }}"False"{{ end }}
   USE_LEGACY_DIGID_EH_OIDC_ENDPOINTS: {{ if .Values.settings.oidc.useLegacyDigidEndpoint }}"True"{{ else }}"False"{{ end }}
   USE_LEGACY_ORG_OIDC_ENDPOINTS: {{ if .Values.settings.oidc.useLegacyOrgEndpoint }}"True"{{ else }}"False"{{ end }}
+  SHOW_ENVIRONMENT: {{ if .Values.settings.showLabelEnvironment }}"True"{{ else }}"False"{{ end }}
+  {{- if .Values.settings.environmentLabelName }}
+  ENVIRONMENT_LABEL: {{ .Values.settings.environmentLabelName | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.environmentLabelBackgroundColor }}
+  ENVIRONMENT_BACKGROUND_COLOR: {{ .Values.settings.environmentLabelBackgroundColor | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.environmentLabelForegroundColor }}
+  ENVIRONMENT_FOREGROUND_COLOR: {{ .Values.settings.environmentLabelForegroundColor | toString | quote }}
+  {{- end }}
