@@ -24,18 +24,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
-| beat.enabled | bool | `true` |  |
-| beat.livenessProbe.failureThreshold | int | `6` |  |
-| beat.livenessProbe.initialDelaySeconds | int | `60` |  |
-| beat.livenessProbe.periodSeconds | int | `10` |  |
-| beat.livenessProbe.successThreshold | int | `1` |  |
-| beat.livenessProbe.timeoutSeconds | int | `5` |  |
 | beat.podLabels | object | `{}` |  |
-| beat.readinessProbe.failureThreshold | int | `6` |  |
-| beat.readinessProbe.initialDelaySeconds | int | `30` |  |
-| beat.readinessProbe.periodSeconds | int | `10` |  |
-| beat.readinessProbe.successThreshold | int | `1` |  |
-| beat.readinessProbe.timeoutSeconds | int | `5` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
 | existingSecret | string | `nil` |  |
@@ -190,7 +179,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.oidc | object | `{"useLegacyDigidEndpoint":false,"useLegacyEndpont":false,"useLegacyOrgEndpoint":false}` | https://open-forms.readthedocs.io/en/latest/changelog.html#upgrade-notes |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
-| settings.showLabelEnvironment | string | `"false"` | Display environment information in the header in the admin. Defaults to True. Environment information is only displayed to logged in users. |
+| settings.showLabelEnvironment | bool | `false` | Display environment information in the header in the admin. Defaults to True. Environment information is only displayed to logged in users. |
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `""` |  |
 | settings.throttling.ratePolling | string | `""` |  |
