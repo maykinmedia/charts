@@ -237,6 +237,31 @@ settings:
   # -- Disable two factor authentication
   disable2fa: false
 
+nginx:
+  image:
+    repository: nginxinc/nginx-unprivileged
+    pullPolicy: IfNotPresent
+    tag: stable
+  existingConfigmap: null
+  service:
+    type: ClusterIP
+    port: 80
+    annotations: {}
+  replicaCount: 1
+  podLabels: {}
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 101
+  autoscaling:
+    enabled: false
+  livenessProbe: {}
+  readinessProbe: {}
+  resources: {}
+
 ##################
 # Redis subchart #
 ##################

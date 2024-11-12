@@ -151,3 +151,34 @@ Usage:
         {{- tpl (.value | toYaml) .context }}
     {{- end }}
 {{- end -}}
+
+{{/*
+Create a name for NGINX
+We truncate at 57 chars in order to provide space for the "-nginx" suffix
+*/}}
+{{- define "registratie-component.nginxName" -}}
+{{ include "registratie-component.name" . | trunc 57 | trimSuffix "-" }}-nginx
+{{- end }}
+
+{{/*
+Create a default fully qualified name for NGINX.
+We truncate at 57 chars in order to provide space for the "-nginx" suffix
+*/}}
+{{- define "registratie-component.nginxFullname" -}}
+{{ include "registratie-component.fullname" . | trunc 57 | trimSuffix "-" }}-nginx
+{{- end }}
+
+{{/*
+NGINX labels
+*/}}
+{{- define "registratie-component.nginxLabels" -}}
+{{ include "registratie-component.commonLabels" . }}
+{{ include "registratie-component.nginxSelectorLabels" . }}
+{{- end }}
+
+{{/*
+NGINX selector labels
+*/}}
+{{- define "registratie-component.nginxSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "registratie-component.nginxName" . }}
+{{- end }}
