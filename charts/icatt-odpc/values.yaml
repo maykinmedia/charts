@@ -154,10 +154,14 @@ settings:
     name: ""
     sslmode: prefer
 
-  aspnetcoreForwardedHeadersEnabled: true
   baseUrl: ""
   adminRole: ""
   odrcApiKey: ""
+
+  aspnetcore:
+    forwardedHeadersEnabled: true
+    environment: ""
+    httpPorts: ""
 
 
 ##################

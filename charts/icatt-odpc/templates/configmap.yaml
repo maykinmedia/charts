@@ -9,6 +9,12 @@ data:
   POSTGRES_DB: {{ .Values.settings.database.name | toString | quote }}
   POSTGRES_PORT: {{ .Values.settings.database.port | toString | quote }}
   POSTGRES_USER: {{ .Values.settings.database.username | toString | quote }}
-  ASPNETCORE_FORWARDEDHEADERS_ENABLED: {{ .Values.settings.aspnetcoreForwardedHeadersEnabled }}
   ODRC_BASE_URL: {{ .Values.settings.baseUrl | toString | quote }}
   OIDC_ADMIN_ROLE: {{ .Values.settings.adminRole | toString | quote }}
+  ASPNETCORE_FORWARDEDHEADERS_ENABLED: {{ .Values.settings.aspnetcore.forwardedHeadersEnabled }}
+  {{- if .Values.settings.aspnetcore.environment }}
+  ASPNETCORE_ENVIRONMENT: {{ .Values.settings.aspnetcore.environment | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.aspnetcore.httpPorts }}
+  ASPNETCORE_HTTP_PORTS: {{ .Values.settings.aspnetcore.httpPorts | toString | quote }}
+  {{- end }}
