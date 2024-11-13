@@ -9,9 +9,27 @@ data:
   POSTGRES_DB: {{ .Values.settings.database.name | toString | quote }}
   POSTGRES_PORT: {{ .Values.settings.database.port | toString | quote }}
   POSTGRES_USER: {{ .Values.settings.database.username | toString | quote }}
-  ODRC_BASE_URL: {{ .Values.settings.baseUrl | toString | quote }}
-  OIDC_ADMIN_ROLE: {{ .Values.settings.adminRole | toString | quote }}
-  ASPNETCORE_FORWARDEDHEADERS_ENABLED: {{ .Values.settings.aspnetcore.forwardedHeadersEnabled }}
+  ODRC_BASE_URL: {{ .Values.settings.odrc.baseUrl | toString | quote }}
+  OIDC_ADMIN_ROLE: {{ .Values.settings.oidc.adminRole | toString | quote }}
+  {{- if .Values.settings.oidc.authority }}
+  OIDC_AUTHORITY: {{ .Values.settings.oidc.authority | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.oidc.clientId }}
+  OIDC_CLIENT_ID: {{ .Values.settings.oidc.clientId | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.oidc.clientSecret }}
+  OIDC_CLIENT_SECRET: {{ .Values.settings.oidc.clientSecret | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.oidc.roleClaimType }}
+  OIDC_ROLE_CLAIM_TYPE: {{ .Values.settings.oidc.roleClaimType | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.oidc.idClaimType }}
+  OIDC_ID_CLAIM_TYPE: {{ .Values.settings.oidc.idClaimType | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.oidc.nameClaimType }}
+  OIDC_NAME_CLAIM_TYPE: {{ .Values.settings.oidc.nameClaimType | toString | quote }}
+  {{- end }}
+  ASPNETCORE_FORWARDEDHEADERS_ENABLED: {{ .Values.settings.aspnetcore.forwardedHeadersEnabled | toString | quote }}
   {{- if .Values.settings.aspnetcore.environment }}
   ASPNETCORE_ENVIRONMENT: {{ .Values.settings.aspnetcore.environment | toString | quote }}
   {{- end }}

@@ -154,9 +154,18 @@ settings:
     name: ""
     sslmode: prefer
 
-  baseUrl: ""
-  adminRole: ""
-  odrcApiKey: ""
+  oidc:
+    adminRole: ""
+    authority: ""
+    clientId: ""
+    clientSecret: ""
+    roleClaimType: ""
+    idClaimType: ""
+    nameClaimType: ""
+
+  odrc:
+    apiKey: ""
+    baseUrl: ""
 
   aspnetcore:
     forwardedHeadersEnabled: true
