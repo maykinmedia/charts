@@ -17,3 +17,13 @@ helm repo add maykinmedia https://maykinmedia.github.io/charts/
 helm search repo maykinmedia
 helm install my-release maykinmedia/<chart>
 ```
+
+## How to generate Readmes
+
+To generate the charts readmes, we use (helm-docs)[https://github.com/norwoodj/helm-docs].
+To use it, first install Go and then follow their instructions on how to install it.
+Then, within a chart directory you can run:
+
+```bash 
+helm-docs .
+```
