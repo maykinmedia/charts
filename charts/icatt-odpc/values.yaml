@@ -9,7 +9,7 @@ tags:
 replicaCount: 1
 
 image:
-  repository: "" # TODO figure out where they push the images
+  repository: "ghcr.io/generiekpublicatieplatformwoo/openbaar-documenten-publicatie-component"
   pullPolicy: IfNotPresent
   tag: ""
 
