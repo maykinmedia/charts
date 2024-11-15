@@ -1,0 +1,89 @@
+{{ if and .Values.global.configuration.enabled .Values.configuration.enabled .Values.configuration.job.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "objecten.configName" . }}
+  labels:
+    {{- include "objecten.configLabels" . | nindent 4 }}
+spec:
+  backoffLimit: {{ .Values.configuration.job.backoffLimit }}
+  ttlSecondsAfterFinished: {{ .Values.configuration.job.ttlSecondsAfterFinished }}
+  template:
+    metadata:
+      annotations:
+      {{- with .Values.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "objecten.configLabels" . | nindent 8 }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "objecten.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      restartPolicy: {{ .Values.configuration.job.restartPolicy }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "objecten.fullname" .) }}
+            - configMapRef:
+                name: {{ include "objecten.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "objecten.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          resources:
+          {{- toYaml .Values.configuration.job.resources | nindent 12 }}
+          command:
+            - "/bin/bash"
+            - "-c"
+          args:
+            - |
+              /wait_for_db.sh
+              /app/src/manage.py migrate
+              /app/src/manage.py setup_configuration --no-selftest {{- if or .Values.global.configuration.overwrite .Values.configuration.overwrite }} --overwrite{{- end }}
+          volumeMounts:
+            - name: media
+              mountPath: /app/private-media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "objecten/private_media" }}
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "objecten/media" }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "objecten.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
+            {{- end }}
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "objecten.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- include "objecten.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

@@ -130,6 +130,37 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create a name for Config cronjob
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "objecten.configName" -}}
+{{ include "objecten.name" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+Create a default fully qualified name for config.
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "objecten.configFullname" -}}
+{{ include "objecten.fullname" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+config labels
+*/}}
+{{- define "objecten.configLabels" -}}
+{{ include "objecten.commonLabels" . }}
+{{ include "objecten.configSelectorLabels" . }}
+{{- end }}
+
+{{/*
+config selector labels
+*/}}
+{{- define "objecten.configSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "objecten.configName" . }}
+{{- end }}
+
+{{/*
 Ingress annotations
 */}}
 {{- define "objecten.ingress.annotations" -}}
