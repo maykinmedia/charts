@@ -113,6 +113,7 @@ Een registratie die voorziet in de "Openbare Documenten opslag"-functionaliteite
 | settings.debug | bool | `false` |  |
 | settings.disable2fa | bool | `false` | Disable two factor authentication |
 | settings.djangoSettingsModule | string | `"woo_publications.conf.docker"` |  |
+| settings.documentMaxBodySize | string | `"4G"` |  |
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
