@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.4.5](https://img.shields.io/badge/Version-2.4.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.4](https://img.shields.io/badge/AppVersion-2.4.4-informational?style=flat-square)
+![Version: 2.5.0](https://img.shields.io/badge/Version-2.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.4](https://img.shields.io/badge/AppVersion-2.4.4-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -31,6 +31,27 @@ helm install my-release my-repo/objecten
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| configuration.demo.email | string | `nil` |  |
+| configuration.demo.enable | bool | `false` |  |
+| configuration.demo.person | string | `nil` |  |
+| configuration.demo.token | string | `nil` |  |
+| configuration.enabled | bool | `false` |  |
+| configuration.initContainer.enabled | bool | `true` | Run the setup configuration command in a init container |
+| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
+| configuration.job.resources | object | `{}` |  |
+| configuration.job.restartPolicy | string | `"OnFailure"` |  |
+| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.objectTypes.ApiRoot | string | `""` |  |
+| configuration.objectTypes.enable | bool | `false` |  |
+| configuration.objectTypes.token | string | `""` |  |
+| configuration.overwrite | bool | `true` |  |
+| configuration.sites.domain | string | `""` |  |
+| configuration.sites.enabled | bool | `false` |  |
+| configuration.sites.organization | string | `""` |  |
+| configuration.superuser.email | string | `""` |  |
+| configuration.superuser.password | string | `""` |  |
+| configuration.superuser.username | string | `""` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
@@ -51,6 +72,9 @@ helm install my-release my-repo/objecten
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global.configuration.enabled | bool | `false` |  |
+| global.configuration.organization | string | `"Gemeente Example"` |  |
+| global.configuration.overwrite | bool | `true` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"maykinmedia/objects-api"` |  |
@@ -130,6 +154,7 @@ helm install my-release my-repo/objecten
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
+| settings.notificationsDisabled | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.useXForwardedHost | bool | `false` |  |
