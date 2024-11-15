@@ -213,6 +213,8 @@ settings:
   sentry:
     dsn: ""
 
+  documentMaxBodySize: 4G
+
   # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
   cache:
     # e.g.:
