@@ -16,11 +16,11 @@ configuration:
     domain: ""
     organization: ""
   objectTypes:
-    enable: false
+    enabled: false
     ApiRoot: ""
     token: ""
   demo:
-    enable: false
+    enabled: false
     token:
     person:
     email: 
@@ -34,14 +34,13 @@ configuration:
     enabled: true
   job:
     # -- Run the setup configuration command as a job
-    enabled: true
+    enabled: false
     backoffLimit: 6
     # -- 0 Will clean the job after it is finished
     ttlSecondsAfterFinished: 0    
     restartPolicy: OnFailure
     # Note, this field is immutable
     resources: {}
-
       # limits:
       #   cpu: 200m
       #   memory: 256Mi
