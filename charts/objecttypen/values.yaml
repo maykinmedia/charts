@@ -1,7 +1,49 @@
 global:
+  configuration:
+    enabled: false
+    overwrite: true
+    organization: Gemeente Example
+
   settings:
     # -- Global databasehost, overrides setting.database.host
     databaseHost: ""
+
+configuration:
+  enabled: false
+  overwrite: true
+  sites:
+    enabled: false
+    domain: ""
+    organization: ""
+  demo:
+    enabled: false
+    token:
+    person:
+    email: 
+
+  superuser:
+    username: ""
+    password: ""
+    email: ""
+  initContainer:
+    # -- Run the setup configuration command in a init container
+    enabled: true
+  job:
+    # -- Run the setup configuration command as a job
+    enabled: true
+    backoffLimit: 6
+    # -- 0 Will clean the job after it is finished
+    ttlSecondsAfterFinished: 0    
+    restartPolicy: OnFailure
+    # Note, this field is immutable
+    resources: {}
+
+      # limits:
+      #   cpu: 200m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
 
 tags:
   redis: true

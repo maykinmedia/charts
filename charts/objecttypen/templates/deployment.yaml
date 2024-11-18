@@ -32,6 +32,35 @@ spec:
       serviceAccountName: {{ include "objecttypen.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if and .Values.global.configuration.enabled .Values.configuration.enabled .Values.configuration.initContainer.enabled }}
+      initContainers:
+        - name: {{ .Chart.Name }}-config
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 16 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "objecttypen.fullname" .) }}
+            - configMapRef:
+                name: {{ include "objecttypen.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "objecttypen.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
+            {{- end }}
+          command:
+            - "/bin/bash"
+            - "-c"
+          args:
+          - |
+            /wait_for_db.sh
+            /app/src/manage.py migrate
+            /app/src/manage.py setup_configuration --no-selftest {{- if or .Values.global.configuration.overwrite .Values.configuration.overwrite }} --overwrite{{- end }}
+          volumeMounts:
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "objecttypen.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+        {{- end }}        
       containers:
         - name: {{ .Chart.Name }}
           securityContext:

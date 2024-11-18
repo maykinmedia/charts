@@ -1,0 +1,76 @@
+{{ if and .Values.global.configuration.enabled .Values.configuration.enabled .Values.configuration.job.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "objecttypen.configName" . }}
+  labels:
+    {{- include "objecttypen.configLabels" . | nindent 4 }}
+spec:
+  backoffLimit: {{ .Values.configuration.job.backoffLimit }}
+  ttlSecondsAfterFinished: {{ .Values.configuration.job.ttlSecondsAfterFinished }}
+  template:
+    metadata:
+      annotations:
+      {{- with .Values.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "objecttypen.configLabels" . | nindent 8 }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "objecttypen.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      restartPolicy: {{ .Values.configuration.job.restartPolicy }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "objecttypen.fullname" .) }}
+            - configMapRef:
+                name: {{ include "objecttypen.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "objecttypen.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          resources:
+          {{- toYaml .Values.configuration.job.resources | nindent 12 }}
+          command:
+            - "/bin/bash"
+            - "-c"
+          args:
+            - |
+              /wait_for_db.sh
+              /app/src/manage.py migrate
+              /app/src/manage.py setup_configuration --no-selftest {{- if or .Values.global.configuration.overwrite .Values.configuration.overwrite }} --overwrite{{- end }}
+          volumeMounts:
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "objecttypen.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
+            {{- end }}
+      volumes:
+        {{- if .Values.extraVolumes }}
+        {{- include "objecttypen.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
