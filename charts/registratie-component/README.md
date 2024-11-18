@@ -102,7 +102,6 @@ Een registratie die voorziet in de "Openbare Documenten opslag"-functionaliteite
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |
-| settings.cache.oidc | string | `""` |  |
 | settings.cookieSamesite | string | `""` | Choises Strict or Lax |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
