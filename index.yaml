@@ -1,5 +1,22 @@
 apiVersion: v1
 entries:
+  icatt-odpc:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-11-20T14:39:59.765418199Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 20.2.1
+    description: A helm chart for the ICATT Openbaar-Documenten-Publicatie-Component
+    digest: af03f483afa2c484ef276d8a6ba4c3a99ca321ecad4d142a5781e408a33013a3
+    name: icatt-odpc
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/icatt-odpc-0.1.0/icatt-odpc-0.1.0.tgz
+    version: 0.1.0
   maykin-cg-stack:
   - apiVersion: v2
     created: "2024-04-10T14:52:39.982384271Z"
@@ -3171,4 +3188,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/registratie-component-1.0.0/registratie-component-1.0.0.tgz
     version: 1.0.0
-generated: "2024-11-20T14:37:58.367477298Z"
+generated: "2024-11-20T14:39:59.765979605Z"
