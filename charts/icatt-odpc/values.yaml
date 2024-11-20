@@ -1,0 +1,192 @@
+global:
+  settings:
+    # -- Global databasehost, overrides setting.database.host
+    databaseHost: ""
+
+tags:
+  redis: true
+
+replicaCount: 1
+
+image:
+  repository: "ghcr.io/generiekpublicatieplatformwoo/openbaar-documenten-publicatie-component"
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+  automountServiceAccountToken: true
+
+podAnnotations: {}
+
+podLabels: {}
+
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  className: ""
+  # -- ingress hosts
+  hosts: []
+  #  - host: icatt-odpc.gemeente.nl
+  #    paths:
+  #      - path: /
+  #        pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: icatt-odpc-tls
+  #    hosts:
+  #      - icatt-odpc.gemeente.nl
+
+# -- Specify extra ingresses, for example if you have multiple ingress classes
+extraIngress: []
+# e.g:
+# extraIngress:
+#  - name: icatt-odpc-azuregateway
+#    annotations:
+#      appgw.ingress.kubernetes.io/ssl-redirect: "true"
+#    className: azure-application-gateway
+#    hosts:
+#      - host: icatt-odpc.gemeente.nl
+#        paths:
+#          - path: /
+#            pathType: ImplementationSpecific
+#            servicename: icatt-odpc
+#            portNumber: 8000
+#    tls:
+#      - secretName: icatt-odpc-tls
+#        hosts:
+#          - "icatt-odpc.gemeente.nl"
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 200m
+  #   memory: 256Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+pdb:
+  create: false
+  minAvailable: 1
+  maxUnavailable: ""
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClassName: ""
+  existingClaim: null
+
+# Existing Secret must be defined for AzureVaultSecret to work
+existingSecret: null
+
+# This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
+# ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
+# Using this feature requires you to define existingSecret
+azureVaultSecret:
+  # The name of the Azure Key Vault, setting this will create the AzureVaultSecret
+  vaultName: null
+  # The name of the Multi Key Value Secret
+  objectName: ""
+  # Make sure this matches the content of the secret, can be either 'application/x-json' or 'application/x-yaml'
+  contentType: ""
+  # You must set .Values.existingSecret
+  secretName: "{{ .Values.existingSecret }}"
+
+settings:
+  database:
+    host: ""
+    port: 5432
+    username: ""
+    password: ""
+    name: ""
+    sslmode: prefer
+
+  oidc:
+    adminRole: ""
+    authority: ""
+    clientId: ""
+    clientSecret: ""
+    roleClaimType: ""
+    idClaimType: ""
+    nameClaimType: ""
+
+  odrc:
+    apiKey: ""
+    baseUrl: ""
+
+  aspnetcore:
+    forwardedHeadersEnabled: true
+    environment: ""
+    httpPorts: ""
+
+
+##################
+# Redis subchart #
+##################
+
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+      size: 8Gi
+      storageClass: ""
+    resources:
+      requests:
+        cpu: 10m
+        memory: 20Mi
