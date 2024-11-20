@@ -3154,4 +3154,21 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-18T14:32:49.355958869Z"
+  registratie-component:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-11-20T14:37:58.366868923Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 20.2.1
+    description: Een registratie die voorziet in de "Openbare Documenten opslag"-functionaliteiten
+    digest: 185520dff4f4b6e6465857e17ed200e744ffdd0713d72df643f4bd2031057f8f
+    name: registratie-component
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/registratie-component-1.0.0/registratie-component-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-11-20T14:37:58.367477298Z"
