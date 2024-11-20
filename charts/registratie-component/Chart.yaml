@@ -1,0 +1,14 @@
+apiVersion: v2
+name: registratie-component
+description: Een registratie die voorziet in de "Openbare Documenten opslag"-functionaliteiten
+
+type: application
+version: 1.0.0
+appVersion: 0.1.0
+
+dependencies:
+  - name: redis
+    version: 20.2.1
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - redis
