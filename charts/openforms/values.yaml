@@ -1,8 +1,90 @@
-
 global:
+  configuration:
+    enable: true
+    
+
   settings:
     # -- Global databasehost, overrides setting.database.host
     databaseHost: ""
+
+# extraSecrets Array with extra secrets
+# e.g:
+# extraSecrets:
+  # - name: objecttypen-test-token
+  #   value: Token 171be5abaf41e7856b423ad513df1ef8f867ff48
+  # - name: objecten-test-token
+  #   value: Token 7657474c3d75f56ae0abd0d1bf7994b09964dca9
+  # - name: documenten-test-secret
+  #   value: doc-supersecret
+  # - name: catalogi-test-secret
+  #   value: cat-supersecret
+
+extraSecrets: []
+
+configuration:
+  enable: false
+  # data: {}
+  # e.g.
+  # data: |-
+  #   zgw_consumers_config_enable: True
+  #   zgw_consumers:
+  #     services:
+  #     - identifier: objecttypen-test
+  #       label: Objecttypen API test
+  #       api_root: http://objecttypes-web:8000/api/v2/
+  #       api_type: orc
+  #       auth_type: api_key
+  #       header_key: Authorization
+  #       header_value: '${objecttypen-test-token}'
+
+  #     - identifier: objecten-test
+  #       label: Objecten API test
+  #       api_root: http://objects-web:8000/api/v2/
+  #       api_type: orc
+  #       auth_type: api_key
+  #       header_key: Authorization
+  #       header_value: '${objecten-test-token}'
+
+  #     - identifier: documenten-test
+  #       label: Documenten API test
+  #       api_root: http://openzaak-web.local:8000/documenten/api/v1/
+  #       api_type: drc
+  #       auth_type: zgw
+  #       client_id: test_client_id
+  #       secret: '${documenten-test-secret}'
+
+  #     - identifier: catalogi-test
+  #       label: Catalogi API test
+  #       api_root: http://openzaak-web.local:8000/catalogi/api/v1/
+  #       api_type: ztc
+  #       auth_type: zgw
+  #       client_id: test_client_id
+  #       secret: '${catalogi-test-secret}'
+
+  #   objects_api_config_enable: True
+  #   objects_api:
+  #     groups:
+  #     - name: Config 1
+  #       identifier: config-1
+  #       objects_service_identifier: objecten-test
+  #       objecttypes_service_identifier: objecttypen-test
+  #       drc_service_identifier: documenten-test
+  #       catalogi_service_identifier: catalogi-test
+  #       catalogue_domain: TEST
+  #       catalogue_rsin: "000000000"
+  #       organisatie_rsin: "000000000"
+  #       iot_submission_report: PDF Informatieobjecttype
+  #       iot_submission_csv: CSV Informatieobjecttype
+  #       iot_attachment: Attachment Informatieobjecttype
+  #     - name: Config 2
+  #       identifier: config-2
+  #       objects_service_identifier: objecten-test
+  #       objecttypes_service_identifier: objecttypen-test
+  #       drc_service_identifier: documenten-test
+  #       catalogi_service_identifier: catalogi-test
+  #       catalogue_domain: OTHER
+  #       catalogue_rsin: "000000000"
+  #       organisatie_rsin: "000000000"
 
 tags:
   redis: true

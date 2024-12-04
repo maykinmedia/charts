@@ -32,6 +32,44 @@ spec:
       serviceAccountName: {{ include "openforms.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if and .Values.global.configuration.enabled .Values.configuration.enabled .Values.configuration.initContainer.enabled }}
+      initContainers:
+        - name: {{ .Chart.Name }}-config
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 16 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openforms.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openforms.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
+            {{- end }}
+          command:
+            - "/bin/bash"
+            - "-c"
+          args:
+          - |
+            /app/src/manage.py migrate &&
+            /usr/bin/envsubst < /app/configuration/configuration.yaml > /tmp/configuration.yaml &&
+            /app/src/manage.py setup_configuration --yaml-file /tmp/configuration.yaml
+          volumeMounts:
+            - name: media
+              mountPath: /app/private_media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/private_media" }}
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
+            - name: configuration
+              mountPath: /app/configuration/
+              readOnly: true
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+        {{- end }}                   
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -87,6 +125,10 @@ spec:
           {{- else }}
           emptyDir: { }
           {{- end }}
+        - name: configuration
+          configMap:
+            name: {{ include "openforms.fullname" . }}-configuration
+            defaultMode: 0755          
         {{- if .Values.extraVolumes }}
         {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
