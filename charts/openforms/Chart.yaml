@@ -3,8 +3,8 @@ name: openforms
 description: Snel en eenvoudig slimme formulieren bouwen en publiceren
 
 type: application
-version: 1.5.0
-appVersion: 2.8.1
+version: 1.6.0-beta.1
+appVersion: setup-configuration
 icon: https://open-forms.readthedocs.io/en/stable/_static/logo.svg
 
 dependencies:
