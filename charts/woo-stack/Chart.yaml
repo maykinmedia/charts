@@ -1,0 +1,26 @@
+apiVersion: v2
+name: woo-stack
+description: An umbrella chart for the WOO stack
+
+type: application
+
+# Chart version
+version: 0.1.0
+
+appVersion: "0.1.0"
+
+dependencies:
+  - name: openzaak
+    version: 1.3.0
+    repository: https://maykinmedia.github.io/charts/
+    condition: openzaak.enabled
+
+  - name: registratie-component
+    version: latest
+    repository: https://maykinmedia.github.io/charts/
+    condition: registratie-component.enabled
+
+  - name: icatt-odpc
+    version: main
+    repository: https://maykinmedia.github.io/charts/
+    condition: icatt-odpc.enabled
