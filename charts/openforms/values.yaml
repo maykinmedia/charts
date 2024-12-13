@@ -1,65 +1,106 @@
 global:
   configuration:
-    enable: true
-    
+    enabled: false
+    secrets: {}
 
   settings:
     # -- Global databasehost, overrides setting.database.host
     databaseHost: ""
 
-# extraSecrets Array with extra secrets
-# e.g:
-# extraSecrets:
-  # - name: objecttypen-test-token
-  #   value: Token 171be5abaf41e7856b423ad513df1ef8f867ff48
-  # - name: objecten-test-token
-  #   value: Token 7657474c3d75f56ae0abd0d1bf7994b09964dca9
-  # - name: documenten-test-secret
-  #   value: doc-supersecret
-  # - name: catalogi-test-secret
-  #   value: cat-supersecret
-
-extraSecrets: []
-
 configuration:
-  enable: false
-  # data: {}
+  enabled: false
+  initContainer:
+    # -- Run the setup configuration command in a init container
+    enabled: false
+  job:
+    # -- Run the setup configuration command as a job
+    enabled: true
+    backoffLimit: 6
+    # -- 0 Will clean the job after it is finished
+    ttlSecondsAfterFinished: 0    
+    restartPolicy: OnFailure
+    # Note, this field is immutable
+    resources: {}
+      # limits:
+      #   cpu: 200m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+  secrets: {}
+    # objecttypen_test_token: Token 171be5abaf41e7856b423ad513df1ef8f867ff48
+    # objecten_test_token: Token 171be5abaf41e7856b423ad513df1ef8f867ff48
+    # documenten_test_secret: documenten_supersecret
+    # catalogi_test_secret: catalogi_supersecret
+  # data: ""
   # e.g.
   # data: |-
+  #   oidc_db_config_enable: False
+  #   oidc_db_config_admin_auth:
+  #     items:
+  #     - identifier: admin-oidc
+  #       enabled: True
+  #       oidc_rp_client_id: testid
+  #       oidc_rp_client_secret: 7DB3KUAAizYCcmZufpHRVOcD0TOkNO3I
+  #       oidc_rp_scopes_list:
+  #       - openid
+  #       - email
+  #       - profile
+  #       oidc_rp_sign_algo: RS256
+  #       endpoint_config:
+  #         oidc_op_discovery_endpoint: http://keycloak.example.com:/realms/test/
+  #       username_claim:
+  #       - sub
+  #       groups_claim:
+  #       - roles
+  #       claim_mapping:
+  #         first_name:
+  #         - given_name
+  #       sync_groups: true
+  #       sync_groups_glob_pattern: "*"
+  #       default_groups:
+  #       - Functioneel beheer
+  #       make_users_staff: true
+  #       superuser_group_names:
+  #       - superuser
+  #       oidc_use_nonce: true
+  #       oidc_nonce_size: 32
+  #       oidc_state_size: 32
+  #       userinfo_claims_source: id_token
   #   zgw_consumers_config_enable: True
   #   zgw_consumers:
   #     services:
   #     - identifier: objecttypen-test
   #       label: Objecttypen API test
-  #       api_root: http://objecttypes-web:8000/api/v2/
+  #       api_root: http://objecttypes.example.com/api/v2/
   #       api_type: orc
   #       auth_type: api_key
   #       header_key: Authorization
-  #       header_value: '${objecttypen-test-token}'
+  #       header_value: '${objecttypen_test_token}'
 
   #     - identifier: objecten-test
   #       label: Objecten API test
-  #       api_root: http://objects-web:8000/api/v2/
+  #       api_root: http://objects.example.com/api/v2/
   #       api_type: orc
   #       auth_type: api_key
   #       header_key: Authorization
-  #       header_value: '${objecten-test-token}'
+  #       header_value: '${objecten_test_token}'
 
   #     - identifier: documenten-test
   #       label: Documenten API test
-  #       api_root: http://openzaak-web.local:8000/documenten/api/v1/
+  #       api_root: http://openzaak-web.example.com/documenten/api/v1/
   #       api_type: drc
   #       auth_type: zgw
   #       client_id: test_client_id
-  #       secret: '${documenten-test-secret}'
+  #       secret: '${documenten_test_secret}'
 
   #     - identifier: catalogi-test
   #       label: Catalogi API test
-  #       api_root: http://openzaak-web.local:8000/catalogi/api/v1/
+  #       api_root: http://openzaak-web.example.com/catalogi/api/v1/
   #       api_type: ztc
   #       auth_type: zgw
   #       client_id: test_client_id
-  #       secret: '${catalogi-test-secret}'
+  #       secret: '${catalogi_test_secret}'
 
   #   objects_api_config_enable: True
   #   objects_api:
@@ -68,19 +109,19 @@ configuration:
   #       identifier: config-1
   #       objects_service_identifier: objecten-test
   #       objecttypes_service_identifier: objecttypen-test
-  #       drc_service_identifier: documenten-test
+  #       documenten_service_identifier: documenten-test
   #       catalogi_service_identifier: catalogi-test
   #       catalogue_domain: TEST
   #       catalogue_rsin: "000000000"
   #       organisatie_rsin: "000000000"
-  #       iot_submission_report: PDF Informatieobjecttype
-  #       iot_submission_csv: CSV Informatieobjecttype
-  #       iot_attachment: Attachment Informatieobjecttype
+  #       document_type_submission_report: PDF Informatieobjecttype
+  #       document_type_submission_csv: CSV Informatieobjecttype
+  #       document_type_attachment: Attachment Informatieobjecttype
   #     - name: Config 2
   #       identifier: config-2
   #       objects_service_identifier: objecten-test
   #       objecttypes_service_identifier: objecttypen-test
-  #       drc_service_identifier: documenten-test
+  #       documenten_service_identifier: documenten-test
   #       catalogi_service_identifier: catalogi-test
   #       catalogue_domain: OTHER
   #       catalogue_rsin: "000000000"

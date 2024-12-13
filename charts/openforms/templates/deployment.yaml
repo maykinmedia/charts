@@ -42,6 +42,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openforms.fullname" .) }}
+            - secretRef:
+                name: {{ include "openforms.fullname" . }}-config-secrets                
             - configMapRef:
                 name: {{ include "openforms.fullname" . }}
           env:

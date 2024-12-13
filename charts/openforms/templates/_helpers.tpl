@@ -192,6 +192,37 @@ app.kubernetes.io/name: {{ include "openforms.flowerFullname" . }}
 {{- end }}
 
 {{/*
+Create a name for Config cronjob
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openforms.configName" -}}
+{{ include "openforms.name" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+Create a default fully qualified name for config.
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openforms.configFullname" -}}
+{{ include "openforms.fullname" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+config labels
+*/}}
+{{- define "openforms.configLabels" -}}
+{{ include "openforms.commonLabels" . }}
+{{ include "openforms.configSelectorLabels" . }}
+{{- end }}
+
+{{/*
+config selector labels
+*/}}
+{{- define "openforms.configSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openforms.configName" . }}
+{{- end }}
+
+{{/*
 Ingress annotations
 */}}
 {{- define "openforms.ingress.annotations" -}}
