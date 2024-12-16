@@ -1,15 +1,8 @@
 # openinwoner
 
-![Version: 1.5.4](https://img.shields.io/badge/Version-1.5.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.3](https://img.shields.io/badge/AppVersion-1.21.3-informational?style=flat-square)
+![Version: 1.6.0-beta.1](https://img.shields.io/badge/Version-1.6.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
-
-## TL;DR
-
-```console
-helm repo add my-repo https://maykinmedia.github.io/charts/
-helm install my-release my-repo/openinwoner
-```
 
 ## Requirements
 
@@ -38,6 +31,15 @@ helm install my-release my-repo/openinwoner
 | celeryMonitor.podLabels | object | `{}` |  |
 | celeryMonitor.replicaCount | int | `1` |  |
 | celeryMonitor.resources | object | `{}` |  |
+| configuration.data | string | `""` |  |
+| configuration.enabled | bool | `false` |  |
+| configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
+| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
+| configuration.job.resources | object | `{}` |  |
+| configuration.job.restartPolicy | string | `"OnFailure"` |  |
+| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.secrets | object | `{}` |  |
 | elasticsearch.coordinating.replicaCount | int | `1` |  |
 | elasticsearch.data.persistence.enabled | bool | `true` |  |
 | elasticsearch.data.persistence.size | string | `"8Gi"` |  |
@@ -59,6 +61,8 @@ helm install my-release my-repo/openinwoner
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | fullnameOverride | string | `""` |  |
+| global.configuration.enabled | bool | `false` |  |
+| global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"maykinmedia/open-inwoner"` |  |

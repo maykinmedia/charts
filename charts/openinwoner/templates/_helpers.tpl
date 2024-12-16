@@ -68,6 +68,37 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create a name for Config cronjob
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openinwoner.configName" -}}
+{{ include "openinwoner.name" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+Create a default fully qualified name for config.
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openinwoner.configFullname" -}}
+{{ include "openinwoner.fullname" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+config labels
+*/}}
+{{- define "openinwoner.configLabels" -}}
+{{ include "openinwoner.commonLabels" . }}
+{{ include "openinwoner.configSelectorLabels" . }}
+{{- end }}
+
+{{/*
+config selector labels
+*/}}
+{{- define "openinwoner.configSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openinwoner.configName" . }}
+{{- end }}
+
+{{/*
 Create a name for NGINX
 We truncate at 57 chars in order to provide space for the "-nginx" suffix
 */}}
