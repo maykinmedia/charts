@@ -1,6 +1,7 @@
 global:
   configuration:
     enabled: false
+    secrets: {}
     overwrite: true
     organization: Gemeente Example
 
@@ -10,6 +11,7 @@ global:
 
 configuration:
   enabled: false
+  secrets: {}
   overwrite: true
   sites:
     enabled: false
@@ -37,13 +39,13 @@ configuration:
     restartPolicy: OnFailure
     # Note, this field is immutable
     resources: {}
-
       # limits:
       #   cpu: 200m
       #   memory: 256Mi
       # requests:
       #   cpu: 100m
       #   memory: 128Mi
+  data: ""
 
 tags:
   redis: true
