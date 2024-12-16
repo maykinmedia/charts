@@ -42,6 +42,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "opennotificaties.fullname" .) }}
+            - secretRef:
+                name: {{ include "opennotificaties.fullname" . }}-config-secrets
             - configMapRef:
                 name: {{ include "opennotificaties.fullname" . }}
           env:

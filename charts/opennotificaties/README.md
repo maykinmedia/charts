@@ -1,15 +1,8 @@
 # opennotificaties
 
-![Version: 1.5.1](https://img.shields.io/badge/Version-1.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
+![Version: 1.6.0-beta.1](https://img.shields.io/badge/Version-1.6.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 API voor het routeren van notificaties
-
-## TL;DR
-
-```console
-helm repo add my-repo https://maykinmedia.github.io/charts/
-helm install my-release my-repo/opennotificaties
-```
 
 ## Requirements
 
@@ -45,6 +38,7 @@ helm install my-release my-repo/opennotificaties
 | beat.readinessProbe.timeoutSeconds | int | `5` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
+| configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.initContainer.enabled | bool | `true` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
@@ -59,6 +53,7 @@ helm install my-release my-repo/opennotificaties
 | configuration.openzaakAuthorization.notifcationOpenzaakSecret | string | `""` |  |
 | configuration.openzaakAuthorization.notificationOpenzaakClientId | string | `""` |  |
 | configuration.overwrite | bool | `true` |  |
+| configuration.secrets | object | `{}` |  |
 | configuration.sites.enabled | bool | `false` |  |
 | configuration.sites.notificatiesDomain | string | `""` |  |
 | configuration.sites.organization | string | `""` |  |
@@ -95,6 +90,7 @@ helm install my-release my-repo/opennotificaties
 | global.configuration.openzaakNotificatiesSecret | string | `"oz-secret"` |  |
 | global.configuration.organization | string | `"Gemeente Example"` |  |
 | global.configuration.overwrite | bool | `true` |  |
+| global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openzaak/open-notificaties"` |  |
@@ -181,6 +177,7 @@ helm install my-release my-repo/opennotificaties
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
+| settings.email.defaultFrom | string | `""` |  |
 | settings.email.host | string | `"localhost"` |  |
 | settings.email.password | string | `""` |  |
 | settings.email.port | int | `25` |  |
