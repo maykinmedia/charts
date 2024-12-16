@@ -42,6 +42,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openzaak.fullname" .) }}
+            - secretRef:
+                name: {{ include "openzaak.fullname" . }}-config-secrets
             - configMapRef:
                 name: {{ include "openzaak.fullname" . }}
           env:
