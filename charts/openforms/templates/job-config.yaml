@@ -65,7 +65,7 @@ spec:
               mountPath: /app/configuration/
               readOnly: true
             {{- if .Values.extraVolumeMounts }}
-            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
+            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
         - name: media
