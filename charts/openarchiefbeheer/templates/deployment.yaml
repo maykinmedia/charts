@@ -43,6 +43,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openarchiefbeheer.fullname" .) }}
+            - secretRef:
+                name: {{ include "openarchiefbeheer.fullname" . }}-config-secrets
             - configMapRef:
                 name: {{ include "openarchiefbeheer.fullname" . }}
           env:

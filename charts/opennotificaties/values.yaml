@@ -9,6 +9,7 @@ global:
     notificatiesOpenzaakSecret: notif-secret
     openzaakNotificatiesClientId: oz-client-id
     openzaakNotificatiesSecret: oz-secret
+    secrets: {}
 
   settings:
     # -- Global databasehost, overrides setting.database.host
@@ -49,6 +50,8 @@ configuration:
       # requests:
       #   cpu: 100m
       #   memory: 128Mi
+  secrets: {}
+  data: ""
 
 tags:
   redis: true

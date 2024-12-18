@@ -2,9 +2,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "objecttypen.configName" . }}
+  name: {{ include "openklant.configName" . }}
   labels:
-    {{- include "objecttypen.configLabels" . | nindent 4 }}
+    {{- include "openklant.configLabels" . | nindent 4 }}
 spec:
   backoffLimit: {{ .Values.configuration.job.backoffLimit }}
   ttlSecondsAfterFinished: {{ .Values.configuration.job.ttlSecondsAfterFinished }}
@@ -15,7 +15,7 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "objecttypen.configLabels" . | nindent 8 }}
+        {{- include "openklant.configLabels" . | nindent 8 }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -24,7 +24,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "objecttypen.serviceAccountName" . }}
+      serviceAccountName: {{ include "openklant.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       restartPolicy: {{ .Values.configuration.job.restartPolicy }}
@@ -36,14 +36,14 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - secretRef:
-                name: {{ .Values.existingSecret | default (include "objecttypen.fullname" .) }}
-            - configMapRef:
-                name: {{ include "objecttypen.fullname" . }}
+                name: {{ .Values.existingSecret | default (include "openklant.fullname" .) }}
             - secretRef:
-                name: {{ include "objecttypen.fullname" . }}-config-secrets                
+                name: {{ include "openklant.fullname" . }}-config-secrets                
+            - configMapRef:
+                name: {{ include "openklant.fullname" . }}
           env:
             {{- if .Values.extraEnvVars }}
-            {{- include "objecttypen.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- include "openklant.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           resources:
           {{- toYaml .Values.configuration.job.resources | nindent 12 }}
@@ -59,15 +59,15 @@ spec:
               mountPath: /app/configuration/
               readOnly: true
             {{- if .Values.extraVolumeMounts }}
-            {{- include "objecttypen.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
+            {{- include "openklant.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
             {{- end }}
       volumes:
         - name: configuration
           configMap:
-            name: {{ include "objecttypen.fullname" . }}-configuration
+            name: {{ include "openklant.fullname" . }}-configuration
             defaultMode: 0755          
         {{- if .Values.extraVolumes }}
-        {{- include "objecttypen.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
+        {{- include "openklant.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

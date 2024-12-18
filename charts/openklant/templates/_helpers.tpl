@@ -68,6 +68,37 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create a name for Config cronjob
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openklant.configName" -}}
+{{ include "openklant.name" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+Create a default fully qualified name for config.
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openklant.configFullname" -}}
+{{ include "openklant.fullname" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+config labels
+*/}}
+{{- define "openklant.configLabels" -}}
+{{ include "openklant.commonLabels" . }}
+{{ include "openklant.configSelectorLabels" . }}
+{{- end }}
+
+{{/*
+config selector labels
+*/}}
+{{- define "openklant.configSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openklant.configName" . }}
+{{- end }}
+
+{{/*
 Create a name for the worker
 We truncate at 56 chars in order to provide space for the "-worker" suffix
 */}}

@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.5.3](https://img.shields.io/badge/Version-1.5.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.15.0](https://img.shields.io/badge/AppVersion-1.15.0-informational?style=flat-square)
+![Version: 1.6.0-beta.1](https://img.shields.io/badge/Version-1.6.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -37,6 +37,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | beat.readinessProbe.timeoutSeconds | int | `5` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
+| configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.initContainer.enabled | bool | `true` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
@@ -52,6 +53,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | configuration.notificatiesAuthorization.notifcationOpenzaakSecret | string | `""` |  |
 | configuration.notificatiesAuthorization.notificationOpenzaakClientId | string | `""` |  |
 | configuration.overwrite | bool | `true` |  |
+| configuration.secrets | object | `{}` |  |
 | configuration.selectieLijst.AllowedYears[0] | int | `2017` |  |
 | configuration.selectieLijst.AllowedYears[1] | int | `2020` |  |
 | configuration.selectieLijst.ApiOas | string | `"https://selectielijst.openzaak.nl/api/v1/schema/openapi.yaml"` |  |
@@ -95,6 +97,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | global.configuration.openzaakNotificatiesSecret | string | `"oz-secret"` |  |
 | global.configuration.organization | string | `"Gemeente Example"` |  |
 | global.configuration.overwrite | bool | `true` |  |
+| global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openzaak/open-zaak"` |  |

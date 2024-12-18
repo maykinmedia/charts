@@ -2,6 +2,32 @@ global:
   settings:
     # -- Global databasehost, overrides setting.database.host
     databaseHost: ""
+  configuration:
+    enabled: false
+    secrets: {}
+
+configuration:
+  enabled: false
+  initContainer:
+    # -- Run the setup configuration command in a init container
+    enabled: false
+  job:
+    # -- Run the setup configuration command as a job
+    enabled: true
+    backoffLimit: 6
+    # -- 0 Will clean the job after it is finished
+    ttlSecondsAfterFinished: 0    
+    restartPolicy: OnFailure
+    # Note, this field is immutable
+    resources: {}
+      # limits:
+      #   cpu: 200m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+  secrets: {}
+  data: ""
 
 tags:
   redis: true

@@ -37,6 +37,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "opennotificaties.fullname" .) }}
+            - secretRef:
+                name: {{ include "opennotificaties.fullname" . }}-config-secrets                
             - configMapRef:
                 name: {{ include "opennotificaties.fullname" . }}
           env:
@@ -49,10 +51,9 @@ spec:
             - "/bin/bash"
             - "-c"
           args:
-            - |
-              /wait_for_db.sh
-              /app/src/manage.py migrate
-              /app/src/manage.py setup_configuration --no-selftest {{- if or .Values.global.configuration.overwrite .Values.configuration.overwrite }} --overwrite{{- end }}
+          - |
+            /usr/bin/envsubst < /app/configuration/configuration.yaml > /tmp/configuration.yaml &&
+            /app/src/manage.py setup_configuration --yaml-file /tmp/configuration.yaml
           volumeMounts:
             - name: media
               mountPath: /app/private-media
@@ -60,6 +61,9 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "opennotificaties/media" }}
+            - name: configuration
+              mountPath: /app/configuration/
+              readOnly: true
             {{- if .Values.extraVolumeMounts }}
             {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
             {{- end }}
@@ -71,6 +75,10 @@ spec:
           {{- else }}
           emptyDir: { }
           {{- end }}
+        - name: configuration
+          configMap:
+            name: {{ include "opennotificaties.fullname" . }}-configuration
+            defaultMode: 0755          
         {{- if .Values.extraVolumes }}
         {{- include "opennotificaties.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
         {{- end }}

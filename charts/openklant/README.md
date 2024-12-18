@@ -1,15 +1,8 @@
 # openklant
 
-![Version: 1.3.5](https://img.shields.io/badge/Version-1.3.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.0](https://img.shields.io/badge/AppVersion-2.3.0-informational?style=flat-square)
+![Version: 1.4.0-beta.1](https://img.shields.io/badge/Version-1.4.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
-
-## TL;DR
-
-```console
-helm repo add my-repo https://maykinmedia.github.io/charts/
-helm install my-release my-repo/openklant
-```
 
 ## Requirements
 
@@ -31,12 +24,23 @@ helm install my-release my-repo/openklant
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| configuration.data | string | `""` |  |
+| configuration.enabled | bool | `false` |  |
+| configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
+| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
+| configuration.job.resources | object | `{}` |  |
+| configuration.job.restartPolicy | string | `"OnFailure"` |  |
+| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.secrets | object | `{}` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | fullnameOverride | string | `""` |  |
+| global.configuration.enabled | bool | `false` |  |
+| global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"maykinmedia/open-klant"` |  |

@@ -68,6 +68,37 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create a name for Config cronjob
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openarchiefbeheer.configName" -}}
+{{ include "openarchiefbeheer.name" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+Create a default fully qualified name for config.
+We truncate at 56 chars in order to provide space for the "-config" suffix
+*/}}
+{{- define "openarchiefbeheer.configFullname" -}}
+{{ include "openarchiefbeheer.fullname" . | trunc 56 | trimSuffix "-" }}-config
+{{- end }}
+
+{{/*
+config labels
+*/}}
+{{- define "openarchiefbeheer.configLabels" -}}
+{{ include "openarchiefbeheer.commonLabels" . }}
+{{ include "openarchiefbeheer.configSelectorLabels" . }}
+{{- end }}
+
+{{/*
+config selector labels
+*/}}
+{{- define "openarchiefbeheer.configSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openarchiefbeheer.configName" . }}
+{{- end }}
+
+{{/*
 Create a name for NGINX
 We truncate at 57 chars in order to provide space for the "-nginx" suffix
 */}}

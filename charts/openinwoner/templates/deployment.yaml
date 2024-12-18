@@ -44,6 +44,8 @@ spec:
                 name: {{ .Values.existingSecret | default (include "openinwoner.fullname" .) }}
             - configMapRef:
                 name: {{ include "openinwoner.fullname" . }}
+            - secretRef:
+                name: {{ include "openinwoner.fullname" . }}-config-secrets
           env:
             {{- if .Values.extraEnvVars }}
             {{- include "openinwoner.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}

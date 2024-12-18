@@ -44,6 +44,8 @@ spec:
                 name: {{ .Values.existingSecret | default (include "objecten.fullname" .) }}
             - configMapRef:
                 name: {{ include "objecten.fullname" . }}
+            - secretRef:
+                name: {{ include "objecten.fullname" . }}-config-secrets
           env:
             {{- if .Values.extraEnvVars }}
             {{- include "objecten.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}

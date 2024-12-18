@@ -41,6 +41,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openklant.fullname" .) }}
+            - secretRef:
+                name: {{ include "openklant.fullname" . }}-config-secrets
             - configMapRef:
                 name: {{ include "openklant.fullname" . }}
           env:
