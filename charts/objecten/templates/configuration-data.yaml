@@ -1,0 +1,12 @@
+{{ if and .Values.global.configuration.enabled .Values.configuration.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+metadata:
+  name: {{ include "objecten.fullname" . }}-configuration
+  labels:
+    {{- include "objecten.labels" . | nindent 4 }}
+data:
+  configuration.yaml: |-
+    {{- include "common.tplvalues.render" (dict "value" .Values.configuration.data "context" $) | nindent 4 }}
+{{- end }}
