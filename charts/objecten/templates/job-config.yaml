@@ -65,7 +65,7 @@ spec:
               mountPath: /app/configuration/
               readOnly: true
             {{- if .Values.extraVolumeMounts }}
-            {{- include "objecten.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
+            {{- include "objecten.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
         - name: media
@@ -80,7 +80,7 @@ spec:
             name: {{ include "objecten.fullname" . }}-configuration
             defaultMode: 0755          
         {{- if .Values.extraVolumes }}
-        {{- include "objecten.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
+        {{- include "objecten.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
