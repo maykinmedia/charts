@@ -486,6 +486,23 @@ entries:
   openarchiefbeheer:
   - apiVersion: v2
     appVersion: latest
+    created: "2024-12-20T10:33:30.668084938Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik
+      met Zaakgericht werken
+    digest: 93891efa4371f840937505d920d0904a8a0b8cf7007199649e637bb423adf851
+    name: openarchiefbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openarchiefbeheer-1.1.0-beta.3/openarchiefbeheer-1.1.0-beta.3.tgz
+    version: 1.1.0-beta.3
+  - apiVersion: v2
+    appVersion: latest
     created: "2024-12-19T10:14:47.823404302Z"
     dependencies:
     - name: redis
@@ -1819,6 +1836,23 @@ entries:
   openklant:
   - apiVersion: v2
     appVersion: latest
+    created: "2024-12-20T10:33:30.829586508Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten
+      API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
+    digest: 4b0c5ce1285ab0aba458d7317c67afeaa95395ef4a840e9fd9833d9f91576112
+    name: openklant
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openklant-1.4.0-beta.3/openklant-1.4.0-beta.3.tgz
+    version: 1.4.0-beta.3
+  - apiVersion: v2
+    appVersion: latest
     created: "2024-12-19T10:14:48.260038795Z"
     dependencies:
     - name: redis
@@ -2056,6 +2090,27 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openklant-0.0.1/openklant-0.0.1.tgz
     version: 0.0.1
   opennotificaties:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-12-20T10:33:30.982056155Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - rabbitmq
+      version: 11.7.1
+    description: API voor het routeren van notificaties
+    digest: 67225a2689fe06cee9b9371671312d83d9f067efdf0781003dfc07d3dfaeb2a8
+    name: opennotificaties
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.6.0-beta.3/opennotificaties-1.6.0-beta.3.tgz
+    version: 1.6.0-beta.3
   - apiVersion: v2
     appVersion: latest
     created: "2024-12-19T10:14:48.511141511Z"
@@ -2836,6 +2891,22 @@ entries:
   openzaak:
   - apiVersion: v2
     appVersion: latest
+    created: "2024-12-20T10:33:31.131547465Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: cfc90765c5f5b13f709eaf328ea560b7b79072f1d9fe08bf74eaf0ac12f11f18
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.6.0-beta.3/openzaak-1.6.0-beta.3.tgz
+    version: 1.6.0-beta.3
+  - apiVersion: v2
+    appVersion: latest
     created: "2024-12-19T10:14:48.733393322Z"
     dependencies:
     - name: redis
@@ -3436,4 +3507,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-19T12:24:23.100785022Z"
+generated: "2024-12-20T10:33:31.132453465Z"
