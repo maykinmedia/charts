@@ -32,6 +32,7 @@ spec:
       serviceAccountName: {{ include "openklant.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+{{- if and .Values.global.configuration.enabled .Values.configuration.enabled .Values.configuration.initContainer.enabled }}
       initContainers:
         - name: {{ .Chart.Name }}-config
           securityContext:
