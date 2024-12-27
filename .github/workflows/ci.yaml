@@ -1,0 +1,42 @@
+name: Run CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+
+jobs:
+  linter:
+    name: Check Charts Syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4.2.0
+        with:
+          version: v3.14.4
+
+      - name: Add dependency chart repos
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+
+      - name: Run Helm lint
+        run: |
+          for CHART_DIR in ./charts/*; do
+            if [ -d "$CHART_DIR" ]; then
+                helm dependencies build "$CHART_DIR"
+                if [ $? -ne 0 ]; then
+                    exit 1
+                fi
+
+                helm lint "$CHART_DIR"
+                if [ $? -ne 0 ]; then
+                    exit 1
+                fi
+            fi
+          done
