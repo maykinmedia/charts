@@ -335,10 +335,12 @@ worker:
   resources: {}
   maxWorkerLivenessDelta: ""
   livenessProbe:
+    enabled: false
     exec:
       command:
-        - python
-        - /app/bin/check_celery_worker_liveness.py
+        - /bin/sh
+        - -c
+        - celery --workdir src --app nrc.celery inspect --destination celery@${HOSTNAME} active
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
