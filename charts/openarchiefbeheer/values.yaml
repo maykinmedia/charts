@@ -255,8 +255,13 @@ worker:
   concurrency: 4
   podLabels: {}
   resources: {}
-  livenessProbe: {}
-  readinessProbe: {}
+  livenessProbe: 
+    enabled: false
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 10
+    failureThreshold: 3
+    successThreshold: 1
   autoscaling:
     enabled: false
     minReplicas: 1
