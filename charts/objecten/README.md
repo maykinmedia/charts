@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.6.0-beta.1](https://img.shields.io/badge/Version-2.6.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 2.7.0-beta.0](https://img.shields.io/badge/Version-2.7.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -167,13 +167,15 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
-| worker.livenessProbe.exec.command[0] | string | `"python"` |  |
-| worker.livenessProbe.exec.command[1] | string | `"/app/bin/check_celery_worker_liveness.py"` |  |
-| worker.livenessProbe.failureThreshold | int | `10` |  |
+| worker.livenessProbe.enabled | bool | `true` |  |
+| worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
+| worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
+| worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app objects.celery inspect --destination celery@${HOSTNAME} active"` |  |
+| worker.livenessProbe.failureThreshold | int | `3` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
 | worker.livenessProbe.periodSeconds | int | `50` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
-| worker.livenessProbe.timeoutSeconds | int | `5` |  |
+| worker.livenessProbe.timeoutSeconds | int | `10` |  |
 | worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `1` |  |
