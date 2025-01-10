@@ -181,6 +181,16 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- include "openklant.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
+          {{- if .Values.worker.livenessProbe.enabled }}
+          livenessProbe:
+            exec: 
+            {{- toYaml .Values.worker.livenessProbe.exec | nindent 14 }}
+            initialDelaySeconds: {{ .Values.worker.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.worker.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.worker.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.worker.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.worker.livenessProbe.failureThreshold }}
+          {{- end }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           command:

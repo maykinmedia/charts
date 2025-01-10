@@ -1,6 +1,6 @@
 # openklant
 
-![Version: 1.4.0-beta.1](https://img.shields.io/badge/Version-1.4.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.5.0-beta.0](https://img.shields.io/badge/Version-1.5.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
 
@@ -128,11 +128,15 @@ Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten AP
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
+| worker.livenessProbe.enabled | bool | `false` |  |
+| worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
+| worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
+| worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app openklant.celery inspect --destination celery@${HOSTNAME} active"` |  |
 | worker.livenessProbe.failureThreshold | int | `3` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
-| worker.livenessProbe.periodSeconds | int | `10` |  |
+| worker.livenessProbe.periodSeconds | int | `30` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
-| worker.livenessProbe.timeoutSeconds | int | `5` |  |
+| worker.livenessProbe.timeoutSeconds | int | `10` |  |
 | worker.podLabels | object | `{}` |  |
 | worker.readinessProbe.failureThreshold | int | `3` |  |
 | worker.readinessProbe.initialDelaySeconds | int | `30` |  |
