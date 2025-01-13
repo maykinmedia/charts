@@ -1,6 +1,6 @@
 # openinwoner
 
-![Version: 1.6.0-beta.1](https://img.shields.io/badge/Version-1.6.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.6.1-beta.0](https://img.shields.io/badge/Version-1.6.1--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
@@ -179,8 +179,10 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | settings.smsgateway.apikey | string | `""` |  |
 | settings.smsgateway.backend | string | `""` | For example "open_inwoner.accounts.gateways.MessageBird" |
 | settings.uwsgi.harakiri | string | `""` |  |
+| settings.uwsgi.httpTimeout | string | `""` |  |
 | settings.uwsgi.master | bool | `false` |  |
 | settings.uwsgi.maxRequests | string | `""` |  |
+| settings.uwsgi.port | string | `""` |  |
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
 | tags.elasticsearch | bool | `true` |  |

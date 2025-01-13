@@ -71,3 +71,10 @@ data:
   {{- if .Values.settings.uwsgi.harakiri }}
   UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.uwsgi.port }}
+  UWSGI_PORT: {{ .Values.settings.uwsgi.port | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.httpTimeout }}
+  UWSGI_HTTP_TIMEOUT: {{ .Values.settings.uwsgi.httpTimeout | toString | quote }}
+  {{- end }}
+
