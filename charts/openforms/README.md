@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.8.1](https://img.shields.io/badge/AppVersion-2.8.1-informational?style=flat-square)
+![Version: 1.8.0-beta.0](https://img.shields.io/badge/Version-1.8.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -27,6 +27,14 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | beat.podLabels | object | `{}` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
+| configuration.enabled | bool | `false` |  |
+| configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
+| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
+| configuration.job.resources | object | `{}` |  |
+| configuration.job.restartPolicy | string | `"OnFailure"` |  |
+| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.secrets | object | `{}` |  |
 | existingSecret | string | `nil` |  |
 | extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
@@ -49,6 +57,8 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global.configuration.enabled | bool | `false` |  |
+| global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openformulieren/open-forms"` |  |
@@ -198,9 +208,11 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
-| worker.livenessProbe.exec.command[0] | string | `"python"` |  |
-| worker.livenessProbe.exec.command[1] | string | `"/app/bin/check_celery_worker_liveness.py"` |  |
-| worker.livenessProbe.failureThreshold | int | `10` |  |
+| worker.livenessProbe.enabled | bool | `false` |  |
+| worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
+| worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
+| worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app openforms.celery inspect --destination celery@${HOSTNAME} active"` |  |
+| worker.livenessProbe.failureThreshold | int | `3` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
 | worker.livenessProbe.periodSeconds | int | `50` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |

@@ -253,9 +253,15 @@ worker:
   podLabels: { }
   resources: { }
   livenessProbe:
+    enabled: false
+    exec:
+      command:
+        - /bin/sh
+        - -c
+        - celery --workdir src --app openklant.celery inspect --destination celery@${HOSTNAME} active
     initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
+    periodSeconds: 30
+    timeoutSeconds: 10
     failureThreshold: 3
     successThreshold: 1
   readinessProbe:

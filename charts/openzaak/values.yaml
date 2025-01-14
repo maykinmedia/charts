@@ -323,15 +323,17 @@ worker:
   resources: {}
   maxWorkerLivenessDelta: ""
   livenessProbe:
+    enabled: false
     exec:
       command:
-        - python
-        - /app/bin/check_celery_worker_liveness.py
+        - /bin/sh
+        - -c
+        - celery --workdir src --app openzaak.celery inspect --destination celery@${HOSTNAME} active
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
-    timeoutSeconds: 15
-    failureThreshold: 10
+    timeoutSeconds: 10
+    failureThreshold: 3
     successThreshold: 1
   autoscaling:
     enabled: false
