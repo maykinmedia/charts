@@ -272,6 +272,8 @@ spec:
                 name: {{ .Values.existingSecret | default (include "openarchiefbeheer.fullname" .) }}
             - configMapRef:
                 name: {{ include "openarchiefbeheer.fullname" . }}
+            - configMapRef:
+                name: {{ include "project.fullname" . }}-worker-{{ .Values.worker.label | default "celery" }}
           env:
             {{- if .Values.extraEnvVars }}
             {{- include "openarchiefbeheer.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
@@ -300,6 +302,11 @@ spec:
             {{- if .Values.extraVolumeMounts }}
             {{- include "openarchiefbeheer.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
+            {{- if .Values.worker.livenessProbe.enabled }}
+            - name: liveness
+              mountPath: /app/liveness/
+              readOnly: true
+            {{- end }}
       volumes:
         - name: media
           persistentVolumeClaim:
@@ -310,6 +317,12 @@ spec:
           {{- end }}
         {{- if .Values.extraVolumes }}
         {{- include "openarchiefbeheer.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.worker.livenessProbe.enabled }}
+        - name: liveness
+          configMap:
+            name: {{ include "project.fullname" . }}-celery-liveness
+            defaultMode: 0555
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

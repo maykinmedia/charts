@@ -2,5 +2,8 @@ dependencies:
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 17.3.14
-digest: sha256:9a575d102b6aa617223725968198a70072cee90595377df08ae62cef7c32cf4a
-generated: "2023-02-28T13:57:35.331737607+01:00"
+- name: maykinhelmlib
+  repository: file://../maykinhelmlib
+  version: 0.1.0
+digest: sha256:6bba46f6db2fb930fa5a94723b5c1cdde49ada53fd94bb78e6787b46ee63440b
+generated: "2025-01-15T12:10:10.907988903+01:00"

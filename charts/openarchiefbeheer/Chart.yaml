@@ -12,3 +12,6 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - redis
+  - name: maykinhelmlib
+    version: 0.1.0
+    repository: file://../maykinhelmlib
