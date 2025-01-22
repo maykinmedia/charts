@@ -19,6 +19,16 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/maykin-cg-stack-0.0.1/maykin-cg-stack-0.0.1.tgz
     version: 0.0.1
+  maykin-utils-lib:
+  - apiVersion: v2
+    created: "2025-01-22T12:01:39.587114906Z"
+    description: A Library Helm chart containing code shared between Maykin helm charts
+    digest: a093226f7e45b953bd9423d813c74f41024d7534dac3b03156929fc7177572aa
+    name: maykin-utils-lib
+    type: library
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/maykin-utils-lib-0.1.0/maykin-utils-lib-0.1.0.tgz
+    version: 0.1.0
   objecten:
   - apiVersion: v2
     appVersion: latest
@@ -3708,4 +3718,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-14T13:41:17.058056571Z"
+generated: "2025-01-22T12:01:39.587805728Z"
