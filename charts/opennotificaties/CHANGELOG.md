@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.0-beta.0 (2025-22-01)
+- [#169] Add pdb for worker
+
 ## 1.7.0-beta.0 (2025-10-01)
 
 - [#148] Replace the worker liveness probe with the `celery inspect active` command. This should detect when a worker is down and should not interrupt long running tasks.
