@@ -17,3 +17,24 @@ spec:
     matchLabels:
       {{- include "opennotificaties.selectorLabels" . | nindent 6 }}
 {{- end }}
+
+---
+{{- if .Values.worker.pdb.create }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "opennotificaties.workerFullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "opennotificaties.workerLabels" . | nindent 4 }}
+spec:
+  {{- if .Values.worker.pdb.minAvailable }}
+  minAvailable: {{ .Values.worker.pdb.minAvailable }}
+  {{- end }}
+  {{- if .Values.worker.pdb.maxUnavailable }}
+  maxUnavailable: {{ .Values.worker.pdb.maxUnavailable }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "opennotificaties.workerSelectorLabels" . | nindent 6 }}
+{{- end }}

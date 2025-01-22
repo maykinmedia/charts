@@ -219,7 +219,9 @@ API voor het routeren van notificaties
 | worker.livenessProbe.successThreshold | int | `1` |  |
 | worker.livenessProbe.timeoutSeconds | int | `15` |  |
 | worker.maxWorkerLivenessDelta | string | `""` |  |
+| worker.pdb.create | bool | `false` |  |
+| worker.pdb.maxUnavailable | string | `""` |  |
+| worker.pdb.minAvailable | int | `1` |  |
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
-

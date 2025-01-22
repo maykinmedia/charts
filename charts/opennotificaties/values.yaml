@@ -353,6 +353,10 @@ worker:
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+  pdb:
+    create: false
+    minAvailable: 1
+    maxUnavailable: ""
 
 flower:
   enabled: false
