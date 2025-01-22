@@ -1,0 +1,7 @@
+apiVersion: v2
+name: maykin-utils-lib
+description: A Library Helm chart containing code shared between Maykin helm charts
+
+type: library
+version: 0.1.0
+
