@@ -1,6 +1,6 @@
 # openarchiefbeheer
 
-![Version: 1.1.1-beta.0](https://img.shields.io/badge/Version-1.1.1--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
@@ -8,8 +8,8 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../maykin-utils-lib | maykin-utils-lib | 0.1.0 |
 | https://charts.bitnami.com/bitnami | redis | 17.3.14 |
+| https://maykinmedia.github.io/charts/ | maykin-utils-lib | 0.1.0 |
 
 ## Values
 
