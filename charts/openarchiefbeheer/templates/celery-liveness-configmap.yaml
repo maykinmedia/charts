@@ -1,0 +1,3 @@
+{{- if .Values.worker.livenessProbe.enabled }}
+{{- include "maykinhelmlib.celeryLivenessConfigmap" . -}}
+{{- end }}
