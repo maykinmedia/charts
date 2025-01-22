@@ -3,7 +3,7 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   version: 17.3.14
 - name: maykin-utils-lib
-  repository: file://../maykin-utils-lib
+  repository: https://maykinmedia.github.io/charts/
   version: 0.1.0
-digest: sha256:c26bca8f348cdfff797880a55bb2017c613ff7aebad2e4b549a214a417a03c6f
-generated: "2025-01-22T11:36:47.641468714+01:00"
+digest: sha256:a4662193554f255c495842a02817a8ebfeab528d08fb8a03e8377d6455106692
+generated: "2025-01-22T14:41:01.000307992+01:00"
