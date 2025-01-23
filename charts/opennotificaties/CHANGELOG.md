@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.0-beta.1 (2025-23-01)
+- [#170] Add autoscaling behavior for ON
+
 ## 1.8.0-beta.0 (2025-22-01)
 - [#169] Add pdb for worker
 
