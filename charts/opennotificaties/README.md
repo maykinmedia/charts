@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.7.0-beta.0](https://img.shields.io/badge/Version-1.7.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.8.0-beta.1](https://img.shields.io/badge/Version-1.8.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -16,6 +16,7 @@ API voor het routeren van notificaties
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| autoscaling.behavior | object | `{}` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -203,6 +204,7 @@ API voor het routeren van notificaties
 | tags.rabbitmq | bool | `true` |  |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
+| worker.autoscaling.behavior | object | `{}` |  |
 | worker.autoscaling.enabled | bool | `false` |  |
 | worker.autoscaling.maxReplicas | int | `100` |  |
 | worker.autoscaling.minReplicas | int | `1` |  |
