@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 (2025-01-27)
+
+- Add settings for request retry. This should help reduce the failures when resyncing zaken with openzaak.
+
 ## 1.2.0 (2025-01-22)
 
 - [#165] Add possibility to use custom celery queue and worker names when using the worker liveness probe.
