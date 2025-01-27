@@ -250,6 +250,10 @@ settings:
     zaakUrlTemplate: ""
 
   frontendUrl: ""
+  retry:
+    total: ""
+    backoffFactor: ""
+    statusForcelist: ""
 
 worker:
   label: "1"
