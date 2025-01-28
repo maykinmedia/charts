@@ -1,4 +1,4 @@
-{{- define "maykinhelmlib.celeryEnvConfigmap" -}}
+{{- define "maykinUtilsLib.celeryEnvConfigmap" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
