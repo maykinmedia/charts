@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.1 (2025-02-11)
+
+- [#172] Add Horizontal Pod Autoscaler for the worker. Fix the deployment to look for the `.Values.worker.autoscaling.enabled` value instead of the `.Values.autoscaling.enabled` when setting the replicas of the worker.
+
 ## 2.7.0 (2025-01-31)
 
 
