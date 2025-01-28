@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.7.0-beta.0](https://img.shields.io/badge/Version-2.7.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 2.8.0-beta.0](https://img.shields.io/badge/Version-2.8.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -15,6 +15,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| autoscaling.behaviour | object | `{}` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -161,13 +162,14 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | settings.uwsgi.threads | string | `""` |  |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
+| worker.autoscaling.behaviour | object | `{}` |  |
 | worker.autoscaling.enabled | bool | `false` |  |
 | worker.autoscaling.maxReplicas | int | `100` |  |
 | worker.autoscaling.minReplicas | int | `1` |  |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
-| worker.livenessProbe.enabled | bool | `true` |  |
+| worker.livenessProbe.enabled | bool | `false` |  |
 | worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
 | worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
 | worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app objects.celery inspect --destination celery@${HOSTNAME} active"` |  |

@@ -1,4 +1,4 @@
-{{- define "maykinhelmlib.celeryLivenessConfigmap" -}}
+{{- define "maykinUtilsLib.celeryLivenessConfigmap" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:

@@ -3,5 +3,5 @@ name: maykin-utils-lib
 description: A Library Helm chart containing code shared between Maykin helm charts
 
 type: library
-version: 0.1.0
+version: 0.2.0
 
