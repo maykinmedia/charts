@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.8.0-beta.0](https://img.shields.io/badge/Version-1.8.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.8.0](https://img.shields.io/badge/Version-1.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -35,6 +35,8 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | configuration.job.restartPolicy | string | `"OnFailure"` |  |
 | configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
 | configuration.secrets | object | `{}` |  |
+| configurationSecretsName | string | `""` |  |
+| existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
