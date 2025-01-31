@@ -3,8 +3,8 @@ name: objecten
 description: API om objecten te beheren die behoren bij een bepaald objecttype
 
 type: application
-version: 2.7.0-beta.0
-appVersion: latest
+version: 2.7.0
+appVersion: 3.0.0
 
 dependencies:
   - name: redis
