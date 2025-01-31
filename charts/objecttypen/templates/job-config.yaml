@@ -40,7 +40,7 @@ spec:
             - configMapRef:
                 name: {{ include "objecttypen.fullname" . }}
             - secretRef:
-                name: {{ include "objecttypen.fullname" . }}-config-secrets                
+                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "objecttypen.fullname" .)) }}{{ end }}
           env:
             {{- if .Values.extraEnvVars }}
             {{- include "objecttypen.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
