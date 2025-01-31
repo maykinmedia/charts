@@ -1,6 +1,6 @@
 # objecttypen
 
-![Version: 1.3.0-beta.1](https://img.shields.io/badge/Version-1.3.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.2](https://img.shields.io/badge/AppVersion-2.2.2-informational?style=flat-square)
+![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
 
 API om object definities te beheren
 
@@ -25,10 +25,6 @@ API om object definities te beheren
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
 | configuration.data | string | `""` |  |
-| configuration.demo.email | string | `nil` |  |
-| configuration.demo.enabled | bool | `false` |  |
-| configuration.demo.person | string | `nil` |  |
-| configuration.demo.token | string | `nil` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.initContainer.enabled | bool | `true` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
@@ -38,12 +34,11 @@ API om object definities te beheren
 | configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
-| configuration.sites.domain | string | `""` |  |
-| configuration.sites.enabled | bool | `false` |  |
-| configuration.sites.organization | string | `""` |  |
 | configuration.superuser.email | string | `""` |  |
 | configuration.superuser.password | string | `""` |  |
 | configuration.superuser.username | string | `""` |  |
+| configurationSecretsName | string | `""` |  |
+| existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
