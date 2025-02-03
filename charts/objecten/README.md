@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.7.0-beta.0](https://img.shields.io/badge/Version-2.7.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 2.7.0](https://img.shields.io/badge/Version-2.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -24,29 +24,20 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
-| configuration.data | string | `""` |  |
-| configuration.demo.email | string | `nil` |  |
-| configuration.demo.enabled | bool | `false` |  |
-| configuration.demo.person | string | `nil` |  |
-| configuration.demo.token | string | `nil` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
-| configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
+| configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
 | configuration.job.restartPolicy | string | `"OnFailure"` |  |
 | configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
-| configuration.objectTypes.ApiRoot | string | `""` |  |
-| configuration.objectTypes.enabled | bool | `false` |  |
-| configuration.objectTypes.token | string | `""` |  |
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
-| configuration.sites.domain | string | `""` |  |
-| configuration.sites.enabled | bool | `false` |  |
-| configuration.sites.organization | string | `""` |  |
 | configuration.superuser.email | string | `""` |  |
 | configuration.superuser.password | string | `""` |  |
 | configuration.superuser.username | string | `""` |  |
+| configurationSecretsName | string | `""` |  |
+| existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
@@ -68,7 +59,6 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | flower.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | global.configuration.enabled | bool | `false` |  |
-| global.configuration.organization | string | `"Gemeente Example"` |  |
 | global.configuration.overwrite | bool | `true` |  |
 | global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
@@ -167,7 +157,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
-| worker.livenessProbe.enabled | bool | `true` |  |
+| worker.livenessProbe.enabled | bool | `false` |  |
 | worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
 | worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
 | worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app objects.celery inspect --destination celery@${HOSTNAME} active"` |  |

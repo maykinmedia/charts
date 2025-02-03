@@ -72,27 +72,8 @@ data:
   {{- if .Values.settings.notificationsDisabled }}
   NOTIFICATIONS_DISABLED: "True"
   {{- end }}
-  {{- if .Values.settings.notificationsDisabled }}
-  NOTIFICATIONS_DISABLED: "True"
-  {{- end }}
   {{ if .Values.settings.disable2fa }}
   DISABLE_2FA: "True"
-  {{- end }}
-  {{ if and .Values.global.configuration.enabled .Values.configuration.enabled -}}
-  SITES_CONFIG_ENABLE: {{ if .Values.configuration.sites.enabled }}"True"{{ else }}"False"{{ end }}
-  {{- if .Values.configuration.sites.enabled }}
-  OBJECTS_DOMAIN: {{ .Values.configuration.sites.domain | toString | quote }}
-  OBJECTS_ORGANIZATION: {{ .Values.global.configuration.organization | default .Values.configuration.sites.organization | toString | quote }}
-  {{- end }}
-  OBJECTS_OBJECTTYPES_CONFIG_ENABLE: {{ if .Values.configuration.objectTypes.enabled }}"True"{{ else }}"False"{{ end }}
-  {{- if .Values.configuration.objectTypes.enabled }}
-  OBJECTTYPES_API_ROOT: {{ .Values.configuration.objectTypes.ApiRoot | toString | quote }}
-  {{- end }}
-  DEMO_CONFIG_ENABLE: {{ if .Values.configuration.demo.enabled }}"True"{{ else }}"False"{{ end }}
-  {{ if .Values.configuration.demo.enabled }}
-  DEMO_PERSON: {{ .Values.configuration.demo.person | toString | quote }}
-  DEMO_EMAIL: {{ .Values.configuration.demo.email | toString | quote }}
-  {{- end }}
   {{- end }}
   {{ if .Values.configuration.superuser.username }}
   OBJECTS_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
