@@ -38,7 +38,7 @@ spec:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openforms.fullname" .) }}
             - secretRef:
-                name: {{ include "openforms.fullname" . }}-config-secrets                
+                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openforms.fullname" .)) }}{{ end }}                
             - configMapRef:
                 name: {{ include "openforms.fullname" . }}
           env:
