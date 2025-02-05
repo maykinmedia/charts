@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.8.0-beta.1](https://img.shields.io/badge/Version-1.8.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.8.0](https://img.shields.io/badge/Version-1.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.0](https://img.shields.io/badge/AppVersion-1.8.0-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -46,21 +46,13 @@ API voor het routeren van notificaties
 | configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
 | configuration.job.restartPolicy | string | `"OnFailure"` |  |
-| configuration.notificaties.enabled | bool | `false` |  |
-| configuration.notificaties.openzaakNotifcationClientId | string | `""` |  |
-| configuration.notificaties.openzaakNotificationSecret | string | `""` |  |
-| configuration.openzaakAuthorization.ApiRoot | string | `""` |  |
-| configuration.openzaakAuthorization.enabled | bool | `false` |  |
-| configuration.openzaakAuthorization.notifcationOpenzaakSecret | string | `""` |  |
-| configuration.openzaakAuthorization.notificationOpenzaakClientId | string | `""` |  |
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
-| configuration.sites.enabled | bool | `false` |  |
-| configuration.sites.notificatiesDomain | string | `""` |  |
-| configuration.sites.organization | string | `""` |  |
 | configuration.superuser.email | string | `""` |  |
 | configuration.superuser.password | string | `""` |  |
 | configuration.superuser.username | string | `""` |  |
+| configurationSecretsName | string | `""` |  |
+| existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
@@ -83,13 +75,6 @@ API voor het routeren van notificaties
 | flower.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | global.configuration.enabled | bool | `false` |  |
-| global.configuration.notificatiesApi | string | `"http://opennotificaties.example.nl/api/v1/"` |  |
-| global.configuration.notificatiesOpenzaakClientId | string | `"notif-client-id"` |  |
-| global.configuration.notificatiesOpenzaakSecret | string | `"notif-secret"` |  |
-| global.configuration.openzaakAutorisatiesApi | string | `"https://openzaak.example.nl/autorisaties/api/v1/"` |  |
-| global.configuration.openzaakNotificatiesClientId | string | `"oz-client-id"` |  |
-| global.configuration.openzaakNotificatiesSecret | string | `"oz-secret"` |  |
-| global.configuration.organization | string | `"Gemeente Example"` |  |
 | global.configuration.overwrite | bool | `true` |  |
 | global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
@@ -227,3 +212,4 @@ API voor het routeren van notificaties
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
+

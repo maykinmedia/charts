@@ -38,7 +38,7 @@ spec:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "opennotificaties.fullname" .) }}
             - secretRef:
-                name: {{ include "opennotificaties.fullname" . }}-config-secrets                
+                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "opennotificaties.fullname" .)) }}{{ end }}               
             - configMapRef:
                 name: {{ include "opennotificaties.fullname" . }}
           env:
