@@ -270,13 +270,16 @@ settings:
   debug: false
 
   uwsgi:
-    master: false
     threads: ""
     processes: ""
     maxRequests: ""
     harakiri: ""
     port: ""
     httpTimeout: ""
+    httpKeepalive: ""
+    # In bytes:
+    postBuffering: ""
+    bufferSize: ""
 
   # -- Runs a init container that will run /app/src/manage.py search_index --rebuild -f. You might want to enable this one time for new deployments if you want to prevent 500 errors when using the search function
   searchInexInitContainer: false
