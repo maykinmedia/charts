@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.0 (2025-02-12)
+
+- [maykinmedia/open-klant#299] Added nginx to OpenKlant helm chart
+
 ## 1.5.0 (2025-02-05)
 
 Stable release with support of [django-setup-configuration](https://github.com/maykinmedia/django-setup-configuration). 
