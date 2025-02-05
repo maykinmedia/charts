@@ -1,6 +1,6 @@
 # openklant
 
-![Version: 1.5.0-beta.0](https://img.shields.io/badge/Version-1.5.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
 
 Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
 
@@ -33,6 +33,8 @@ Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten AP
 | configuration.job.restartPolicy | string | `"OnFailure"` |  |
 | configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
 | configuration.secrets | object | `{}` |  |
+| configurationSecretsName | string | `""` |  |
+| existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |

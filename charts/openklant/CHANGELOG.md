@@ -1,6 +1,13 @@
 # Changelog
 
-## 1.5.0-beta.0 (2025-10-01)
+## 1.5.0 (2025-02-05)
+
+Stable release with support of [django-setup-configuration](https://github.com/maykinmedia/django-setup-configuration). 
+
+- Fixed the configuration-secrets.yaml template to render only if no existing secret is present in the cluster (needed for example if using sealed secrets).
+- Added the possibility to add/use a secret with a custom name for the django-setup-configuration job.
+
+## 1.5.0-beta.0 (2025-01-10)
 
 - [#148] Replace the worker liveness probe with the `celery inspect active` command. This should detect when a worker is down and should not interrupt long running tasks.
 - [#119] Update the syntax of the worker liveness probe. The worker probes now can be enabled/disabled with:

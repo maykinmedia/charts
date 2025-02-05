@@ -38,7 +38,7 @@ spec:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openklant.fullname" .) }}
             - secretRef:
-                name: {{ include "openklant.fullname" . }}-config-secrets                
+                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openklant.fullname" .)) }}{{ end }}               
             - configMapRef:
                 name: {{ include "openklant.fullname" . }}
           env:
