@@ -228,6 +228,7 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
+  behaviour: {}
 
 pdb:
   create: false
@@ -385,6 +386,7 @@ worker:
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+    behaviour: {}
 
 flower:
   enabled: true
