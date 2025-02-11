@@ -21,6 +21,15 @@ entries:
     version: 0.0.1
   maykin-utils-lib:
   - apiVersion: v2
+    created: "2025-02-11T13:22:30.100998729Z"
+    description: A Library Helm chart containing code shared between Maykin helm charts
+    digest: 32d60691f1c184e96c458d6bff104d76f9193dadcb5bd6a40b1946d81f32c4c4
+    name: maykin-utils-lib
+    type: library
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/maykin-utils-lib-0.2.0/maykin-utils-lib-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     created: "2025-01-22T12:01:39.587114906Z"
     description: A Library Helm chart containing code shared between Maykin helm charts
     digest: a093226f7e45b953bd9423d813c74f41024d7534dac3b03156929fc7177572aa
@@ -30,6 +39,22 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/maykin-utils-lib-0.1.0/maykin-utils-lib-0.1.0.tgz
     version: 0.1.0
   objecten:
+  - apiVersion: v2
+    appVersion: 3.0.0
+    created: "2025-02-11T13:22:30.220015391Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: API om objecten te beheren die behoren bij een bepaald objecttype
+    digest: 3e6b8a59b1c973425c02920cf8810abad8e8a320a762b2cc2aa4dff8ed28fcef
+    name: objecten
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecten-2.7.1/objecten-2.7.1.tgz
+    version: 2.7.1
   - apiVersion: v2
     appVersion: 3.0.0
     created: "2025-02-11T10:17:08.165393393Z"
@@ -3261,6 +3286,22 @@ entries:
   openzaak:
   - apiVersion: v2
     appVersion: latest
+    created: "2025-02-11T13:22:30.32933761Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: a55f7077b5b084ecd550669688cf9bdd76435e268c02452a3e636932f34d0f9a
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.8.0-beta.0/openzaak-1.8.0-beta.0.tgz
+    version: 1.8.0-beta.0
+  - apiVersion: v2
+    appVersion: latest
     created: "2025-01-14T13:41:17.056034018Z"
     dependencies:
     - name: redis
@@ -3893,4 +3934,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-11T11:45:06.467545123Z"
+generated: "2025-02-11T13:22:30.329938696Z"
