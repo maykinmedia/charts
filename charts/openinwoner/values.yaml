@@ -28,6 +28,116 @@ configuration:
       #   memory: 128Mi
   secrets: {}
   data: ""
+  # e.g.
+  # data: |-
+  #   oidc_db_config_enable: True
+  #   oidc_db_config_admin_auth:
+  #     items:
+  #     - identifier: admin-oidc
+  #       enabled: True
+  #       oidc_rp_client_id: openinwoner.example.nl 
+  #       oidc_rp_client_secret: ${keycloak_client_secret}
+  #       oidc_rp_scopes_list:
+  #       - openid
+  #       - email
+  #       - profile
+  #       - roles
+  #       oidc_rp_sign_algo: RS256
+  #       endpoint_config:
+  #         oidc_op_discovery_endpoint: https://keycloak.example.nl/realms/example/
+  #       username_claim:
+  #       - sub
+  #       groups_claim:
+  #       - roles
+  #       claim_mapping:
+  #         first_name:
+  #         - given_name
+  #         last_name:
+  #         - family_name
+  #       sync_groups: true
+  #       sync_groups_glob_pattern: "*"
+  #       default_groups: []
+  #       make_users_staff: true
+  #       superuser_group_names:
+  #       - Superuser
+  #       oidc_use_nonce: true
+  #       oidc_nonce_size: 32
+  #       oidc_state_size: 32
+  #       userinfo_claims_source: id_token
+  #   zgw_consumers_config_enable: True
+  #   zgw_consumers:
+  #     services:
+  #       - identifier: zaken-test
+  #         label: Open Zaak - Zaken API
+  #         api_root: https://openzaak.example.nl/zaken/api/v1/
+  #         api_type: zrc
+  #         auth_type: zgw
+  #         client_id: openinwoner
+  #         secret: ${openzaak_openinwoner_secret}
+  #       - identifier: documenten-test
+  #         label: Open Zaak - Documenten API
+  #         api_root: https://openzaak.example.nl/documenten/api/v1/
+  #         api_type: drc
+  #         auth_type: zgw
+  #         client_id: openinwoner
+  #         secret: ${openzaak_openinwoner_secret}
+  #       - identifier: catalogi-test
+  #         label: Open Zaak - Catalogi API
+  #         api_root: https://openzaak.example.nl/catalogi/api/v1/
+  #         api_type: ztc
+  #         auth_type: zgw
+  #         client_id: openinwoner
+  #         secret: ${openzaak_openinwoner_secret}
+  #       - identifier: besluiten-test
+  #         label: Open Zaak - Besluiten API
+  #         api_root: https://openzaak.example.nl/besluiten/api/v1/
+  #         api_type: brc
+  #         auth_type: zgw
+  #         client_id: openinwoner
+  #         secret: ${openzaak_openinwoner_secret}
+  #       - identifier: selectielijst
+  #         label: Open Zaak (public) - Selectielijst API
+  #         api_root: https://selectielijst.openzaak.nl/api/v1/
+  #         api_type: orc
+  #         auth_type: no_auth
+  #       - identifier: klanten-test
+  #         label: Open klanten API
+  #         api_root: https://openklant.example.nl/klanten/api/v1/
+  #         api_type: kc
+  #         auth_type: zgw
+  #         client_id: openinwoner
+  #         secret: ${openklant_openinwoner_token}
+  #   openzaak_config_enable: true
+  #   openzaak_config:
+  #     zaak_max_confidentiality: openbaar
+  #     document_max_confidentiality: vertrouwelijk
+  #     max_upload_size: 50
+  #     skip_notification_statustype_informeren: false
+  #     reformat_esuite_zaak_identificatie: true
+  #     derive_zaak_titel_from: zaaktype_omschrijving
+  #     order_statuses_by_date_set: false
+  #     title_text: title text from setup configuration
+  #     enable_categories_filtering_with_zaken: true
+  #     action_required_deadline_days: 1874
+  #     zaken_filter_enabled: 'true'
+  #     allowed_file_extensions:
+  #       - .pdf
+  #       - .txt
+  #     api_groups:
+  #       - zaken_api_identifier: zaken-test
+  #         documenten_api_identifier: documenten-test
+  #         catalogi_api_identifier: catalogi-test
+  #         fetch_eherkenning_zaken_with_rsin: true
+  #   openklant_config_enable: false
+  #   # OpenKlant2
+  #   openklant2_config_enable: true
+  #   openklant2_config:
+  #     service_identifier: klanten-test
+  #     mijn_vragen_kanaal: formulier
+  #     mijn_vragen_organisatie_naam: De Gemeente
+  #     mijn_vragen_actor: e412c6f6-bc31-4fd4-b883-0fb5e88d3f5b
+  #     interne_taak_gevraagde_handeling: Vraag beantwoorden
+  #     interne_taak_toelichting: Vraag via OIP, graag beantwoorden
 
 tags:
   redis: true
@@ -160,6 +270,7 @@ persistence:
 
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
+existingConfigurationSecrets: null
 
 # This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
 # ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
