@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7.0-beta.1 (2025-05-02)
+
+- Bring uWSGI settings into sync with available options for the upcoming `v1.27` release
+  of OIP.
+
 ## 1.7.0-beta.0 (2025-10-01)
 
 - [#148] Replace the worker liveness probe with the `celery inspect active` command. This should detect when a worker is down and should not interrupt long running tasks.

@@ -56,9 +56,6 @@ data:
   {{- if .Values.settings.elasticapm.url }}
   ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
   {{- end }}
-  {{- if .Values.settings.uwsgi.master }}
-  UWSGI_MASTER:  {{ if .Values.settings.uwsgi.master }}"1"{{ else }}"0"{{ end }}
-  {{- end }}
   {{- if .Values.settings.uwsgi.threads }}
   UWSGI_THREADS: {{ .Values.settings.uwsgi.threads  | toString | quote }}
   {{- end }}
@@ -72,9 +69,17 @@ data:
   UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
   {{- end }}
   {{- if .Values.settings.uwsgi.port }}
-  UWSGI_PORT: {{ .Values.settings.uwsgi.port | toString | quote }}
+  PORT: {{ .Values.settings.uwsgi.port | toString | quote }}
   {{- end }}
   {{- if .Values.settings.uwsgi.httpTimeout }}
   UWSGI_HTTP_TIMEOUT: {{ .Values.settings.uwsgi.httpTimeout | toString | quote }}
   {{- end }}
-
+  {{- if .Values.settings.uwsgi.postBuffering }}
+  UWSGI_POST_BUFFERING: {{ .Values.settings.uwsgi.postBuffering | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.bufferSize }}
+  UWSGI_BUFFER_SIZE: {{ .Values.settings.uwsgi.bufferSize | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.httpKeepalive }}
+  UWSGI_HTTP_KEEPALIVE: {{ if .Values.settings.uwsgi.httpKeepalive }}"1"{{ else }}"0"{{ end }}
+  {{- end }}
