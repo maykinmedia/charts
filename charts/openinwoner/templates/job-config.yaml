@@ -38,7 +38,7 @@ spec:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openinwoner.fullname" .) }}
             - secretRef:
-                name: {{ include "openinwoner.fullname" . }}-config-secrets                
+                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openinwoner.fullname" .)) }}{{ end }}                
             - configMapRef:
                 name: {{ include "openinwoner.fullname" . }}
           env:

@@ -1,6 +1,6 @@
 # openinwoner
 
-![Version: 1.7.0-beta.0](https://img.shields.io/badge/Version-1.7.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.27.0](https://img.shields.io/badge/AppVersion-1.27.0-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
@@ -54,6 +54,7 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | elasticsearch.master.resources.limits | object | `{}` |  |
 | elasticsearch.master.resources.requests.cpu | string | `"25m"` |  |
 | elasticsearch.master.resources.requests.memory | string | `"256Mi"` |  |
+| existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraDeploy | list | `[]` | Extra objects to deploy (value evaluated as a template) |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
@@ -178,11 +179,13 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | settings.sentry.dsn | string | `""` |  |
 | settings.smsgateway.apikey | string | `""` |  |
 | settings.smsgateway.backend | string | `""` | For example "open_inwoner.accounts.gateways.MessageBird" |
+| settings.uwsgi.bufferSize | string | `""` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
+| settings.uwsgi.httpKeepalive | string | `""` |  |
 | settings.uwsgi.httpTimeout | string | `""` |  |
-| settings.uwsgi.master | bool | `false` |  |
 | settings.uwsgi.maxRequests | string | `""` |  |
 | settings.uwsgi.port | string | `""` |  |
+| settings.uwsgi.postBuffering | string | `""` |  |
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
 | tags.elasticsearch | bool | `true` |  |
