@@ -1,6 +1,6 @@
 # openklant
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
+![Version: 1.6.0](https://img.shields.io/badge/Version-1.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
 
 Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
 
@@ -58,10 +58,42 @@ Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten AP
 | livenessProbe.successThreshold | int | `1` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
+| nginx.autoscaling.enabled | bool | `false` |  |
+| nginx.config.clientMaxBodySize | string | `"10M"` |  |
+| nginx.existingConfigmap | string | `nil` |  |
+| nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
+| nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
+| nginx.image.tag | string | `"stable"` |  |
+| nginx.livenessProbe.failureThreshold | int | `3` |  |
+| nginx.livenessProbe.initialDelaySeconds | int | `60` |  |
+| nginx.livenessProbe.periodSeconds | int | `10` |  |
+| nginx.livenessProbe.successThreshold | int | `1` |  |
+| nginx.livenessProbe.timeoutSeconds | int | `5` |  |
+| nginx.podLabels | object | `{}` |  |
+| nginx.readinessProbe.failureThreshold | int | `3` |  |
+| nginx.readinessProbe.initialDelaySeconds | int | `30` |  |
+| nginx.readinessProbe.periodSeconds | int | `10` |  |
+| nginx.readinessProbe.successThreshold | int | `1` |  |
+| nginx.readinessProbe.timeoutSeconds | int | `5` |  |
+| nginx.replicaCount | int | `1` |  |
+| nginx.resources | object | `{}` |  |
+| nginx.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| nginx.securityContext.readOnlyRootFilesystem | bool | `false` |  |
+| nginx.securityContext.runAsNonRoot | bool | `true` |  |
+| nginx.securityContext.runAsUser | int | `101` |  |
+| nginx.service.annotations | object | `{}` |  |
+| nginx.service.port | int | `80` |  |
+| nginx.service.type | string | `"ClusterIP"` |  |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
 | pdb.minAvailable | int | `1` |  |
+| persistence.enabled | bool | `true` |  |
+| persistence.existingClaim | string | `nil` |  |
+| persistence.mediaMountSubpath | string | `"openklant/media"` |  |
+| persistence.privateMediaMountSubpath | string | `"openklant/private_media"` |  |
+| persistence.size | string | `"1Gi"` |  |
+| persistence.storageClassName | string | `""` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |

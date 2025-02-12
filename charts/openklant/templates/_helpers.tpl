@@ -99,6 +99,37 @@ app.kubernetes.io/name: {{ include "openklant.configName" . }}
 {{- end }}
 
 {{/*
+Create a name for NGINX
+We truncate at 57 chars in order to provide space for the "-nginx" suffix
+*/}}
+{{- define "openklant.nginxName" -}}
+{{ include "openklant.name" . | trunc 57 | trimSuffix "-" }}-nginx
+{{- end }}
+
+{{/*
+Create a default fully qualified name for NGINX.
+We truncate at 57 chars in order to provide space for the "-nginx" suffix
+*/}}
+{{- define "openklant.nginxFullname" -}}
+{{ include "openklant.fullname" . | trunc 57 | trimSuffix "-" }}-nginx
+{{- end }}
+
+{{/*
+NGINX labels
+*/}}
+{{- define "openklant.nginxLabels" -}}
+{{ include "openklant.commonLabels" . }}
+{{ include "openklant.nginxSelectorLabels" . }}
+{{- end }}
+
+{{/*
+NGINX selector labels
+*/}}
+{{- define "openklant.nginxSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openklant.nginxName" . }}
+{{- end }}
+    
+{{/*
 Create a name for the worker
 We truncate at 56 chars in order to provide space for the "-worker" suffix
 */}}
