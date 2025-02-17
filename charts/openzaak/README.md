@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.8.0-beta.0](https://img.shields.io/badge/Version-1.8.0--beta.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.8.0](https://img.shields.io/badge/Version-1.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.18.0](https://img.shields.io/badge/AppVersion-1.18.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -44,28 +44,12 @@ Productiewaardige API's voor Zaakgericht Werken
 | configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
 | configuration.job.restartPolicy | string | `"OnFailure"` |  |
-| configuration.notificaties.ApiRoot | string | `""` |  |
-| configuration.notificaties.enabled | bool | `false` |  |
-| configuration.notificaties.openzaakNotifcationClientId | string | `""` |  |
-| configuration.notificaties.openzaakNotificationSecret | string | `""` |  |
-| configuration.notificaties.registerKanalen | bool | `false` |  |
-| configuration.notificatiesAuthorization.enabled | bool | `false` |  |
-| configuration.notificatiesAuthorization.notifcationOpenzaakSecret | string | `""` |  |
-| configuration.notificatiesAuthorization.notificationOpenzaakClientId | string | `""` |  |
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
-| configuration.selectieLijst.AllowedYears[0] | int | `2017` |  |
-| configuration.selectieLijst.AllowedYears[1] | int | `2020` |  |
-| configuration.selectieLijst.ApiOas | string | `"https://selectielijst.openzaak.nl/api/v1/schema/openapi.yaml"` |  |
-| configuration.selectieLijst.ApiRoot | string | `"https://selectielijst.openzaak.nl/api/v1/"` |  |
-| configuration.selectieLijst.DefaultYear | int | `2020` |  |
-| configuration.selectieLijst.enabled | bool | `false` |  |
-| configuration.sites.enabled | bool | `false` |  |
-| configuration.sites.openzaakDomain | string | `""` |  |
-| configuration.sites.organization | string | `""` |  |
 | configuration.superuser.email | string | `""` |  |
 | configuration.superuser.password | string | `""` |  |
 | configuration.superuser.username | string | `""` |  |
+| existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
@@ -89,13 +73,6 @@ Productiewaardige API's voor Zaakgericht Werken
 | flower.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | global.configuration.enabled | bool | `false` |  |
-| global.configuration.notificatiesApi | string | `"http://opennotificaties.example.nl/api/v1/"` |  |
-| global.configuration.notificatiesOpenzaakClientId | string | `"notif-client-id"` |  |
-| global.configuration.notificatiesOpenzaakSecret | string | `"notif-secret"` |  |
-| global.configuration.openzaakAutorisatiesApi | string | `"https://openzaak.example.nl/autorisaties/api/v1/"` |  |
-| global.configuration.openzaakNotificatiesClientId | string | `"oz-client-id"` |  |
-| global.configuration.openzaakNotificatiesSecret | string | `"oz-secret"` |  |
-| global.configuration.organization | string | `"Gemeente Example"` |  |
 | global.configuration.overwrite | bool | `true` |  |
 | global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |

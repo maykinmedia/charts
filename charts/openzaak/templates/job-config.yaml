@@ -38,7 +38,7 @@ spec:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openzaak.fullname" .) }}
             - secretRef:
-                name: {{ include "openzaak.fullname" . }}-config-secrets                
+                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openzaak.fullname" .)) }}{{ end }}                
             - configMapRef:
                 name: {{ include "openzaak.fullname" . }}
           env:
