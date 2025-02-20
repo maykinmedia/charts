@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1 (2025-02-19)
+
+- [#189] Fix duplicate environment variables in config map.
+
 ## 1.3.0 (2025-01-27)
 
 - Add settings for request retry. This should help reduce the failures when resyncing zaken with openzaak.
