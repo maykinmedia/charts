@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.0 (2025-02-17)
+
+Stable release with support of [django-setup-configuration](https://github.com/maykinmedia/django-setup-configuration). 
+
+- Fixed the configuration-secrets.yaml template to render only if no existing secret is present in the cluster (needed for example if using sealed secrets).
+- Removed support for the following environment variables: `SITES_CONFIG_ENABLE`, `OPENZAAK_DOMAIN`, `OPENZAAK_ORGANIZATION`, `NOTIF_OPENZAAK_CONFIG_ENABLE`, `NOTIF_OPENZAAK_CLIENT_ID`, `OPENZAAK_NOTIF_CONFIG_ENABLE`, `NOTIF_API_ROOT`, `OPENZAAK_NOTIF_CLIENT_ID`, `OPENZAAK_SELECTIELIJST_CONFIG_ENAB`, `SELECTIELIJST_API_ROOT`, `SELECTIELIJST_API_OAS`, `SELECTIELIJST_ALLOWED_YEARS`, `SELECTIELIJST_DEFAULT_YEAR`. The settings that used to be configured with these variables can now be configured via django setup configuration.
+- Removed variable `DEMO_CONFIG_ENABLE` because it is not supported by the application.
+
 ## 1.8.0-beta.0 (2025-01-28)
 
 - [#172] Add Horizontal Pod Autoscaler for nginx. Fix the deployment to look for the `.Values.worker.autoscaling.enabled` value instead of the `.Values.autoscaling.enabled` when setting the replicas of the worker.
