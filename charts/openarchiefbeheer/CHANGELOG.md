@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2 (2025-02-21)
+
+- [#191] Fix missing support for environment variable `WAITING_PERIOD`.
+
 ## 1.3.1 (2025-02-19)
 
 - [#189] Fix duplicate environment variables in config map.
