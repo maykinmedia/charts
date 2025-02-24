@@ -182,6 +182,8 @@ settings:
   secretKey: ""
   environment: ""
   requestsReadTimeout: "30"
+  # -- Number of days to wait before destroying a list. Defaults to 7 in the application.
+  waitingPeriod: ""
 
   database:
     host: ""

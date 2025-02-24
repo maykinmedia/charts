@@ -107,4 +107,8 @@ data:
   {{- if .Values.settings.retry.statusForcelist }}
   RETRY_STATUS_FORCELIST: {{ .Values.settings.retry.statusForcelist | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.waitingPeriod }}
+  WAITING_PERIOD: {{ .Values.settings.waitingPeriod | toString | quote }}
+  {{- end }}
+
 
