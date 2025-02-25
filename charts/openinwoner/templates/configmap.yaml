@@ -83,3 +83,6 @@ data:
   {{- if .Values.settings.uwsgi.httpKeepalive }}
   UWSGI_HTTP_KEEPALIVE: {{ if .Values.settings.uwsgi.httpKeepalive }}"1"{{ else }}"0"{{ end }}
   {{- end }}
+  {{- if .Values.settings.oip_use_oidc_session_refresh_middleware }}
+  USE_OIDC_SESSION_REFRESH_MIDDLEWARE: {{ if .Values.settings.oip_use_oidc_session_refresh_middleware }}"true"{{ else }}"false"{{ end }}
+  {{- end }}
