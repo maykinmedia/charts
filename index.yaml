@@ -41,6 +41,22 @@ entries:
   objecten:
   - apiVersion: v2
     appVersion: 3.0.0
+    created: "2025-03-12T18:39:01.945296826Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: API om objecten te beheren die behoren bij een bepaald objecttype
+    digest: 12a0fc37d4f5b18d7ae000bff4968733a5d975bbc4273153712ec4a2f53eb446
+    name: objecten
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecten-2.7.3/objecten-2.7.3.tgz
+    version: 2.7.3
+  - apiVersion: v2
+    appVersion: 3.0.0
     created: "2025-03-12T09:28:00.59567668Z"
     dependencies:
     - name: redis
@@ -354,6 +370,22 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/objecten-0.9.3/objecten-0.9.3.tgz
     version: 0.9.3
   objecttypen:
+  - apiVersion: v2
+    appVersion: 3.0.0
+    created: "2025-03-12T18:39:02.122603204Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: API om object definities te beheren
+    digest: dbf347bf956883eaedd071ea8f0d8a0742e77d2b501198f2b232f9cdfc0f135e
+    name: objecttypen
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecttypen-1.3.1/objecttypen-1.3.1.tgz
+    version: 1.3.1
   - apiVersion: v2
     appVersion: 3.0.0
     created: "2025-02-11T11:45:06.466921056Z"
@@ -919,6 +951,23 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openarchiefbeheer-0.9.1/openarchiefbeheer-0.9.1.tgz
     version: 0.9.1
   openforms:
+  - apiVersion: v2
+    appVersion: 3.0.1
+    created: "2025-03-12T18:39:02.290757864Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Snel en eenvoudig slimme formulieren bouwen en publiceren
+    digest: 765d49778af9ec23ca72aa022f92dc79e78706a7c5bb217256f2e661b12d8058
+    icon: https://open-forms.readthedocs.io/en/stable/_static/logo.svg
+    name: openforms
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openforms-1.8.1/openforms-1.8.1.tgz
+    version: 1.8.1
   - apiVersion: v2
     appVersion: 3.0.1
     created: "2025-02-11T10:16:55.324806677Z"
@@ -1524,6 +1573,29 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openforms-1.0.0/openforms-1.0.0.tgz
     version: 1.0.0
   openinwoner:
+  - apiVersion: v2
+    appVersion: 1.27.0
+    created: "2025-03-12T18:39:02.439320026Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: elasticsearch
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - elasticsearch
+      version: 19.5.11
+    description: Platform voor gemeenten en overheden om producten inzichtelijker
+      en toegankelijker te maken voor inwoners.
+    digest: c9a7c0a21051fee21a478efe868fa87ce750f27bffb1c340d687bc1b5775f2cf
+    icon: https://docs.openinwoner.nl/en/latest/_static/logo.png
+    name: openinwoner
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openinwoner-1.7.1/openinwoner-1.7.1.tgz
+    version: 1.7.1
   - apiVersion: v2
     appVersion: 1.27.0
     created: "2025-02-12T11:43:11.891135098Z"
@@ -2175,6 +2247,23 @@ entries:
   openklant:
   - apiVersion: v2
     appVersion: 2.5.0
+    created: "2025-03-12T18:39:02.650070314Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten
+      API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
+    digest: 8c3d009111e0a5b6d0f7aa65fe1ad9b7ebf70dfb045d7519290c91e5eaf5c584
+    name: openklant
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openklant-1.6.1/openklant-1.6.1.tgz
+    version: 1.6.1
+  - apiVersion: v2
+    appVersion: 2.5.0
     created: "2025-02-12T09:42:35.057835186Z"
     dependencies:
     - name: redis
@@ -2514,6 +2603,27 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openklant-0.0.1/openklant-0.0.1.tgz
     version: 0.0.1
   opennotificaties:
+  - apiVersion: v2
+    appVersion: 1.8.0
+    created: "2025-03-12T18:39:02.856817052Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - rabbitmq
+      version: 11.7.1
+    description: API voor het routeren van notificaties
+    digest: 092e1cffa49fb6d2f0959ec8a65bee591dbeb1e2fe2dfc00d2e8bea3004be600
+    name: opennotificaties
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.8.1/opennotificaties-1.8.1.tgz
+    version: 1.8.1
   - apiVersion: v2
     appVersion: 1.8.0
     created: "2025-02-10T09:38:19.35059334Z"
@@ -3399,6 +3509,22 @@ entries:
   openzaak:
   - apiVersion: v2
     appVersion: 1.18.0
+    created: "2025-03-12T18:39:03.053864753Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: 04aba4be05fe337c60b51ae1a6edde3faef69a2ed981e0a5ebad1cb1c3fbbc5d
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.8.1/openzaak-1.8.1.tgz
+    version: 1.8.1
+  - apiVersion: v2
+    appVersion: 1.18.0
     created: "2025-02-20T09:14:53.10079026Z"
     dependencies:
     - name: redis
@@ -4063,4 +4189,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-12T09:28:00.596096412Z"
+generated: "2025-03-12T18:39:03.055033548Z"
