@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1 (2025-03-12)
+
+- [#197] Increase default `replicaCount` for the worker and the web app. Increase the (commented out) resources requests values for the web app and the worker. Increase the default the resources requests values for redis.
+
 ## 1.6.0 (2025-02-12)
 
 - [maykinmedia/open-klant#299] Added nginx to OpenKlant helm chart
