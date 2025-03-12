@@ -72,9 +72,6 @@ data:
   {{- if .Values.settings.notificationsDisabled }}
   NOTIFICATIONS_DISABLED: "True"
   {{- end }}
-  {{ if .Values.settings.disable2fa }}
-  DISABLE_2FA: "True"
-  {{- end }}
   {{ if .Values.configuration.superuser.username }}
   OBJECTS_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
   OBJECTS_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
