@@ -158,7 +158,7 @@ tags:
   redis: true
   rabbitmq: true
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: openzaak/open-notificaties
@@ -254,8 +254,8 @@ resources: {}
   #   cpu: 200m
   #   memory: 256Mi
   # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  #   cpu: 250m
+  #   memory: 256Mi
 
 autoscaling:
   enabled: false
@@ -460,6 +460,10 @@ worker:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
     behavior: {}
+  resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
 
   pdb:
     create: false
@@ -500,6 +504,9 @@ beat:
     failureThreshold: 6
     successThreshold: 1
   resources: {}  
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
 
 ##################
 # Redis subchart #
@@ -516,8 +523,8 @@ redis:
       storageClass: ""
     resources:
       requests:
-        cpu: 10m
-        memory: 20Mi
+        cpu: 250m
+        memory: 256Mi
 
 #####################
 # RabbitMQ subchart #
@@ -537,8 +544,8 @@ rabbitmq:
     #   memory: 1000Mi
     #   cpu: 500m
     # requests:
-    #   memory: 600Mi
-    #   cpu: 200m
+    #   memory: 300Mi
+    #   cpu: 256m
   rbac:
     create: false
   clustering:

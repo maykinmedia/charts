@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.1 (2025-03-12)
+
+- [#197] Increase default `replicaCount` for the web app. Increase the (commented out) resources requests values for the web app, the worker and celery beat. Increase the default the resources requests values for redis and rabbitmq.
+
 ## 1.8.0 (2025-02-05)
 
 Stable release with support of [django-setup-configuration](https://github.com/maykinmedia/django-setup-configuration). 
