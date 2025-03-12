@@ -1,6 +1,6 @@
 # objecttypen
 
-![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
+![Version: 1.3.1](https://img.shields.io/badge/Version-1.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
 
 API om object definities te beheren
 
@@ -82,9 +82,9 @@ API om object definities te beheren
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
-| redis.master.resources.requests.cpu | string | `"10m"` |  |
-| redis.master.resources.requests.memory | string | `"20Mi"` |  |
-| replicaCount | int | `1` |  |
+| redis.master.resources.requests.cpu | string | `"250m"` |  |
+| redis.master.resources.requests.memory | string | `"256Mi"` |  |
+| replicaCount | int | `2` |  |
 | resources | object | `{}` |  |
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | securityContext.readOnlyRootFilesystem | bool | `false` |  |

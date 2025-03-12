@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1 (2025-03-12)
+
+- [#197] Increase default `replicaCount` for the web app. Increase the (commented out) resources requests values for the web app. Increase the default the resources requests values for redis.
+
 ## 1.3.0 (2025-01-31)
 
 Stable release with support of [django-setup-configuration](https://github.com/maykinmedia/django-setup-configuration). 

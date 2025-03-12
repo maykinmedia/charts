@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.7.2](https://img.shields.io/badge/Version-2.7.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
+![Version: 2.7.3](https://img.shields.io/badge/Version-2.7.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -100,9 +100,9 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
-| redis.master.resources.requests.cpu | string | `"10m"` |  |
-| redis.master.resources.requests.memory | string | `"20Mi"` |  |
-| replicaCount | int | `1` |  |
+| redis.master.resources.requests.cpu | string | `"250m"` |  |
+| redis.master.resources.requests.memory | string | `"256Mi"` |  |
+| replicaCount | int | `2` |  |
 | resources | object | `{}` |  |
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | securityContext.readOnlyRootFilesystem | bool | `false` |  |
@@ -170,6 +170,6 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | worker.livenessProbe.timeoutSeconds | int | `10` |  |
 | worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
-| worker.replicaCount | int | `1` |  |
+| worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
 

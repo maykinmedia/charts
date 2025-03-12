@@ -80,7 +80,7 @@ configuration:
 tags:
   redis: true
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: maykinmedia/open-klant
@@ -173,11 +173,11 @@ resources: {}
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
-  #   cpu: 200m
-  #   memory: 256Mi
+  #   cpu: 500m
+  #   memory: 512Mi
   # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  #   cpu: 250m
+  #   memory: 256Mi
 
 autoscaling:
   enabled: false
@@ -308,10 +308,13 @@ settings:
     logLevel: debug
 
 worker:
-  replicaCount: 1
+  replicaCount: 2
   concurrency: 4
   podLabels: { }
   resources: { }
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
   livenessProbe:
     enabled: false
     exec:
@@ -389,6 +392,6 @@ redis:
       storageClass: ""
     resources:
       requests:
-        cpu: 10m
-        memory: 20Mi
+        cpu: 250m
+        memory: 256Mi
 
