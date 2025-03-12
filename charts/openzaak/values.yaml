@@ -124,7 +124,7 @@ configuration:
 tags:
   redis: true
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: openzaak/open-zaak
@@ -220,8 +220,8 @@ resources: {}
   #   cpu: 200m
   #   memory: 256Mi
   # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  #   cpu: 250m
+  #   memory: 256Mi
 
 autoscaling:
   enabled: false
@@ -378,10 +378,13 @@ settings:
   disable2fa: false
 
 worker:
-  replicaCount: 1
+  replicaCount: 2
   concurrency: 4
   podLabels: {}
   resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 512Mi
   maxWorkerLivenessDelta: ""
   livenessProbe:
     enabled: false
@@ -438,6 +441,9 @@ nginx:
     failureThreshold: 3
     successThreshold: 1
   resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
 
 flower:
   enabled: false
@@ -473,6 +479,9 @@ beat:
     failureThreshold: 6
     successThreshold: 1
   resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
 
 ##################
 # Redis subchart #
@@ -488,5 +497,5 @@ redis:
       storageClass: ""
     resources:
       requests:
-        cpu: 10m
-        memory: 20Mi
+        cpu: 250m
+        memory: 256Mi

@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.8.0](https://img.shields.io/badge/Version-1.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.18.0](https://img.shields.io/badge/AppVersion-1.18.0-informational?style=flat-square)
+![Version: 1.8.1](https://img.shields.io/badge/Version-1.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.18.0](https://img.shields.io/badge/AppVersion-1.18.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -139,9 +139,9 @@ Productiewaardige API's voor Zaakgericht Werken
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
-| redis.master.resources.requests.cpu | string | `"10m"` |  |
-| redis.master.resources.requests.memory | string | `"20Mi"` |  |
-| replicaCount | int | `1` |  |
+| redis.master.resources.requests.cpu | string | `"250m"` |  |
+| redis.master.resources.requests.memory | string | `"256Mi"` |  |
+| replicaCount | int | `2` |  |
 | resources | object | `{}` |  |
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | securityContext.readOnlyRootFilesystem | bool | `false` |  |
@@ -214,6 +214,6 @@ Productiewaardige API's voor Zaakgericht Werken
 | worker.livenessProbe.timeoutSeconds | int | `10` |  |
 | worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
-| worker.replicaCount | int | `1` |  |
+| worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
 
