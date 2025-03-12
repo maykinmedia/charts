@@ -143,7 +143,7 @@ tags:
   redis: true
   elasticsearch: true
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: maykinmedia/open-inwoner
@@ -237,10 +237,10 @@ resources: {}
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
   #   cpu: 1000m
-  #   memory: 1Gi
+  #   memory: 2Gi
   # requests:
-  #   cpu: 250m
-  #   memory: 512Mi
+  #   cpu: 500m
+  #   memory: 1Gi
 
 autoscaling:
   enabled: false
@@ -396,10 +396,13 @@ settings:
   searchInexInitContainer: false
 
 worker:
-  replicaCount: 1
+  replicaCount: 2
   concurrency: 4
   podLabels: {}
   resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
   # Defaults to 60s
   maxWorkerLivenessDelta: ""
   livenessProbe:
@@ -426,11 +429,17 @@ beat:
   replicaCount: 1
   podLabels: {}
   resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
 
 celeryMonitor:
   replicaCount: 1
   podLabels: {}
   resources: {}
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
 
 nginx:
   image:
@@ -474,6 +483,9 @@ nginx:
     failureThreshold: 3
     successThreshold: 1
   resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
 
 
 ##################
@@ -491,8 +503,8 @@ redis:
       storageClass: ""
     resources:
       requests:
-        cpu: 10m
-        memory: 20Mi
+        cpu: 250m
+        memory: 256Mi
 
 ##########################
 # elasticsearch subchart #
@@ -509,14 +521,19 @@ elasticsearch:
     resources:
       limits: {}
       requests:
-        cpu: 25m
-        memory: 256Mi
+        cpu: 100m
+        memory: 640Mi
   data:
     replicaCount: 1
     persistence:
       enabled: true
       storageClass: ""
       size: 8Gi
+    resources:
+      limits: {}
+      requests:
+        cpu: 100m
+        memory: 512Mi
   coordinating:
     replicaCount: 1
   ingest:

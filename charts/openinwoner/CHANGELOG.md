@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1 (2025-03-12)
+
+- [#197] Increase default `replicaCount` for the worker. Increase the (commented out) resources requests values for the web app, the worker, celery beat, celery monitor, nginx. Increase the default the resources requests values for redis, elasticsearch master and elasticsearch data.
+
 ## 1.7.0 (2025-02-11)
 
 Stable release with support of [django-setup-configuration](https://github.com/maykinmedia/django-setup-configuration). 

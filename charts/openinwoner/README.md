@@ -1,6 +1,6 @@
 # openinwoner
 
-![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.27.0](https://img.shields.io/badge/AppVersion-1.27.0-informational?style=flat-square)
+![Version: 1.7.1](https://img.shields.io/badge/Version-1.7.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.27.0](https://img.shields.io/badge/AppVersion-1.27.0-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
@@ -45,6 +45,9 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | elasticsearch.data.persistence.size | string | `"8Gi"` |  |
 | elasticsearch.data.persistence.storageClass | string | `""` |  |
 | elasticsearch.data.replicaCount | int | `1` |  |
+| elasticsearch.data.resources.limits | object | `{}` |  |
+| elasticsearch.data.resources.requests.cpu | string | `"100m"` |  |
+| elasticsearch.data.resources.requests.memory | string | `"512Mi"` |  |
 | elasticsearch.ingest.enabled | bool | `false` |  |
 | elasticsearch.master.masterOnly | bool | `true` |  |
 | elasticsearch.master.persistence.enabled | bool | `true` |  |
@@ -52,8 +55,8 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | elasticsearch.master.persistence.storageClass | string | `""` |  |
 | elasticsearch.master.replicaCount | int | `1` |  |
 | elasticsearch.master.resources.limits | object | `{}` |  |
-| elasticsearch.master.resources.requests.cpu | string | `"25m"` |  |
-| elasticsearch.master.resources.requests.memory | string | `"256Mi"` |  |
+| elasticsearch.master.resources.requests.cpu | string | `"100m"` |  |
+| elasticsearch.master.resources.requests.memory | string | `"640Mi"` |  |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraDeploy | list | `[]` | Extra objects to deploy (value evaluated as a template) |
@@ -131,9 +134,9 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
-| redis.master.resources.requests.cpu | string | `"10m"` |  |
-| redis.master.resources.requests.memory | string | `"20Mi"` |  |
-| replicaCount | int | `1` |  |
+| redis.master.resources.requests.cpu | string | `"250m"` |  |
+| redis.master.resources.requests.memory | string | `"256Mi"` |  |
+| replicaCount | int | `2` |  |
 | resources | object | `{}` |  |
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | securityContext.readOnlyRootFilesystem | bool | `false` |  |
@@ -208,6 +211,6 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | worker.livenessProbe.timeoutSeconds | int | `10` |  |
 | worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
-| worker.replicaCount | int | `1` |  |
+| worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
 
