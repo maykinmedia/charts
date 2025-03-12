@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.3 (2025-03-12)
+
+- [#197] Increase default `replicaCount` for the worker and the web app. Increase the (commented out) resources requests values for the web app and the worker. Increase the default the resources requests values for redis.
+
 ## 2.7.2 (2025-03-12)
 
 - [#195] `DISABLE_2FA` setting was defined twice by mistake in the config map. Now it is present only once.
