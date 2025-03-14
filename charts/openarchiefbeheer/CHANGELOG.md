@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.3 (2025-03-14)
+
+- [maykinmedia/open-archiefbeheer#738] Replaced environment variables:
+
+   - `REACT_APP_API_URL`  => `OAB_API_URL`
+   - `REACT_APP_API_PATH` => `OAB_API_PATH`
+   - `REACT_APP_ZAAK_URL_TEMPLATE` => `OAB_ZAAK_URL_TEMPLATE`
+
+   The values are also renamed from `settings.react.*` to `settings.frontend.*`.
+
 ## 1.3.2 (2025-02-21)
 
 - [#191] Fix missing support for environment variable `WAITING_PERIOD`.

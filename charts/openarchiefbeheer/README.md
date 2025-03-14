@@ -1,6 +1,6 @@
 # openarchiefbeheer
 
-![Version: 1.3.2](https://img.shields.io/badge/Version-1.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.3.3](https://img.shields.io/badge/Version-1.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
@@ -156,10 +156,10 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 | settings.email.useTLS | bool | `false` |  |
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `""` |  |
+| settings.frontend.apiPath | string | `"/api/v1"` |  |
+| settings.frontend.apiUrl | string | `""` |  |
+| settings.frontend.zaakUrlTemplate | string | `""` |  |
 | settings.frontendUrl | string | `""` |  |
-| settings.react.apiPath | string | `"/api/v1"` |  |
-| settings.react.apiUrl | string | `""` |  |
-| settings.react.zaakUrlTemplate | string | `""` |  |
 | settings.requestsReadTimeout | string | `"30"` |  |
 | settings.retry.backoffFactor | string | `""` |  |
 | settings.retry.statusForcelist | string | `""` |  |
