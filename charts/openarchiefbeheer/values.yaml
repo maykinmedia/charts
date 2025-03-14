@@ -246,7 +246,7 @@ settings:
     maxRequests: ''
     harakiri: ''
 
-  react:
+  frontend:
     apiUrl: ""
     apiPath: "/api/v1"
     zaakUrlTemplate: ""
