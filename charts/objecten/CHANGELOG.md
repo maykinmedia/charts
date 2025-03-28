@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.7.4 (2025-03-28)
+- Fixed a typo related to configuration-data.yaml file. The double entry of `metadata:` is now removed.
+
 ## 2.7.3 (2025-03-12)
 
 - [#197] Increase default `replicaCount` for the worker and the web app. Increase the (commented out) resources requests values for the web app and the worker. Increase the default the resources requests values for redis.

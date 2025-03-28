@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.4 (2025-03-28)
+
+- Fixed a typo related to configuration-data.yaml file. The double entry for `metadata:` is now removed.
+
 ## 1.3.3 (2025-03-14)
 
 - [maykinmedia/open-archiefbeheer#738] Replaced environment variables:

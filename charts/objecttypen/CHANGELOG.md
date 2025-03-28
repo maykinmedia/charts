@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2 (2025-03-28)
+
+- Fixed a typo related to configuration-data.yaml file. The double entry for `metadata:` is now removed.
+
 ## 1.3.1 (2025-03-12)
 
 - [#197] Increase default `replicaCount` for the web app. Increase the (commented out) resources requests values for the web app. Increase the default the resources requests values for redis.
