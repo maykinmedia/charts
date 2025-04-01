@@ -1,6 +1,6 @@
 # openarchiefbeheer
 
-![Version: 1.3.5](https://img.shields.io/badge/Version-1.3.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.3.6](https://img.shields.io/badge/Version-1.3.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
@@ -129,6 +129,7 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
+| settings.cache.choices | string | `""` |  |
 | settings.cache.default | string | `""` |  |
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |

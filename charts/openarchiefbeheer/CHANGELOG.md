@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.6 (2025-04-01)
+
+- Make it possible to configure the separate cache for the internal endpoints that return all the possible type objects (resultaattypen, informatieobjecttypen, selectielijstklasse, behandelend afdeling).
+
 ## 1.3.5 (2025-03-28)
 
 - [#193] Fix missing dependency on bitnami common
