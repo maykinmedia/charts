@@ -2,7 +2,7 @@
 
 ## 1.6.3 (2025-03-31)
 
-- Adding "extra deploy" possibility to deploy additional resources like config maps, deployments, etc. The variable `extraDeploy` is added to take the configuration.
+- [#201] Adding "extra deploy" possibility to deploy additional resources like config maps, deployments, etc. The variable `extraDeploy` is added to take the configuration.
 
 ## 1.6.2 (2025-03-28)
 
