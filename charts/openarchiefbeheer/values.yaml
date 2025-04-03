@@ -223,6 +223,7 @@ settings:
   cache:
     default: ""
     axes: ""
+    choices: ""
 
   celery:
     brokerUrl: ""
