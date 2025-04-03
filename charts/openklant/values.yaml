@@ -247,6 +247,22 @@ extraVolumeMounts: []
 #  - name: verify-certs
 #    mountPath: /etc/ssl/certs/extra-certs/
 
+# -- Extra objects to deploy (value evaluated as a template)
+extraDeploy: []
+# extraDeploy: 
+# - |
+#     apiVersion: v1
+#     kind: ConfigMap
+#     metadata:
+#       name: openklant-extra
+#       labels:
+#         app.kubernetes.io/version: "2.5.0"
+#         helm.sh/chart: openklant-1.6.3
+#         app.kubernetes.io/instance: openklant
+#         app.kubernetes.io/name: openklant
+#     data:
+#       TEST: "hello"
+
 settings:
   allowedHosts: ""
   djangoSettingsModule: openklant.conf.docker
