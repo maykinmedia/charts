@@ -5,5 +5,8 @@ dependencies:
 - name: maykin-utils-lib
   repository: https://maykinmedia.github.io/charts/
   version: 0.1.0
-digest: sha256:a4662193554f255c495842a02817a8ebfeab528d08fb8a03e8377d6455106692
-generated: "2025-01-22T14:41:01.000307992+01:00"
+- name: common
+  repository: https://charts.bitnami.com/bitnami
+  version: 2.27.0
+digest: sha256:1b61d96ba3e2b678f3e518a11abe92c71f255d19d47130470dcc68d274e949c1
+generated: "2025-03-28T12:47:31.728754734+01:00"

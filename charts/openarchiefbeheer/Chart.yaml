@@ -3,7 +3,7 @@ name: openarchiefbeheer
 description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
 type: application
-version: 1.3.4
+version: 1.3.5
 appVersion: latest
 
 dependencies:
@@ -15,3 +15,8 @@ dependencies:
   - name: maykin-utils-lib
     version: 0.1.0
     repository: https://maykinmedia.github.io/charts/
+  - name: common
+    version: 2.27.0
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+    - bitnami-common
