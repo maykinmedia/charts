@@ -72,9 +72,9 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | ingress.enabled | bool | `false` |  |
 | ingress.hosts | list | `[]` | ingress hosts |
 | ingress.tls | list | `[]` |  |
-| ingress.tlsSecret.cert | string | `"-----BEGIN CERTIFICATE-----\nkdjhfksjhdfkklakjdeiwjesmdnliewe\nalwkrjzzfmldekflsdkfnmdk,nflekdf\n-----END CERTIFICATE-----\n"` |  |
+| ingress.tlsSecret.cert | string | `""` |  |
 | ingress.tlsSecret.enabled | bool | `false` |  |
-| ingress.tlsSecret.key | string | `"-----BEGIN CERTIFICATE-----  \nlkfjgldkfjglkfjgkljlkfjlkjkjgdlfk\nsdkjfnskjdhnjhkdsjhfuweiquremnrwr\n-----END CERTIFICATE-----\n"` |  |
+| ingress.tlsSecret.key | string | `""` |  |
 | livenessProbe.failureThreshold | int | `6` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
