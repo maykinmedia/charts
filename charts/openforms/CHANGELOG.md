@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.3 (2025-04-08)
+
+- Adding TLS secret to the helm template files. To be used with plain text certificates and when private web certificate is required as opposed to let's encrypt one for example.
+
 ## 1.8.2 (2025-03-28)
 
 - Fixed a typo related to configuration-data.yaml file. The double entry for `metadata:` is now removed.

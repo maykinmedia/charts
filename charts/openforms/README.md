@@ -38,6 +38,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | configurationSecretsName | string | `""` |  |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
+| existingTlsSecret | string | `nil` |  |
 | extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
@@ -71,6 +72,9 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | ingress.enabled | bool | `false` |  |
 | ingress.hosts | list | `[]` | ingress hosts |
 | ingress.tls | list | `[]` |  |
+| ingress.tlsSecret.cert | string | `"-----BEGIN CERTIFICATE-----\nkdjhfksjhdfkklakjdeiwjesmdnliewe\nalwkrjzzfmldekflsdkfnmdk,nflekdf\n-----END CERTIFICATE-----\n"` |  |
+| ingress.tlsSecret.enabled | bool | `false` |  |
+| ingress.tlsSecret.key | string | `"-----BEGIN CERTIFICATE-----  \nlkfjgldkfjglkfjgkljlkfjlkjkjgdlfk\nsdkjfnskjdhnjhkdsjhfuweiquremnrwr\n-----END CERTIFICATE-----\n"` |  |
 | livenessProbe.failureThreshold | int | `6` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
@@ -203,6 +207,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
 | tags.redis | bool | `true` |  |
+| tlsSecretName | string | `""` |  |
 | tolerations | list | `[]` |  |
 | worker.autoscaling.enabled | bool | `false` |  |
 | worker.autoscaling.maxReplicas | int | `100` |  |

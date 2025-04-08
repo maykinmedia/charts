@@ -194,6 +194,20 @@ ingress:
   #  - secretName: openforms-tls
   #    hosts:
   #      - openformulieren.gemeente.nl
+  # the TLS certificate is enbled only when a privated web certificate is required as opposed to let's encrypt one for example
+  tlsSecret:
+    enabled: false
+    # cert: |
+    #   -----BEGIN CERTIFICATE-----
+    #   kdjhfksjhdfkklakjdeiwjesmdnliewe
+    #   alwkrjzzfmldekflsdkfnmdk,nflekdf
+    #   -----END CERTIFICATE-----
+    # key: |
+    #   -----BEGIN CERTIFICATE-----  
+    #   lkfjgldkfjglkfjgkljlkfjlkjkjgdlfk
+    #   sdkjfnskjdhnjhkdsjhfuweiquremnrwr
+    #   -----END CERTIFICATE-----
+
 
 # -- Specify extra ingresses, for example if you have multiple ingress classes
 extraIngress: []
@@ -259,6 +273,9 @@ existingSecret: null
 existingConfigurationSecrets: null
 # If no secret already exists with the values needed for django-setup-configuration, create it with the following name
 configurationSecretsName: ""
+# Reference to existing tls secret
+existingTlsSecret: null
+tlsSecretName: ""
 
 # This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
 # ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
