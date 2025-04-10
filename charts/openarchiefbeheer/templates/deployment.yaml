@@ -61,7 +61,7 @@ spec:
             /app/src/manage.py migrate
             /app/src/manage.py setup_configuration --no-selftest {{- if or .Values.global.configuration.overwrite .Values.configuration.overwrite }} --overwrite{{- end }}
           volumeMounts:
-            - name: media
+            - name: {{ include "openarchiefbeheer.fullname" . }}
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openarchiefbeheer/media" }}
             {{- if .Values.extraVolumeMounts }}
