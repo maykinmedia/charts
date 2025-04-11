@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.8.2](https://img.shields.io/badge/Version-1.8.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
+![Version: 1.8.3](https://img.shields.io/badge/Version-1.8.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -38,6 +38,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | configurationSecretsName | string | `""` |  |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
+| existingTlsSecret | string | `nil` |  |
 | extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
@@ -71,6 +72,9 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | ingress.enabled | bool | `false` |  |
 | ingress.hosts | list | `[]` | ingress hosts |
 | ingress.tls | list | `[]` |  |
+| ingress.tlsSecret.cert | string | `""` |  |
+| ingress.tlsSecret.enabled | bool | `false` |  |
+| ingress.tlsSecret.key | string | `""` |  |
 | livenessProbe.failureThreshold | int | `6` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
@@ -203,6 +207,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
 | tags.redis | bool | `true` |  |
+| tlsSecretName | string | `""` |  |
 | tolerations | list | `[]` |  |
 | worker.autoscaling.enabled | bool | `false` |  |
 | worker.autoscaling.maxReplicas | int | `100` |  |
