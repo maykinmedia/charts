@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.7 (2025-04-11)
+
+- Align volumeMount name for initContainer with the configured Volumes
+
 ## 1.3.6 (2025-04-01)
 
 - Make it possible to configure the separate cache for the internal endpoints that return all the possible type objects (resultaattypen, informatieobjecttypen, selectielijstklasse, behandelend afdeling).
