@@ -11,7 +11,7 @@ data:
       listen 8080 default_server;
       server_name  {{ .Values.settings.allowedHosts  | replace "," " "}} localhost;
 
-      location ~ ^/admin|static|assets|api/ {
+      location ~ ^/admin|oidc|static|assets|api/ {
         proxy_pass http://{{ include "openarchiefbeheer.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.port }};
         proxy_pass_header Server;
         proxy_set_header X-Real-IP $remote_addr;

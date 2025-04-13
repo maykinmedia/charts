@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.3.7 (2025-04-11)
+## 1.3.7 (2025-04-14)
 
 - Align volumeMount name for initContainer with the configured Volumes
+- Add oidc path to nginx proxy configuration
 
 ## 1.3.6 (2025-04-01)
 
