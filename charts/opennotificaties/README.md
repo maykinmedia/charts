@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.8.2](https://img.shields.io/badge/Version-1.8.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.0](https://img.shields.io/badge/AppVersion-1.8.0-informational?style=flat-square)
+![Version: 1.8.3](https://img.shields.io/badge/Version-1.8.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.8.0](https://img.shields.io/badge/AppVersion-1.8.0-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -146,6 +146,7 @@ API voor het routeren van notificaties
 | settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false |
 | settings.celery.rabbitmqHost | string | `""` | RabbitMQ server hostname |
 | settings.celery.resultBackend | string | `""` | Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false |
+| settings.celery.resultExpires | int | `3600` | Sets the 'CELERY_RESULT_EXPIRES' var, only required when tags.redis is false |
 | settings.cleanOldNotifications.cronjob.historyLimit | int | `1` |  |
 | settings.cleanOldNotifications.cronjob.resources | object | `{}` |  |
 | settings.cleanOldNotifications.cronjob.schedule | string | `"0 0 * * *"` | Schedule to run the clean logged notifications cronjob |

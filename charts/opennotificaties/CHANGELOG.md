@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.3 (2025-04-16)
+
+- [open-zaak/open-notificaties#240] Expose `result_expires` Celery setting via envvar
+
 ## 1.8.2 (2025-03-28)
 
 - Fixed a typo related to configuration-data.yaml file. The double entry for `metadata:` is now removed.
