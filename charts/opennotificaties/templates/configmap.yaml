@@ -20,6 +20,7 @@ data:
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
   CELERY_WORKER_CONCURRENCY: {{ .Values.worker.concurrency | toString | quote }}
+  CELERY_RESULT_EXPIRES: {{ .Values.settings.celery.resultExpires | toString | quote }}
   {{ if .Values.worker.maxWorkerLivenessDelta }}
   MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
   {{- end }}    
