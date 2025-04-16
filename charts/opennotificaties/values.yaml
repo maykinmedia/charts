@@ -413,6 +413,8 @@ settings:
     logLevel: debug
     # -- Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false
     brokerUrl: ""
+    # -- Sets the 'CELERY_RESULT_EXPIRES' var
+    resultExpires: 3600
     # -- Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false
     resultBackend: ""
     # -- Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false

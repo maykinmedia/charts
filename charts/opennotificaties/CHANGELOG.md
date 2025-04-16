@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.0 (2025-05-08)
+
+- [open-zaak/open-notificaties#240] Expose `result_expires` Celery setting via envvar
+
 ## 1.8.4 (2025-05-14)
 
 - Fixed missing environment variable `NOTIFICATION_REQUESTS_TIMEOUT`.
