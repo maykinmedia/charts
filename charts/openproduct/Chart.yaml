@@ -1,0 +1,21 @@
+apiVersion: v2
+appVersion: 1.0.0
+description: Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
+name: openproduct
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: redis
+    version: 17.3.14
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - redis
+  - name: maykin-utils-lib
+    version: 0.2.1
+    repository: https://maykinmedia.github.io/charts/  #"file://../maykin-utils-lib"
+  - name: common
+    version: 2.27.0
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+    - bitnami-common

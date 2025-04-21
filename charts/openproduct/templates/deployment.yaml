@@ -1,0 +1,414 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openproduct.fullname" . }}
+  labels:
+    {{- include "openproduct.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+  {{- include "openproduct.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+    {{- include "openproduct.selectorLabels" . | nindent 8 }}
+    {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openproduct.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if and .Values.global.configuration.enabled .Values.configuration.enabled .Values.configuration.initContainer.enabled }}
+      initContainers:
+        - name: {{ .Chart.Name }}-config
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 16 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openproduct.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openproduct.fullname" . }}
+            - secretRef:
+                name: {{ include "openproduct.fullname" . }}-config-secrets
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openproduct.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
+            {{- end }}
+          command:
+            - "/bin/bash"
+            - "-c"
+          args:
+          - |
+            /wait_for_db.sh
+            /app/src/manage.py migrate
+            /app/src/manage.py setup_configuration --no-selftest {{- if or .Values.global.configuration.overwrite .Values.configuration.overwrite }} --overwrite{{- end }}
+          volumeMounts:
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openproduct/media" }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openproduct.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+        {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openproduct.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openproduct.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openproduct.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: {{ include "openproduct.fullname" . | quote }}
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: {{ include "openproduct.fullname" . | quote }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openproduct/media" }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openproduct.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openproduct.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- include "openproduct.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openproduct.workerFullname" . }}
+  labels:
+    {{- include "openproduct.workerLabels" . | nindent 4 }}
+spec:
+  {{- if not .Values.worker.autoscaling.enabled }}
+  replicas: {{ .Values.worker.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "openproduct.workerSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+    {{- include "openproduct.workerSelectorLabels" . | nindent 8 }}
+    {{- with .Values.worker.podLabels }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openproduct.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "openproduct.workerFullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openproduct.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openproduct.fullname" . }}
+            - configMapRef:
+                name: {{ include "project.fullname" . }}-worker-{{ .Values.worker.label | default "celery" }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openproduct.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          {{- if .Values.worker.livenessProbe.enabled }}
+          livenessProbe:
+            exec: 
+            {{- toYaml .Values.worker.livenessProbe.exec | nindent 14 }}
+            initialDelaySeconds: {{ .Values.worker.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.worker.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.worker.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.worker.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.worker.livenessProbe.failureThreshold }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+          command:
+            - /celery_worker.sh
+          volumeMounts:
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openproduct/media" }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openproduct.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+            {{- if .Values.worker.livenessProbe.enabled }}
+            - name: liveness
+              mountPath: /app/liveness/
+              readOnly: true
+            {{- end }}            
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openproduct.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- include "openproduct.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.worker.livenessProbe.enabled }}
+        - name: liveness
+          configMap:
+            name: {{ include "project.fullname" . }}-celery-liveness
+            defaultMode: 0555
+        {{- end }}        
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+---
+{{ if .Values.flower.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openproduct.flowerFullname" . }}
+  labels:
+    {{- include "openproduct.flowerLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.flower.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "openproduct.flowerSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "openproduct.flowerSelectorLabels" . | nindent 8 }}
+        {{- with .Values.flower.podLabels }}
+            {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openproduct.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "openproduct.flowerFullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/celery_flower.sh"]
+          resources:
+            {{- toYaml .Values.flower.resources | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openproduct.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openproduct.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openproduct.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 5555
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 5555
+            {{- toYaml .Values.flower.livenessProbe | nindent 12 }}
+          readinessProbe:
+            tcpSocket:
+              port: 5555
+            {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
+          volumeMounts:
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openproduct.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+          {{- if .Values.extraVolumes }}
+          {{- include "openproduct.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
+---
+# Deployment celery beat
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openproduct.beatFullname" . }}
+  labels:
+  {{- include "openproduct.beatLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.beat.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "openproduct.beatSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+    {{- include "openproduct.beatSelectorLabels" . | nindent 8 }}
+    {{- with .Values.beat.podLabels }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openproduct.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "openproduct.beatFullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openproduct.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openproduct.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openproduct.fullname" . }}
+          resources:
+            {{- toYaml .Values.beat.resources | nindent 12 }}
+          command:
+            - /celery_beat.sh
+          volumeMounts:
+            - name: media
+              mountPath: /app/private-media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openproduct/private_media" }}
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openproduct/media" }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openproduct.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openproduct.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- include "openproduct.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
