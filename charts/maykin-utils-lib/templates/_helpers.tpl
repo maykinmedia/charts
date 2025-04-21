@@ -7,9 +7,8 @@
 {{- end }}
 
 {{- define "project.chart" -}}
-{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
-
 
 {{/*
 Create a default fully qualified app name.
