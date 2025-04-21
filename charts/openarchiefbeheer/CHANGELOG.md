@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.8 (2025-04-21)
+
+- Using the maykin-utils-lib version 0.2.1. Change in celery liveness cm and celery cm.
+
+
 ## 1.3.7 (2025-04-14)
 
 - Align volumeMount name for initContainer with the configured Volumes
