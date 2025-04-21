@@ -10,7 +10,7 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.27.0 |
 | https://charts.bitnami.com/bitnami | redis | 17.3.14 |
-| https://maykinmedia.github.io/charts/ | maykin-utils-lib | 0.1.0 |
+| https://maykinmedia.github.io/charts/ | maykin-utils-lib | 0.2.1 |
 
 ## Values
 
