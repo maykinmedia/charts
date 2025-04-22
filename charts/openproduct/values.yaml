@@ -24,13 +24,10 @@ configuration:
     backoffLimit: 6
     # -- 0 Will clean the job after it is finished
     ttlSecondsAfterFinished: 0
-    restartPolicy: OnFailure
+    restartPolicy: OnFailureFcinfiguration
     # Note, this field is immutable
     resources: {}
   secrets: {}
-    # keycloak_client_secret: keycloak-secret
-    # openformulieren_openproduct_token: token123
-    # object_objecttypes_token: token123
   # data: ""
   # e.g.
   # data: |-
