@@ -69,10 +69,3 @@ data:
   {{- if .Values.settings.uwsgi.harakiri }}
   UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.notificationsDisabled }}
-  NOTIFICATIONS_DISABLED: "True"
-  {{- end }}
-  {{ if .Values.configuration.superuser.username }}
-  OBJECTS_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
-  OBJECTS_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
-  {{- end }}
