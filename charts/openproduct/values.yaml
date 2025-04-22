@@ -24,7 +24,7 @@ configuration:
     backoffLimit: 6
     # -- 0 Will clean the job after it is finished
     ttlSecondsAfterFinished: 0
-    restartPolicy: OnFailureFcinfiguration
+    restartPolicy: OnFailure
     # Note, this field is immutable
     resources: {}
   secrets: {}
