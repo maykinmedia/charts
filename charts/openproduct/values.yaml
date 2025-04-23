@@ -15,9 +15,6 @@ configuration:
     username: ""
     password: ""
     email: ""
-  initContainer:
-    # -- Run the setup configuration command in a init container
-    enabled: false
   job:
     # -- Run the setup configuration command as a job
     enabled: false
@@ -195,6 +192,7 @@ persistence:
   storageClassName: ""
   existingClaim: null
   mediaMountSubpath: openproduct/media
+  privateMediaMountSubpath: openproduct/private_media
 
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
@@ -276,16 +274,6 @@ settings:
   sentry:
     dsn: ""
 
-  # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
-  cache:
-    # e.g.:
-    # default: openforms-redis-master-0:6379/0
-    # axes: openforms-redis-master-0:6379/0
-    # oidc: openforms-redis-master-0:6379/0
-    default: ""
-    axes: ""
-    oidc: ""
-
   # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
   celery:
     # e.g.:
@@ -322,9 +310,7 @@ worker:
     enabled: false
     exec:
       command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app openproduct.celery inspect --destination celery@${HOSTNAME} active
+        - /app/liveness/liveness-probe.sh        
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
