@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.8 (2025-04-23)
+
+- [#210] Fix app version to 1.0.0
+
 ## 1.3.7 (2025-04-14)
 
 - Align volumeMount name for initContainer with the configured Volumes
