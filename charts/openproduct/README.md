@@ -2,7 +2,7 @@
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
 
 ## Requirements
 
@@ -34,7 +34,6 @@ A Helm chart for Kubernetes
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
 | configuration.enabled | bool | `false` |  |
-| configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
 | configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
@@ -93,6 +92,7 @@ A Helm chart for Kubernetes
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |
 | persistence.mediaMountSubpath | string | `"openproduct/media"` |  |
+| persistence.privateMediaMountSubpath | string | `"openproduct/private_media"` |  |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClassName | string | `""` |  |
 | podAnnotations | object | `{}` |  |
@@ -123,9 +123,6 @@ A Helm chart for Kubernetes
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
-| settings.cache.axes | string | `""` |  |
-| settings.cache.default | string | `""` |  |
-| settings.cache.oidc | string | `""` |  |
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
@@ -168,9 +165,7 @@ A Helm chart for Kubernetes
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
 | worker.livenessProbe.enabled | bool | `false` |  |
-| worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
-| worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
-| worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app openproduct.celery inspect --destination celery@${HOSTNAME} active"` |  |
+| worker.livenessProbe.exec.command[0] | string | `"/app/liveness/liveness-probe.sh"` |  |
 | worker.livenessProbe.failureThreshold | int | `3` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
 | worker.livenessProbe.periodSeconds | int | `50` |  |
