@@ -1,9 +1,8 @@
 apiVersion: v2
 name: openklant
 description: Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
-
 type: application
-version: 1.6.3
+version: 1.6.4
 appVersion: 2.5.0
 
 dependencies:
