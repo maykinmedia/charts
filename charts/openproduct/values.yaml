@@ -236,6 +236,9 @@ extraVolumeMounts: []
 #  - name: verify-certs
 #    mountPath: /etc/ssl/certs/extra-certs/
 
+#needed for the helm lib chart celery worker
+pythonAppName: openproduct
+
 settings:
   allowedHosts: ""
   djangoSettingsModule: openproduct.conf.docker
@@ -304,6 +307,9 @@ settings:
     harakiri: ''
 
 worker:
+  label: "1"
+  name: ""
+  queueName: ""
   replicaCount: 2
   concurrency: 4
   podLabels: {}

@@ -98,6 +98,7 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
+| pythonAppName | string | `"openproduct"` |  |
 | readinessProbe.failureThreshold | int | `6` |  |
 | readinessProbe.initialDelaySeconds | int | `30` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
@@ -165,6 +166,7 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
+| worker.label | string | `"1"` |  |
 | worker.livenessProbe.enabled | bool | `false` |  |
 | worker.livenessProbe.exec.command[0] | string | `"/app/liveness/liveness-probe.sh"` |  |
 | worker.livenessProbe.failureThreshold | int | `3` |  |
@@ -172,7 +174,9 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | worker.livenessProbe.periodSeconds | int | `50` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
 | worker.livenessProbe.timeoutSeconds | int | `10` |  |
+| worker.name | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
+| worker.queueName | string | `""` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
 
