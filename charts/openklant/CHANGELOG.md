@@ -3,6 +3,7 @@
 ## 1.6.4 (2025-04-24)
 
 - Allow image tag override
+- Changed default pullPolicy to `IfNotPresent`
 
 ## 1.6.3 (2025-03-31)
 
