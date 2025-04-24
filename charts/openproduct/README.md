@@ -123,6 +123,8 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
+| settings.cache.axes | string | `""` |  |
+| settings.cache.default | string | `""` |  |
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
@@ -130,7 +132,6 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | settings.database.name | string | `""` |  |
 | settings.database.password | string | `""` |  |
 | settings.database.port | int | `5432` |  |
-| settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
 | settings.disable2fa | bool | `false` | Disable two factor authentication |
@@ -171,7 +172,6 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | worker.livenessProbe.periodSeconds | int | `50` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
 | worker.livenessProbe.timeoutSeconds | int | `10` |  |
-| worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |

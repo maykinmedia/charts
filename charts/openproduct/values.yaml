@@ -261,7 +261,6 @@ settings:
     username: ""
     password: ""
     name: ""
-    sslmode: prefer
 
   email:
     host: localhost
@@ -312,8 +311,6 @@ worker:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
-  # Defaults to 60s
-  maxWorkerLivenessDelta: ""
   livenessProbe: 
     enabled: false
     exec:
