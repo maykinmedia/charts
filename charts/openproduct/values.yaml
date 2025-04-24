@@ -274,6 +274,14 @@ settings:
   sentry:
     dsn: ""
 
+  # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
+  cache:
+    # e.g.:
+    # default: openforms-redis-master-0:6379/0
+    # axes: openforms-redis-master-0:6379/0
+    default: ""
+    axes: ""
+
   # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
   celery:
     # e.g.:
