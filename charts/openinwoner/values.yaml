@@ -452,6 +452,8 @@ nginx:
     tag: stable
   config:
     clientMaxBodySize: 10M
+    proxyConnectTimeoutSeconds: 300
+    proxyReadTimeoutSeconds: 300
     # -- Configure nginx basic authentication, only use if you are unable to set it on your ingress controller
     basicAuth:
       # -- Enables nginx basic password authentication
