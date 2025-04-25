@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.5 (2025-04-25)
+- [#193] Fix missing dependency on bitnami common
+
 ## 1.6.4 (2025-04-24)
 
 - Allow image tag override

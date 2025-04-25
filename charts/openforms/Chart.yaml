@@ -3,7 +3,7 @@ name: openforms
 description: Snel en eenvoudig slimme formulieren bouwen en publiceren
 
 type: application
-version: 1.8.3
+version: 1.8.4
 appVersion: 3.0.1
 icon: https://open-forms.readthedocs.io/en/stable/_static/logo.svg
 
@@ -13,3 +13,8 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - redis
+  - name: common
+    version: 2.27.0
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common

@@ -3,7 +3,7 @@ name: objecten
 description: API om objecten te beheren die behoren bij een bepaald objecttype
 
 type: application
-version: 2.7.4
+version: 2.7.5
 appVersion: 3.0.0
 
 dependencies:
@@ -12,3 +12,8 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - redis
+  - name: common
+    version: 2.27.0
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common

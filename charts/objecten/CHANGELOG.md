@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.7.5 (2025-04-25)
+- [#193] Fix missing dependency on bitnami common
+
 ## 2.7.4 (2025-03-28)
 - Fixed a typo related to configuration-data.yaml file. The double entry of `metadata:` is now removed.
 
