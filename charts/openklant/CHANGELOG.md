@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.4 (2025-04-24)
+
+- Allow image tag override
+- Changed default pullPolicy to `IfNotPresent`
+
 ## 1.6.3 (2025-03-31)
 
 - [#201] Adding "extra deploy" possibility to deploy additional resources like config maps, deployments, etc. The variable `extraDeploy` is added to take the configuration.
