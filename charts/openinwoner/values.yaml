@@ -323,6 +323,10 @@ settings:
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
 
+  # -- This optional setting can be used to rotate a secret key, by moving a new value
+  # into secretKey, and moving the previous secretKey into secretKeyFallback. 
+  secretKeyFallback: ""
+
   environment: null
 
   database:
@@ -448,6 +452,8 @@ nginx:
     tag: stable
   config:
     clientMaxBodySize: 10M
+    proxyConnectTimeoutSeconds: 300
+    proxyReadTimeoutSeconds: 300
     # -- Configure nginx basic authentication, only use if you are unable to set it on your ingress controller
     basicAuth:
       # -- Enables nginx basic password authentication
