@@ -50,6 +50,27 @@ entries:
   objecten:
   - apiVersion: v2
     appVersion: 3.0.0
+    created: "2025-05-06T09:05:52.103703969Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: API om objecten te beheren die behoren bij een bepaald objecttype
+    digest: 910be9707eef5fdd67137a56ed0bf503b6913d821950d2c5ef71b6f46b0f8bbb
+    name: objecten
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecten-2.7.5/objecten-2.7.5.tgz
+    version: 2.7.5
+  - apiVersion: v2
+    appVersion: 3.0.0
     created: "2025-03-28T14:49:28.325492834Z"
     dependencies:
     - name: redis
@@ -395,6 +416,27 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/objecten-0.9.3/objecten-0.9.3.tgz
     version: 0.9.3
   objecttypen:
+  - apiVersion: v2
+    appVersion: 3.0.0
+    created: "2025-05-06T09:05:52.23075302Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: API om object definities te beheren
+    digest: 248e8b46e862a384536d5731916aaccabbc573ae5f3ccade52415df5c2316ab6
+    name: objecttypen
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecttypen-1.3.3/objecttypen-1.3.3.tgz
+    version: 1.3.3
   - apiVersion: v2
     appVersion: 3.0.0
     created: "2025-03-28T14:49:28.444329575Z"
@@ -1134,6 +1176,28 @@ entries:
   openforms:
   - apiVersion: v2
     appVersion: 3.0.1
+    created: "2025-05-06T09:05:52.406025297Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: Snel en eenvoudig slimme formulieren bouwen en publiceren
+    digest: 507cae119627727854ffd4657312412aac5abae5974bb3e4a56af772c4c43cff
+    icon: https://open-forms.readthedocs.io/en/stable/_static/logo.svg
+    name: openforms
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openforms-1.8.4/openforms-1.8.4.tgz
+    version: 1.8.4
+  - apiVersion: v2
+    appVersion: 3.0.1
     created: "2025-04-11T10:12:55.709984971Z"
     dependencies:
     - name: redis
@@ -1788,6 +1852,34 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openforms-1.0.0/openforms-1.0.0.tgz
     version: 1.0.0
   openinwoner:
+  - apiVersion: v2
+    appVersion: 1.27.0
+    created: "2025-05-06T09:05:52.544823946Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: elasticsearch
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - elasticsearch
+      version: 19.5.11
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: Platform voor gemeenten en overheden om producten inzichtelijker
+      en toegankelijker te maken voor inwoners.
+    digest: 3510a8a5a98ff8eeae6c2f6e0ece6a4582bd767754d175a243ea429a1268acab
+    icon: https://docs.openinwoner.nl/en/latest/_static/logo.png
+    name: openinwoner
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openinwoner-1.7.3/openinwoner-1.7.3.tgz
+    version: 1.7.3
   - apiVersion: v2
     appVersion: 1.27.0
     created: "2025-03-28T14:49:28.911563054Z"
@@ -2485,6 +2577,28 @@ entries:
   openklant:
   - apiVersion: v2
     appVersion: 2.5.0
+    created: "2025-05-06T09:05:52.659348563Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten
+      API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
+    digest: bc9e63e0fdf3a66569869a1e747ee9a6a6d9791931e8cd5264fe87cb74f44e2e
+    name: openklant
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openklant-1.6.5/openklant-1.6.5.tgz
+    version: 1.6.5
+  - apiVersion: v2
+    appVersion: 2.5.0
     created: "2025-04-25T07:42:49.087478374Z"
     dependencies:
     - name: redis
@@ -2892,6 +3006,32 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openklant-0.0.1/openklant-0.0.1.tgz
     version: 0.0.1
   opennotificaties:
+  - apiVersion: v2
+    appVersion: 1.8.0
+    created: "2025-05-06T09:05:52.814487802Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - rabbitmq
+      version: 11.7.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: API voor het routeren van notificaties
+    digest: ecd6a1ac448f65e289c50880bb6cce79809d46d32905c27d14c1ee83a3baa1d2
+    name: opennotificaties
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.8.3/opennotificaties-1.8.3.tgz
+    version: 1.8.3
   - apiVersion: v2
     appVersion: 1.8.0
     created: "2025-03-28T14:49:29.240249482Z"
@@ -3845,6 +3985,27 @@ entries:
   openzaak:
   - apiVersion: v2
     appVersion: 1.18.0
+    created: "2025-05-06T09:05:52.945382894Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: bd9355a1ca259c8e053449df77031f1efaf518ef963e8be4da41c8533c664eb1
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.8.2/openzaak-1.8.2.tgz
+    version: 1.8.2
+  - apiVersion: v2
+    appVersion: 1.18.0
     created: "2025-03-12T18:39:03.053864753Z"
     dependencies:
     - name: redis
@@ -4525,4 +4686,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-25T07:42:49.08797922Z"
+generated: "2025-05-06T09:05:52.946679067Z"
