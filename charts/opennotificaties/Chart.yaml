@@ -3,7 +3,7 @@ name: opennotificaties
 description: API voor het routeren van notificaties
 
 type: application
-version: 1.8.2
+version: 1.8.3
 appVersion: 1.8.0
 
 dependencies:
@@ -17,3 +17,8 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - rabbitmq
+  - name: common
+    version: 2.27.0
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common

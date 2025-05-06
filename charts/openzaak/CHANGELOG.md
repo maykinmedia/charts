@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.2 (2025-04-25)
+- [#193] Fix missing dependency on bitnami common
+
 ## 1.8.1 (2025-03-12)
 
 - [#197] Increase default `replicaCount` for the worker and the web app. Increase the (commented out) resources requests values for the web app, the worker, nginx and celery beat. Increase the default the resources requests values for redis.

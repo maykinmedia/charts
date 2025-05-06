@@ -3,7 +3,7 @@ name: openzaak
 description: Productiewaardige API's voor Zaakgericht Werken
 
 type: application
-version: 1.8.1
+version: 1.8.2
 appVersion: 1.18.0
 
 dependencies:
@@ -12,3 +12,8 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - redis
+  - name: common
+    version: 2.27.0
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
