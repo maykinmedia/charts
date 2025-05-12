@@ -35,7 +35,7 @@ data:
   {{- end }}
   {{ if .Values.worker.maxWorkerLivenessDelta }}
   MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
-  {{- end }}  
+  {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
@@ -84,4 +84,10 @@ data:
   {{ if .Values.configuration.superuser.username }}
   OPENZAAK_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
   OPENZAAK_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.fuzzyPagination }}
+  FUZZY_PAGINATION: "True"
+  {{- end }}
+  {{- if .Values.settings.fuzzyPaginationCountLimit }}
+  FUZZY_PAGINATION_COUNT_LIMIT: {{ .Values.settings.fuzzyPaginationCountLimit | toString | quote }}
   {{- end }}
