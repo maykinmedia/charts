@@ -43,6 +43,9 @@ data:
   {{- if .Values.settings.retryBackoffMax }}
   NOTIFICATION_DELIVERY_RETRY_BACKOFF_MAX: {{ .Values.settings.retryBackoffMax | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.requestsTimeout }}
+  NOTIFICATION_REQUESTS_TIMEOUT: {{ .Values.settings.requestsTimeout | toString | quote }}
+  {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
