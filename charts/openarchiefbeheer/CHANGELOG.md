@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.9 (2025-05-14)
+
+- [#222] Remove unused environment variables `TWO_FACTOR_FORCE_OTP_ADMIN` and `TWO_FACTOR_PATCH_ADMIN` since these are not used by the application. The values `settings.twoFactorAuthentication.forceOtpAdmin` and `settings.twoFactorAuthentication.patchAdmin` have also been removed.
+
 ## 1.3.8 (2025-04-23)
 
 - [#210] Fix app version to 1.0.0
