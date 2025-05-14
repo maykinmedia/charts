@@ -1,6 +1,6 @@
 # openarchiefbeheer
 
-![Version: 1.3.8](https://img.shields.io/badge/Version-1.3.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.3.9](https://img.shields.io/badge/Version-1.3.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
@@ -171,8 +171,6 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `"2500/hour"` |  |
 | settings.throttling.rateUser | string | `"15000/hour"` |  |
-| settings.twoFactorAuthentication.forceOtpAdmin | bool | `true` |  |
-| settings.twoFactorAuthentication.patchAdmin | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
 | settings.uwsgi.maxRequests | string | `""` |  |

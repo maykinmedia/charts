@@ -210,10 +210,6 @@ settings:
     rateAnonymous: "2500/hour"
     rateUser: "15000/hour"
 
-  twoFactorAuthentication:
-    forceOtpAdmin: true
-    patchAdmin: true
-
   csrf:
     trustedOrigins: ""
 

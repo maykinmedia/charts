@@ -61,12 +61,6 @@ data:
     {{- if .Values.settings.enableAdminNavSidebar }}
   ENABLE_ADMIN_NAV_SIDEBAR: "{{ .Values.settings.enableAdminNavSidebar }}"
   {{- end }}
-    {{- if .Values.settings.twoFactorAuthentication.forceOtpAdmin }}
-  TWO_FACTOR_FORCE_OTP_ADMIN: "{{ .Values.settings.twoFactorAuthentication.forceOtpAdmin }}"
-  {{- end }}
-    {{- if .Values.settings.twoFactorAuthentication.patchAdmin }}
-  TWO_FACTOR_PATCH_ADMIN: "{{ .Values.settings.twoFactorAuthentication.patchAdmin }}"
-  {{- end }}
     {{- if .Values.settings.subpath }}
   SUBPATH: "{{ .Values.settings.subpath }}"
   {{- end }}
