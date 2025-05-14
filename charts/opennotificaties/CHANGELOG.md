@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.4 (2025-05-14)
+
+- Fixed missing environment variable `NOTIFICATION_REQUESTS_TIMEOUT`.
+
 ## 1.8.3 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
 

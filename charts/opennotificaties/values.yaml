@@ -356,6 +356,9 @@ settings:
   # -- An upper limit to the exponential backoff time. Application default is 48.
   retryBackoffMax: ""
 
+  # -- Timeout in seconds for HTTP requests.
+  requestsTimeout: 10
+
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
 
