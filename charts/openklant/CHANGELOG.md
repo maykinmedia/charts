@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.7.0 (2025-05-16)
+- Upgrade to Openzaak version 2.7.0
 
 ## 1.6.6 (2025-05-16)
 - Fix missing env variable USE_X_FORWARDED_HOST from web container
