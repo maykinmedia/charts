@@ -1,5 +1,9 @@
 # Changelog
 
+
+## 1.6.6 (2025-05-16)
+- Fix missing env variable USE_X_FORWARDED_HOST from web container
+
 ## 1.6.5 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
 
