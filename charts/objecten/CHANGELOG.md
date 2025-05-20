@@ -1,7 +1,7 @@
 # Changelog
 
-## 2.7.6 (2025-05-19)
-- Adding 8 env variables for DB POOL related to postgres performance. In addition `db_conn_max_age` and `objecttype_version_cache_timeout` created as well. 
+## 2.8.0 (2025-05-20)
+- Adding 8 env variables for DB POOL related to postgres performance. In addition `db_conn_max_age` and `objecttype_version_cache_timeout` were created as well. Increasing the appVersion to 3.0.4 which is introducing the extra variables.
 
 ## 2.7.5 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
