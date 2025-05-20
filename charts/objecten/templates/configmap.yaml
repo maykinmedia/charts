@@ -38,6 +38,7 @@ data:
   {{- end }}  
   {{- with .Values.settings.database.db_pool }}
   {{- if .enabled }}
+  DB_POOL_ENABLED: {{ .enabled | toString | title | quote }}
   {{- if .db_pool_min_size }}
   DB_POOL_MIN_SIZE: {{ .db_pool_min_size | quote }}
   {{- end }} 
@@ -115,9 +116,6 @@ data:
   OBJECTS_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
   OBJECTS_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
   {{- end }}
-
-
-
 
 
 
