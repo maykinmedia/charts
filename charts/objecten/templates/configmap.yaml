@@ -68,10 +68,6 @@ data:
   DB_CONN_MAX_AGE: {{ $.Values.settings.database.db_conn_max_age | quote }}
   {{- end }}     
   {{- end }}
-  {{- else }}
-  {{- if .Values.settings.database.db_conn_max_age }}
-  DB_CONN_MAX_AGE: {{ .Values.settings.database.db_conn_max_age | quote }}
-  {{- end }}  
   {{- end }}
   {{ if .Values.settings.debug }}
   DEBUG: "True"
