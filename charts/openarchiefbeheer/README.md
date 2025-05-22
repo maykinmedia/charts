@@ -1,6 +1,6 @@
 # openarchiefbeheer
 
-![Version: 1.3.9](https://img.shields.io/badge/Version-1.3.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.3.10](https://img.shields.io/badge/Version-1.3.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
@@ -87,7 +87,7 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 | nginx.securityContext.runAsNonRoot | bool | `true` |  |
 | nginx.securityContext.runAsUser | int | `101` |  |
 | nginx.service.annotations | object | `{}` |  |
-| nginx.service.port | int | `8080` |  |
+| nginx.service.port | int | `80` |  |
 | nginx.service.type | string | `"ClusterIP"` |  |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
