@@ -721,6 +721,31 @@ entries:
   openarchiefbeheer:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2025-05-22T10:49:34.123075727Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: maykin-utils-lib
+      repository: https://maykinmedia.github.io/charts/
+      version: 0.1.0
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik
+      met Zaakgericht werken
+    digest: c0dbf9dd21c812e9311024c1a687b38d0cbb21efaadd1696abecc6c353f8edc0
+    name: openarchiefbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openarchiefbeheer-1.3.10/openarchiefbeheer-1.3.10.tgz
+    version: 1.3.10
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2025-05-14T12:36:41.016268396Z"
     dependencies:
     - name: redis
@@ -4806,4 +4831,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-05-21T11:01:00.690169651Z"
+generated: "2025-05-22T10:49:34.123904933Z"
