@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.3 (2025-06-11)
+
+- Add extra volumes and volumemounts for nginx so it can be deployed with readOnlyRootFilesystem: true
+
 ## 1.8.2 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
 

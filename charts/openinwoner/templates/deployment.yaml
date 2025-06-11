@@ -477,6 +477,9 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openinwoner/media" }}
+            {{- if .Values.nginx.extraVolumeMounts }}
+            {{- include "openinwoner.tplvalues.render" ( dict "value" .Values.nginx.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
       volumes:
         - name: media
           persistentVolumeClaim:
@@ -493,6 +496,9 @@ spec:
           secret:
             secretName: {{ include "openinwoner.fullname" . }}-basic-auth
           {{- end }}
+        {{- if .Values.nginx.extraVolumes }}
+        {{- include "openinwoner.tplvalues.render" ( dict "value" .Values.nginx.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -99,3 +99,17 @@ NGINX selector labels
 {{- define "openzaaktypebeheer.nginxSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "openzaaktypebeheer.nginxFullname" . }}
 {{- end }}
+
+{{/* vim: set filetype=mustache: */}}
+{{/*
+Renders a value that contains template.
+Usage:
+{{ include "openzaaktypebeheer.tplvalues.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+*/}}
+{{- define "openzaaktypebeheer.tplvalues.render" -}}
+    {{- if typeIs "string" .value }}
+        {{- tpl .value .context }}
+    {{- else }}
+        {{- tpl (.value | toYaml) .context }}
+    {{- end }}
+{{- end -}}

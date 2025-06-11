@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.11 (2025-06-11)
+
+- Add extra volumes and volumemounts for nginx so it can be deployed with readOnlyRootFilesystem: true
+
 ## 1.3.10 (2025-05-22)
 
 - Change the default nginx port number to 80 in values.yaml. (To be in line with the rest of Maykin apps)
