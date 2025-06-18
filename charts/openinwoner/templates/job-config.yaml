@@ -52,7 +52,7 @@ spec:
             - "-c"
           args:
           - |
-            {{- if and (or (not .Values.configuration.configurationSecrets) (.Values.configuration.configurationSecrets.enabled | default true))
+            {{- if and (or (not .Values.configuration.performEnvsubst) (.Values.configuration.performEnvsubst.enabled | default true))
                       (or .Values.global.configuration.secrets .Values.existingConfigurationSecrets)
             }}
             /usr/bin/envsubst < /app/configuration/configuration.yaml > /tmp/configuration.yaml &&
