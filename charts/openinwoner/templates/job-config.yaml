@@ -52,8 +52,14 @@ spec:
             - "-c"
           args:
           - |
+            {{- if and (or (not .Values.configuration.configurationSecrets) (.Values.configuration.configurationSecrets.enabled | default true))
+                      (or .Values.global.configuration.secrets .Values.existingConfigurationSecrets)
+            }}
             /usr/bin/envsubst < /app/configuration/configuration.yaml > /tmp/configuration.yaml &&
             /app/src/manage.py setup_configuration --yaml-file /tmp/configuration.yaml
+            {{- else }}
+            /app/src/manage.py setup_configuration --yaml-file /app/configuration/configuration.yaml
+            {{- end }}
           volumeMounts:
             - name: media
               mountPath: /app/private_media

@@ -27,6 +27,17 @@ configuration:
       #   cpu: 100m
       #   memory: 128Mi
   secrets: {}
+  # -- configurationSecrets controls whether secret substitution (envsubst) is enabled for the configuration job.
+  # -- If this section is omitted, or if 'enabled' is true (the default), and either
+  # -- 'global.configuration.secrets' or 'existingConfigurationSecrets' is set,
+  # -- the envsubst method will be used to process the configuration file.
+  # -- If 'enabled' is explicitly set to false, the job will use the direct configmap method
+  # -- for configuration, but only if neither secret is defined.
+  # -- If neither global.configuration.secrets nor existingConfigurationSecrets is set,
+  # -- and if configurationSecrets.enabled is explicitly set to false,
+  # -- the direct configmap method will be used (no envsubst).      
+  # configurationSecrets:
+    # enabled: false   # Optional. If not set, defaults to true.  
   data: ""
   # e.g.
   # data: |-

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0 (2024-06-18)
+
+- Improved configuration job logic for secret substitution:
+  - The job now conditionally uses envsubst for configuration file processing only if `configurationSecrets.enabled` is true (or not set) and either `global.configuration.secrets` or `existingConfigurationSecrets` is set.
+  - Added support for explicitly disabling secret substitution by setting configurationSecrets.enabled: false, which forces the job to use the direct configmap method for configuration when no secrets are defined.
+  - Functionality added by request from Dimpact 
+
 ## 1.7.3 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
 
