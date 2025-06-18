@@ -36,8 +36,8 @@ configuration:
   # -- If neither global.configuration.secrets nor existingConfigurationSecrets is set,
   # -- and if performEnvsubst.enabled is explicitly set to false,
   # -- the direct configmap method will be used (no envsubst).      
-  performEnvsubst:
-    enabled: false   # Optional. If not set, defaults to true.  
+  # performEnvsubst:
+  #   enabled: false   # Optional. If not set, defaults to true.  
   data: ""
   # e.g.
   # data: |-
