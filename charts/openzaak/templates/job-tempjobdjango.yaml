@@ -1,0 +1,185 @@
+{{ if and .Values.global.configuration.enabled (default false .Values.tempjobdjango.enabled) -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "openzaak.fullname" . }}-tempjobdjango
+  labels:
+    {{- include "openzaak.configLabels" . | nindent 4 }}
+    app.kubernetes.io/component: tempjobdjango
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-weight: "10"
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  backoffLimit: {{ .Values.tempjobdjango.backoffLimit }}
+  ttlSecondsAfterFinished: {{ .Values.tempjobdjango.ttlSecondsAfterFinished }}
+  activeDeadlineSeconds: {{ .Values.tempjobdjango.activeDeadlineSeconds | default 21600 }}
+  parallelism: {{ .Values.tempjobdjango.parallelism | default 1 }}
+  completions: {{ .Values.tempjobdjango.completions | default 1 }}
+  template:
+    metadata:
+      annotations:
+      {{- with .Values.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "openzaak.configLabels" . | nindent 8 }}
+        app.kubernetes.io/component: tempjobdjango
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openzaak.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      restartPolicy: {{ .Values.tempjobdjango.restartPolicy }}
+      containers:
+        - name: {{ .Chart.Name }}-tempjobdjango
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openzaak.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openzaak.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openzaak.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }} 
+          # Django job commands ->  
+          {{- if eq .Values.tempjobdjango.mode "python" -}}
+          # Mode: python - run a script mounted via ConfigMap/Secret/PVC
+          command: ["/bin/bash", "-c"]
+          {{- if and .Values.tempjobdjango.configMap.enabled .Values.tempjobdjango.configMap.scriptCode }}
+          args: ["python /app/bin/{{ .Values.tempjobdjango.configMap.scriptName | default "custom_script.py" }}"]
+          {{- else }}
+          args:
+            - |
+              echo "Error: Python mode requires configMap.enabled=true and configMap.scriptCode to be specified"
+              echo "Current configuration:"
+              echo "  mode: {{ .Values.tempjobdjango.mode }}"
+              echo "  configMap.enabled: {{ .Values.tempjobdjango.configMap.enabled }}"
+              echo "  configMap.scriptCode: {{ if .Values.tempjobdjango.configMap.scriptCode }}specified{{ else }}not specified{{ end }}"
+              echo ""
+              echo "Please update your values.yaml with:"
+              echo "  tempjobdjango:"
+              echo "    mode: python"
+              echo "    configMap:"
+              echo "      enabled: true"
+              echo "      scriptCode: |"
+              echo "        # Your Python code here"
+              exit 1
+          {{- end }}                                                                                                                                           
+          {{- else if eq .Values.tempjobdjango.mode "managepy" -}}
+          # Mode: managepy - run a Django management command with flexible base command and parameters
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              {{- if .Values.tempjobdjango.command }}
+              {{ .Values.tempjobdjango.scriptPath }} {{ .Values.tempjobdjango.command }}{{ if .Values.tempjobdjango.commandParams }} {{ .Values.tempjobdjango.commandParams }}{{ end }}
+              {{- else }}
+              echo "Error: managepy mode requires a command"
+              exit 1
+              {{- end }}
+          {{- else if eq .Values.tempjobdjango.mode "container" -}}
+          # Mode: container - run a script already present in the container image
+          command: ["/bin/bash", "-c"]
+          args: ["python {{ .Values.tempjobdjango.scriptPath }}"]
+          {{- else if eq .Values.tempjobdjango.mode "shell" -}}
+          # Mode: shell - run a manage.py shell command
+          command: ["/bin/bash", "-c"]
+          # args: ["python /app/src/manage.py shell --command=\"{{ .Values.tempjobdjango.shellCommand }}\""]
+          {{- if and .Values.tempjobdjango.configMap.enabled .Values.tempjobdjango.configMap.shellScript }}
+          args: ["python /app/src/manage.py shell < /app/bin/{{ .Values.tempjobdjango.configMap.scriptName | default "shell_script.py" }} "]
+          {{- else }}
+          args:
+            - |
+              echo "Error: Shell mode requires configMap.enabled=true with configMap.shellScript"
+              echo "Current configuration:"
+              echo "  mode: {{ .Values.tempjobdjango.mode }}"
+              echo "  configMap.enabled: {{ .Values.tempjobdjango.configMap.enabled }}"
+              echo "  configMap.shellScript: {{ if .Values.tempjobdjango.configMap.shellScript }}specified{{ else }}not specified{{ end }}"
+              echo ""
+              echo "  Please add Shell Script for ConfigMap:"
+              echo "    tempjobdjango:"
+              echo "      mode: shell"
+              echo "      configMap:"
+              echo "        enabled: true"
+              echo "        shellScript: |"
+              echo "          print('Hello from shell script!')"
+              exit 1
+          {{- end }}          
+          # Unsupported mode - show helpful error message
+          {{- else }}
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              echo "Error: Unsupported mode '{{ .Values.tempjobdjango.mode }}'"
+              echo "Supported modes are: python, managepy, container, shell"
+              echo "Current configuration:"
+              echo "  mode: {{ .Values.tempjobdjango.mode }}"
+              echo "  scriptPath: {{ .Values.tempjobdjango.scriptPath }}"
+              echo "  command: {{ .Values.tempjobdjango.command }}"
+              echo "  commandParams: {{ .Values.tempjobdjango.commandParams }}"
+              echo "  shellCommand: {{ .Values.tempjobdjango.shellCommand }}"
+              echo ""
+              echo "Please update your values.yaml with a supported mode."
+              exit 1          
+          {{- end }}
+          # command:  ["/bin/bash", "-c" , "echo 'yes' | /app/src/manage.py generate_data --generate-superuser-credentials --generate-non-superuser-credentials --without-zaakgeometrie --partition 500 --zaken 500000" ]
+          # working command tested
+          # command:  ["/bin/bash", "-c", "echo 'yes' | /app/src/manage.py generate_data --generate-superuser-credentials --generate-non-superuser-credentials --without-zaakgeometrie --partition 500 --zaken 500000" ]
+
+          resources:
+          {{- toYaml .Values.tempjobdjango.resources | nindent 12 }} 
+          volumeMounts:
+            - name: media
+              mountPath: /app/private-media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openzaak/private_media" }}
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openzaak/media" }}
+            {{- if and (or (eq .Values.tempjobdjango.mode "python") (eq .Values.tempjobdjango.mode "shell")) .Values.tempjobdjango.configMap.enabled }}
+            - name: script-volume
+              mountPath: {{ .Values.tempjobdjango.configMap.scriptMountPath | default "/app/bin" }}
+              readOnly: true
+            {{- end }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openzaak.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if and (or (eq .Values.tempjobdjango.mode "python") (eq .Values.tempjobdjango.mode "shell")) .Values.tempjobdjango.configMap.enabled }}
+        - name: script-volume
+          configMap:
+            name: {{ .Values.tempjobdjango.configMap.name | default (printf "%s-tempjobdjango-script" (include "openzaak.fullname" .)) }}
+            defaultMode: 0755
+        {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

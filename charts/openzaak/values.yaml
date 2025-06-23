@@ -499,3 +499,88 @@ redis:
       requests:
         cpu: 250m
         memory: 256Mi
+
+############################################
+# -- Temporary Django job configuration    #
+# for executing custom Django commands     #
+# with Python scripts                      #   
+############################################
+tempjobdjango:
+  enabled: false
+  # -- Mode: 'managepy' to run a Django management command, 'python' to run a plain Python script, 'container' to run a script already in the image, 'shell' to run a manage.py shell command
+  # -- Supported modes: python, managepy, container, shell
+  # --   - managepy: Run Django management commands (e.g., migrate, collectstatic, custom commands)
+  # --   - python: Run Python scripts mounted via ConfigMap (requires configMap.enabled=true and configMap.scriptCode)
+  # --   - container: Run Python scripts already present in the container image
+  # --   - shell: Run Python code in Django shell
+  mode: "managepy"
+  # -- Base command with pipes/redirects (e.g., "echo 'yes' | /app/src/manage.py" or "/app/src/manage.py")
+  # -- Note: Not used in 'python' mode (script is hardcoded at /app/bin/script.py)
+  scriptPath: "/app/src/manage.py"
+  # -- Django management command to execute (e.g., "generate_data", "runscript", "migrate")
+  command: "runscript"
+  # -- Parameters for the Django command (e.g., "--generate-superuser-credentials --without-zaakgeometrie --partition 500 --zaken 500000")
+  commandParams: ""
+  # -- ConfigMap configuration for Python scripts
+  configMap:
+    # -- Enable ConfigMap creation for Python scripts (used in python and shell modes)
+    # -- REQUIRED: Set to true and provide scriptCode when using python mode
+    # -- REQUIRED: Set to true and provide shellScript when using shell mode with script
+    enabled: false
+    # -- Required: Python script code to execute (MUST be specified when enabled: true for python mode)
+    # -- Example:
+    # -- scriptCode: |
+    # --   #!/usr/bin/env python
+    # --   print("Hello from Python!")
+    scriptCode: ""
+    # -- Required: Python script code to execute in Django shell (MUST be specified when enabled: true for shell mode)
+    # -- Example:
+    # -- shellScript: |
+    # --   from django.contrib.auth.models import User
+    # --   print(f"Total users: {User.objects.count()}")
+    shellScript: ""
+    # -- Optional: Script filename (default: custom_script.py)
+    scriptName: "custom_script.py"
+    # -- Optional: Shell script filename (default: shell_script.py)
+    shellScriptName: "shell_script.py"
+    # -- Optional: ConfigMap name (default: auto-generated as "{release-name}-tempjobdjango-script")
+    name: ""
+    # -- Optional: Mount path for scripts (default: /app/bin)
+    scriptMountPath: "/app/bin"
+  # -- Volume configuration for the script file
+
+  backoffLimit: 3
+  # -- 0 Will clean the job after it is finished
+  ttlSecondsAfterFinished: 0    
+  # -- Job timeout in seconds (default: 6 hours = 21600)
+  activeDeadlineSeconds: 21600
+  # -- Number of parallel pods (default: 1)
+  parallelism: 1
+  # -- Number of completions required (default: 1)
+  completions: 1
+  # -- Restart policy: Never, OnFailure, or Always (Never is recommended for jobs)
+  restartPolicy: Never
+  # -- Log level for the job (DEBUG, INFO, WARNING, ERROR)
+  logging:
+    # -- Enable persistent logging volume
+    enabled: false
+    # -- PVC name for logs (auto-generated if not specified)
+    pvcName: ""
+    # -- Persistent Volume Claim configuration (alternative to pvcName)
+    persistentVolumeClaim:
+      # -- PVC name for logs
+      claimName: ""
+    # -- ConfigMap configuration for logs (alternative to PVC)
+    # configMap:
+    #   name: "job-logs-configmap"
+    # -- Secret configuration for logs (alternative to PVC)
+    # secret:
+    #   name: "job-logs-secret"
+  # Note, this field is immutable
+  resources: {}
+    # limits:
+    #   cpu: 200m
+    #   memory: 256Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
