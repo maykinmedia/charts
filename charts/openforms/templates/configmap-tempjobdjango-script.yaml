@@ -1,0 +1,22 @@
+{{ if and .Values.global.configuration.enabled (default false .Values.tempjobdjango.enabled) (or (eq .Values.tempjobdjango.mode "python") (eq .Values.tempjobdjango.mode "shell")) ( default false .Values.tempjobdjango.configMap.enabled ) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.tempjobdjango.configMap.name | default (printf "%s-tempjobdjango-script" (include "openforms.fullname" .)) }}
+  labels:
+    {{- include "openforms.configLabels" . | nindent 4 }}
+    app.kubernetes.io/component: tempjobdjango-script
+data:
+  {{- if and (eq .Values.tempjobdjango.mode "python") .Values.tempjobdjango.configMap.scriptCode }}
+  # -- Python script for python mode
+  # -- The key name must match scriptName in values.yaml (default: custom_script.py)
+  {{ .Values.tempjobdjango.configMap.scriptName | default "custom_script.py" }}: |
+    {{- .Values.tempjobdjango.configMap.scriptCode | nindent 4 }}
+  {{- end }}
+  {{- if and (eq .Values.tempjobdjango.mode "shell") .Values.tempjobdjango.configMap.shellScript }}
+  # -- Shell script for shell mode
+  # -- The key name must match shellScriptName in values.yaml (default: shell_script.py)
+  {{ .Values.tempjobdjango.configMap.shellScriptName | default "shell_script.py" }}: |
+    {{- .Values.tempjobdjango.configMap.shellScript | nindent 4 }}
+  {{- end }}
+{{- end }} 
