@@ -268,6 +268,7 @@ persistence:
   existingClaim: null
   mediaMountSubpath: openforms/media
   privateMediaMountSubpath: openforms/private_media
+  tempjobMountSubpath: openforms/temp_job
 
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
@@ -588,15 +589,13 @@ tempjobdjango:
   # --   - shell: Run Python code in Django shell
   mode: "managepy"
   # -- Base command with pipes/redirects (e.g., "echo 'yes' | /app/src/manage.py" or "/app/src/manage.py")
+  # -- To be used mostly for the container option e.g. "/app/bin/fix_component_default_values.py"
   # -- Note: Not used in 'python' mode (script is hardcoded at /app/bin/script.py)
   scriptPath: "/app/src/manage.py"
   # -- Django management command to execute (e.g., "generate_data", "runscript", "migrate")
   command: "runscript"
-  # -- Parameters for the Django command (e.g., "--generate-superuser-credentials --without-zaakgeometrie --partition 500 --zaken 500000")
+  # -- Parameters for the Django management command (e.g., "--generate-superuser-credentials")
   commandParams: ""
-  # -- Shell command to execute in manage.py shell mode
-  # -- Can be either a direct command or reference a script in configMap.shellScript
-  shellCommand: ""
   # -- ConfigMap configuration for Python scripts
   configMap:
     # -- Enable ConfigMap creation for Python scripts (used in python and shell modes)
@@ -615,7 +614,7 @@ tempjobdjango:
     # --   from django.contrib.auth.models import User
     # --   print(f"Total users: {User.objects.count()}")
     shellScript: ""
-    # -- Optional: Script filename (default: custom_script.py)
+    # -- Required: Script filename (default: custom_script.py)
     scriptName: "custom_script.py"
     # -- Optional: Shell script filename (default: shell_script.py)
     shellScriptName: "shell_script.py"
@@ -636,24 +635,6 @@ tempjobdjango:
   completions: 1
   # -- Restart policy: Never, OnFailure, or Always (Never is recommended for jobs)
   restartPolicy: Never
-  # -- Log level for the job (DEBUG, INFO, WARNING, ERROR)
-  logLevel: "INFO"
-  # -- Persistent logging configuration
-  logging:
-    # -- Enable persistent logging volume
-    enabled: false
-    # -- PVC name for logs (auto-generated if not specified)
-    pvcName: ""
-    # -- Persistent Volume Claim configuration (alternative to pvcName)
-    persistentVolumeClaim:
-      # -- PVC name for logs
-      claimName: ""
-    # -- ConfigMap configuration for logs (alternative to PVC)
-    # configMap:
-    #   name: "job-logs-configmap"
-    # -- Secret configuration for logs (alternative to PVC)
-    # secret:
-    #   name: "job-logs-secret"
   # Note, this field is immutable
   resources: {}
     # limits:
@@ -661,4 +642,9 @@ tempjobdjango:
     #   memory: 256Mi
     # requests:
     #   cpu: 100m
-    #   memory: 128Mi
+    #   memory: 128Mi  
+  
+  # -- Saving the logs resulting from the the django commands
+  logging:
+    # -- Enable persistent logging volume using the existing pvc
+    enabled: false

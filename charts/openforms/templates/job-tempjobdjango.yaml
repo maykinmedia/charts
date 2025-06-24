@@ -57,7 +57,7 @@ spec:
           # Mode: python - run a script mounted via ConfigMap/Secret/PVC
           command: ["/bin/bash", "-c"]
           {{- if and (default false .Values.tempjobdjango.configMap.enabled) (default "" .Values.tempjobdjango.configMap.scriptCode) }}
-          args: ["python /app/bin/{{ (default "custom_script.py" .Values.tempjobdjango.configMap.scriptName) }}"]          
+          args: ["python {{( default "/app/bin" .Values.tempjobdjango.configMap.scriptMountPath )}}/{{ (default "custom_script.py" .Values.tempjobdjango.configMap.scriptName) }}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}"]
           {{- else }}
           args:
             - |
@@ -82,7 +82,7 @@ spec:
           args:
             - |
               {{- if (default "" .Values.tempjobdjango.command) }}
-              {{ default "/app/src/manage.py" .Values.tempjobdjango.scriptPath }} {{ .Values.tempjobdjango.command }}{{ if (default "" .Values.tempjobdjango.commandParams) }} {{ .Values.tempjobdjango.commandParams }}{{ end }}
+              {{ default "/app/src/manage.py" .Values.tempjobdjango.scriptPath }} {{ .Values.tempjobdjango.command }}{{ if (default "" .Values.tempjobdjango.commandParams) }} {{ .Values.tempjobdjango.commandParams }}{{ end }}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}
               {{- else }}
               echo "Error: managepy mode requires a command"
               exit 1
@@ -90,12 +90,12 @@ spec:
           {{- else if eq (default "managepy" .Values.tempjobdjango.mode) "container" -}}          
           # Mode: container - run a script already present in the container image
           command: ["/bin/bash", "-c"]
-          args: ["python {{ default "/app/src/manage.py" .Values.tempjobdjango.scriptPath }}"]
-          {{- else if eq (default "managepy" .Values.tempjobdjango.mode) "shell" -}}          
+          args: ["python {{ default "/app/src/manage.py" .Values.tempjobdjango.scriptPath }}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}"]
+          {{- else if eq (default "managepy" .Values.tempjobdjango.mode) "shell" -}} 
           # Mode: shell - run a manage.py shell command
           command: ["/bin/bash", "-c"]
           {{- if and (default false .Values.tempjobdjango.configMap.enabled) (default "" .Values.tempjobdjango.configMap.shellScript) }}
-          args: ["python /app/src/manage.py shell < /app/bin/{{( default "shell_script.py" .Values.tempjobdjango.configMap.scriptName )}}"]
+          args: ["python /app/src/manage.py shell < {{( default "/app/bin" .Values.tempjobdjango.configMap.scriptMountPath )}}/{{( default "shell_script.py" .Values.tempjobdjango.configMap.scriptName )}}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}"]
           {{- else }}
           args:
             - |
@@ -126,12 +126,11 @@ spec:
               echo "  scriptPath: {{ .Values.tempjobdjango.scriptPath }}"
               echo "  command: {{ .Values.tempjobdjango.command }}"
               echo "  commandParams: {{ .Values.tempjobdjango.commandParams }}"
-              echo "  shellCommand: {{ .Values.tempjobdjango.shellCommand }}"
               echo ""
               echo "Please update your values.yaml with a supported mode."
               exit 1          
           {{- end }}
-          # end job commands 
+          # End job commands 
           resources:
           {{- toYaml .Values.tempjobdjango.resources | nindent 12 }} 
           volumeMounts:
@@ -145,6 +144,11 @@ spec:
             - name: script-volume
               mountPath: {{ .Values.tempjobdjango.configMap.scriptMountPath | default "/app/bin" }}
               readOnly: true
+            {{- end }}
+            {{- if .Values.tempjobdjango.logging.enabled | default false }}
+            - name: media
+              mountPath: /app/log
+              subPath: {{ .Values.persistence.tempjobMountSubpath  | default "openforms/temp_job" }}
             {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
@@ -162,7 +166,7 @@ spec:
           configMap:
             name: {{ .Values.tempjobdjango.configMap.name | default (printf "%s-tempjobdjango-script" (include "openforms.fullname" .)) }}
             defaultMode: 0755
-        {{- end }}
+        {{- end }}      
         {{- if .Values.extraVolumes }}
         {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
