@@ -1,6 +1,6 @@
 # openarchiefbeheer
 
-![Version: 1.3.10](https://img.shields.io/badge/Version-1.3.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.3.11](https://img.shields.io/badge/Version-1.3.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
@@ -74,6 +74,8 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
 | nginx.existingConfigmap | string | `nil` |  |
+| nginx.extraVolumeMounts | list | `[]` |  |
+| nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |

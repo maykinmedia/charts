@@ -1,6 +1,6 @@
 # openzaaktypebeheer
 
-![Version: 0.1.8](https://img.shields.io/badge/Version-0.1.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.2](https://img.shields.io/badge/AppVersion-0.1.2-informational?style=flat-square)
+![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.2](https://img.shields.io/badge/AppVersion-0.1.2-informational?style=flat-square)
 
 An app to manage the relations between 'zaaktypen' and 'informatieobjecttypen'.
 
@@ -41,6 +41,8 @@ An app to manage the relations between 'zaaktypen' and 'informatieobjecttypen'.
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
 | nginx.existingConfigmap | string | `nil` |  |
+| nginx.extraVolumeMounts | list | `[]` |  |
+| nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |

@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.8.2](https://img.shields.io/badge/Version-1.8.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.18.0](https://img.shields.io/badge/AppVersion-1.18.0-informational?style=flat-square)
+![Version: 1.8.3](https://img.shields.io/badge/Version-1.8.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.18.0](https://img.shields.io/badge/AppVersion-1.18.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -94,6 +94,8 @@ Productiewaardige API's voor Zaakgericht Werken
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
 | nginx.existingConfigmap | string | `nil` | mount existing nginx vhost config |
+| nginx.extraVolumeMounts | list | `[]` |  |
+| nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |

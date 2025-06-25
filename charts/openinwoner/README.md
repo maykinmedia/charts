@@ -1,6 +1,6 @@
 # openinwoner
 
-![Version: 1.7.3](https://img.shields.io/badge/Version-1.7.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.27.0](https://img.shields.io/badge/AppVersion-1.27.0-informational?style=flat-square)
+![Version: 1.7.4](https://img.shields.io/badge/Version-1.7.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.27.0](https://img.shields.io/badge/AppVersion-1.27.0-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
@@ -89,6 +89,8 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | nginx.config.basicAuth.enabled | bool | `false` | Enables nginx basic password authentication |
 | nginx.config.basicAuth.users | string | `"usernameexample:$apr1$5QwE2Ysc$ycRucgmLt0iQMMxcnu4CA/"` | You need to generate the encrypted basic auth password yourself |
 | nginx.config.clientMaxBodySize | string | `"10M"` |  |
+| nginx.extraVolumeMounts | list | `[]` |  |
+| nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |
