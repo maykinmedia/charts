@@ -1,4 +1,4 @@
-{{ if and .Values.global.configuration.enabled (default false .Values.tempjobdjango.enabled) -}}
+{{ if (default false .Values.tempjobdjango.enabled) -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -53,83 +53,8 @@ spec:
             {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }} 
           # Django job commands ->  
-          {{- if eq (default "managepy" .Values.tempjobdjango.mode) "python" -}}
-          # Mode: python - run a script mounted via ConfigMap/Secret/PVC
           command: ["/bin/bash", "-c"]
-          {{- if and (default false .Values.tempjobdjango.configMap.enabled) (default "" .Values.tempjobdjango.configMap.scriptCode) }}
-          args: ["python {{( default "/app/bin" .Values.tempjobdjango.configMap.scriptMountPath )}}/{{ (default "custom_script.py" .Values.tempjobdjango.configMap.scriptName) }}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}"]
-          {{- else }}
-          args:
-            - |
-              echo "Error: Python mode requires configMap.enabled=true and configMap.scriptCode to be specified"
-              echo "Current configuration:"
-              echo "  mode: {{ .Values.tempjobdjango.mode }}"
-              echo "  configMap.enabled: {{ .Values.tempjobdjango.configMap.enabled }}"
-              echo "  configMap.scriptCode: {{ if .Values.tempjobdjango.configMap.scriptCode }}specified{{ else }}not specified{{ end }}"
-              echo ""
-              echo "Please update your values.yaml with:"
-              echo "  tempjobdjango:"
-              echo "    mode: python"
-              echo "    configMap:"
-              echo "      enabled: true"
-              echo "      scriptCode: |"
-              echo "        # Your Python code here"
-              exit 1
-          {{- end }}                                                                                                                                           
-          {{- else if eq (default "managepy" .Values.tempjobdjango.mode) "managepy" -}} 
-          # Mode: managepy - run a Django management command with flexible base command and parameters
-          command: ["/bin/bash", "-c"]
-          args:
-            - |
-              {{- if (default "" .Values.tempjobdjango.command) }}
-              {{ default "/app/src/manage.py" .Values.tempjobdjango.scriptPath }} {{ .Values.tempjobdjango.command }}{{ if (default "" .Values.tempjobdjango.commandParams) }} {{ .Values.tempjobdjango.commandParams }}{{ end }}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}
-              {{- else }}
-              echo "Error: managepy mode requires a command"
-              exit 1
-              {{- end }}
-          {{- else if eq (default "managepy" .Values.tempjobdjango.mode) "container" -}}          
-          # Mode: container - run a script already present in the container image
-          command: ["/bin/bash", "-c"]
-          args: ["python {{ default "/app/src/manage.py" .Values.tempjobdjango.scriptPath }}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}"]
-          {{- else if eq (default "managepy" .Values.tempjobdjango.mode) "shell" -}} 
-          # Mode: shell - run a manage.py shell command
-          command: ["/bin/bash", "-c"]
-          {{- if and (default false .Values.tempjobdjango.configMap.enabled) (default "" .Values.tempjobdjango.configMap.shellScript) }}
-          args: ["python /app/src/manage.py shell < {{( default "/app/bin" .Values.tempjobdjango.configMap.scriptMountPath )}}/{{( default "shell_script.py" .Values.tempjobdjango.configMap.scriptName )}}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}"]
-          {{- else }}
-          args:
-            - |
-              echo "Error: Shell mode requires configMap.enabled=true with configMap.shellScript"
-              echo "Current configuration:"
-              echo "  mode: {{ .Values.tempjobdjango.mode }}"
-              echo "  configMap.enabled: {{ .Values.tempjobdjango.configMap.enabled }}"
-              echo "  configMap.shellScript: {{ if .Values.tempjobdjango.configMap.shellScript }}specified{{ else }}not specified{{ end }}"
-              echo ""
-              echo "  Please add Shell Script for ConfigMap:"
-              echo "    tempjobdjango:"
-              echo "      mode: shell"
-              echo "      configMap:"
-              echo "        enabled: true"
-              echo "        shellScript: |"
-              echo "          print('Hello from shell script!')"
-              exit 1
-          {{- end }}          
-          # Unsupported mode - show helpful error message
-          {{- else }}
-          command: ["/bin/bash", "-c"]
-          args:
-            - |
-              echo "Error: Unsupported mode '{{ .Values.tempjobdjango.mode }}'"
-              echo "Supported modes are: python, managepy, container, shell"
-              echo "Current configuration:"
-              echo "  mode: {{ .Values.tempjobdjango.mode }}"
-              echo "  scriptPath: {{ .Values.tempjobdjango.scriptPath }}"
-              echo "  command: {{ .Values.tempjobdjango.command }}"
-              echo "  commandParams: {{ .Values.tempjobdjango.commandParams }}"
-              echo ""
-              echo "Please update your values.yaml with a supported mode."
-              exit 1          
-          {{- end }}
+          args: ["{{ (default "echo no command provided" .Values.tempjobdjango.bashCommand) }}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}"]
           # End job commands 
           resources:
           {{- toYaml .Values.tempjobdjango.resources | nindent 12 }} 
@@ -140,7 +65,7 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
-            {{- if and (or (eq (default "managepy" .Values.tempjobdjango.mode) "python") (eq (default "managepy" .Values.tempjobdjango.mode) "shell")) (default false .Values.tempjobdjango.configMap.enabled) }}
+            {{- if and (default false .Values.tempjobdjango.enabled) (default false .Values.tempjobdjango.configMap.enabled) }}
             - name: script-volume
               mountPath: {{ .Values.tempjobdjango.configMap.scriptMountPath | default "/app/bin" }}
               readOnly: true
@@ -161,7 +86,7 @@ spec:
           {{- else }}
           emptyDir: { }
           {{- end }}
-        {{- if and (or (eq (default "managepy" .Values.tempjobdjango.mode) "python") (eq (default "managepy" .Values.tempjobdjango.mode) "shell")) (default false .Values.tempjobdjango.configMap.enabled) }}
+        {{- if and (default false .Values.tempjobdjango.enabled) (default false .Values.tempjobdjango.configMap.enabled) }}
         - name: script-volume
           configMap:
             name: {{ .Values.tempjobdjango.configMap.name | default (printf "%s-tempjobdjango-script" (include "openforms.fullname" .)) }}

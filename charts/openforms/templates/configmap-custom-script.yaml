@@ -1,0 +1,14 @@
+{{ if and (default false .Values.tempjobdjango.enabled) ( default false .Values.tempjobdjango.configMap.enabled ) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.tempjobdjango.configMap.name | default (printf "%s-tempjobdjango-script" (include "openforms.fullname" .)) }}
+  labels:
+    {{- include "openforms.configLabels" . | nindent 4 }}
+    app.kubernetes.io/component: tempjobdjango-script
+data:
+  {{- if .Values.tempjobdjango.configMap.scriptCode }}
+  {{ .Values.tempjobdjango.configMap.scriptName | default "custom_script.py" }}: |
+    {{- .Values.tempjobdjango.configMap.scriptCode | nindent 4 }}
+  {{- end }}
+{{- end }} 
