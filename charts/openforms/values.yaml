@@ -581,49 +581,37 @@ redis:
 ############################################
 tempjobdjango:
   enabled: false
-  # -- Mode: 'managepy' to run a Django management command, 'python' to run a plain Python script, 'container' to run a script already in the image, 'shell' to run a manage.py shell command
-  # -- Supported modes: python, managepy, container, shell
-  # --   - managepy: Run Django management commands (e.g., migrate, collectstatic, custom commands)
-  # --   - python: Run Python scripts mounted via ConfigMap (requires configMap.enabled=true and configMap.scriptCode)
-  # --   - container: Run Python scripts already present in the container image
-  # --   - shell: Run Python code in Django shell
-  mode: "managepy"
-  # -- Base command with pipes/redirects (e.g., "echo 'yes' | /app/src/manage.py" or "/app/src/manage.py")
-  # -- To be used mostly for the container option e.g. "/app/bin/fix_component_default_values.py"
-  # -- Note: Not used in 'python' mode (script is hardcoded at /app/bin/script.py)
-  scriptPath: "/app/src/manage.py"
-  # -- Django management command to execute (e.g., "generate_data", "runscript", "migrate")
-  command: "runscript"
-  # -- Parameters for the Django management command (e.g., "--generate-superuser-credentials")
-  commandParams: ""
+  # -- Four(or more) types of commands:
+  # -- -> Available on the container image (configMap: false)
+  # -- 1) Python script, e.g. "python /app/bin/fix_component_default_values.py"
+  # -- 2) Django management command to execute (e.g., "echo 'yes' | /app/src/manage.py generate_data --generate-superuser-credentials")
+  # -- -> Using custom script mounted as a configmap on the container (requirement: configMap to be set to true)
+  # -- 3) Python script, e.g. "python /app/bin/custom_script.py"
+  # -- 4) Django shell script "python /app/src/manage.py shell < /app/bin/custom_script.py"
+  bashCommand: "echo this is a test"
   # -- ConfigMap configuration for Python scripts
   configMap:
-    # -- Enable ConfigMap creation for Python scripts (used in python and shell modes)
-    # -- REQUIRED: Set to true and provide scriptCode when using python mode
-    # -- REQUIRED: Set to true and provide shellScript when using shell mode with script
+    # -- Enable ConfigMap creation for Python scripts or Django shell scripts
+    # -- REQUIRED: When set to true -> please provide scriptCode 
     enabled: false
-    # -- Required: Python script code to execute (MUST be specified when enabled: true for python mode)
+    # -- Required: Python script code to execute (MUST be specified if custom python script to be used)
     # -- Example:
     # -- scriptCode: |
     # --   #!/usr/bin/env python
     # --   print("Hello from Python!")
-    scriptCode: ""
-    # -- Required: Python script code to execute in Django shell (MUST be specified when enabled: true for shell mode)
+    # -- Required: Python script code to execute in Django shell (MUST be specified if a shell script has to be executed)
     # -- Example:
     # -- shellScript: |
     # --   from django.contrib.auth.models import User
-    # --   print(f"Total users: {User.objects.count()}")
-    shellScript: ""
-    # -- Required: Script filename (default: custom_script.py)
+    # --   print(f"Total users: {User.objects.count()}")    
+    scriptCode: ""
+    # -- Optional: Shell script filename (default: custom_script.py)    
     scriptName: "custom_script.py"
-    # -- Optional: Shell script filename (default: shell_script.py)
-    shellScriptName: "shell_script.py"
-    # -- Optional: ConfigMap name (default: auto-generated as "{release-name}-tempjobdjango-script")
+    # -- Optional: name of the configmap, defaults to appname-tempjobdjango
     name: ""
     # -- Optional: Mount path for scripts (default: /app/bin)
     scriptMountPath: "/app/bin"
   # -- Volume configuration for the script file
-
   backoffLimit: 3
   # -- 0 Will clean the job after it is finished
   ttlSecondsAfterFinished: 0    
@@ -642,8 +630,7 @@ tempjobdjango:
     #   memory: 256Mi
     # requests:
     #   cpu: 100m
-    #   memory: 128Mi  
-  
+    #   memory: 128Mi    
   # -- Saving the logs resulting from the the django commands
   logging:
     # -- Enable persistent logging volume using the existing pvc

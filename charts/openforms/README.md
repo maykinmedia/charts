@@ -209,25 +209,21 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
 | tags.redis | bool | `true` |  |
-| tempjobdjango | object | `{"activeDeadlineSeconds":21600,"backoffLimit":3,"command":"runscript","commandParams":"","completions":1,"configMap":{"enabled":false,"name":"","scriptCode":"","scriptMountPath":"/app/bin","scriptName":"custom_script.py","shellScript":"","shellScriptName":"shell_script.py"},"enabled":false,"logging":{"enabled":false},"mode":"managepy","parallelism":1,"resources":{},"restartPolicy":"Never","scriptPath":"/app/src/manage.py","ttlSecondsAfterFinished":0}` | Temporary Django job configuration    # for executing custom Django commands     # with Python scripts                      #    ########################################### |
+| tempjobdjango | object | `{"activeDeadlineSeconds":21600,"backoffLimit":3,"bashCommand":"echo this is a test","completions":1,"configMap":{"enabled":false,"name":"","scriptCode":"","scriptMountPath":"/app/bin","scriptName":"custom_script.py"},"enabled":false,"logging":{"enabled":false},"parallelism":1,"resources":{},"restartPolicy":"Never","ttlSecondsAfterFinished":0}` | Temporary Django job configuration    # for executing custom Django commands     # with Python scripts                      #    ########################################### |
 | tempjobdjango.activeDeadlineSeconds | int | `21600` | Job timeout in seconds (default: 6 hours = 21600) |
-| tempjobdjango.command | string | `"runscript"` | Django management command to execute (e.g., "generate_data", "runscript", "migrate") |
-| tempjobdjango.commandParams | string | `""` | Parameters for the Django management command (e.g., "--generate-superuser-credentials") |
+| tempjobdjango.backoffLimit | int | `3` | Volume configuration for the script file |
+| tempjobdjango.bashCommand | string | `"echo this is a test"` | 4) Django shell script "python /app/src/manage.py shell < /app/bin/custom_script.py" |
 | tempjobdjango.completions | int | `1` | Number of completions required (default: 1) |
-| tempjobdjango.configMap | object | `{"enabled":false,"name":"","scriptCode":"","scriptMountPath":"/app/bin","scriptName":"custom_script.py","shellScript":"","shellScriptName":"shell_script.py"}` | ConfigMap configuration for Python scripts |
-| tempjobdjango.configMap.enabled | bool | `false` | REQUIRED: Set to true and provide shellScript when using shell mode with script |
-| tempjobdjango.configMap.name | string | `""` | Optional: ConfigMap name (default: auto-generated as "{release-name}-tempjobdjango-script") |
-| tempjobdjango.configMap.scriptCode | string | `""` | print("Hello from Python!") |
+| tempjobdjango.configMap | object | `{"enabled":false,"name":"","scriptCode":"","scriptMountPath":"/app/bin","scriptName":"custom_script.py"}` | ConfigMap configuration for Python scripts |
+| tempjobdjango.configMap.enabled | bool | `false` | REQUIRED: When set to true -> please provide scriptCode  |
+| tempjobdjango.configMap.name | string | `""` | Optional: name of the configmap, defaults to appname-tempjobdjango |
+| tempjobdjango.configMap.scriptCode | string | `""` | print(f"Total users: {User.objects.count()}")     |
 | tempjobdjango.configMap.scriptMountPath | string | `"/app/bin"` | Optional: Mount path for scripts (default: /app/bin) |
-| tempjobdjango.configMap.scriptName | string | `"custom_script.py"` | Required: Script filename (default: custom_script.py) |
-| tempjobdjango.configMap.shellScript | string | `""` | print(f"Total users: {User.objects.count()}") |
-| tempjobdjango.configMap.shellScriptName | string | `"shell_script.py"` | Optional: Shell script filename (default: shell_script.py) |
+| tempjobdjango.configMap.scriptName | string | `"custom_script.py"` | Optional: Shell script filename (default: custom_script.py)     |
 | tempjobdjango.logging | object | `{"enabled":false}` | Saving the logs resulting from the the django commands |
 | tempjobdjango.logging.enabled | bool | `false` | Enable persistent logging volume using the existing pvc |
-| tempjobdjango.mode | string | `"managepy"` | - shell: Run Python code in Django shell |
 | tempjobdjango.parallelism | int | `1` | Number of parallel pods (default: 1) |
 | tempjobdjango.restartPolicy | string | `"Never"` | Restart policy: Never, OnFailure, or Always (Never is recommended for jobs) |
-| tempjobdjango.scriptPath | string | `"/app/src/manage.py"` | Note: Not used in 'python' mode (script is hardcoded at /app/bin/script.py) |
 | tempjobdjango.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
 | tlsSecretName | string | `""` |  |
 | tolerations | list | `[]` |  |
