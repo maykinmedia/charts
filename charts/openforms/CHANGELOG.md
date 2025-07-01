@@ -1,26 +1,24 @@
 # Changelog
 
-## 1.9.0 (2025-06-25)
+## 1.9.0 (2025-07-01)
 
 ### ✨ New Features
 
 - **Added tempjobdjango feature**: A flexible temporary Django job for executing custom Django commands and Python scripts
-  - **Multiple execution modes**:
-    - `managepy`: Run Django management commands (e.g., migrate, custom commands)
-    - `python`: Run Python scripts mounted via ConfigMap
-    - `container`: Run Python scripts already present in the container image  
-    - `shell`: Run Python code in Django shell
-  - **ConfigMap support**: Mount custom Python scripts via ConfigMap for python and shell modes
-  - **Advanced job configuration**: Configurable backoff limits, timeouts, parallelism, and restart policies
+  - **Possible execution**:
+    - Run Django management commands (e.g., migrate, custom commands)
+    - Run Python scripts mounted via ConfigMap
+    - Run Python scripts already present in the container image
+    - Run Python code in Django shell
+  - **ConfigMap support**: Mount custom Python scripts via ConfigMap for python and shell options
   - **Persistent logging**: Optional persistent volume for job logs with PVC
   - **Resource management**: Configurable CPU and memory limits/requests
-  - **Error handling**: Comprehensive error messages and validation for misconfigured jobs
 
 
 ### 📁 New Files
 
-- `templates/job-tempjobdjango.yaml`: Main job template with comprehensive mode support
-- `templates/configmap-tempjobdjango-script.yaml`: ConfigMap template for script mounting
+- `templates/job-tempjobdjango.yaml`: Main job template 
+- `templates/configmap-custom-script.yaml`: ConfigMap template for script mounting
 
 ## 1.8.4 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
