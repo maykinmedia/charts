@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.1 (2025-07-02)
+
+- Fixed env variable name `PUBLISH_BROKER_URL` in secrets.yaml
+
 ## 1.9.0 (2025-05-08)
 
 - [open-zaak/open-notificaties#240] Expose `result_expires` Celery setting via envvar
