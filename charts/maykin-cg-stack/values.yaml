@@ -674,7 +674,7 @@ opennotificaties:
       brokerUrl: ""
       # -- Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false
       resultBackend: ""
-      # -- Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false
+      # -- Sets the 'PUBLISH_BROKER_URL' var, only required when tags.rabbitmq is false
       publishBrokerUrl: ""
       # -- RabbitMQ server hostname
       rabbitmqHost: ""
