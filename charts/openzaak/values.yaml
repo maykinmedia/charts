@@ -32,7 +32,7 @@ configuration:
       #   memory: 128Mi
   secrets: {}
   data: ""
-  # e.g. 
+  # e.g.
   # data: |-
   #   sites_config_enable: true
   #   sites_config:
@@ -69,8 +69,8 @@ configuration:
   #       - 2017
   #     default_year: 2020
 
-  #   # These are all the applications that need to talk to Open Zaak. 
-  #   # Their secrets are configured in the `vng_api_common_credentials` values below! 
+  #   # These are all the applications that need to talk to Open Zaak.
+  #   # Their secrets are configured in the `vng_api_common_credentials` values below!
   #   vng_api_common_applicaties_config_enable: true
   #   vng_api_common_applicaties:
   #     items:
@@ -89,7 +89,7 @@ configuration:
   #     items:
   #     - identifier: admin-oidc
   #       enabled: True
-  #       oidc_rp_client_id: openzaak.example.nl 
+  #       oidc_rp_client_id: openzaak.example.nl
   #       oidc_rp_client_secret: ${keycloak_client_secret}
   #       oidc_rp_scopes_list:
   #       - openid
@@ -376,6 +376,10 @@ settings:
 
   # -- Disable two factor authentication
   disable2fa: false
+
+  # -- Settings related to performance
+  fuzzyPagination: true
+  fuzzyPaginationCountLimit: 500
 
 worker:
   replicaCount: 2
