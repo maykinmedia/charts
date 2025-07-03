@@ -144,7 +144,7 @@ API voor het routeren van notificaties
 | settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
 | settings.celery.brokerUrl | string | `""` | Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false |
 | settings.celery.logLevel | string | `"debug"` | Celery loglevel |
-| settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISHER_BROKER_URL' var, only required when tags.rabbitmq is false |
+| settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISH_BROKER_URL' var, only required when tags.rabbitmq is false |
 | settings.celery.rabbitmqHost | string | `""` | RabbitMQ server hostname |
 | settings.celery.resultBackend | string | `""` | Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false |
 | settings.celery.resultExpires | int | `3600` | Sets the 'CELERY_RESULT_EXPIRES' var |
