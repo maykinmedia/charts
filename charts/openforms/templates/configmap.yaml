@@ -69,6 +69,9 @@ data:
   {{- if .Values.settings.email.defaultFrom }}
   DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
   {{- end }}
+  {{- if and (hasKey .Values.settings.email "timeout") (not (empty .Values.settings.email.timeout)) }}
+  EMAIL_TIMEOUT: {{ .Values.settings.email.timeout | toString | quote }}
+  {{- end }}
   {{- if .Values.settings.elasticapm.url }}
   ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
   {{- end }}
