@@ -405,6 +405,8 @@ settings:
     password: ""
     useTLS: false
     defaultFrom: ""
+  # -- default value email_timeout in openforms app = 10      
+    timeout: "" 
 
   flower:
     urlPrefix: ""
