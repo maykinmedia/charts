@@ -85,12 +85,9 @@ data:
   OPENZAAK_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
   OPENZAAK_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
   {{- end }}
-  {{- if and 
-        (hasKey .Values.settings "zaakIdentificatieGenerator") (not (empty .Values.settings.zaakIdentificatieGenerator )) 
-        (or (eq .Values.settings.zaakIdentificatieGenerator "use-start-datum-year") (eq .Values.settings.zaakIdentificatieGenerator "use-creation-year")) 
-  }}
+  {{- if or (eq .Values.settings.zaakIdentificatieGenerator "use-start-datum-year") (eq .Values.settings.zaakIdentificatieGenerator "use-creation-year") }}
   ZAAK_IDENTIFICATIE_GENERATOR: {{ .Values.settings.zaakIdentificatieGenerator | toString | quote }}
   {{- end }}
-  {{- if and (hasKey .Values.settings "siteDomain") (not (empty .Values.settings.siteDomain )) }}
+  {{- if .Values.settings.siteDomain }}
   SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
   {{- end }}
