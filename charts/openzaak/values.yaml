@@ -378,6 +378,8 @@ settings:
   disable2fa: false
   # -- Sets the method of Zaak.identificatie generation. Possible values are: use-creation-year, use-start-datum-year ; default=use-start-datum-year
   zaakIdentificatieGenerator: ""
+  # -- Defines the primary domain where the application is hosted. Defaults to ""
+  siteDomain: ""
 
 worker:
   replicaCount: 2

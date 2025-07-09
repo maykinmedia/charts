@@ -192,6 +192,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |

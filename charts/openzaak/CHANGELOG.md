@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.8.4 (2025-07-07)
+## 1.8.4 (2025-07-09)
 
 - Adding extra env variable `zaakIdentificatieGenerator` with 2 possible values: *use-start-datum-year*, *use-creation-year* 
+- Adding env variable `siteDomain` defines primary domain of Openzaak
 
 ## 1.8.3 (2025-06-11)
 
