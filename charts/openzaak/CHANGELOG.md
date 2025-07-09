@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8.4 (2025-07-09)
+
+- Adding extra env variable `zaakIdentificatieGenerator` with 2 possible values: *use-start-datum-year*, *use-creation-year* 
+- Adding env variable `siteDomain` defines primary domain of Openzaak
+
 ## 1.8.3 (2025-06-11)
 
 - Add extra volumes and volumemounts for nginx so it can be deployed with readOnlyRootFilesystem: true
