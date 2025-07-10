@@ -128,6 +128,16 @@ Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten AP
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
+| settings.database.db_conn_max_age | string | `""` |  |
+| settings.database.db_pool.db_pool_max_idle | string | `""` |  |
+| settings.database.db_pool.db_pool_max_lifetime | string | `""` |  |
+| settings.database.db_pool.db_pool_max_size | string | `""` |  |
+| settings.database.db_pool.db_pool_max_waiting | string | `""` |  |
+| settings.database.db_pool.db_pool_min_size | string | `""` |  |
+| settings.database.db_pool.db_pool_num_workers | string | `""` |  |
+| settings.database.db_pool.db_pool_reconnect_timeout | string | `""` |  |
+| settings.database.db_pool.db_pool_timeout | string | `""` |  |
+| settings.database.db_pool.enabled | bool | `false` |  |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
 | settings.database.password | string | `""` |  |
