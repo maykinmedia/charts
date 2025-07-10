@@ -322,6 +322,8 @@ settings:
     brokerUrl: ""
     resultBackend: ""
     logLevel: debug
+  # -- Defines the primary domain where the application is hosted. Defaults to ""
+  siteDomain: ""  
 
 worker:
   replicaCount: 2

@@ -151,6 +151,7 @@ Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten AP
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |

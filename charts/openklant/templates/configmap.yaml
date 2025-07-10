@@ -65,3 +65,6 @@ data:
   {{- if .Values.settings.uwsgi.harakiri }}
   UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.siteDomain }}
+  SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
+  {{- end }}
