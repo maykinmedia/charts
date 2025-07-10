@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.2 (2025-07-10)
+
+- Adding env variable name `SITE_DOMAIN` in configmap.yaml; defines primary domain
+- Adding 8 env variables for DB POOL related to postgres performance. In addition db_conn_max_age variable created. ( To be used from version 2.11.0 )
+
 ## 1.9.1 (2025-07-02)
 
 - Fixed env variable name `PUBLISH_BROKER_URL` in secrets.yaml

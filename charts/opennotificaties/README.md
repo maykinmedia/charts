@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.9.0](https://img.shields.io/badge/Version-1.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+![Version: 1.9.1](https://img.shields.io/badge/Version-1.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -153,6 +153,16 @@ API voor het routeren van notificaties
 | settings.cleanOldNotifications.cronjob.schedule | string | `"0 0 * * *"` | Schedule to run the clean logged notifications cronjob |
 | settings.cleanOldNotifications.daysRetained | string | `""` | Number of days to retain logged notifications, default is 30 days |
 | settings.cleanOldNotifications.enabled | bool | `false` | Clean logged notifications |
+| settings.database.db_conn_max_age | string | `""` |  |
+| settings.database.db_pool.db_pool_max_idle | string | `""` |  |
+| settings.database.db_pool.db_pool_max_lifetime | string | `""` |  |
+| settings.database.db_pool.db_pool_max_size | string | `""` |  |
+| settings.database.db_pool.db_pool_max_waiting | string | `""` |  |
+| settings.database.db_pool.db_pool_min_size | string | `""` |  |
+| settings.database.db_pool.db_pool_num_workers | string | `""` |  |
+| settings.database.db_pool.db_pool_reconnect_timeout | string | `""` |  |
+| settings.database.db_pool.db_pool_timeout | string | `""` |  |
+| settings.database.db_pool.enabled | bool | `false` |  |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
 | settings.database.password | string | `""` |  |
@@ -183,6 +193,7 @@ API voor het routeren van notificaties
 | settings.retryBackoffMax | string | `""` | An upper limit to the exponential backoff time. Application default is 48. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
