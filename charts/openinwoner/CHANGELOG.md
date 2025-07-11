@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## 1.7.5 (2025-07-11)
 - Adding/setting extra variables `proxyConnectTimeoutSeconds` and `proxyReadTimeoutSeconds` for nginx in configmap-nginx ; default to 300
 - Adding new optional secret `SECRET_KEY_FALLBACK` for rotating a secret key

@@ -91,6 +91,8 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | nginx.config.clientMaxBodySize | string | `"10M"` |  |
 | nginx.config.proxyConnectTimeoutSeconds | int | `300` |  |
 | nginx.config.proxyReadTimeoutSeconds | int | `300` |  |
+| nginx.extraVolumeMounts | list | `[]` |  |
+| nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |

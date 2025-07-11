@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.7 (2025-06-11)
+
+- Add extra volumes and volumemounts for nginx so it can be deployed with readOnlyRootFilesystem: true
+
+## 1.6.6 (2025-05-16)
+- Fix missing env variable USE_X_FORWARDED_HOST from web container
+
 ## 1.6.5 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
 

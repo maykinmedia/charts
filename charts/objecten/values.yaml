@@ -316,6 +316,19 @@ settings:
     password: ""
     name: ""
     sslmode: prefer
+    objecttype_version_cache_timeout: ""      
+    db_conn_max_age: ""
+    db_pool:
+      enabled: false
+      db_pool_min_size: ""
+      db_pool_max_size: ""
+      db_pool_timeout: ""
+      db_pool_max_waiting: ""
+      db_pool_max_lifetime: ""
+      db_pool_max_idle: ""
+      db_pool_reconnect_timeout: ""
+      db_pool_num_workers: ""
+
 
   email:
     host: localhost

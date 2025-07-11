@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.9.1 (2025-07-02)
+
+- Fixed env variable name `PUBLISH_BROKER_URL` in secrets.yaml
+
+## 1.9.0 (2025-05-08)
+
+- [open-zaak/open-notificaties#240] Expose `result_expires` Celery setting via envvar
+
+## 1.8.4 (2025-05-14)
+
+- Fixed missing environment variable `NOTIFICATION_REQUESTS_TIMEOUT`.
+
 ## 1.8.3 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
 

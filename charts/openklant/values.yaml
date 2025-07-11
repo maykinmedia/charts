@@ -363,6 +363,19 @@ nginx:
     pullPolicy: IfNotPresent
     tag: stable
   existingConfigmap: null
+  # extraVolumes Optionally specify extra list of additional volumes
+  # e.g:
+  # extraVolumes:
+  #   - name: tmp
+  #     emptyDir: {}
+  #
+  extraVolumes: []
+  # extraVolumeMounts Optionally specify extra list of additional volumeMounts
+  # e.g:
+  # extraVolumeMounts:
+  #   - name: tmp
+  #     mountPath: /tmp
+  extraVolumeMounts: []
   config:
     clientMaxBodySize: 10M
   service:
