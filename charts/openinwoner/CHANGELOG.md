@@ -1,5 +1,13 @@
 # Changelog
 
+
+## 1.7.5 (2025-07-11)
+- Adding/setting extra variables for nginx in configmap `proxyConnectTimeoutSeconds` and `proxyReadTimeoutSeconds` default to 300
+- Adding new optional secret `SECRET_KEY_FALLBACK` for rotating a secret key
+
+## 1.7.4 (2025-06-11)
+- Add extra volumes and volumemounts for nginx so it can be deployed with readOnlyRootFilesystem: true
+
 ## 1.7.3 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
 
