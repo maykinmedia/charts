@@ -329,6 +329,8 @@ settings:
       db_pool_reconnect_timeout: ""
       db_pool_num_workers: ""
 
+  # -- Defines the primary domain where the application is hosted. Defaults to ""
+  siteDomain: ""
 
   email:
     host: localhost

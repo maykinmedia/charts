@@ -112,6 +112,9 @@ data:
   OBJECTS_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
   OBJECTS_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.siteDomain }}
+  SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
+  {{- end }}
 
 
 
