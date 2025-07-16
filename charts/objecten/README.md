@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.8.0](https://img.shields.io/badge/Version-2.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.4](https://img.shields.io/badge/AppVersion-3.0.4-informational?style=flat-square)
+![Version: 2.8.1](https://img.shields.io/badge/Version-2.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.4](https://img.shields.io/badge/AppVersion-3.0.4-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -137,6 +137,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | settings.database.objecttype_version_cache_timeout | string | `""` |  |
 | settings.database.password | string | `""` |  |
 | settings.database.port | int | `5432` |  |
+| settings.database.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
