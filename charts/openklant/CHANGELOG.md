@@ -1,7 +1,11 @@
 # Changelog
 
-## 1.6.7 (2025-06-11)
+## 1.7.0 (2025-05-16)
+- Upgrade to Openklant version 2.7.0
+- Adding env variable siteDomain defines primary domain of Openklant
+- Adding 8 env variables for DB POOL related to postgres performance. In addition db_conn_max_age variable created. ( To be used from openklant version 2.10.0 )
 
+## 1.6.7 (2025-06-11)
 - Add extra volumes and volumemounts for nginx so it can be deployed with readOnlyRootFilesystem: true
 
 ## 1.6.6 (2025-05-16)
