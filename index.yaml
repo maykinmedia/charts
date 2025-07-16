@@ -50,6 +50,27 @@ entries:
   objecten:
   - apiVersion: v2
     appVersion: 3.0.4
+    created: "2025-07-16T10:15:26.902910561Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: API om objecten te beheren die behoren bij een bepaald objecttype
+    digest: 530085c0adf6727146202e6a5af944d8840126c1c78df54747208c74d91bb39c
+    name: objecten
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecten-2.8.1/objecten-2.8.1.tgz
+    version: 2.8.1
+  - apiVersion: v2
+    appVersion: 3.0.4
     created: "2025-05-21T11:01:00.689621235Z"
     dependencies:
     - name: redis
@@ -5015,4 +5036,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-11T14:20:36.687982027Z"
+generated: "2025-07-16T10:15:26.903670439Z"
