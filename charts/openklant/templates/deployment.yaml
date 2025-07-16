@@ -277,6 +277,9 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openklant/media" }}
+            {{- if .Values.nginx.extraVolumeMounts }}
+            {{- include "openklant.tplvalues.render" ( dict "value" .Values.nginx.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
       volumes:
         - name: media
           persistentVolumeClaim:
@@ -288,6 +291,9 @@ spec:
         - name: nginx-config
           configMap:
             name: {{ if .Values.nginx.existingConfigmap }}{{ .Values.nginx.existingConfigmap  }}{{- else }}{{ include "openklant.nginxFullname" . }}{{- end }}
+        {{- if .Values.nginx.extraVolumes }}
+        {{- include "openklant.tplvalues.render" ( dict "value" .Values.nginx.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

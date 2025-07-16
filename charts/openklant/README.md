@@ -64,6 +64,8 @@ Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten AP
 | nginx.autoscaling.enabled | bool | `false` |  |
 | nginx.config.clientMaxBodySize | string | `"10M"` |  |
 | nginx.existingConfigmap | string | `nil` |  |
+| nginx.extraVolumeMounts | list | `[]` |  |
+| nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |
