@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.2 (2025-07-10)
+
+- Added the env variable `SITE_DOMAIN`, which should contain the primary domain where the application is hosted.
+- Added 8 env variables (`db_pool_min_size`, `db_pool_max_size`, `db_pool_timeout`, `db_pool_max_waiting`, `db_pool_max_lifetime`, `db_pool_max_idle`, `db_pool_reconnect_timeout`, `db_pool_num_workers`) for DB POOL related to postgres performance. In addition `db_conn_max_age` variable created. ( To be used from version 2.11.0 )
+
 ## 1.9.1 (2025-07-02)
 
 - Fixed env variable name `PUBLISH_BROKER_URL` in secrets.yaml
