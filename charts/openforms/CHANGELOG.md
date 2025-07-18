@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.7 (2025-07-18)
+
+- Removing initContainer used in the past for the serup configuration. [ It is no longer supported, and unnecessary ]
+
 ## 1.8.6 (2025-07-03)
 
 - Adding extra env variable `EMAIL_TIMEOUT` defined with `settings.email.timeout:`
