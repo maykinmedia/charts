@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.0 (2025-07-18)
+
+- Pinning the ElasticSearch image as well as upgrading the Bitnami Helm chart deploying it.
+
 ## 1.7.4 (2025-06-11)
 
 - Add extra volumes and volumemounts for nginx so it can be deployed with readOnlyRootFilesystem: true
