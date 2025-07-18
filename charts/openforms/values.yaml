@@ -9,9 +9,6 @@ global:
 
 configuration:
   enabled: false
-  initContainer:
-    # -- Run the setup configuration command in a init container
-    enabled: false
   job:
     # -- Run the setup configuration command as a job
     enabled: true

@@ -29,7 +29,6 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
 | configuration.enabled | bool | `false` |  |
-| configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
 | configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
