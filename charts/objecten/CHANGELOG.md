@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.8.2 (2025-07-18)
+- Adding default values to the 8 env variables for DB POOL 
+
 ## 2.8.1 (2025-07-12)
 - Added the env variable `SITE_DOMAIN`, which should contain the primary domain where the application is hosted.
 
