@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.3 (2025-07-18)
+
+- Added default values for the 8 `DB_POOL` env variables
+
 ## 1.9.2 (2025-07-10)
 
 - Added the env variable `SITE_DOMAIN`, which should contain the primary domain where the application is hosted.

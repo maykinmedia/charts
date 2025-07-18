@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.9.2](https://img.shields.io/badge/Version-1.9.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+![Version: 1.9.3](https://img.shields.io/badge/Version-1.9.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -153,15 +153,15 @@ API voor het routeren van notificaties
 | settings.cleanOldNotifications.cronjob.schedule | string | `"0 0 * * *"` | Schedule to run the clean logged notifications cronjob |
 | settings.cleanOldNotifications.daysRetained | string | `""` | Number of days to retain logged notifications, default is 30 days |
 | settings.cleanOldNotifications.enabled | bool | `false` | Clean logged notifications |
-| settings.database.db_conn_max_age | string | `""` |  |
-| settings.database.db_pool.db_pool_max_idle | string | `""` |  |
-| settings.database.db_pool.db_pool_max_lifetime | string | `""` |  |
-| settings.database.db_pool.db_pool_max_size | string | `""` |  |
-| settings.database.db_pool.db_pool_max_waiting | string | `""` |  |
-| settings.database.db_pool.db_pool_min_size | string | `""` |  |
-| settings.database.db_pool.db_pool_num_workers | string | `""` |  |
-| settings.database.db_pool.db_pool_reconnect_timeout | string | `""` |  |
-| settings.database.db_pool.db_pool_timeout | string | `""` |  |
+| settings.database.db_conn_max_age | int | `60` |  |
+| settings.database.db_pool.db_pool_max_idle | int | `600` |  |
+| settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
+| settings.database.db_pool.db_pool_max_size | string | `nil` |  |
+| settings.database.db_pool.db_pool_max_waiting | int | `0` |  |
+| settings.database.db_pool.db_pool_min_size | int | `4` |  |
+| settings.database.db_pool.db_pool_num_workers | int | `3` |  |
+| settings.database.db_pool.db_pool_reconnect_timeout | int | `300` |  |
+| settings.database.db_pool.db_pool_timeout | int | `30` |  |
 | settings.database.db_pool.enabled | bool | `false` |  |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
