@@ -125,7 +125,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | settings.database.db_conn_max_age | int | `60` |  |
 | settings.database.db_pool.db_pool_max_idle | int | `600` |  |
 | settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
-| settings.database.db_pool.db_pool_max_size | string | `nil` |  |
+| settings.database.db_pool.db_pool_max_size | int | `4` |  |
 | settings.database.db_pool.db_pool_max_waiting | int | `0` |  |
 | settings.database.db_pool.db_pool_min_size | int | `4` |  |
 | settings.database.db_pool.db_pool_num_workers | int | `3` |  |
