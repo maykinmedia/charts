@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.1 (2025-07-23)
+- Added default values for the 8 `DB_POOL` env variables
+
 ## 1.7.0 (2025-05-16)
 - Upgrade to Openklant version 2.7.0
 - Adding env variable siteDomain defines primary domain of Openklant
