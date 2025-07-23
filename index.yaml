@@ -4320,6 +4320,31 @@ entries:
   openproduct:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2025-07-23T15:43:01.764731491Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: maykin-utils-lib
+      repository: https://maykinmedia.github.io/charts/
+      version: 0.2.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: Open Product is een applicatie waarin producttypen en producten op
+      een enkele plek kunnen worden beheerd.
+    digest: cf71aa26815359ae47367270b835734525010d2c1efc8880fe50ec38fbb8460d
+    name: openproduct
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openproduct-0.1.1/openproduct-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2025-04-24T13:45:57.225848044Z"
     dependencies:
     - name: redis
@@ -5106,4 +5131,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-18T08:58:32.85960353Z"
+generated: "2025-07-23T15:43:01.765259109Z"
