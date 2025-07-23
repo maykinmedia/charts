@@ -27,6 +27,39 @@ data:
   DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
   DB_PORT: {{ .Values.settings.database.port | toString | quote }}
+  {{- with .Values.settings.database.db_pool }}
+  {{- if .enabled }}
+  DB_POOL_ENABLED: {{ .enabled | toString | title | quote }}
+  {{- if ne .db_pool_min_size nil }}
+  DB_POOL_MIN_SIZE: {{ int .db_pool_min_size | quote }}
+  {{- end }} 
+  {{- if ne .db_pool_max_size nil }}
+  DB_POOL_MAX_SIZE: {{ int .db_pool_max_size | quote }}
+  {{- end }}
+  {{- if ne .db_pool_timeout nil }}
+  DB_POOL_TIMEOUT: {{ int .db_pool_timeout | quote }}
+  {{- end }}
+  {{- if ne .db_pool_max_waiting nil }}
+  DB_POOL_MAX_WAITING: {{ int .db_pool_max_waiting | quote }}
+  {{- end }}
+  {{- if ne .db_pool_max_lifetime nil }}
+  DB_POOL_MAX_LIFETIME: {{ int .db_pool_max_lifetime | quote }}
+  {{- end }}
+  {{- if ne .db_pool_max_idle nil }}
+  DB_POOL_MAX_IDLE: {{ int .db_pool_max_idle | quote }}
+  {{- end }}
+  {{- if ne .db_pool_reconnect_timeout nil }}
+  DB_POOL_RECONNECT_TIMEOUT: {{ int .db_pool_reconnect_timeout | quote }}
+  {{- end }}
+  {{- if ne .db_pool_num_workers nil }}
+  DB_POOL_NUM_WORKERS: {{ int .db_pool_num_workers | quote }}
+  {{- end }}
+  {{ else }}
+  {{- if ne $.Values.settings.database.db_conn_max_age nil }}
+  DB_CONN_MAX_AGE: {{ int $.Values.settings.database.db_conn_max_age | quote }}
+  {{- end }}     
+  {{- end }}
+  {{- end }}  
   {{ if .Values.settings.debug }}
   DEBUG: "True"
   {{- end }}
