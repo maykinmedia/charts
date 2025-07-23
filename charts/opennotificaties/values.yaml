@@ -379,7 +379,7 @@ settings:
     db_pool:
       enabled: false
       db_pool_min_size: 4 
-      db_pool_max_size: null
+      db_pool_max_size: 4
       db_pool_timeout: 30
       db_pool_max_waiting: 0
       db_pool_max_lifetime: 3600
