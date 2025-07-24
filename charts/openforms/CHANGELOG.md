@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.8 (2025-07-24)
+
+- Changed the setting for openforms worker deployment -> when HPA is enabled the replicas for the deployment will not be set.
+
 ## 1.8.7 (2025-07-18)
 
 - Removing initContainer used in the past for the serup configuration. [ It is no longer supported, and unnecessary ]
