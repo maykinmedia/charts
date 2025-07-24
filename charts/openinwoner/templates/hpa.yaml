@@ -65,3 +65,7 @@ spec:
           averageUtilization: {{ .Values.nginx.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
 {{- end }}
+---
+{{- if .Values.worker.autoscaling.enabled }}
+{{- include "maykinUtilsLib.workerHpa" . -}}
+{{- end }}
