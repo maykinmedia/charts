@@ -1,6 +1,10 @@
 # Changelog
 
 
+## 0.2.2 (2025-07-24)
+
+- Adding label `workerSelectorLabels` to helpers.tpl
+
 ## 0.2.1 (2025-04-21)
 
 - Adding label in helpers.tpl for a Chart, `project.chart`. Example usage: *helm.sh/chart: openproduct-0.1.0*
