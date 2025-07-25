@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.8.1](https://img.shields.io/badge/Version-2.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.4](https://img.shields.io/badge/AppVersion-3.0.4-informational?style=flat-square)
+![Version: 2.8.2](https://img.shields.io/badge/Version-2.8.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.4](https://img.shields.io/badge/AppVersion-3.0.4-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -122,22 +122,21 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
-| settings.database.db_conn_max_age | string | `""` |  |
-| settings.database.db_pool.db_pool_max_idle | string | `""` |  |
-| settings.database.db_pool.db_pool_max_lifetime | string | `""` |  |
-| settings.database.db_pool.db_pool_max_size | string | `""` |  |
-| settings.database.db_pool.db_pool_max_waiting | string | `""` |  |
-| settings.database.db_pool.db_pool_min_size | string | `""` |  |
-| settings.database.db_pool.db_pool_num_workers | string | `""` |  |
-| settings.database.db_pool.db_pool_reconnect_timeout | string | `""` |  |
-| settings.database.db_pool.db_pool_timeout | string | `""` |  |
+| settings.database.db_conn_max_age | int | `60` |  |
+| settings.database.db_pool.db_pool_max_idle | int | `600` |  |
+| settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
+| settings.database.db_pool.db_pool_max_size | int | `4` |  |
+| settings.database.db_pool.db_pool_max_waiting | int | `0` |  |
+| settings.database.db_pool.db_pool_min_size | int | `4` |  |
+| settings.database.db_pool.db_pool_num_workers | int | `3` |  |
+| settings.database.db_pool.db_pool_reconnect_timeout | int | `300` |  |
+| settings.database.db_pool.db_pool_timeout | int | `30` |  |
 | settings.database.db_pool.enabled | bool | `false` |  |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
 | settings.database.objecttype_version_cache_timeout | string | `""` |  |
 | settings.database.password | string | `""` |  |
 | settings.database.port | int | `5432` |  |
-| settings.database.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `""` |  |
 | settings.debug | bool | `false` |  |
@@ -157,6 +156,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
 | settings.useXForwardedHost | bool | `false` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
