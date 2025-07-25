@@ -64,6 +64,12 @@ We truncate at 56 chars in order to provide space for the "-worker" suffix
 {{ include "project.fullname" . | trunc 56 | trimSuffix "-" }}-worker
 {{- end }}
 
+{{/*
+Worker selector labels
+*/}}
+{{- define "project.workerSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "project.workerFullname" . }}
+{{- end }}
 
 {{/*
 Create a default fully qualified name for NGINX.
