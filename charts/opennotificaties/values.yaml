@@ -372,17 +372,20 @@ settings:
     password: ""
     name: ""
     sslmode: prefer
-    db_conn_max_age: ""
+    db_conn_max_age: 60
+    # @section Django DB Pool Configuration
+    # Django database connection pool settings.
+    # These are the default values used by Django and the application; change them if your app requires more connections or different timeouts.
     db_pool:
       enabled: false
-      db_pool_min_size: ""
-      db_pool_max_size: ""
-      db_pool_timeout: ""
-      db_pool_max_waiting: ""
-      db_pool_max_lifetime: ""
-      db_pool_max_idle: ""
-      db_pool_reconnect_timeout: ""
-      db_pool_num_workers: ""
+      db_pool_min_size: 4 
+      db_pool_max_size: 4
+      db_pool_timeout: 30
+      db_pool_max_waiting: 0
+      db_pool_max_lifetime: 3600
+      db_pool_max_idle: 600
+      db_pool_reconnect_timeout: 300
+      db_pool_num_workers: 3
 
   # -- use 2 if enabling ingress
   numProxies: 1
