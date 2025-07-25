@@ -23,6 +23,3 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-  - name: maykin-utils-lib
-    version: 0.2.1
-    repository: https://maykinmedia.github.io/charts/
