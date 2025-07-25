@@ -2,7 +2,7 @@
 
 ## 1.8.8 (2025-07-24)
 
-- Changed the setting for openforms worker deployment -> when HPA is enabled the replicas for the deployment will not be set.
+- Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
 
 ## 1.8.7 (2025-07-18)
 
