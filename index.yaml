@@ -21,6 +21,15 @@ entries:
     version: 0.0.1
   maykin-utils-lib:
   - apiVersion: v2
+    created: "2025-07-25T13:27:22.901796232Z"
+    description: A Library Helm chart containing code shared between Maykin helm charts
+    digest: 69a590e1c29637eead9255dbc989247c229bc584136e6cf69af5d83ada392d0a
+    name: maykin-utils-lib
+    type: library
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/maykin-utils-lib-0.2.2/maykin-utils-lib-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
     created: "2025-04-23T15:24:29.320607498Z"
     description: A Library Helm chart containing code shared between Maykin helm charts
     digest: 5efc43555faea718e1992f99d5384d3aa28bb1ff71eb61e3f3013f142c374033
@@ -5157,4 +5166,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-25T11:54:22.839281983Z"
+generated: "2025-07-25T13:27:22.902571744Z"
