@@ -1,6 +1,6 @@
 # openklant
 
-![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
+![Version: 1.7.1](https://img.shields.io/badge/Version-1.7.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
 
 Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
 
@@ -130,15 +130,15 @@ Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten AP
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
-| settings.database.db_conn_max_age | string | `""` |  |
-| settings.database.db_pool.db_pool_max_idle | string | `""` |  |
-| settings.database.db_pool.db_pool_max_lifetime | string | `""` |  |
-| settings.database.db_pool.db_pool_max_size | string | `""` |  |
-| settings.database.db_pool.db_pool_max_waiting | string | `""` |  |
-| settings.database.db_pool.db_pool_min_size | string | `""` |  |
-| settings.database.db_pool.db_pool_num_workers | string | `""` |  |
-| settings.database.db_pool.db_pool_reconnect_timeout | string | `""` |  |
-| settings.database.db_pool.db_pool_timeout | string | `""` |  |
+| settings.database.db_conn_max_age | int | `60` |  |
+| settings.database.db_pool.db_pool_max_idle | int | `600` |  |
+| settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
+| settings.database.db_pool.db_pool_max_size | int | `4` |  |
+| settings.database.db_pool.db_pool_max_waiting | int | `0` |  |
+| settings.database.db_pool.db_pool_min_size | int | `4` |  |
+| settings.database.db_pool.db_pool_num_workers | int | `3` |  |
+| settings.database.db_pool.db_pool_reconnect_timeout | int | `300` |  |
+| settings.database.db_pool.db_pool_timeout | int | `30` |  |
 | settings.database.db_pool.enabled | bool | `false` |  |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
