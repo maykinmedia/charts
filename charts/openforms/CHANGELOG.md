@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.8 (2025-07-24)
+
+- Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
+
 ## 1.8.7 (2025-07-18)
 
 - Removing initContainer used in the past for the serup configuration. [ It is no longer supported, and unnecessary ]
