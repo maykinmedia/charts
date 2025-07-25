@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.6 (2025-07-24)
+- Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
+- Adding the HPA for worker deployment, (it was missing so far)
+
 ## 1.7.5 (2025-07-11)
 - Adding/setting extra variables `proxyConnectTimeoutSeconds` and `proxyReadTimeoutSeconds` for nginx in configmap-nginx ; default to 300
 - Adding new optional secret `SECRET_KEY_FALLBACK` for rotating a secret key
