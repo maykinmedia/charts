@@ -363,6 +363,7 @@ settings:
     # resultBackend: redis://openforms-redis-master:6379/1
     brokerUrl: ""
     resultBackend: ""
+    resultExpires: 3600
     logLevel: debug
 
   notificationsDisabled: false

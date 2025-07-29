@@ -122,6 +122,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
+| settings.celery.resultExpires | int | `3600` | Sets the 'CELERY_RESULT_EXPIRES' var |
 | settings.database.db_conn_max_age | int | `60` |  |
 | settings.database.db_pool.db_pool_max_idle | int | `600` |  |
 | settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |

@@ -26,6 +26,7 @@ data:
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
   {{ if .Values.worker.maxWorkerLivenessDelta }}
+  CELERY_RESULT_EXPIRES: {{ .Values.settings.celery.resultExpires | toString | quote }}
   MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
   {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
