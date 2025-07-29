@@ -161,6 +161,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.cache.default | string | `""` |  |
 | settings.cache.portalLocker | string | `""` |  |
 | settings.celery.brokerUrl | string | `""` |  |
+| settings.celery.resultExpires | int | `3600` | Sets the 'CELERY_RESULT_EXPIRES' var |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
 | settings.cmis.enabled | bool | `false` |  |

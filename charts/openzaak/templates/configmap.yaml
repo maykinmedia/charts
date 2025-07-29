@@ -19,6 +19,7 @@ data:
   CACHE_AXES: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
   CELERY_BROKER_URL: {{ printf "redis://%s-master.%s:6379/1" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
   CELERY_RESULT_BACKEND: {{ printf "redis://%s-master.%s:6379/1" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  CELERY_RESULT_EXPIRES: {{ .Values.settings.celery.resultExpires | toString | quote }}
   {{- else }}
   CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
   CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
