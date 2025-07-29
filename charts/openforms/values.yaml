@@ -458,6 +458,11 @@ settings:
     maxRequests: ""
     harakiri: ""
 
+  # -- Cross-Origin Opener Policy (COOP) header value to control how the browser handles cross-origin windows
+  # -- Possible values: "same-origin", "same-origin-allow-popups", "unsafe-none", "noopener-allow-popups"
+  # -- Recommended: "same-origin" for production security, "unsafe-none" for development/testing
+  crossOriginOpenerPolicy: ""
+
 worker:
   replicaCount: 2
   concurrency: 4
