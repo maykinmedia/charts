@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.8.7](https://img.shields.io/badge/Version-1.8.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
+![Version: 1.8.9](https://img.shields.io/badge/Version-1.8.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -163,6 +163,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.cors.allowAllOrigins | bool | `false` |  |
 | settings.cors.allowedOrigins | list | `[]` |  |
 | settings.cors.allowedOriginsNginx | bool | `false` |  |
+| settings.crossOriginOpenerPolicy | string | `""` | Recommended: "same-origin" for production security, "unsafe-none" for development/testing |
 | settings.csp.extraDefaultSrc | list | `[]` |  |
 | settings.csp.extraImgSrc | list | `[]` |  |
 | settings.csp.reportSave | bool | `false` |  |

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.9 (2025-07-29)
+
+- Adding extra env variable `crossOriginOpenerPolicy` to control browser cross-origin window handling; recommended: "unsafe-none" for development, "same-origin" for production; includes validation to ensure only valid values are used
+
 ## 1.8.8 (2025-07-24)
 
 - Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).

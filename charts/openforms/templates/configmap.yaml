@@ -116,3 +116,9 @@ data:
   {{- if .Values.settings.environmentLabelForegroundColor }}
   ENVIRONMENT_FOREGROUND_COLOR: {{ .Values.settings.environmentLabelForegroundColor | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.crossOriginOpenerPolicy }}
+  {{- $allowedValues := list "same-origin" "same-origin-allow-popups" "unsafe-none" "noopener-allow-popups" }}
+  {{- if has .Values.settings.crossOriginOpenerPolicy $allowedValues }}
+  CROSS_ORIGIN_OPENER_POLICY: {{ .Values.settings.crossOriginOpenerPolicy | toString | quote }}
+  {{- end }}
+  {{- end }}  
