@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.1 (xxxx-xx-xx)
+
+- [open-zaak/open-zaak#2132] Expose `result_expires` Celery setting via envvar
+
 ## 1.9.0 (2025-07-09)
 
 - Upgrade the chart version with respect to Openzaak version 1.21.2 

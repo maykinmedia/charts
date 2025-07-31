@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.9.0](https://img.shields.io/badge/Version-1.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.2](https://img.shields.io/badge/AppVersion-1.21.2-informational?style=flat-square)
+![Version: 1.9.1](https://img.shields.io/badge/Version-1.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.23.0](https://img.shields.io/badge/AppVersion-1.23.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -161,9 +161,9 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.cache.default | string | `""` |  |
 | settings.cache.portalLocker | string | `""` |  |
 | settings.celery.brokerUrl | string | `""` |  |
-| settings.celery.resultExpires | int | `3600` | Sets the 'CELERY_RESULT_EXPIRES' var |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
+| settings.celery.resultExpires | int | `3600` |  |
 | settings.cmis.enabled | bool | `false` |  |
 | settings.cmis.mapperFile | string | `""` |  |
 | settings.database.host | string | `"open-zaak-postgresql"` |  |
