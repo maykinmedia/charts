@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.8.3 (xxxx-xx-xx)
+## 2.8.3 (2025-08-05)
 - [maykinmedia/objects-api#643] Expose `result_expires` Celery setting via envvar
 
 ## 2.8.2 (2025-07-18)

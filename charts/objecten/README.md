@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.8.3](https://img.shields.io/badge/Version-2.8.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.3](https://img.shields.io/badge/AppVersion-3.1.3-informational?style=flat-square)
+![Version: 2.8.3](https://img.shields.io/badge/Version-2.8.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.4](https://img.shields.io/badge/AppVersion-3.0.4-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -122,7 +122,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
-| settings.celery.resultExpires | int | `3600` |  |
+| settings.celery.resultExpires | int | `3600` | Sets how long the results of tasks will be stored in Redis (in seconds); can be set to a lower value |
 | settings.database.db_conn_max_age | int | `60` |  |
 | settings.database.db_pool.db_pool_max_idle | int | `600` |  |
 | settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
