@@ -25,6 +25,9 @@ data:
   CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackendl | toString | quote }}
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
+  {{- if .Values.settings.logLevel }}
+  LOG_LEVEL: {{ .Values.settings.logLevel | toString | quote }}
+  {{- end }}
   {{ if .Values.worker.maxWorkerLivenessDelta }}
   MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
   {{- end }}

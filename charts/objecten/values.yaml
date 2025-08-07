@@ -334,6 +334,8 @@ settings:
 
   # -- Defines the primary domain where the application is hosted. Defaults to ""
   siteDomain: ""
+  # -- Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG
+  logLevel: "INFO"
 
   email:
     host: localhost

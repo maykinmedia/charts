@@ -2,6 +2,7 @@
 
 ## 2.8.3 (2025-08-05)
 - [maykinmedia/objects-api#643] Expose `result_expires` Celery setting via envvar
+- Add configurable log level via LOG_LEVEL environment variable (default: INFO)
 
 ## 2.8.2 (2025-07-18)
 - Adding default values to the 8 env variables for DB POOL 
