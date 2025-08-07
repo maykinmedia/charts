@@ -25,9 +25,13 @@ data:
   CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackendl | toString | quote }}
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
+  {{- if .Values.settings.logLevel }}
+  LOG_LEVEL: {{ .Values.settings.logLevel | toString | quote }}
+  {{- end }}
   {{ if .Values.worker.maxWorkerLivenessDelta }}
   MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
   {{- end }}
+  CELERY_RESULT_EXPIRES: {{ .Values.settings.celery.resultExpires | toString | quote }}  
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
