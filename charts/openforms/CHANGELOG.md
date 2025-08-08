@@ -3,6 +3,7 @@
 ## 1.8.10 (2025-08-06)
 
 - Enhanced `extraVolumes` and `extraVolumeMounts` for Flower container configuration. Previously applied to all containers, now supports targeting Flower container. Allows more granular control over volume mounting.
+- Warning: This change affects deployments that previously relied on extraVolumes and extraVolumeMounts being applied globally across all containers. extraVolumes and extraVolumeMounts now exclusively target the Flower container. Action: Move configurations to the appropriate container-specific sections.
 
 ## 1.8.9 (2025-07-29)
 
