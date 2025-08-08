@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.4 (2025-07-24)
+
+- Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
+
 ## 1.9.3 (2025-07-18)
 
 - Added default values for the 8 `DB_POOL` env variables
