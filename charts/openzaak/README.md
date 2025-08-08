@@ -182,7 +182,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.database.port | int | `5432` |  |
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `"postgres"` |  |
-| settings.dbDisableServerSideCursors | string | `"nil"` | Disable server-side cursors to prevent connection pooling issues Set to true when using transaction pooling to avoid cursor-related errors Warning: the effect of disabling server side cursors on performance has not been thoroughly tested yet Default: nil (uses Django default which is false) Possible values: true or false |
+| settings.dbDisableServerSideCursors | bool | `false` | Disable server-side cursors to prevent connection pooling issues Set to true when using transaction pooling to avoid cursor-related errors Warning: the effect of disabling server side cursors on performance has not been thoroughly tested yet Default: false ; Valid values: true, false |
 | settings.debug | bool | `false` |  |
 | settings.disable2fa | bool | `false` | Disable two factor authentication |
 | settings.djangoSettingsModule | string | `"openzaak.conf.docker"` |  |

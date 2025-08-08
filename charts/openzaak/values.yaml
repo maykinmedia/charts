@@ -398,8 +398,8 @@ settings:
   # -- Disable server-side cursors to prevent connection pooling issues
   # Set to true when using transaction pooling to avoid cursor-related errors
   # Warning: the effect of disabling server side cursors on performance has not been thoroughly tested yet
-  # Default: nil (uses Django default which is false) Possible values: true or false
-  dbDisableServerSideCursors: nil 
+  # Default: false ; Valid values: true, false
+  dbDisableServerSideCursors: false
   # -- Time leeway in seconds for JWT validation timestamps
   # Accounts for clock drift between server and client
   # Default: nil (uses Django default, typically 0 seconds)

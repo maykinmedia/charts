@@ -126,9 +126,7 @@ data:
   SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
   {{- end }}
   {{- if .Values.settings.dbDisableServerSideCursors }}
-  {{- if or (eq .Values.settings.dbDisableServerSideCursors true) (eq .Values.settings.dbDisableServerSideCursors false) }}
   DB_DISABLE_SERVER_SIDE_CURSORS: {{ .Values.settings.dbDisableServerSideCursors | ternary "True" "False" | quote }}
-  {{- end }}
   {{- end }}
   {{- if .Values.settings.timeLeeway }}
   TIME_LEEWAY: {{ int .Values.settings.timeLeeway | quote }}
