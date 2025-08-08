@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.8.9](https://img.shields.io/badge/Version-1.8.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
+![Version: 1.8.10](https://img.shields.io/badge/Version-1.8.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -46,6 +46,8 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
 | flower.enabled | bool | `true` |  |
+| flower.extraVolumeMounts | list | `[]` |  |
+| flower.extraVolumes | list | `[]` |  |
 | flower.livenessProbe.failureThreshold | int | `6` |  |
 | flower.livenessProbe.initialDelaySeconds | int | `60` |  |
 | flower.livenessProbe.periodSeconds | int | `10` |  |

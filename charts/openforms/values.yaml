@@ -563,6 +563,27 @@ flower:
     failureThreshold: 6
     successThreshold: 1
   resources: {}
+  # Additional k8s volumes to be created
+  # Use this to mount ConfigMaps, Secrets, or PersistentVolumeClaims
+  # e.g:
+  # extraVolumes:
+  #   - name: config-volume
+  #     configMap:
+  #       name: my-config
+  #   - name: logs-volume
+  #     persistentVolumeClaim:
+  #       claimName: application-logs-pvc  
+  extraVolumes: []
+  # Mount points for the additional volumes inside the container
+  # Each mount must correspond to a volume defined in extraVolumes
+  # e.g:
+  # extraVolumeMounts:
+  #   - name: config-volume
+  #     mountPath: /etc/config
+  #   - name: logs-volume
+  #     mountPath: /var/log/app
+  #     readOnly: false  
+  extraVolumeMounts: []
 
 beat:
   replicaCount: 1
