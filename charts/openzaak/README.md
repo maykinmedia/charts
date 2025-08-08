@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.9.1](https://img.shields.io/badge/Version-1.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.23.0](https://img.shields.io/badge/AppVersion-1.23.0-informational?style=flat-square)
+![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.23.0](https://img.shields.io/badge/AppVersion-1.23.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -166,12 +166,23 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.celery.resultExpires | int | `3600` |  |
 | settings.cmis.enabled | bool | `false` |  |
 | settings.cmis.mapperFile | string | `""` |  |
+| settings.database.db_conn_max_age | int | `60` |  |
+| settings.database.db_pool.db_pool_max_idle | int | `600` |  |
+| settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
+| settings.database.db_pool.db_pool_max_size | int | `4` |  |
+| settings.database.db_pool.db_pool_max_waiting | int | `0` |  |
+| settings.database.db_pool.db_pool_min_size | int | `4` |  |
+| settings.database.db_pool.db_pool_num_workers | int | `3` |  |
+| settings.database.db_pool.db_pool_reconnect_timeout | int | `300` |  |
+| settings.database.db_pool.db_pool_timeout | int | `30` |  |
+| settings.database.db_pool.enabled | bool | `false` |  |
 | settings.database.host | string | `"open-zaak-postgresql"` |  |
 | settings.database.name | string | `"openzaak"` |  |
 | settings.database.password | string | `"SUPER-SECRET"` |  |
 | settings.database.port | int | `5432` |  |
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `"postgres"` |  |
+| settings.dbDisableServerSideCursors | string | `"nil"` | Disable server-side cursors to prevent connection pooling issues Set to true when using transaction pooling to avoid cursor-related errors Warning: the effect of disabling server side cursors on performance has not been thoroughly tested yet Default: nil (uses Django default which is false) Possible values: true or false |
 | settings.debug | bool | `false` |  |
 | settings.disable2fa | bool | `false` | Disable two factor authentication |
 | settings.djangoSettingsModule | string | `"openzaak.conf.docker"` |  |
@@ -194,6 +205,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
+| settings.timeLeeway | string | `"nil"` | Time leeway in seconds for JWT validation timestamps Accounts for clock drift between server and client Default: nil (uses Django default, typically 0 seconds) Recommended: not to increase above 300 seconds |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
