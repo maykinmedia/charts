@@ -73,10 +73,7 @@ spec:
             {{- if .Values.tempjobdjango.logging.enabled | default false }}
             - name: media
               mountPath: /app/log
-              subPath: {{ .Values.persistence.tempjobMountSubpath  | default "openforms/temp_job" }}
-            {{- end }}
-            {{- if .Values.extraVolumeMounts }}
-            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+              subPath: {{ .Values.tempjobdjango.logging.tempjobMountSubpath  | default "openforms/temp-job/log-temp-job" }}
             {{- end }}
       volumes:
         - name: media
