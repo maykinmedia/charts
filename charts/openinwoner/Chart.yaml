@@ -9,17 +9,17 @@ icon: https://docs.openinwoner.nl/en/latest/_static/logo.png
 
 dependencies:
   - name: redis
-    version: 17.3.14
+    version: 22.0.1  #17.3.14 
     repository: https://charts.bitnami.com/bitnami
     tags:
       - redis
   - name: elasticsearch
-    version: 19.5.11
+    version: 22.1.5  #19.5.11
     repository: https://charts.bitnami.com/bitnami
     tags:
       - elasticsearch
   - name: common
-    version: 2.27.0
+    version: 2.31.4  #2.27.0
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
