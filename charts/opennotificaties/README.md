@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.9.3](https://img.shields.io/badge/Version-1.9.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+![Version: 1.9.5](https://img.shields.io/badge/Version-1.9.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -185,6 +185,7 @@ API voor het routeren van notificaties
 | settings.flower.basicAuth | string | `""` |  |
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
+| settings.logLevel | string | `"INFO"` | Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
 | settings.logNotifications | bool | `true` | When set to true notifications are saved to the database and accessible from the admin interface |
 | settings.maxRetries | string | `""` | The maximum number of automatic retries. After this amount of retries, Open Notificaties stops trying to deliver the message. Application default is 5. |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
