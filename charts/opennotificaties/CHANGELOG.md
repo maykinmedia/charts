@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.5 (2025-08-14)
+
+- Add configurable log level via LOG_LEVEL environment variable (default: INFO)
+
 ## 1.9.4 (2025-07-24)
 
 - Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
