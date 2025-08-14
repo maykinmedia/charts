@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.0 (2025-08-15)
+
+- Upgraded Bitnami Elasticsearch Helm chart to version 22.1.5
+- Pinned Elasticsearch image to 9.0.3-debian-12-r1
+- Upgraded Redis Helm chart to version 22.0.1
+- Pinned Redis image to official Redis 8.0.3
+- Upgraded Bitnami Common Helm chart to version 2.31.4
+
 ## 1.7.6 (2025-07-24)
 - Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
 - Adding the HPA for worker deployment, (it was missing so far)

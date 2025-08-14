@@ -512,6 +512,10 @@ nginx:
 ##################
 
 redis:
+  image:
+    registry: docker.io
+    repository: redis # official redis image
+    tag: "8.0.3"
   architecture: standalone
   auth:
     enabled: false
@@ -530,6 +534,8 @@ redis:
 ##########################
 
 elasticsearch:
+  image:
+    tag: 9.0.3-debian-12-r1
   master:
     masterOnly: true
     replicaCount: 1
