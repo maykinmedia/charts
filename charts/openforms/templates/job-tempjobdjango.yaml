@@ -54,7 +54,7 @@ spec:
             {{- end }} 
           # Django job commands ->  
           command: ["/bin/bash", "-c"]
-          args: ["{{ (default "echo no command provided" .Values.tempjobdjango.bashCommand) }}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | tee /app/log/tempjobdjango.log{{ end }}"]
+          args: ["{{ (default "echo no command provided" .Values.tempjobdjango.bashCommand) }}{{ if (default false .Values.tempjobdjango.logging.enabled ) }} 2>&1 | while IFS= read -r line; do echo \"$(date '+%Y-%m-%d %H:%M:%S') $line\"; done  | tee -a /app/log/tempjobdjango.log{{ end }}"]
           # End job commands 
           resources:
           {{- toYaml .Values.tempjobdjango.resources | nindent 12 }} 
