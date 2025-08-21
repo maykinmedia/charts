@@ -3,7 +3,7 @@
 ## 1.9.0 (2025-08-20)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`
-- Common Bitnami Helm subchart version `2.31.4`
+- Common Bitnami Helm subchart to version `2.31.4`
 ##### Changed
 - Redis: Migrated from Bitnami to official Redis container image (`8.0.3`) [pinned] 
 
