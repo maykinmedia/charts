@@ -562,3 +562,5 @@ elasticsearch:
     replicaCount: 1
   ingest:
     enabled: false
+  image:
+    tag: 9.0.3-debian-12-r1    

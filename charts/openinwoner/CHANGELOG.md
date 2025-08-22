@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.0 (2025-08-23)
+##### Upgraded 
+- Elasticsearch Bitnami Helm subchart to version `22.1.5`
+- Pinned Elasticsearch image to 9.0.3-debian-12-r1
+
 ## 1.8.0 (2025-08-22)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`
