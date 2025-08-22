@@ -14,7 +14,7 @@ dependencies:
     tags:
       - redis
   - name: elasticsearch
-    version: 22.1.5
+    version: 19.5.11
     repository: https://charts.bitnami.com/bitnami
     tags:
       - elasticsearch

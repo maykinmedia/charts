@@ -9,7 +9,7 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
-| https://charts.bitnami.com/bitnami | elasticsearch | 22.1.5 |
+| https://charts.bitnami.com/bitnami | elasticsearch | 19.5.11 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
 
 ## Values
@@ -49,7 +49,6 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | elasticsearch.data.resources.limits | object | `{}` |  |
 | elasticsearch.data.resources.requests.cpu | string | `"100m"` |  |
 | elasticsearch.data.resources.requests.memory | string | `"512Mi"` |  |
-| elasticsearch.image.tag | string | `"9.0.3-debian-12-r1"` |  |
 | elasticsearch.ingest.enabled | bool | `false` |  |
 | elasticsearch.master.masterOnly | bool | `true` |  |
 | elasticsearch.master.persistence.enabled | bool | `true` |  |
@@ -137,9 +136,7 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | redis.architecture | string | `"standalone"` |  |
 | redis.auth.enabled | bool | `false` |  |
-| redis.image.registry | string | `"docker.io"` |  |
-| redis.image.repository | string | `"redis"` |  |
-| redis.image.tag | string | `"8.0.3"` |  |
+| redis.image | object | `{"registry":"docker.io","repository":"redis","tag":"8.0"}` | Redis image configuration - Migration from Bitnami to official Redis image           |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
