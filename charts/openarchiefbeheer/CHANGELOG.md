@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.0 (2025-08-24)
+##### Upgraded
+- Redis Bitnami Helm subchart to version `22.0.1`
+- Common Bitnami Helm subchart to version `2.31.4`
+##### Changed
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`, pinned)
+
 ## 1.3.11 (2025-06-11)
 
 - Add extra volumes and volumemounts for nginx so it can be deployed with readOnlyRootFilesystem: true
