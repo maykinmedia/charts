@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.9.0 (2025-08-20)
+##### Upgraded 
+- Redis Bitnami Helm subchart to version `22.0.1`
+- Common Bitnami Helm subchart to version `2.31.4`
+##### Changed
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`, pinned) 
+
 ## 1.8.10 (2025-08-06)
 
 - Enhanced `extraVolumes` and `extraVolumeMounts` for Flower container configuration. Previously applied to all containers, now supports targeting Flower container. Allows more granular control over volume mounting.
