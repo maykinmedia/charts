@@ -614,4 +614,4 @@ redis:
   image:
     registry: docker.io  # Docker registry for Redis image
     repository: redis  # Official Redis image (migrated from Bitnami)
-    tag: "8.0.3"  # Official Redis image pinned version
+    tag: "8.0"  # Official Redis image pinned version
