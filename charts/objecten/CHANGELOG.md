@@ -5,7 +5,7 @@
 - Redis Bitnami Helm subchart to version `22.0.1`
 - Common Bitnami Helm subchart to version `2.31.4`
 ##### Changed
-- Redis: Migrated from Bitnami to official Redis container image (`8.0.3`) [pinned] 
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`, pinned)
 
 ## 2.8.3 (2025-08-05)
 - [maykinmedia/objects-api#643] Expose `result_expires` Celery setting via envvar
