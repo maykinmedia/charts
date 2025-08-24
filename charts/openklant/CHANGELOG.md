@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0 (2025-08-24)
+##### Upgraded 
+- Redis Bitnami Helm subchart to version `22.0.1`
+- Common Bitnami Helm subchart to version `2.31.4`
+##### Changed
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`, pinned)
+
 ## 1.7.1 (2025-07-23)
 - Added default values for the 8 `DB_POOL` env variables
 
