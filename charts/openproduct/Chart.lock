@@ -1,12 +1,12 @@
 dependencies:
 - name: redis
   repository: https://charts.bitnami.com/bitnami
-  version: 17.3.14
+  version: 22.0.1
 - name: maykin-utils-lib
   repository: https://maykinmedia.github.io/charts/
   version: 0.2.1
 - name: common
   repository: https://charts.bitnami.com/bitnami
-  version: 2.27.0
-digest: sha256:d578c1b4ca7c6dc8a66870cb55e2cb5367beadb74a1df23fac16a8dad4caa248
-generated: "2025-04-23T19:04:20.538417031+02:00"
+  version: 2.31.4
+digest: sha256:916c6abb6390d15c37874076a90f064b21475644f3c325dfc7539acf0c3314fe
+generated: "2025-08-24T18:03:44.838757744+02:00"
