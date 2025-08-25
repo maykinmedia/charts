@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.10.0 (2025-08-08)
+## 1.11.0 (2025-08-08)
 
 - [open-zaak/open-zaak#2132] Expose `result_expires` Celery setting via envvar
 - Add TIME_LEEWAY environment variable for JWT validation time tolerance (replaces deprecated JWT_LEEWAY) (default: nil)
