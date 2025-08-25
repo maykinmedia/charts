@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.10.0 (2025-08-26)
+- Pinned Elasticsearch image to 9.0.3-debian-12-r1
+
 ## 1.9.0 (2025-08-25)
 
 ### Upgraded
