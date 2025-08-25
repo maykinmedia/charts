@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0 (2025-08-22)
+##### Upgraded 
+- Redis Bitnami Helm subchart to version `22.0.1`
+- Common Bitnami Helm subchart to version `2.31.4`
+##### Changed
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`) [pinned] 
+
 ## 1.7.6 (2025-07-24)
 - Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
 - Adding the HPA for worker deployment, (it was missing so far)
