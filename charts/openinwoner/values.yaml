@@ -562,3 +562,5 @@ elasticsearch:
     replicaCount: 1
   ingest:
     enabled: false
+  image:
+    repository: bitnamilegacy/elasticsearch  # Temporary: legacy Bitnami repo.
