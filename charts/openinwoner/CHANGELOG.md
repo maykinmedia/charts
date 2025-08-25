@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.9.0 (2025-08-25)
+
+### Upgraded
+- Bitnami Elasticsearch Helm subchart to version `22.1.5`
+
+### Changed
+- Elasticsearch: (Temporary) migrated from the `bitnami` to the `bitnamilegacy` container image repository  
+
 ## 1.8.0 (2025-08-22)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`
