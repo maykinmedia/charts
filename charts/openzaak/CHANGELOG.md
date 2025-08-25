@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.11.0 (2025-08-23)
+## 1.10.0 (2025-08-23)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`
 - Common Bitnami Helm subchart to version `2.31.4`
