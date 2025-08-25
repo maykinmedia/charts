@@ -7,7 +7,6 @@
 
 ### Changed
 - Elasticsearch: (Temporary) migrated from the `bitnami` to the `bitnamilegacy` container image repository  
-- Pinned Elasticsearch image to `9.0.3-debian-12-r1`
 
 ## 1.8.0 (2025-08-22)
 ##### Upgraded 
