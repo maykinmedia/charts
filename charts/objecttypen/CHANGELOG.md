@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.0 (2025-08-24)
+##### Upgraded 
+- Redis Bitnami Helm subchart to version `22.0.1`
+- Common Bitnami Helm subchart to version `2.31.4`
+##### Changed
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`, pinned)
+
 ## 1.3.3 (2025-04-25)
 - [#193] Fix missing dependency on bitnami common
 
