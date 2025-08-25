@@ -393,3 +393,8 @@ redis:
       requests:
         cpu: 250m
         memory: 256Mi
+  # -- Redis image configuration - Migration from Bitnami to official Redis image        
+  image:
+    registry: docker.io  # Docker registry for Redis image
+    repository: redis  # Official Redis image (migrated from Bitnami)
+    tag: "8.0"  # Official Redis image pinned version
