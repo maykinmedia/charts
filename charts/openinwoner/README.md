@@ -49,6 +49,7 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | elasticsearch.data.resources.limits | object | `{}` |  |
 | elasticsearch.data.resources.requests.cpu | string | `"100m"` |  |
 | elasticsearch.data.resources.requests.memory | string | `"512Mi"` |  |
+| elasticsearch.image.repository | string | `"bitnamilegacy/elasticsearch"` |  |
 | elasticsearch.image.tag | string | `"9.0.3-debian-12-r1"` |  |
 | elasticsearch.ingest.enabled | bool | `false` |  |
 | elasticsearch.master.masterOnly | bool | `true` |  |

@@ -563,4 +563,5 @@ elasticsearch:
   ingest:
     enabled: false
   image:
-    tag: 9.0.3-debian-12-r1    
+    repository: bitnamilegacy/elasticsearch  # Temporary: legacy Bitnami repo.
+    tag: 9.0.3-debian-12-r1  # Legacy Elasticsearch image pinned version
