@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -9,7 +9,7 @@ API voor het routeren van notificaties
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
-| https://charts.bitnami.com/bitnami | rabbitmq | 11.7.1 |
+| https://charts.bitnami.com/bitnami | rabbitmq | 16.0.12 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
 
 ## Values
@@ -107,9 +107,12 @@ API voor het routeren van notificaties
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | rabbitmq.auth.erlangCookie | string | `""` |  |
-| rabbitmq.auth.password | string | `""` |  |
+| rabbitmq.auth.password | string | `"dummy"` |  |
 | rabbitmq.auth.username | string | `"user"` |  |
 | rabbitmq.clustering.enabled | bool | `false` |  |
+| rabbitmq.image.registry | string | `"docker.io"` |  |
+| rabbitmq.image.repository | string | `"bitnamilegacy/rabbitmq"` |  |
+| rabbitmq.image.tag | string | `"4.1.3-debian-12-r0"` |  |
 | rabbitmq.persistence.enabled | bool | `false` |  |
 | rabbitmq.persistence.existingClaim | string | `nil` |  |
 | rabbitmq.persistence.size | string | `"1Gi"` |  |
