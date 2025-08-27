@@ -5,7 +5,7 @@
 ##### Upgraded
 - RabbitMQ Bitnami Helm subchart: Upgraded from version `11.7.1` to `16.0.12`
   * RabbitMQ Application: Upgraded from version `3.11.8` to `4.1.3`
- - Added "dummy" value for rabbitmq.auth.password: To prevent upgrade errors
+- Added "dummy" value for rabbitmq.auth.password: To prevent upgrade errors. ( NOTE: If you remove existingPasswordSecret configuration and want to use direct passwords change the password from "dummy" to your actual RabbitMQ password. )
 ##### Changed
 - RabbitMQ Container Image: Pinned to `4.1.3-debian-12-r0` (previously default image `3.11.8-debian-11-r0`)
 - RabbitMQ: (Temporary) migrated from the bitnami to the bitnamilegacy container image repository
