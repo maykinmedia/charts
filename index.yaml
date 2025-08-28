@@ -4867,6 +4867,27 @@ entries:
   openzaak:
   - apiVersion: v2
     appVersion: 1.21.2
+    created: "2025-08-28T17:03:37.956567304Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: 2475b46d39be63318c896837c35de8c13da278a736495ec926197cb93de2cd53
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.10.1/openzaak-1.10.1.tgz
+    version: 1.10.1
+  - apiVersion: v2
+    appVersion: 1.21.2
     created: "2025-08-25T15:52:50.09709826Z"
     dependencies:
     - name: redis
@@ -5648,4 +5669,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-08-28T15:24:40.061026762Z"
+generated: "2025-08-28T17:03:37.957200594Z"
