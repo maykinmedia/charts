@@ -471,20 +471,7 @@ nginx:
     # -- Default client_max_body_size for all endpoints (unless overridden)
     # Examples: "10M", "100M", "1G", "4G", "10G"
     # This is the fallback value when no endpoint-specific override is set    
-    clientMaxBodySize: "10M"
-    # -- Dynamic endpoint-specific configurations
-    # This feature allows you to set different file upload limits for different API endpoints
-    # without modifying the nginx template. Simply add, remove, or modify endpoints here.    
-    # LOCATION MATCHING TYPES:
-    # - "prefix" (default): Matches /path, /path/, /path/anything
-    # - "exact": Matches only /path exactly
-    # - "regex": Matches using regex patterns like /path/.*\.pdf$
-    endpoints:
-      - path: "/documenten/api/v1/enkelvoudiginformatieobjecten"
-        clientMaxBodySize: "4G"
-      - path: "/documenten/api/v1/bestandsdelen/*"
-        matchType: "regex"  # exact, regex, or empty for prefix
-        clientMaxBodySize: "4G"      
+    clientMaxBodySize: "10M"   
 
 flower:
   enabled: false

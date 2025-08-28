@@ -65,22 +65,15 @@ data:
       location / {
           include conf.d/proxy;
 
-          # Dynamic nested endpoint configurations (generated from values.yaml)
-          {{- range .Values.nginx.config.endpoints }}
-          {{- if .clientMaxBodySize }}
-          {{- if eq .matchType "regex" }}
-          location ~ {{ .path }} {
-          {{- else if eq .matchType "exact" }}
-          location = {{ .path }} {
-          {{- else }}
-          location {{ .path }} {
-          {{- end }}
-              client_max_body_size {{ .clientMaxBodySize }};
+          location /documenten/api/v1/enkelvoudiginformatieobjecten {
+              client_max_body_size 4G;
               include conf.d/proxy;
           }
-          {{- end }}
-          {{- end }}
 
+          location ~ /documenten/api/v1/bestandsdelen/* {
+            client_max_body_size 4G;
+            include conf.d/proxy;
+          }
       }
 
       location /_health/ {
