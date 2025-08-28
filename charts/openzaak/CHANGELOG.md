@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.10.1 (2025-08-28)
+- **Nginx** configmap extra variables added. A general configuration `config.clientMaxBodySize` (defaults to 4G)
+- Hard coded nginx config values were made to be variables: `proxyConnectTimeoutSeconds` and `proxyReadTimeoutSeconds` (both default to 300 sec).
+- Removing individual endpoints for nginx config locations, namely `/documenten/api/v1/enkelvoudiginformatieobjecten` and `/documenten/api/v1/bestandsdelen`.
+
 ## 1.10.0 (2025-08-23)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`

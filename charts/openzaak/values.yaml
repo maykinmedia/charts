@@ -461,6 +461,17 @@ nginx:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
+  config:
+    # -- Proxy connection timeout in seconds
+    # How long nginx waits to establish connection with backend  
+    proxyConnectTimeoutSeconds: 300
+    # -- Proxy read timeout in seconds  
+    # How long nginx waits for backend response    
+    proxyReadTimeoutSeconds: 300
+    # -- Default client_max_body_size for all endpoints (unless overridden)
+    # Examples: "10M", "100M", "1G", "4G", "10G"
+    # This is the fallback value when no endpoint-specific override is set    
+    clientMaxBodySize: "4G"   
 
 flower:
   enabled: false
