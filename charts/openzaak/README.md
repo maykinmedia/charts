@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.2](https://img.shields.io/badge/AppVersion-1.21.2-informational?style=flat-square)
+![Version: 1.10.1](https://img.shields.io/badge/Version-1.10.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.2](https://img.shields.io/badge/AppVersion-1.21.2-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -93,6 +93,10 @@ Productiewaardige API's voor Zaakgericht Werken
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
+| nginx.config.clientMaxBodySize | string | `"10M"` | Default client_max_body_size for all endpoints (unless overridden) Examples: "10M", "100M", "1G", "4G", "10G" This is the fallback value when no endpoint-specific override is set     |
+| nginx.config.endpoints | list | `[{"clientMaxBodySize":"4G","path":"/documenten/api/v1/enkelvoudiginformatieobjecten"},{"clientMaxBodySize":"4G","matchType":"regex","path":"/documenten/api/v1/bestandsdelen/*"}]` | Dynamic endpoint-specific configurations This feature allows you to set different file upload limits for different API endpoints without modifying the nginx template. Simply add, remove, or modify endpoints here.     LOCATION MATCHING TYPES: - "prefix" (default): Matches /path, /path/, /path/anything - "exact": Matches only /path exactly - "regex": Matches using regex patterns like /path/.*\.pdf$ |
+| nginx.config.proxyConnectTimeoutSeconds | int | `300` | Proxy connection timeout in seconds How long nginx waits to establish connection with backend   |
+| nginx.config.proxyReadTimeoutSeconds | int | `300` | Proxy read timeout in seconds   How long nginx waits for backend response     |
 | nginx.existingConfigmap | string | `nil` | mount existing nginx vhost config |
 | nginx.extraVolumeMounts | list | `[]` |  |
 | nginx.extraVolumes | list | `[]` |  |

@@ -3,7 +3,7 @@ name: openzaak
 description: Productiewaardige API's voor Zaakgericht Werken
 
 type: application
-version: 1.10.0
+version: 1.10.1
 appVersion: 1.21.2
 
 dependencies:
