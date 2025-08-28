@@ -4,9 +4,9 @@ dependencies:
   version: 22.0.1
 - name: rabbitmq
   repository: https://charts.bitnami.com/bitnami
-  version: 11.7.1
+  version: 16.0.12
 - name: common
   repository: https://charts.bitnami.com/bitnami
   version: 2.31.4
-digest: sha256:bed929ee573b25f356efd73b72802c35ee60d02059bebb86130dd1e3e13a6f3f
-generated: "2025-08-24T20:49:30.840980396+02:00"
+digest: sha256:53c06f5bf6d354174f1d85b1150af6c9465af43996c55534741fc3a6b731be3f
+generated: "2025-08-26T08:49:58.062942306+02:00"
