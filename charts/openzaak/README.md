@@ -93,7 +93,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
-| nginx.config.clientMaxBodySize | string | `"10M"` | Default client_max_body_size for all endpoints (unless overridden) Examples: "10M", "100M", "1G", "4G", "10G" This is the fallback value when no endpoint-specific override is set     |
+| nginx.config.clientMaxBodySize | string | `"4G"` | Default client_max_body_size for all endpoints (unless overridden) Examples: "10M", "100M", "1G", "4G", "10G" This is the fallback value when no endpoint-specific override is set     |
 | nginx.config.proxyConnectTimeoutSeconds | int | `300` | Proxy connection timeout in seconds How long nginx waits to establish connection with backend   |
 | nginx.config.proxyReadTimeoutSeconds | int | `300` | Proxy read timeout in seconds   How long nginx waits for backend response     |
 | nginx.existingConfigmap | string | `nil` | mount existing nginx vhost config |

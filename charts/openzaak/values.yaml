@@ -471,7 +471,7 @@ nginx:
     # -- Default client_max_body_size for all endpoints (unless overridden)
     # Examples: "10M", "100M", "1G", "4G", "10G"
     # This is the fallback value when no endpoint-specific override is set    
-    clientMaxBodySize: "10M"   
+    clientMaxBodySize: "4G"   
 
 flower:
   enabled: false
