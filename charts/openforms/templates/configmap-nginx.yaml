@@ -96,6 +96,14 @@ data:
         include conf.d/proxy;
       }
 
+      {{- if .Values.nginx.staticFileServing.enabled }}
+      # Serve collected static files directly from Nginx
+      location /static/ {
+          expires max;
+          alias {{ .Values.nginx.staticFileServing.staticRootVolume | default "/srv/static/" }};
+      }
+      {{- end }}
+
       # Metadata endpoints - rate limit them to prevent abuse, as they generate XML
       # on the fly.
       location /discovery/ {

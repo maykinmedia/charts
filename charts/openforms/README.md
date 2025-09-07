@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.9.0](https://img.shields.io/badge/Version-1.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
+![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -111,6 +111,8 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | nginx.service.annotations | object | `{}` |  |
 | nginx.service.port | int | `80` |  |
 | nginx.service.type | string | `"ClusterIP"` |  |
+| nginx.staticFileServing.enabled | bool | `false` | Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0) |
+| nginx.staticFileServing.staticRootVolume | string | `"/srv/static"` | Path where static files are mounted in the nginx container |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
