@@ -9,7 +9,7 @@ data:
   ENVIRONMENT: {{ .Values.settings.environment | default (include "openinwoner.fullname" .) }}
   ALLOWED_HOSTS: "{{ include "openinwoner.fullname" . }},{{ include "openinwoner.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
   {{- if .Values.tags.elasticsearch }}
-  ES_HOST: {{ include "elasticsearch.coordinating.servicename" .Subcharts.elasticsearch | toString | quote }}
+  ES_HOST: "http://{{ include "elasticsearch.coordinating.servicename" .Subcharts.elasticsearch }}:9200"
   {{ else }}
   ES_HOST: {{ .Values.settings.elasticSearchHost | toString | quote }}
   {{- end }}

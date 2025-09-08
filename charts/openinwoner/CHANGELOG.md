@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.10.1 (2025-09-08)
+- Fix Elasticsearch host configuration syntax for env variable `ES_HOST` by adding missing `http://` protocol and `:9200` port 
+
 ## 1.10.0 (2025-08-26)
 - Pinned Elasticsearch image to 9.0.3-debian-12-r1
 
