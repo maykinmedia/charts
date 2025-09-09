@@ -595,5 +595,7 @@ rabbitmq:
   # schedules tasks that can be further in the future. This timeout prevents errors when tasks
   # are scheduled more than 30 minutes ahead. Set to 24 hours (86400000ms) to ensure compatibility.
   # You can customize these settings by modifying the values below
-  configuration: |-
+  # configuration: |-
+  #   consumer_timeout = 86400000
+  extraConfiguration: |-
     consumer_timeout = 86400000
