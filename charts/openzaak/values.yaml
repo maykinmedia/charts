@@ -313,20 +313,25 @@ settings:
     password: SUPER-SECRET
     name: openzaak
     sslmode: prefer
-    db_conn_max_age: 60
+    dbConnMaxAge: 60
     # @section Django DB Pool Configuration
     # Django database connection pool settings.
     # These are the default values used by Django and the application; change them if your app requires more connections or different timeouts.
-    db_pool:
+    dbPool:
       enabled: false
-      db_pool_min_size: 4 
-      db_pool_max_size: 4
-      db_pool_timeout: 30
-      db_pool_max_waiting: 0
-      db_pool_max_lifetime: 3600
-      db_pool_max_idle: 600
-      db_pool_reconnect_timeout: 300
-      db_pool_num_workers: 3    
+      dbPoolMinSize: 4
+      dbPoolMaxSize: 4
+      dbPoolTimeout: 30
+      dbPoolMaxWaiting: 0
+      dbPoolMaxLifetime: 3600
+      dbPoolMaxIdle: 600
+      dbPoolReconnectTimeout: 300
+      dbPoolNumWorkers: 3 
+    # -- Disable server-side cursors to prevent connection pooling issues
+    # Set to true when using transaction pooling to avoid cursor-related errors
+    # Warning: the effect of disabling server side cursors on performance has not been thoroughly tested yet
+    # Default: false ; Valid values: true, false
+    dbDisableServerSideCursors: false
 
   # -- use 2 if enabling ingress
   numProxies: 1
@@ -395,11 +400,6 @@ settings:
   zaakIdentificatieGenerator: ""
   # -- Defines the primary domain where the application is hosted. Defaults to ""
   siteDomain: ""
-  # -- Disable server-side cursors to prevent connection pooling issues
-  # Set to true when using transaction pooling to avoid cursor-related errors
-  # Warning: the effect of disabling server side cursors on performance has not been thoroughly tested yet
-  # Default: false ; Valid values: true, false
-  dbDisableServerSideCursors: false
   # -- Time leeway in seconds for JWT validation timestamps
   # Accounts for clock drift between server and client
   # Default: nil (uses Django default, typically 0 seconds)

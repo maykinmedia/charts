@@ -2,10 +2,11 @@
 
 ## 1.11.0 (2025-08-08)
 
-- [open-zaak/open-zaak#2132] Expose `result_expires` Celery setting via envvar
+- [open-zaak/open-zaak#2132] Expose `result_expires` Celery setting via environment variable `CELERY_RESULT_EXPIRES`.
 - Add TIME_LEEWAY environment variable for JWT validation time tolerance (replaces deprecated JWT_LEEWAY) (default: nil)
 - Add DB_DISABLE_SERVER_SIDE_CURSORS environment variable to prevent cursor-related errors (default: false)
-- Add 8 env variables (`db_pool_min_size`, `db_pool_max_size`, `db_pool_timeout`, `db_pool_max_waiting`, `db_pool_max_lifetime`, `db_pool_max_idle`, `db_pool_reconnect_timeout`, `db_pool_num_workers`) for DB POOL related to postgres performance. In addition `db_conn_max_age` variable created.
+- Add 8 environment variables (`DB_POOL_MIN_SIZE`, `DB_POOL_MAX_SIZE`, `DB_POOL_TIMEOUT`, `DB_POOL_MAX_WAITING`, `DB_POOL_MAX_LIFETIME`, `DB_POOL_MAX_IDLE`, `DB_POOL_RECONNECT_TIMEOUT`, `DB_POOL_NUM_WORKERS`) for database connection pooling settings. 
+- Added `DB_CONN_MAX_AGE` environment variable.
 
 ## 1.9.0 (2025-07-09)
 

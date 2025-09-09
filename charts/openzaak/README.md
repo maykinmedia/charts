@@ -166,23 +166,23 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.celery.resultExpires | int | `3600` |  |
 | settings.cmis.enabled | bool | `false` |  |
 | settings.cmis.mapperFile | string | `""` |  |
-| settings.database.db_conn_max_age | int | `60` |  |
-| settings.database.db_pool.db_pool_max_idle | int | `600` |  |
-| settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
-| settings.database.db_pool.db_pool_max_size | int | `4` |  |
-| settings.database.db_pool.db_pool_max_waiting | int | `0` |  |
-| settings.database.db_pool.db_pool_min_size | int | `4` |  |
-| settings.database.db_pool.db_pool_num_workers | int | `3` |  |
-| settings.database.db_pool.db_pool_reconnect_timeout | int | `300` |  |
-| settings.database.db_pool.db_pool_timeout | int | `30` |  |
-| settings.database.db_pool.enabled | bool | `false` |  |
+| settings.database.dbConnMaxAge | int | `60` |  |
+| settings.database.dbDisableServerSideCursors | bool | `false` | Disable server-side cursors to prevent connection pooling issues Set to true when using transaction pooling to avoid cursor-related errors Warning: the effect of disabling server side cursors on performance has not been thoroughly tested yet Default: false ; Valid values: true, false |
+| settings.database.dbPool.dbPoolMaxIdle | int | `600` |  |
+| settings.database.dbPool.dbPoolMaxLifetime | int | `3600` |  |
+| settings.database.dbPool.dbPoolMaxSize | int | `4` |  |
+| settings.database.dbPool.dbPoolMaxWaiting | int | `0` |  |
+| settings.database.dbPool.dbPoolMinSize | int | `4` |  |
+| settings.database.dbPool.dbPoolNumWorkers | int | `3` |  |
+| settings.database.dbPool.dbPoolReconnectTimeout | int | `300` |  |
+| settings.database.dbPool.dbPoolTimeout | int | `30` |  |
+| settings.database.dbPool.enabled | bool | `false` |  |
 | settings.database.host | string | `"open-zaak-postgresql"` |  |
 | settings.database.name | string | `"openzaak"` |  |
 | settings.database.password | string | `"SUPER-SECRET"` |  |
 | settings.database.port | int | `5432` |  |
 | settings.database.sslmode | string | `"prefer"` |  |
 | settings.database.username | string | `"postgres"` |  |
-| settings.dbDisableServerSideCursors | bool | `false` | Disable server-side cursors to prevent connection pooling issues Set to true when using transaction pooling to avoid cursor-related errors Warning: the effect of disabling server side cursors on performance has not been thoroughly tested yet Default: false ; Valid values: true, false |
 | settings.debug | bool | `false` |  |
 | settings.disable2fa | bool | `false` | Disable two factor authentication |
 | settings.djangoSettingsModule | string | `"openzaak.conf.docker"` |  |
