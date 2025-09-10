@@ -3,25 +3,40 @@
 
 ## 1.11.0 (2025-09-10)
 
- **BREAKING**: Updated to new version `1.34` of openinwoner using new version of setup configuartion library with syntax changes:
-  - Removed `envsubst` functionality
-  - **BREAKING**: Secret substitution syntax `${keycloak_client_secret}` is no longer supported
-  - Updated secret configuration to use new `value_from.env` format:
-    ```yaml
-    # Old syntax (NO LONGER SUPPORTED):
-    oidc_rp_client_secret: ${keycloak_client_secret}
+**Warning**
 
-    # Direct value syntax (SUPPORTED but NOT RECOMMENDED):
-    oidc_rp_client_secret: keycloak_client_secret
-    
-    # New syntax (REQUIRED):
-    oidc_rp_client_secret:
-      value_from:
-        env: keycloak_client_secret
-    ```
-  - **Migration required**:  All configurations using the old `${variable}` syntax must be updated. The direct value syntax is supported but not recommended as it bypasses proper environment variable handling.
-- Improved configuration job logic for secret substitution:
-- Updated values.yaml documentation for clarity on configuration options and expected behavior.
+⚠️ This release contains breaking changes.
+
+The application version was updated to `1.34`. This version of the application uses version `0.9.0` of the `django-setup-configuration` library.
+
+This version of `django-setup-configuration` removes the need to use `envsubst` to inject secrets into the yaml file used to 
+configure the application. It supports extracting secrets directly from environment variables.
+
+---
+
+**Upgrade procedure**
+
+In the `configuration.data` value, any value using the `envsubst` syntax `${...}`, for example:
+
+```yaml
+oidc_rp_client_secret: ${keycloak_client_secret}
+```
+
+should be changed to:
+
+```yaml
+oidc_rp_client_secret:
+  value_from:
+    env: KEYCLOAK_CLIENT_SECRET
+```
+
+Note: It is still possible to specify values directly. 
+
+**Changes**
+
+- Updated application to version 1.34.
+- Updated job-config to no longer perform the `envsubst` command.
+- Updated the yaml configuration example to reflect the use of environment variables.
 
 
 ## 1.10.0 (2025-08-26)
