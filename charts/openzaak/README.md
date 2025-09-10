@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.10.1](https://img.shields.io/badge/Version-1.10.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.2](https://img.shields.io/badge/AppVersion-1.21.2-informational?style=flat-square)
+![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.23.0](https://img.shields.io/badge/AppVersion-1.23.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -167,8 +167,20 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
+| settings.celery.resultExpires | int | `3600` |  |
 | settings.cmis.enabled | bool | `false` |  |
 | settings.cmis.mapperFile | string | `""` |  |
+| settings.database.dbConnMaxAge | int | `60` |  |
+| settings.database.dbDisableServerSideCursors | bool | `false` | Disable server-side cursors to prevent connection pooling issues Set to true when using transaction pooling to avoid cursor-related errors Warning: the effect of disabling server side cursors on performance has not been thoroughly tested yet Default: false ; Valid values: true, false |
+| settings.database.dbPool.dbPoolMaxIdle | int | `600` |  |
+| settings.database.dbPool.dbPoolMaxLifetime | int | `3600` |  |
+| settings.database.dbPool.dbPoolMaxSize | int | `4` |  |
+| settings.database.dbPool.dbPoolMaxWaiting | int | `0` |  |
+| settings.database.dbPool.dbPoolMinSize | int | `4` |  |
+| settings.database.dbPool.dbPoolNumWorkers | int | `3` |  |
+| settings.database.dbPool.dbPoolReconnectTimeout | int | `300` |  |
+| settings.database.dbPool.dbPoolTimeout | int | `30` |  |
+| settings.database.dbPool.enabled | bool | `false` |  |
 | settings.database.host | string | `"open-zaak-postgresql"` |  |
 | settings.database.name | string | `"openzaak"` |  |
 | settings.database.password | string | `"SUPER-SECRET"` |  |
@@ -197,6 +209,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
+| settings.timeLeeway | string | `"nil"` | Time leeway in seconds for JWT validation timestamps Accounts for clock drift between server and client Default: nil (uses Django default, typically 0 seconds) Recommended: not to increase above 300 seconds |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |

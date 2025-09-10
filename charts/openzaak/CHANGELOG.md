@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.11.0 (2025-08-08)
+
+- [open-zaak/open-zaak#2132] Expose `result_expires` Celery setting via environment variable `CELERY_RESULT_EXPIRES`.
+- Add TIME_LEEWAY environment variable for JWT validation time tolerance (replaces deprecated JWT_LEEWAY) (default: nil)
+- Add DB_DISABLE_SERVER_SIDE_CURSORS environment variable to prevent cursor-related errors (default: false)
+- Add 8 environment variables (`DB_POOL_MIN_SIZE`, `DB_POOL_MAX_SIZE`, `DB_POOL_TIMEOUT`, `DB_POOL_MAX_WAITING`, `DB_POOL_MAX_LIFETIME`, `DB_POOL_MAX_IDLE`, `DB_POOL_RECONNECT_TIMEOUT`, `DB_POOL_NUM_WORKERS`) for database connection pooling settings. 
+- Added `DB_CONN_MAX_AGE` environment variable.
+
 ## 1.10.1 (2025-08-28)
 - **Nginx** configmap extra variables added. A general configuration `config.clientMaxBodySize` (defaults to 4G)
 - Hard coded nginx config values were made to be variables: `proxyConnectTimeoutSeconds` and `proxyReadTimeoutSeconds` (both default to 300 sec).
