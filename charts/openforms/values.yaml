@@ -458,6 +458,11 @@ settings:
     maxRequests: ""
     harakiri: ""
 
+  # -- Cross-Origin Opener Policy (COOP) header value to control how the browser handles cross-origin windows
+  # -- Possible values: "same-origin", "same-origin-allow-popups", "unsafe-none", "noopener-allow-popups"
+  # -- Recommended: "same-origin" for production security, "unsafe-none" for development/testing
+  crossOriginOpenerPolicy: ""
+
 worker:
   replicaCount: 2
   concurrency: 4
@@ -558,6 +563,27 @@ flower:
     failureThreshold: 6
     successThreshold: 1
   resources: {}
+  # Additional k8s volumes to be created
+  # Use this to mount ConfigMaps, Secrets, or PersistentVolumeClaims
+  # e.g:
+  # extraVolumes:
+  #   - name: config-volume
+  #     configMap:
+  #       name: my-config
+  #   - name: logs-volume
+  #     persistentVolumeClaim:
+  #       claimName: application-logs-pvc  
+  extraVolumes: []
+  # Mount points for the additional volumes inside the container
+  # Each mount must correspond to a volume defined in extraVolumes
+  # e.g:
+  # extraVolumeMounts:
+  #   - name: config-volume
+  #     mountPath: /etc/config
+  #   - name: logs-volume
+  #     mountPath: /var/log/app
+  #     readOnly: false  
+  extraVolumeMounts: []
 
 beat:
   replicaCount: 1
@@ -584,3 +610,8 @@ redis:
       requests:
         cpu: 250m
         memory: 256Mi
+  # -- Redis image configuration - Migration from Bitnami to official Redis image        
+  image:
+    registry: docker.io  # Docker registry for Redis image
+    repository: redis  # Official Redis image (migrated from Bitnami)
+    tag: "8.0"  # Official Redis image pinned version

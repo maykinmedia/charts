@@ -19,6 +19,9 @@ data:
   CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
+  {{- if .Values.settings.logLevel }}
+  LOG_LEVEL: {{ .Values.settings.logLevel | toString | quote }}
+  {{- end }}
   CELERY_WORKER_CONCURRENCY: {{ .Values.worker.concurrency | toString | quote }}
   CELERY_RESULT_EXPIRES: {{ .Values.settings.celery.resultExpires | toString | quote }}
   {{ if .Values.worker.maxWorkerLivenessDelta }}

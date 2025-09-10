@@ -334,6 +334,8 @@ settings:
 
   # -- Defines the primary domain where the application is hosted. Defaults to ""
   siteDomain: ""
+  # -- Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG
+  logLevel: "INFO"
 
   email:
     host: localhost
@@ -363,6 +365,8 @@ settings:
     # resultBackend: redis://openforms-redis-master:6379/1
     brokerUrl: ""
     resultBackend: ""
+    # -- Sets how long the results of tasks will be stored in Redis (in seconds); can be set to a lower value
+    resultExpires: 3600
     logLevel: debug
 
   notificationsDisabled: false
@@ -445,3 +449,8 @@ redis:
       requests:
         cpu: 250m
         memory: 256Mi
+  # -- Redis image configuration - Migration from Bitnami to official Redis image        
+  image:
+    registry: docker.io  # Docker registry for Redis image
+    repository: redis  # Official Redis image (migrated from Bitnami)
+    tag: "8.0"  # Official Redis image pinned version

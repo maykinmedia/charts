@@ -8,12 +8,12 @@ appVersion: 1.23.0
 
 dependencies:
   - name: redis
-    version: 17.3.14
+    version: 22.0.1
     repository: https://charts.bitnami.com/bitnami
     tags:
       - redis
   - name: common
-    version: 2.27.0
+    version: 2.31.4
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common

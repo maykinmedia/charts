@@ -8,6 +8,18 @@
 - Add 8 environment variables (`DB_POOL_MIN_SIZE`, `DB_POOL_MAX_SIZE`, `DB_POOL_TIMEOUT`, `DB_POOL_MAX_WAITING`, `DB_POOL_MAX_LIFETIME`, `DB_POOL_MAX_IDLE`, `DB_POOL_RECONNECT_TIMEOUT`, `DB_POOL_NUM_WORKERS`) for database connection pooling settings. 
 - Added `DB_CONN_MAX_AGE` environment variable.
 
+## 1.10.1 (2025-08-28)
+- **Nginx** configmap extra variables added. A general configuration `config.clientMaxBodySize` (defaults to 4G)
+- Hard coded nginx config values were made to be variables: `proxyConnectTimeoutSeconds` and `proxyReadTimeoutSeconds` (both default to 300 sec).
+- Removing individual endpoints for nginx config locations, namely `/documenten/api/v1/enkelvoudiginformatieobjecten` and `/documenten/api/v1/bestandsdelen`.
+
+## 1.10.0 (2025-08-23)
+##### Upgraded 
+- Redis Bitnami Helm subchart to version `22.0.1`
+- Common Bitnami Helm subchart to version `2.31.4`
+##### Changed
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`) [pinned] 
+
 ## 1.9.0 (2025-07-09)
 
 - Upgrade the chart version with respect to Openzaak version 1.21.2 

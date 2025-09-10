@@ -1,6 +1,6 @@
 # openproduct
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
 
@@ -8,8 +8,8 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.27.0 |
-| https://charts.bitnami.com/bitnami | redis | 17.3.14 |
+| https://charts.bitnami.com/bitnami | common | 2.31.4 |
+| https://charts.bitnami.com/bitnami | redis | 22.0.1 |
 | https://maykinmedia.github.io/charts/ | maykin-utils-lib | 0.2.1 |
 
 ## Values
@@ -106,6 +106,7 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | redis.architecture | string | `"standalone"` |  |
 | redis.auth.enabled | bool | `false` |  |
+| redis.image | object | `{"registry":"docker.io","repository":"redis","tag":"8.0"}` | Redis image configuration - Migration from Bitnami to official Redis image         |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |

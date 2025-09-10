@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.10.0 (2025-08-26)
+- Pinned Elasticsearch image to 9.0.3-debian-12-r1
+
+## 1.9.0 (2025-08-25)
+
+### Upgraded
+- Bitnami Elasticsearch Helm subchart to version `22.1.5`
+
+### Changed
+- Elasticsearch: (Temporary) migrated from the `bitnami` to the `bitnamilegacy` container image repository  
+
+## 1.8.0 (2025-08-22)
+##### Upgraded 
+- Redis Bitnami Helm subchart to version `22.0.1`
+- Common Bitnami Helm subchart to version `2.31.4`
+##### Changed
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`) [pinned] 
+
+## 1.7.6 (2025-07-24)
+- Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
+- Adding the HPA for worker deployment, (it was missing so far)
+
 ## 1.7.5 (2025-07-11)
 - Adding/setting extra variables `proxyConnectTimeoutSeconds` and `proxyReadTimeoutSeconds` for nginx in configmap-nginx ; default to 300
 - Adding new optional secret `SECRET_KEY_FALLBACK` for rotating a secret key

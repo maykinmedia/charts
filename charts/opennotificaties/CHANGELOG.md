@@ -1,5 +1,30 @@
 # Changelog
 
+
+## 1.11.0 (2025-08-26)
+##### Upgraded
+- RabbitMQ Bitnami Helm subchart: Upgraded from version `11.7.1` to `16.0.12`
+  * RabbitMQ Application: Upgraded from version `3.11.8` to `4.1.3`
+- Added "dummy" value for rabbitmq.auth.password: To prevent upgrade errors. ( NOTE: If you remove existingPasswordSecret configuration and want to use direct passwords change the password from "dummy" to your actual RabbitMQ password. )
+##### Changed
+- RabbitMQ Container Image: Pinned to `4.1.3-debian-12-r0` (previously default image `3.11.8-debian-11-r0`)
+- RabbitMQ: (Temporary) migrated from the bitnami to the bitnamilegacy container image repository
+
+## 1.10.0 (2025-08-24)
+##### Upgraded
+- Redis Bitnami Helm subchart to version `22.0.1`
+- Common Bitnami Helm subchart to version `2.31.4`
+##### Changed
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`, pinned)
+
+## 1.9.5 (2025-08-14)
+
+- Add configurable log level via LOG_LEVEL environment variable (default: INFO)
+
+## 1.9.4 (2025-07-24)
+
+- Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
+
 ## 1.9.3 (2025-07-18)
 
 - Added default values for the 8 `DB_POOL` env variables

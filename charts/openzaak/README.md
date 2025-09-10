@@ -8,8 +8,8 @@ Productiewaardige API's voor Zaakgericht Werken
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.27.0 |
-| https://charts.bitnami.com/bitnami | redis | 17.3.14 |
+| https://charts.bitnami.com/bitnami | common | 2.31.4 |
+| https://charts.bitnami.com/bitnami | redis | 22.0.1 |
 
 ## Values
 
@@ -93,6 +93,9 @@ Productiewaardige API's voor Zaakgericht Werken
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
+| nginx.config.clientMaxBodySize | string | `"4G"` | Default client_max_body_size for all endpoints (unless overridden) Examples: "10M", "100M", "1G", "4G", "10G" This is the fallback value when no endpoint-specific override is set     |
+| nginx.config.proxyConnectTimeoutSeconds | int | `300` | Proxy connection timeout in seconds How long nginx waits to establish connection with backend   |
+| nginx.config.proxyReadTimeoutSeconds | int | `300` | Proxy read timeout in seconds   How long nginx waits for backend response     |
 | nginx.existingConfigmap | string | `nil` | mount existing nginx vhost config |
 | nginx.extraVolumeMounts | list | `[]` |  |
 | nginx.extraVolumes | list | `[]` |  |
@@ -139,6 +142,7 @@ Productiewaardige API's voor Zaakgericht Werken
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | redis.architecture | string | `"standalone"` |  |
 | redis.auth.enabled | bool | `false` |  |
+| redis.image | object | `{"registry":"docker.io","repository":"redis","tag":"8.0"}` | Redis image configuration - Migration from Bitnami to official Redis image         |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |

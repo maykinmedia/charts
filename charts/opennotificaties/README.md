@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.9.3](https://img.shields.io/badge/Version-1.9.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -8,9 +8,9 @@ API voor het routeren van notificaties
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.27.0 |
-| https://charts.bitnami.com/bitnami | rabbitmq | 11.7.1 |
-| https://charts.bitnami.com/bitnami | redis | 17.3.14 |
+| https://charts.bitnami.com/bitnami | common | 2.31.4 |
+| https://charts.bitnami.com/bitnami | rabbitmq | 16.0.12 |
+| https://charts.bitnami.com/bitnami | redis | 22.0.1 |
 
 ## Values
 
@@ -107,9 +107,12 @@ API voor het routeren van notificaties
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | rabbitmq.auth.erlangCookie | string | `""` |  |
-| rabbitmq.auth.password | string | `""` |  |
+| rabbitmq.auth.password | string | `"dummy"` |  |
 | rabbitmq.auth.username | string | `"user"` |  |
 | rabbitmq.clustering.enabled | bool | `false` |  |
+| rabbitmq.image.registry | string | `"docker.io"` |  |
+| rabbitmq.image.repository | string | `"bitnamilegacy/rabbitmq"` |  |
+| rabbitmq.image.tag | string | `"4.1.3-debian-12-r0"` |  |
 | rabbitmq.persistence.enabled | bool | `false` |  |
 | rabbitmq.persistence.existingClaim | string | `nil` |  |
 | rabbitmq.persistence.size | string | `"1Gi"` |  |
@@ -122,6 +125,7 @@ API voor het routeren van notificaties
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | redis.architecture | string | `"standalone"` |  |
 | redis.auth.enabled | bool | `false` |  |
+| redis.image | object | `{"registry":"docker.io","repository":"redis","tag":"8.0"}` | Redis image configuration - Migration from Bitnami to official Redis image         |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
@@ -185,6 +189,7 @@ API voor het routeren van notificaties
 | settings.flower.basicAuth | string | `""` |  |
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
+| settings.logLevel | string | `"INFO"` | Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
 | settings.logNotifications | bool | `true` | When set to true notifications are saved to the database and accessible from the admin interface |
 | settings.maxRetries | string | `""` | The maximum number of automatic retries. After this amount of retries, Open Notificaties stops trying to deliver the message. Application default is 5. |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |

@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.8.7](https://img.shields.io/badge/Version-1.8.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
+![Version: 1.9.0](https://img.shields.io/badge/Version-1.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -8,8 +8,8 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.27.0 |
-| https://charts.bitnami.com/bitnami | redis | 17.3.14 |
+| https://charts.bitnami.com/bitnami | common | 2.31.4 |
+| https://charts.bitnami.com/bitnami | redis | 22.0.1 |
 
 ## Values
 
@@ -46,6 +46,8 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
 | flower.enabled | bool | `true` |  |
+| flower.extraVolumeMounts | list | `[]` |  |
+| flower.extraVolumes | list | `[]` |  |
 | flower.livenessProbe.failureThreshold | int | `6` |  |
 | flower.livenessProbe.initialDelaySeconds | int | `60` |  |
 | flower.livenessProbe.periodSeconds | int | `10` |  |
@@ -129,6 +131,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | redis.architecture | string | `"standalone"` |  |
 | redis.auth.enabled | bool | `false` |  |
+| redis.image | object | `{"registry":"docker.io","repository":"redis","tag":"8.0"}` | Redis image configuration - Migration from Bitnami to official Redis image         |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
@@ -163,6 +166,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.cors.allowAllOrigins | bool | `false` |  |
 | settings.cors.allowedOrigins | list | `[]` |  |
 | settings.cors.allowedOriginsNginx | bool | `false` |  |
+| settings.crossOriginOpenerPolicy | string | `""` | Recommended: "same-origin" for production security, "unsafe-none" for development/testing |
 | settings.csp.extraDefaultSrc | list | `[]` |  |
 | settings.csp.extraImgSrc | list | `[]` |  |
 | settings.csp.reportSave | bool | `false` |  |

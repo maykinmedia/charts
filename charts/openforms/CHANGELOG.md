@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.9.0 (2025-08-20)
+##### Upgraded 
+- Redis Bitnami Helm subchart to version `22.0.1`
+- Common Bitnami Helm subchart to version `2.31.4`
+##### Changed
+- Redis: Migrated from Bitnami to official Redis container image (`8.0`, pinned) 
+
+## 1.8.10 (2025-08-06)
+
+- Enhanced `extraVolumes` and `extraVolumeMounts` for Flower container configuration. Previously applied to all containers, now supports targeting Flower container. Allows more granular control over volume mounting.
+- Warning: This change affects deployments that previously relied on extraVolumes and extraVolumeMounts being applied globally across all containers. extraVolumes and extraVolumeMounts now exclusively target the Flower container. Action: Move configurations to the appropriate container-specific sections.
+
+## 1.8.9 (2025-07-29)
+
+- Adding extra env variable `crossOriginOpenerPolicy` to control browser cross-origin window handling; recommended: "unsafe-none" for development, "same-origin" for production; includes validation to ensure only valid values are used
+
 ## 1.8.8 (2025-07-24)
 
 - Fixed worker deployment which was using the wrong value to determine if autoscaling is enabled (autoscaling.enabled instead of worker.autoscaling.enabled).
