@@ -1,5 +1,29 @@
 # Changelog
 
+
+## 1.11.0 (2025-09-10)
+
+ **BREAKING**: Updated to new version `1.34` of openinwoner using new version of setup configuartion library with syntax changes:
+  - Removed `envsubst` functionality
+  - **BREAKING**: Secret substitution syntax `${keycloak_client_secret}` is no longer supported
+  - Updated secret configuration to use new `value_from.env` format:
+    ```yaml
+    # Old syntax (NO LONGER SUPPORTED):
+    oidc_rp_client_secret: ${keycloak_client_secret}
+
+    # Direct value syntax (SUPPORTED but NOT RECOMMENDED):
+    oidc_rp_client_secret: keycloak_client_secret
+    
+    # New syntax (REQUIRED):
+    oidc_rp_client_secret:
+      value_from:
+        env: keycloak_client_secret
+    ```
+  - **Migration required**:  All configurations using the old `${variable}` syntax must be updated. The direct value syntax is supported but not recommended as it bypasses proper environment variable handling.
+- Improved configuration job logic for secret substitution:
+- Updated values.yaml documentation for clarity on configuration options and expected behavior.
+
+
 ## 1.10.0 (2025-08-26)
 - Pinned Elasticsearch image to 9.0.3-debian-12-r1
 
