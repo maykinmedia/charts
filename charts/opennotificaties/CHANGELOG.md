@@ -2,8 +2,9 @@
 
 
 ## 1.11.1 (2025-09-09)
+
 - [#283] Add RabbitMQ consumer timeout configuration to prevent errors with long-running tasks
-  - Set consumer_timeout to 24 hours (86400000ms) to handle Open Notificaties tasks scheduled more than 30 minutes in the future
+- Set consumer_timeout to 24 hours (86400000ms) to handle Open Notificaties tasks scheduled more than 30 minutes in the future
 
 
 ## 1.11.0 (2025-08-26)
