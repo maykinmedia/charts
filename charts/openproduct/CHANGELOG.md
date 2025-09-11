@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.2.1 (2025-09-11)
+- [#290] Fix mising env variable dbPool.enable (default: false)
+- Change db pool variable names to camel case
+
 ## 0.2.0 (2025-08-24)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`
