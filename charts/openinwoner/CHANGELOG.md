@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## 1.11.0 (2025-09-10)
 
 **Warning**
@@ -38,6 +37,9 @@ Note: It is still possible to specify values directly.
 - Updated job-config to no longer perform the `envsubst` command.
 - Updated the yaml configuration example to reflect the use of environment variables.
 
+## 1.10.1 (2025-09-08)
+- Fix Elasticsearch host configuration syntax for env variable `ES_HOST` environment variable by using Elasticsearch subchart variables for protocol and port configuration
+- Subchart variables (`elasticsearch.service.ports.restAPI` and `elasticsearch.security.tls.restEncryption`) for protocol and port configuration
 
 ## 1.10.0 (2025-08-26)
 - Pinned Elasticsearch image to 9.0.3-debian-12-r1
