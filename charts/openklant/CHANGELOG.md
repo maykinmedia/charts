@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8.1 (2025-09-11)
+- [#284] Fix hardcoded worker `replicas` -> now using `worker.replicaCount` variable
+- Fix worker replica autoscaling: now properly respects `worker.autoscaling.enabled` setting
+- Add missing HPA (Horizontal Pod Autoscaler) template for worker autoscaling 
+
 ## 1.8.0 (2025-08-24)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`
