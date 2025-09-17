@@ -549,7 +549,7 @@ nginx:
     # -- Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0)
     enabled: false
     # -- Path where static files are mounted in the nginx container
-    staticRootVolume: "/srv/static"    
+    staticRootVolume: "/srv/static/"    
 
 flower:
   enabled: true
