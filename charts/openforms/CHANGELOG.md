@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.10.0 (2025-09-07)
+- [#267] Add nginx static file serving support
+  - Added `nginx.staticFileServing.enabled` (default: false) to enable/disable static file serving directly from nginx 
+  - Added `nginx.staticFileServing.staticRootVolume` (default: /srv/static) to configure the static files mount path 
+  - To be used with Openforms version greater than 3.3.0
+
 ## 1.9.0 (2025-08-20)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`

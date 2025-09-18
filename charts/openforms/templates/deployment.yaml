@@ -58,7 +58,11 @@ spec:
               httpHeaders:
                 - name: Host
                   value: {{ include "openforms.fullname" . | quote }}
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
+            {{- $livenessProbe := deepCopy .Values.livenessProbe }}
+            {{- if .Values.nginx.staticFileServing.enabled }}
+            {{- $_ := set $livenessProbe "initialDelaySeconds" .Values.nginx.staticFileServing.initialDelaySeconds }}
+            {{- end }}
+            {{- toYaml $livenessProbe | nindent 12 }}            
           readinessProbe:
             httpGet:
               path: /admin/
@@ -76,6 +80,11 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
+            {{- if .Values.nginx.staticFileServing.enabled }}
+            - name: media
+              mountPath: {{ .Values.nginx.staticFileServing.staticRootVolume | default "/srv/static" }}
+              subPath: openforms/static
+            {{- end }}                
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
@@ -352,6 +361,11 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
+            {{- if .Values.nginx.staticFileServing.enabled }}
+            - name: media
+              mountPath: {{ .Values.nginx.staticFileServing.staticRootVolume | default "/srv/static" }}
+              subPath: openforms/static
+            {{- end }}              
             {{- if .Values.nginx.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.nginx.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
