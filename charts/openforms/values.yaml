@@ -550,7 +550,7 @@ nginx:
     enabled: false
     # -- Path where static files are mounted in the nginx container
     staticRootVolume: "/srv/static/"
-    initialDelaySeconds: 140 
+    initialDelaySeconds: 120 
 
 flower:
   enabled: true
