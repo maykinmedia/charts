@@ -1,6 +1,6 @@
 # openproduct
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
 
@@ -130,15 +130,16 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
-| settings.database.db_conn_max_age | int | `60` |  |
-| settings.database.db_pool.db_pool_max_idle | int | `600` |  |
-| settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
-| settings.database.db_pool.db_pool_max_size | int | `4` |  |
-| settings.database.db_pool.db_pool_max_waiting | int | `0` |  |
-| settings.database.db_pool.db_pool_min_size | int | `4` |  |
-| settings.database.db_pool.db_pool_num_workers | int | `3` |  |
-| settings.database.db_pool.db_pool_reconnect_timeout | int | `300` |  |
-| settings.database.db_pool.db_pool_timeout | int | `30` |  |
+| settings.database.dbConnMaxAge | int | `60` |  |
+| settings.database.dbPool.dbPoolMaxIdle | int | `600` |  |
+| settings.database.dbPool.dbPoolMaxLifetime | int | `3600` |  |
+| settings.database.dbPool.dbPoolMaxSize | int | `4` |  |
+| settings.database.dbPool.dbPoolMaxWaiting | int | `0` |  |
+| settings.database.dbPool.dbPoolMinSize | int | `4` |  |
+| settings.database.dbPool.dbPoolNumWorkers | int | `3` |  |
+| settings.database.dbPool.dbPoolReconnectTimeout | int | `300` |  |
+| settings.database.dbPool.dbPoolTimeout | int | `30` |  |
+| settings.database.dbPool.enabled | bool | `false` |  |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
 | settings.database.password | string | `""` |  |
