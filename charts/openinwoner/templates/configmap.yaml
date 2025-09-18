@@ -83,3 +83,4 @@ data:
   {{- if .Values.settings.uwsgi.httpKeepalive }}
   UWSGI_HTTP_KEEPALIVE: {{ if .Values.settings.uwsgi.httpKeepalive }}"1"{{ else }}"0"{{ end }}
   {{- end }}
+  ALLOW_CUSTOM_JS:  {{ if .Values.settings.allowCustomJs }}"True"{{ else }}"False"{{ end }}

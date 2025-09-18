@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.11.1 (2025-09-11)
+- [#287] Add `ALLOW_CUSTOM_JS` environment variable to enable/disable custom JavaScript upload feature (default: "False")
+
 ## 1.11.0 (2025-09-10)
 
 **Warning**
