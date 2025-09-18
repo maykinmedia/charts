@@ -4,7 +4,7 @@
 ## 0.2.1 (2025-09-11)
 - [#290] Fix mising env variable dbPool.enable (default: false)
 - Change db pool variable names to camel case
-**Warning**
+- **Warning**
 ⚠️ This release contains breaking changes.
     - Rename database pool variables from snake_case to camelCase
     - Old: `db_pool.*` → New: `dbPool.*`
