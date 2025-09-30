@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.8.2 (2025-01-30)
+
+### Configuration Updates
+- **OIDC Configuration**: Updated example setup configuration YAML file to use modern `mozilla-django-oidc-db` v0.25.1 format
+  - Migrated deprecated fields to new `options` structure
+  - Added proper provider/client separation
+  - Improved claim mappings and group settings configuration
+- **Compatibility**: Requires OpenKlant version > 2.12.0
+
+### Breaking Changes
+- OIDC configuration format has changed - existing configurations need to be updated to the new structure
+- See migration guide for details on updating your OIDC setup
+
 ## 1.8.1 (2025-09-11)
 - [#284] Fix hardcoded worker `replicas` -> now using `worker.replicaCount` variable
 - Fix worker replica autoscaling: now properly respects `worker.autoscaling.enabled` setting
