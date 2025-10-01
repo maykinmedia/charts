@@ -106,5 +106,5 @@ data:
   {{- if .Values.settings.waitingPeriod }}
   WAITING_PERIOD: {{ .Values.settings.waitingPeriod | toString | quote }}
   {{- end }}
-
-
+  OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS: {{ .Values.settings.oidcRenewIdTokenExpirySeconds | toString | quote }}
+  SESSION_COOKIE_AGE: {{ .Values.settings.sessionCookieAge | toString | quote }}
