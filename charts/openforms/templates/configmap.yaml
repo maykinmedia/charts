@@ -118,11 +118,7 @@ data:
   {{- end }}
   # Static files configuration
   {{- if .Values.nginx.staticFileServing.enabled }}
-  {{- if .Values.nginx.staticFileServing.staticRootVolume }}
-  STATIC_ROOT_VOLUME: {{ .Values.nginx.staticFileServing.staticRootVolume | toString | quote }}
-  {{- else }}
   STATIC_ROOT_VOLUME: "/srv/static/"
-  {{- end }}
   {{- end }}
   {{- if .Values.settings.crossOriginOpenerPolicy }}
   {{- $allowedValues := list "same-origin" "same-origin-allow-popups" "unsafe-none" "noopener-allow-popups" }}

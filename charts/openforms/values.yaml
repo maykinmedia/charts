@@ -548,8 +548,6 @@ nginx:
   staticFileServing:
     # -- Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0)
     enabled: false
-    # -- Path where static files are mounted in the nginx container
-    staticRootVolume: "/srv/static/"
     initialDelaySeconds: 120 
 
 flower:

@@ -112,7 +112,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | nginx.service.port | int | `80` |  |
 | nginx.service.type | string | `"ClusterIP"` |  |
 | nginx.staticFileServing.enabled | bool | `false` | Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0) |
-| nginx.staticFileServing.staticRootVolume | string | `"/srv/static"` | Path where static files are mounted in the nginx container |
+| nginx.staticFileServing.initialDelaySeconds | int | `120` |  |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
