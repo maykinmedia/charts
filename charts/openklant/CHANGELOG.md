@@ -8,6 +8,9 @@
   - Added proper provider/client separation
   - Improved claim mappings and group settings configuration
 - **Compatibility**: Requires OpenKlant version > 2.12.0
+### Version Information
+- **App Version**: 2.12.0 (upgraded from previous version 2.7.0)
+
 
 ### Breaking Changes
 - OIDC configuration format has changed - existing configurations need to be updated to the new structure
