@@ -1,0 +1,56 @@
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Introduction 
+
+This chart deploys Open Forms on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/open-formulieren/open-forms/)
+* [Issues](github.com/open-formulieren/open-forms/issues)
+* [Docker image](https://hub.docker.com/r/openformulieren/open-forms)
+* [Changelog](https://github.com/open-formulieren/open-forms/blob/master/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install {{ template "chart.name" . }} maykinmedia/{{ template "chart.name" . }}
+```
+
+{{ template "chart.requirementsSection" . }}
+
+## Configuration and installation details
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`. 
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+
+### Open Telemetry
+
+Open Forms supports the Open Telemetry Protocol.
+
+On Kubernetes, the [Kubernetes Attributes Processor](https://opentelemetry.io/docs/platforms/kubernetes/collector/components/#kubernetes-attributes-processor)
+can be useful to correlate your application’s traces, metrics, and logs signals with your Kubernetes telemetry, such as pod metrics and traces.
+
+
+{{ template "chart.valuesSection" . }}
+
+
+
+
