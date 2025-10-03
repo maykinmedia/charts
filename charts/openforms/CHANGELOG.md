@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.10.0 (2025-10-03)
+
+- Added environment variables to manage Open Telemetry configuration.
+- Updated the example yaml for automatic configuration.
+
+**Upgrade notes**
+
+In the `configuration.data` value, the data for the `oidc_db_config_admin_auth` should be updated to the new format.
+Look at the example in the `values.yaml` file to see the new format.
+
 ## 1.9.0 (2025-08-20)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`
