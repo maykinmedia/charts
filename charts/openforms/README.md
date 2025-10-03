@@ -1,8 +1,24 @@
 # openforms
 
-![Version: 1.9.0](https://img.shields.io/badge/Version-1.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
-
 Snel en eenvoudig slimme formulieren bouwen en publiceren
+
+![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0](https://img.shields.io/badge/AppVersion-3.3.0-informational?style=flat-square)
+
+## Introduction
+
+This chart deploys Open Forms on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/open-formulieren/open-forms/)
+* [Issues](github.com/open-formulieren/open-forms/issues)
+* [Docker image](https://hub.docker.com/r/openformulieren/open-forms)
+* [Changelog](https://github.com/open-formulieren/open-forms/blob/master/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install openforms maykinmedia/openforms
+```
 
 ## Requirements
 
@@ -10,6 +26,33 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
+
+## Configuration and installation details
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+
+### Open Telemetry
+
+Open Forms supports the Open Telemetry Protocol.
+
+On Kubernetes, the [Kubernetes Attributes Processor](https://opentelemetry.io/docs/platforms/kubernetes/collector/components/#kubernetes-attributes-processor)
+can be useful to correlate your application’s traces, metrics, and logs signals with your Kubernetes telemetry, such as pod metrics and traces.
 
 ## Values
 
@@ -28,6 +71,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | beat.podLabels | object | `{}` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
+| configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.job.backoffLimit | int | `6` |  |
 | configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
@@ -200,6 +244,12 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.maxImportSize | string | `"20M"` | Configure the maximum allowed size for importing forms in the admin |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
 | settings.oidc | object | `{"useLegacyDigidEndpoint":false,"useLegacyEndpont":false,"useLegacyOrgEndpoint":false}` | https://open-forms.readthedocs.io/en/latest/changelog.html#upgrade-notes |
+| settings.otel.disabled | bool | `true` |  |
+| settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
+| settings.otel.exporterOtlpHeaders | string | `""` | Any additional HTTP headers, e.g. when your collector is username/password protected with Basic auth, you want something like: Authorization=Basic <base64-username-colon-password> |
+| settings.otel.exporterOtlpMetricsInsecure | bool | `false` | Is true if the endoint is not protected with TLS. |
+| settings.otel.exporterOtlpProtocol | string | `"grpc"` | Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf. |
+| settings.otel.metricExportInterval | int | `60000` | Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application.  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.showLabelEnvironment | bool | `false` | Display environment information in the header in the admin. Defaults to True. Environment information is only displayed to logged in users. |
