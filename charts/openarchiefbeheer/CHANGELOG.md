@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0 (2025-10-03)
+
+- [maykinmedia/open-archiefbeheer#857] Added the possibility to configure the environment variables `LOG_STDOUT` and `LOG_LEVEL`. These variables are available from Open Archiefbeheer version `1.1.1`.
+
 ## 1.4.1 (2025-10-01)
 
 - Add OIDC token renewal and session cookie age configuration options:
