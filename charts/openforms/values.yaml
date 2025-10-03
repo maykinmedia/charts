@@ -545,6 +545,10 @@ nginx:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
+  staticFileServing:
+    # -- Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0)
+    enabled: false
+    initialDelaySeconds: 120 
 
 flower:
   enabled: true

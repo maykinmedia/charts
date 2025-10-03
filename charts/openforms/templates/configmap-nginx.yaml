@@ -96,6 +96,21 @@ data:
         include conf.d/proxy;
       }
 
+      {{- if .Values.nginx.staticFileServing.enabled }}
+      # Serve collected static files directly from Nginx
+      location /static/ {
+          expires max;
+          add_header Access-Control-Allow-Origin *;
+          alias {{ .Values.nginx.staticFileServing.staticRootVolume | default "/srv/static/" }};
+      }
+      {{- else }}
+      # Font assets with CORS headers (when static file serving is disabled)
+      location ~* ^/static/.*\.(eot|ttf|woff|woff2|svg)$ {
+          add_header Access-Control-Allow-Origin *;
+          include conf.d/proxy;
+      }
+      {{- end }}
+
       # Metadata endpoints - rate limit them to prevent abuse, as they generate XML
       # on the fly.
       location /discovery/ {
@@ -104,10 +119,5 @@ data:
           include conf.d/proxy;
       }
 
-
-      location ~* ^/static/.*\.(eot|ttf|woff|woff2|svg)$ {
-          add_header Access-Control-Allow-Origin *;
-          include conf.d/proxy;
-      }
     }
 {{- end }}
