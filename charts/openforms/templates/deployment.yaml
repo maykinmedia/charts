@@ -59,8 +59,8 @@ spec:
                 - name: Host
                   value: {{ include "openforms.fullname" . | quote }}
             {{- $livenessProbe := deepCopy .Values.livenessProbe }}
-            {{- if .Values.nginx.staticFileServing.enabled }}
-            {{- $_ := set $livenessProbe "initialDelaySeconds" .Values.nginx.staticFileServing.initialDelaySeconds }}
+            {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
+            {{- $_ := set $livenessProbe "initialDelaySeconds" .Values.nginx.staticFileServing.livenessProbeInitialDelaySeconds }}
             {{- end }}
             {{- toYaml $livenessProbe | nindent 12 }}            
           readinessProbe:
@@ -70,7 +70,11 @@ spec:
               httpHeaders:
                 - name: Host
                   value: {{ include "openforms.fullname" . | quote }}
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            {{- $readinessProbe := deepCopy .Values.readinessProbe }}
+            {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
+            {{- $_ := set $readinessProbe "initialDelaySeconds" .Values.nginx.staticFileServing.readinessProbeInitialDelaySeconds }}
+            {{- end }}
+            {{- toYaml $readinessProbe | nindent 12 }}
           resources:
           {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -80,7 +84,7 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
-            {{- if .Values.nginx.staticFileServing.enabled }}
+            {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
             - name: media
               mountPath: "/srv/static/"
               subPath: openforms/static
@@ -361,7 +365,7 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
-            {{- if .Values.nginx.staticFileServing.enabled }}
+            {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
             - name: media
               mountPath: "/srv/static/"
               subPath: openforms/static
