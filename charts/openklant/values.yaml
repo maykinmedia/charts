@@ -42,9 +42,18 @@ configuration:
       #       administration: Administration XYZ
       # oidc_db_config_enable: True
       # oidc_db_config_admin_auth:
+      #   providers:
+      #     - identifier: admin-oidc-provider
+      #       oidc_token_use_basic_auth: true
+      #       oidc_use_nonce: false
+      #       oidc_nonce_size: 32
+      #       oidc_state_size: 32
+      #       endpoint_config:
+      #         oidc_op_discovery_endpoint: https://keycloak.example.nl/realms/example/      
       #   items:
       #   - identifier: admin-oidc
       #     enabled: True
+      #     oidc_provider_identifier: admin-oidc-provider          
       #     oidc_rp_client_id: openklant.example.nl
       #     oidc_rp_client_secret: ${keycloak_client_secret}
       #     oidc_rp_scopes_list:
@@ -53,29 +62,28 @@ configuration:
       #     - profile
       #     - roles
       #     oidc_rp_sign_algo: RS256
-      #     endpoint_config:
-      #       oidc_op_discovery_endpoint: https://keycloak.example.nl/realms/example/
-      #     username_claim:
-      #     - sub
-      #     groups_claim:
-      #     - roles
-      #     claim_mapping:
-      #       first_name:
-      #       - given_name
-      #       last_name:
-      #       - family_name
-      #       email:
-      #       - email
-      #     sync_groups: true
-      #     sync_groups_glob_pattern: "*"
-      #     default_groups: []
-      #     make_users_staff: true
-      #     superuser_group_names:
-      #     - Superuser
-      #     oidc_use_nonce: true
-      #     oidc_nonce_size: 32
-      #     oidc_state_size: 32
       #     userinfo_claims_source: id_token
+      #     options:
+      #       user_settings:
+      #         claim_mappings:
+      #           username:
+      #             - sub
+      #           email:
+      #             - email
+      #           first_name:
+      #             - given_name
+      #           last_name:
+      #             - family_name
+      #         username_case_sensitive: true
+      #       groups_settings:
+      #         claim_mapping:
+      #           - roles
+      #         superuser_group_names:
+      #           - Superuser
+      #         make_users_staff: true
+      #         sync: true
+      #         sync_pattern: "*"
+      #         default_groups: []
 
 tags:
   redis: true
