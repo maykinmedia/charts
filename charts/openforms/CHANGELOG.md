@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.10.0 (2025-10-06)
+## 1.11.0 (2025-10-06)
 - [#267] Add nginx static file serving support
   - Added `nginx.staticFileServing.enabled` (default: false) to enable/disable static file serving directly from nginx 
   - Hard coded mount path /srv/static/ as a place for the static files
