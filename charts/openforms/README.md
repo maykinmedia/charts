@@ -111,7 +111,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | nginx.service.annotations | object | `{}` |  |
 | nginx.service.port | int | `80` |  |
 | nginx.service.type | string | `"ClusterIP"` |  |
-| nginx.staticFileServing.enabled | bool | `false` | Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0) |
+| nginx.staticFileServing.enabled | bool | `true` | Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0) |
 | nginx.staticFileServing.livenessProbeInitialDelaySeconds | int | `180` | Initial delay seconds for liveness probe when static file serving is enabled |
 | nginx.staticFileServing.readinessProbeInitialDelaySeconds | int | `120` | Initial delay seconds for readiness probe when static file serving is enabled |
 | nodeSelector | object | `{}` |  |
