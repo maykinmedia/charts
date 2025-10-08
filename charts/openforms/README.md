@@ -11,7 +11,7 @@ This chart can be used to deploy Open Forms on a Kubernetes cluster using the He
 * [Source code](https://github.com/open-formulieren/open-forms/)
 * [Documentation](https://open-forms.readthedocs.io/)
 * [Docker image](https://hub.docker.com/r/openformulieren/open-forms)
-* [Changelog](https://github.com/open-formulieren/open-forms/blob/master/CHANGELOG.rst)
+* [Changelog](https://open-forms.readthedocs.io/en/3.3.0/changelog.html)
 
 ## Quickstart
 
@@ -78,8 +78,8 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 
 Open Forms supports the Open Telemetry Protocol.
 
-On Kubernetes, the [Kubernetes Attributes Processor](https://opentelemetry.io/docs/platforms/kubernetes/collector/components/#kubernetes-attributes-processor)
-can be useful to correlate your application’s traces, metrics, and logs signals with your Kubernetes telemetry, such as pod metrics and traces.
+We recommend deploying one or more Open Telemetry Collector instances in your cluster to receive
+telemetry. Alternatively, you can use any vendor that speaks the OTLP protocol.
 
 The environment variables that the Open Telemetry SDK supports can be found [here](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#general-sdk-configuration).
 
@@ -275,7 +275,7 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | settings.oidc | object | `{"useLegacyDigidEndpoint":false,"useLegacyEndpont":false,"useLegacyOrgEndpoint":false}` | https://open-forms.readthedocs.io/en/latest/changelog.html#upgrade-notes |
 | settings.otel.disabled | bool | `true` |  |
 | settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
-| settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. |
+| settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials.  |
 | settings.otel.exporterOtlpMetricsInsecure | bool | `false` | Is true if the endoint is not protected with TLS. |
 | settings.otel.exporterOtlpProtocol | string | `"grpc"` | Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf. |
 | settings.otel.metricExportInterval | int | `60000` | Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application.  |
@@ -316,4 +316,3 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
-

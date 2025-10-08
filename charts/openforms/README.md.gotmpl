@@ -11,7 +11,7 @@ This chart can be used to deploy Open Forms on a Kubernetes cluster using the He
 * [Source code](https://github.com/open-formulieren/open-forms/)
 * [Documentation](https://open-forms.readthedocs.io/)
 * [Docker image](https://hub.docker.com/r/openformulieren/open-forms)
-* [Changelog](https://github.com/open-formulieren/open-forms/blob/master/CHANGELOG.rst)
+* [Changelog](https://open-forms.readthedocs.io/en/3.3.0/changelog.html)
 
 ## Quickstart
 
@@ -73,13 +73,9 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 
 Open Forms supports the Open Telemetry Protocol.
 
-On Kubernetes, the [Kubernetes Attributes Processor](https://opentelemetry.io/docs/platforms/kubernetes/collector/components/#kubernetes-attributes-processor)
-can be useful to correlate your application’s traces, metrics, and logs signals with your Kubernetes telemetry, such as pod metrics and traces.
+We recommend deploying one or more Open Telemetry Collector instances in your cluster to receive
+telemetry. Alternatively, you can use any vendor that speaks the OTLP protocol.
 
 The environment variables that the Open Telemetry SDK supports can be found [here](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#general-sdk-configuration).
 
 {{ template "chart.valuesSection" . }}
-
-
-
-
