@@ -7,7 +7,7 @@
 
 **Upgrade notes**
 
-⚠️ When upgrading to Open Forms 3.3, a number of manual actions are required. See the [changelog](https://github.com/open-formulieren/open-forms/blob/master/CHANGELOG.rst#upgrade-procedure) for more details.
+⚠️ When upgrading to Open Forms 3.3, a number of manual actions are required. See the [changelog](https://open-forms.readthedocs.io/en/3.3.0/changelog.html) for more details.
 
 In addition, the data in the `configuration.data` value regarding the OIDC configuration (`oidc_db_config_admin_auth`) should be updated to the new format.
 Look at the example in the `values.yaml` file to see the new format.
