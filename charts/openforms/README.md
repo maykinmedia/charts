@@ -1,6 +1,6 @@
 # openforms
 
-![Version: 1.9.0](https://img.shields.io/badge/Version-1.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
+![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
@@ -111,6 +111,10 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | nginx.service.annotations | object | `{}` |  |
 | nginx.service.port | int | `80` |  |
 | nginx.service.type | string | `"ClusterIP"` |  |
+| nginx.staticFileServing.enabled | bool | `false` | Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0) |
+| nginx.staticFileServing.livenessProbeInitialDelaySeconds | int | `180` | Initial delay seconds for liveness probe when static file serving is enabled |
+| nginx.staticFileServing.minVersion | string | `"3.3.0"` | Minimum required OpenForms version for static file serving (semver format) |
+| nginx.staticFileServing.readinessProbeInitialDelaySeconds | int | `120` | Initial delay seconds for readiness probe when static file serving is enabled |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |

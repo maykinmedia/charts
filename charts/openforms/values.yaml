@@ -545,6 +545,15 @@ nginx:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
+  staticFileServing:
+    # -- Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0)
+    enabled: false
+    # -- Minimum required OpenForms version for static file serving (semver format)
+    minVersion: "3.3.0"
+    # -- Initial delay seconds for liveness probe when static file serving is enabled
+    livenessProbeInitialDelaySeconds: 180
+    # -- Initial delay seconds for readiness probe when static file serving is enabled
+    readinessProbeInitialDelaySeconds: 120
 
 flower:
   enabled: true
