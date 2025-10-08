@@ -113,7 +113,6 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | nginx.service.type | string | `"ClusterIP"` |  |
 | nginx.staticFileServing.enabled | bool | `false` | Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0) |
 | nginx.staticFileServing.livenessProbeInitialDelaySeconds | int | `180` | Initial delay seconds for liveness probe when static file serving is enabled |
-| nginx.staticFileServing.minVersion | string | `"3.3.0"` | Minimum required OpenForms version for static file serving (semver format) |
 | nginx.staticFileServing.readinessProbeInitialDelaySeconds | int | `120` | Initial delay seconds for readiness probe when static file serving is enabled |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |

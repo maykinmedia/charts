@@ -253,7 +253,7 @@ Usage:
 */}}
 {{- define "openforms.staticFileServingSupported" -}}
 {{- $currentVersion := .Values.image.tag | default .Chart.AppVersion -}}
-{{- $minVersion := .Values.nginx.staticFileServing.minVersion | default "3.3.0" -}}
+{{- $minVersion := "3.3.0" -}}
 {{- if semverCompare (printf ">=%s" $minVersion) $currentVersion -}}
 true
 {{- else -}}
