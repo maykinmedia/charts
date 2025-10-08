@@ -106,7 +106,7 @@ data:
       location /static/ {
           expires max;
           add_header Access-Control-Allow-Origin *;
-          alias {{ .Values.nginx.staticFileServing.staticRootVolume | default "/srv/static/" }};
+          alias /srv/static/;
       }
       {{- else }}
       # Font assets with CORS headers (when static file serving is disabled)
