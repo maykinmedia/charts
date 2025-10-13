@@ -88,6 +88,14 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
+          startupProbe:
+            httpGet:
+              path: /admin/login/
+              port: http
+              httpHeaders:
+                - name: Host
+                  value: {{ include "openinwoner.fullname" . | quote }}
+            {{- toYaml .Values.startupProbe | nindent 12 }}
           livenessProbe:
             httpGet:
               path: /admin/login/
@@ -103,7 +111,7 @@ spec:
               httpHeaders:
                 - name: Host
                   value: {{ include "openinwoner.fullname" . | quote }}
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}           
           resources:
           {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
