@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.11.1 (2025-10-13)
+- [#302] Fix health check probes to use non-redirecting endpoints
+  - Update liveness and readiness probe paths from `/admin/` to `/admin/login/`
+  - Prevents 302 redirects that cause probe failures
+  - **Future**: Planned migration to `/_health/` endpoint
+
 ## 1.11.0 (2025-09-10)
 
 **Warning**
