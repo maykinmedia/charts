@@ -5,7 +5,6 @@
   - Add startup probe with 5+ minute timeout for application initialization
   - Configuration: 15s initial delay + 30 failures × 10s period = 5 minutes 15 seconds total
   - Prevents premature pod restarts during complex startup scenarios (database migrations, static file collection)
-  - Improves deployment success rate for OpenForms applications
 
 ## 1.10.0 (2025-10-03)
 

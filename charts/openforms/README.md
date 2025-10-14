@@ -294,7 +294,11 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | settings.uwsgi.maxRequests | string | `""` |  |
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
-| startupProbe | object | `{"failureThreshold":30,"initialDelaySeconds":15,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":5}` | Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)     |
+| startupProbe.failureThreshold | int | `30` |  |
+| startupProbe.initialDelaySeconds | int | `15` | Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)     |
+| startupProbe.periodSeconds | int | `10` |  |
+| startupProbe.successThreshold | int | `1` |  |
+| startupProbe.timeoutSeconds | int | `5` |  |
 | tags.redis | bool | `true` |  |
 | tlsSecretName | string | `""` |  |
 | tolerations | list | `[]` |  |
