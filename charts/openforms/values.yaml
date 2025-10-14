@@ -184,6 +184,15 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
+startupProbe:
+  # -- Startup probe configuration - allows up to 5 minutes for application startup
+  # -- Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)    
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+  successThreshold: 1   
+
 livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 10
