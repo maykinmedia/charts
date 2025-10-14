@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.10.2 (2025-09-14)
+- Fix template logic inconsistency in flower deployment
+  - Correct volumeMounts condition to render flower.extraVolumeMounts instead of extraVolumeMounts
+  - Correct volumes condition to render flower.extraVolumes instead of extraVolumes
+  - Ensures flower deployment uses correct volume configuration from values.yaml
+
 ## 1.10.1 (2025-09-13)
 - [#300] Add startup probe to improve deployment reliability
   - Add startup probe with 5+ minute timeout for application initialization
