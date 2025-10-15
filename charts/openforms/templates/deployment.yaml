@@ -456,11 +456,11 @@ spec:
             {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
           volumeMounts:
             {{- if .Values.flower.extraVolumeMounts }}
-            {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- include "openforms.tplvalues.render" ( dict "value" .Values.flower.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
           {{- if .Values.flower.extraVolumes }}
-          {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+          {{- include "openforms.tplvalues.render" ( dict "value" .Values.flower.extraVolumes "context" $ ) | nindent 8 }}
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

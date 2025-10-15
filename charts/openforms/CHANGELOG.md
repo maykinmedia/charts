@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.10.2 (2025-09-14)
+- Fixed Flower deployment to use the `flower.extraVolumes` instead of `extraVolumes` and `flower.extraVolumeMounts` instead of `extraVolumeMounts`.
+
 ## 1.10.1 (2025-09-13)
 - [#300] Add startup probe to improve deployment reliability
   - Add startup probe with 5+ minute timeout for application initialization
