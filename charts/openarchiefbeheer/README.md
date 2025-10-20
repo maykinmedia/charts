@@ -1,6 +1,6 @@
 # openarchiefbeheer
 
-![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.1](https://img.shields.io/badge/AppVersion-1.1.1-informational?style=flat-square)
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
@@ -165,12 +165,16 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 | settings.frontend.apiUrl | string | `""` |  |
 | settings.frontend.zaakUrlTemplate | string | `""` |  |
 | settings.frontendUrl | string | `""` |  |
+| settings.logging.level | string | `"INFO"` | Controls the log levels of project code and of the OIDC library.  Possible values: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL. |
+| settings.logging.toStdout | bool | `false` | Controls whether the logs are output to standard output or to a file |
+| settings.oidcRenewIdTokenExpirySeconds | int | `900` | OIDC token renewal settings (15 minutes = 900 seconds) IMPORTANT: This value must equal sessionCookieAge to prevent timeout mismatches If values differ, users may experience unexpected logouts when one expires before the other |
 | settings.requestsReadTimeout | string | `"30"` |  |
 | settings.retry.backoffFactor | string | `""` |  |
 | settings.retry.statusForcelist | string | `""` |  |
 | settings.retry.total | string | `""` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.sessionCookieAge | int | `900` | Session cookie age in seconds (15 minutes = 900 seconds) IMPORTANT: This value must equal oidcRenewIdTokenExpirySeconds to prevent timeout mismatches If values differ, users may experience unexpected logouts when one expires before the other |
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `"2500/hour"` |  |
 | settings.throttling.rateUser | string | `"15000/hour"` |  |

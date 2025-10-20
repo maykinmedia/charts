@@ -1,8 +1,24 @@
-# openforms
-
-![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
+# Open Forms Chart
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
+
+![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0](https://img.shields.io/badge/AppVersion-3.3.0-informational?style=flat-square)
+
+## Introduction
+
+This chart can be used to deploy Open Forms on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/open-formulieren/open-forms/)
+* [Documentation](https://open-forms.readthedocs.io/)
+* [Docker image](https://hub.docker.com/r/openformulieren/open-forms)
+* [Changelog](https://open-forms.readthedocs.io/en/3.3.0/changelog.html)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install openforms maykinmedia/openforms
+```
 
 ## Requirements
 
@@ -10,6 +26,62 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
+
+## Configuration and installation details
+
+### Django specific configuration
+
+**Secret key**
+
+Django makes use of a secret key to provide cryptographic signing.
+This key should be set to a unique, unpredictable value.
+Without the `SECRET_KEY` environment variable, the application will not start.
+
+The key can be configured with the value `settings.secretKey`. You can use a [web tool](https://djecrety.ir/) to generate it.
+
+**Warning**: Running with a known secret key defeats many of Django’s security protections and can lead to privilege escalation and remote code execution vulnerabilities.
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Forms [documetation](https://open-forms.readthedocs.io/en/stable/installation/setup_configuration.html#installation-configuration-cli).
+
+### Sentry
+
+Open Forms makes use of [Sentry](https://sentry.io/welcome/) for automatic reporting of errors.
+In order to configure it, the value `settings.sentry.dsn` needs to be set. To see where to find the `DSN`, see
+the [Sentry documentation](https://docs.sentry.io/concepts/key-terms/dsn-explainer/#where-to-find-your-data-source-name-dsn). 
+
+```yaml
+settings:
+  sentry:
+    dsn: "https://public@sentry.example.com/1"
+```
+
+The value of the `DSN` is considered sensitive, so it should be handled as a secret.
+
+### Open Telemetry
+
+Open Forms supports the Open Telemetry Protocol.
+
+We recommend deploying one or more Open Telemetry Collector instances in your cluster to receive
+telemetry. Alternatively, you can use any vendor that speaks the OTLP protocol.
+
+The environment variables that the Open Telemetry SDK supports can be found [here](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#general-sdk-configuration).
 
 ## Values
 
@@ -28,6 +100,7 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | beat.podLabels | object | `{}` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
+| configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.job.backoffLimit | int | `6` |  |
 | configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
@@ -203,6 +276,14 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.maxImportSize | string | `"20M"` | Configure the maximum allowed size for importing forms in the admin |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
 | settings.oidc | object | `{"useLegacyDigidEndpoint":false,"useLegacyEndpont":false,"useLegacyOrgEndpoint":false}` | https://open-forms.readthedocs.io/en/latest/changelog.html#upgrade-notes |
+| settings.otel.disabled | bool | `true` |  |
+| settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
+| settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials.  |
+| settings.otel.exporterOtlpMetricsInsecure | bool | `false` | Is true if the endoint is not protected with TLS. |
+| settings.otel.exporterOtlpProtocol | string | `"grpc"` | Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf. |
+| settings.otel.metricExportInterval | int | `60000` | Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application.  |
+| settings.otel.metricExportTimeout | int | `10000` | Controls the timeout of the requests to the collector (in milliseconds) |
+| settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.showLabelEnvironment | bool | `false` | Display environment information in the header in the admin. Defaults to True. Environment information is only displayed to logged in users. |
@@ -216,6 +297,11 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | settings.uwsgi.maxRequests | string | `""` |  |
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
+| startupProbe.failureThreshold | int | `30` |  |
+| startupProbe.initialDelaySeconds | int | `15` | Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)     |
+| startupProbe.periodSeconds | int | `10` |  |
+| startupProbe.successThreshold | int | `1` |  |
+| startupProbe.timeoutSeconds | int | `5` |  |
 | tags.redis | bool | `true` |  |
 | tlsSecretName | string | `""` |  |
 | tolerations | list | `[]` |  |
@@ -238,4 +324,3 @@ Snel en eenvoudig slimme formulieren bouwen en publiceren
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
-

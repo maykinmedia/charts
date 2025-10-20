@@ -1,6 +1,35 @@
 
 # Changelog
 
+## 0.2.1 (2025-09-11)
+- [#290] Fix mising env variable dbPool.enable (default: false)
+- Change db pool variable names to camel case
+- **Warning**
+⚠️ This release contains breaking changes.
+    - Rename database pool variables from snake_case to camelCase
+    - Old: `db_pool.*` → New: `dbPool.*`
+    - **Migration required**: Update values.yaml with new variable names
+
+    - **Upgrade procedure**:
+
+In the `values.yaml` value, any variable using `db_pool` should be `dbPool`, for example:
+
+```yaml
+    db_pool:
+      enabled: false
+      db_pool_min_size: 4 
+      db_pool_max_size: 4
+```
+
+should be changed to:
+
+```yaml
+    dbPool:
+      enabled: false
+      dbPoolMinSize: 4
+      dbPoolMaxSize: 4
+```
+
 ## 0.2.0 (2025-08-24)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`

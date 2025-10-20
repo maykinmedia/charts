@@ -1,6 +1,6 @@
 # opennotificaties
 
-![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+![Version: 1.11.1](https://img.shields.io/badge/Version-1.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 API voor het routeren van notificaties
 
@@ -110,6 +110,7 @@ API voor het routeren van notificaties
 | rabbitmq.auth.password | string | `"dummy"` |  |
 | rabbitmq.auth.username | string | `"user"` |  |
 | rabbitmq.clustering.enabled | bool | `false` |  |
+| rabbitmq.extraConfiguration | string | `"consumer_timeout = 86400000"` | RabbitMQ configuration file content This configuration will be appended to the default RabbitMQ configuration It will be mounted as /bitnami/rabbitmq/conf/rabbitmq.conf in the RabbitMQ container The mount name is "configuration" consumer_timeout: RabbitMQ's default consumer timeout is 30 minutes, but OpenNotificaties schedules tasks that can be further in the future. This timeout prevents errors when tasks are scheduled more than 30 minutes ahead. Set to 24 hours (86400000ms) to ensure compatibility. You can customize these settings by modifying the values below |
 | rabbitmq.image.registry | string | `"docker.io"` |  |
 | rabbitmq.image.repository | string | `"bitnamilegacy/rabbitmq"` |  |
 | rabbitmq.image.tag | string | `"4.1.3-debian-12-r0"` |  |

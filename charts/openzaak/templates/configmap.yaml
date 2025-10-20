@@ -19,6 +19,7 @@ data:
   CACHE_AXES: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
   CELERY_BROKER_URL: {{ printf "redis://%s-master.%s:6379/1" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
   CELERY_RESULT_BACKEND: {{ printf "redis://%s-master.%s:6379/1" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  CELERY_RESULT_EXPIRES: {{ .Values.settings.celery.resultExpires | toString | quote }}
   {{- else }}
   CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
   CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
@@ -40,6 +41,39 @@ data:
   DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
   DB_PORT: {{ .Values.settings.database.port | toString | quote }}
+  {{- with .Values.settings.database.dbPool }}
+  {{- if .enabled }}
+  DB_POOL_ENABLED: {{ .enabled | toString | title | quote }}
+  {{- if ne .dbPoolMinSize nil }}
+  DB_POOL_MIN_SIZE: {{ int .dbPoolMinSize | quote }}
+  {{- end }} 
+  {{- if ne .dbPoolMaxSize nil }}
+  DB_POOL_MAX_SIZE: {{ int .dbPoolMaxSize | quote }}
+  {{- end }}
+  {{- if ne .dbPoolTimeout nil }}
+  DB_POOL_TIMEOUT: {{ int .dbPoolTimeout | quote }}
+  {{- end }}
+  {{- if ne .dbPoolMaxWaiting nil }}
+  DB_POOL_MAX_WAITING: {{ int .dbPoolMaxWaiting | quote }}
+  {{- end }}
+  {{- if ne .dbPoolMaxLifetime nil }}
+  DB_POOL_MAX_LIFETIME: {{ int .dbPoolMaxLifetime | quote }}
+  {{- end }}
+  {{- if ne .dbPoolMaxIdle nil }}
+  DB_POOL_MAX_IDLE: {{ int .dbPoolMaxIdle | quote }}
+  {{- end }}
+  {{- if ne .dbPoolReconnectTimeout nil }}
+  DB_POOL_RECONNECT_TIMEOUT: {{ int .dbPoolReconnectTimeout | quote }}
+  {{- end }}
+  {{- if ne .dbPoolNumWorkers nil }}
+  DB_POOL_NUM_WORKERS: {{ int .dbPoolNumWorkers | quote }}
+  {{- end }}
+  {{ else }}
+  {{- if ne $.Values.settings.database.dbConnMaxAge nil }}
+  DB_CONN_MAX_AGE: {{ int $.Values.settings.database.dbConnMaxAge | quote }}
+  {{- end }}     
+  {{- end }}
+  {{- end }}  
   PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
   DEBUG: {{ if .Values.settings.debug }}"True"{{ else }}"False"{{ end }}
   NUM_PROXIES: {{ .Values.settings.numProxies | toString | quote }}
@@ -90,4 +124,12 @@ data:
   {{- end }}
   {{- if .Values.settings.siteDomain }}
   SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.database.dbDisableServerSideCursors }}
+  DB_DISABLE_SERVER_SIDE_CURSORS: "True"
+  {{- else }}
+  DB_DISABLE_SERVER_SIDE_CURSORS: "False"
+  {{- end }}
+  {{- if .Values.settings.timeLeeway }}
+  TIME_LEEWAY: {{ int .Values.settings.timeLeeway | quote }}
   {{- end }}

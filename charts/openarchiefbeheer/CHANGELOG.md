@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.0 (2025-10-03)
+
+- [maykinmedia/open-archiefbeheer#857] Added the possibility to configure the environment variables `LOG_STDOUT` and `LOG_LEVEL`. These variables are available from Open Archiefbeheer version `1.1.1`.
+
+## 1.4.1 (2025-10-01)
+
+- Add OIDC token renewal and session cookie age configuration options:
+  - `settings.oidcRenewIdTokenExpirySeconds`: Configure OIDC ID token renewal expiry time in seconds (defaults to 15 minutes = 900 seconds)
+  - `settings.sessionCookieAge`: Configure session cookie age in seconds (defaults to 15 minutes = 900 seconds)
+
 ## 1.4.0 (2025-08-24)
 ##### Upgraded
 - Redis Bitnami Helm subchart to version `22.0.1`

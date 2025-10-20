@@ -253,6 +253,21 @@ settings:
     total: ""
     backoffFactor: ""
     statusForcelist: ""
+  # -- OIDC token renewal settings (15 minutes = 900 seconds)
+  # IMPORTANT: This value must equal sessionCookieAge to prevent timeout mismatches
+  # If values differ, users may experience unexpected logouts when one expires before the other
+  oidcRenewIdTokenExpirySeconds: 900
+  # -- Session cookie age in seconds (15 minutes = 900 seconds)
+  # IMPORTANT: This value must equal oidcRenewIdTokenExpirySeconds to prevent timeout mismatches
+  # If values differ, users may experience unexpected logouts when one expires before the other
+  sessionCookieAge: 900  
+
+  logging:
+    # -- Controls whether the logs are output to standard output or to a file
+    toStdout: false
+    # -- Controls the log levels of project code and of the OIDC library. 
+    # Possible values: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL.
+    level: INFO
 
 worker:
   label: "1"
