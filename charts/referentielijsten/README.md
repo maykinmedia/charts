@@ -59,7 +59,7 @@ configuration:
 ```
 
 The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
-how to configure, see the Open Forms [documetation](https://referentielijsten-api.readthedocs.io/en/latest/installation/setup_configuration.html).
+how to configure, see the Referentielijsten [documetation](https://referentielijsten-api.readthedocs.io/en/latest/installation/setup_configuration.html).
 
 ### Sentry
 
