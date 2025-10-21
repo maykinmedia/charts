@@ -2,7 +2,7 @@
 
 ## 1.11.0 (2025-10-21)
 - [#267] Add nginx static file serving support
-  - Added `nginx.staticFileServing.enabled` (default: false) to enable/disable static file serving directly from nginx 
+  - Added `nginx.staticFileServing.enabled` (default: true) to enable/disable static file serving directly from nginx 
   - Hard coded mount path /srv/static/ as a place for the static files
   - Added `nginx.staticFileServing.minVersion` to specify minimum OpenForms version requirement (default: 3.3.0)
   - Includes automatic version checking to ensure static file serving only works with compatible OpenForms versions (>= 3.3.0)
