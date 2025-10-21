@@ -66,7 +66,7 @@ spec:
               httpHeaders:
                 - name: Host
                   value: {{ include "openforms.fullname" . | quote }}
-            {{- toYaml .Values.livenessProbe | nindent 12 }}           
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /admin/
