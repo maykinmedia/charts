@@ -1,13 +1,10 @@
 # Changelog
 
-## 1.11.0 (2025-10-06)
+## 1.11.0 (2025-10-21)
 - [#267] Add nginx static file serving support
   - Added `nginx.staticFileServing.enabled` (default: false) to enable/disable static file serving directly from nginx 
   - Hard coded mount path /srv/static/ as a place for the static files
   - Added `nginx.staticFileServing.minVersion` to specify minimum OpenForms version requirement (default: 3.3.0)
-  - Added `nginx.staticFileServing.livenessProbeInitialDelaySeconds` (default: 180) for liveness probe delay when static file serving is enabled
-  - Added `nginx.staticFileServing.readinessProbeInitialDelaySeconds` (default: 120) for readiness probe delay when static file serving is enabled
-  - Probe delays are only applied when both static file serving is enabled AND version check passes
   - Includes automatic version checking to ensure static file serving only works with compatible OpenForms versions (>= 3.3.0)
 
 ## 1.10.2 (2025-09-14)

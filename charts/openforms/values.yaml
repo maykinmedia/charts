@@ -606,10 +606,6 @@ nginx:
   staticFileServing:
     # -- Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0)
     enabled: true
-    # -- Initial delay seconds for liveness probe when static file serving is enabled
-    livenessProbeInitialDelaySeconds: 180
-    # -- Initial delay seconds for readiness probe when static file serving is enabled
-    readinessProbeInitialDelaySeconds: 120
 
 flower:
   enabled: true

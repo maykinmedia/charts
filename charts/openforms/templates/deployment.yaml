@@ -66,11 +66,7 @@ spec:
               httpHeaders:
                 - name: Host
                   value: {{ include "openforms.fullname" . | quote }}
-            {{- $livenessProbe := deepCopy .Values.livenessProbe }}
-            {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
-            {{- $_ := set $livenessProbe "initialDelaySeconds" .Values.nginx.staticFileServing.livenessProbeInitialDelaySeconds }}
-            {{- end }}
-            {{- toYaml $livenessProbe | nindent 12 }}            
+            {{- toYaml .Values.livenessProbe | nindent 12 }}           
           readinessProbe:
             httpGet:
               path: /admin/
@@ -78,11 +74,7 @@ spec:
               httpHeaders:
                 - name: Host
                   value: {{ include "openforms.fullname" . | quote }}
-            {{- $readinessProbe := deepCopy .Values.readinessProbe }}
-            {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
-            {{- $_ := set $readinessProbe "initialDelaySeconds" .Values.nginx.staticFileServing.readinessProbeInitialDelaySeconds }}
-            {{- end }}
-            {{- toYaml $readinessProbe | nindent 12 }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
           {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
