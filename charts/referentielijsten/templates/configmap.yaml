@@ -55,10 +55,8 @@ data:
   DB_CONN_MAX_AGE: {{ int $.Values.settings.database.db_conn_max_age | quote }}
   {{- end }}     
   {{- end }}
-  {{- end }}  
-  {{ if .Values.settings.debug }}
-  DEBUG: "True"
   {{- end }}
+  DEBUG: {{ if .Values.settings.debug }}"True"{{ else }}"False"{{ end }}  
   {{ if .Values.settings.disable2fa }}
   DISABLE_2FA: "True"
   {{- end }}
