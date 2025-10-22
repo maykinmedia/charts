@@ -1,6 +1,6 @@
 # Referentielijsten Chart
 
-A Helm chart for Kubernetes
+De Referentielijsten API is een generieke API voor eenvoudige herbruikebare lijsten
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.0](https://img.shields.io/badge/AppVersion-0.6.0-informational?style=flat-square)
 
@@ -133,6 +133,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |
 | persistence.mediaMountSubpath | string | `"referentielijsten/media"` |  |
+| persistence.privateMediaMountSubpath | string | `"referentielijsten/private_media"` |  |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClassName | string | `""` |  |
 | podAnnotations | object | `{}` |  |
@@ -166,7 +167,19 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |
-| settings.cache.oidc | string | `""` |  |
+| settings.cors | object | `{"allowAllOrigins":false,"allowedOriginRegexes":"","allowedOrigins":"","extraAllowHeaders":""}` | CORS (Cross-Origin Resource Sharing) settings |
+| settings.cors.allowAllOrigins | bool | `false` | Allow cross-domain access from any client |
+| settings.cors.allowedOriginRegexes | string | `""` | Allowed origin regex patterns (comma-separated). Same as CORS_ALLOWED_ORIGINS, but supports regular expressions |
+| settings.cors.allowedOrigins | string | `""` | Explicitly list allowed origins (comma-separated). Example: http://localhost:3000,https://some-app.gemeente.nl |
+| settings.cors.extraAllowHeaders | string | `""` | Extra headers allowed in cross-domain requests (comma-separated). By default, Authorization, Accept-Crs and Content-Crs are already included |
+| settings.csp | object | `{"extraDefaultSrc":"","extraFormAction":"","extraImgSrc":"","formAction":"","objectSrc":"","reportPercentage":0,"reportUri":""}` | Content Security Policy settings |
+| settings.csp.extraDefaultSrc | string | `""` | Extra default source URLs for CSP other than 'self'. Used for img-src, style-src and script-src (comma-separated) |
+| settings.csp.extraFormAction | string | `""` | Additional form-action sources (comma-separated) |
+| settings.csp.extraImgSrc | string | `""` | Extra img-src sources (comma-separated) |
+| settings.csp.formAction | string | `""` | Override the default form-action sources (comma-separated) |
+| settings.csp.objectSrc | string | `""` | object-src sources (comma-separated) |
+| settings.csp.reportPercentage | float | `0` | Fraction (between 0 and 1) of requests to include report-uri directive |
+| settings.csp.reportUri | string | `""` | URI for CSP report-uri directive |
 | settings.database.db_conn_max_age | int | `60` |  |
 | settings.database.db_pool.db_pool_max_idle | int | `600` |  |
 | settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
@@ -188,6 +201,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.djangoSettingsModule | string | `"referentielijsten.conf.docker"` |  |
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
+| settings.elasticapm.transactionSampleRate | float | `0.1` | By default, the agent will sample every transaction (e.g. request to your service). To reduce overhead and storage requirements, set the sample rate to a value between 0.0 and 1.0 |
 | settings.elasticapm.url | string | `""` |  |
 | settings.email.defaultFrom | string | `""` |  |
 | settings.email.host | string | `"localhost"` |  |
@@ -197,6 +211,17 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
+| settings.logging | object | `{"enableStructlogRequests":true,"formatConsole":"json","level":"INFO","outgoingRequests":{"dbSave":false,"dbSaveBody":true,"emitBody":true,"maxAge":7},"queries":false,"requests":false,"stdout":true}` | Logging configuration |
+| settings.logging.enableStructlogRequests | bool | `true` | Enable structured logging of requests |
+| settings.logging.formatConsole | string | `"json"` | The format for the console logging handler, possible options: json, plain_console |
+| settings.logging.level | string | `"INFO"` | Control the verbosity of logging output. Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
+| settings.logging.outgoingRequests.dbSave | bool | `false` | Whether to save outgoing request logs to database |
+| settings.logging.outgoingRequests.dbSaveBody | bool | `true` | Whether to save request bodies to database |
+| settings.logging.outgoingRequests.emitBody | bool | `true` | Whether to emit request bodies in logs |
+| settings.logging.outgoingRequests.maxAge | int | `7` | Maximum age of request logs in database (days) |
+| settings.logging.queries | bool | `false` | Enable (query) logging at the database backend level. Note that you must also set DEBUG=1, which should be done very sparingly! |
+| settings.logging.requests | bool | `false` | Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database. |
+| settings.logging.stdout | bool | `true` | Whether to log to stdout or not |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
