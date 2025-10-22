@@ -117,7 +117,7 @@ data:
   ENVIRONMENT_FOREGROUND_COLOR: {{ .Values.settings.environmentLabelForegroundColor | toString | quote }}
   {{- end }}
   # Static files configuration
-  {{- if .Values.nginx.staticFileServing.enabled }}
+  {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
   STATIC_ROOT_VOLUME: "/srv/static/"
   {{- end }}
   {{- if .Values.settings.crossOriginOpenerPolicy }}
