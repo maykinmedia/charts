@@ -289,10 +289,8 @@ settings:
     # e.g.:
     # default: referentielijsten-redis-master-0:6379/0
     # axes: referentielijsten-redis-master-0:6379/0
-    # oidc: referentielijsten-redis-master-0:6379/0
     default: ""
     axes: ""
-    oidc: ""
 
   isHttps: true
 
