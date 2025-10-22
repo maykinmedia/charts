@@ -73,6 +73,9 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "referentielijsten/media" }}
+            - name: media
+              mountPath: /app/private_media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "referentielijsten/private_media" }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "referentielijsten.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}

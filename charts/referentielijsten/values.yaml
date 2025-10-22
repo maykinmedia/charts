@@ -189,6 +189,7 @@ persistence:
   storageClassName: ""
   existingClaim: null
   mediaMountSubpath: referentielijsten/media
+  privateMediaMountSubpath: referentielijsten/private_media
 
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
