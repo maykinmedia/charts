@@ -305,8 +305,31 @@ settings:
     harakiri: ''
 
   # -- Defines the primary domain where the application is hosted. Defaults to ""
-  siteDomain: ""      
+  siteDomain: ""
 
+  # -- Logging configuration
+  logging:
+    # -- Whether to log to stdout or not
+    stdout: true
+    # -- Control the verbosity of logging output. Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG
+    level: "INFO"
+    # -- Enable (query) logging at the database backend level. Note that you must also set DEBUG=1, which should be done very sparingly!
+    queries: false
+    # -- Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database.
+    requests: false
+    # -- The format for the console logging handler, possible options: json, plain_console
+    formatConsole: "json"
+    # -- Enable structured logging of requests
+    enableStructlogRequests: true
+    outgoingRequests:
+      # -- Whether to emit request bodies in logs
+      emitBody: true
+      # -- Whether to save outgoing request logs to database
+      dbSave: false
+      # -- Whether to save request bodies to database
+      dbSaveBody: true
+      # -- Maximum age of request logs in database (days)
+      maxAge: 7
 
 ##################
 # Redis subchart #
