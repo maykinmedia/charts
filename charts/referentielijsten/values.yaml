@@ -251,6 +251,8 @@ settings:
     url: ""
     token: ""
     serviceName: ""
+      # -- By default, the agent will sample every transaction (e.g. request to your service). To reduce overhead and storage requirements, set the sample rate to a value between 0.0 and 1.0
+    transactionSampleRate: 0.1  
 
   database:
     host: ""
@@ -330,6 +332,32 @@ settings:
       dbSaveBody: true
       # -- Maximum age of request logs in database (days)
       maxAge: 7
+  # -- CORS (Cross-Origin Resource Sharing) settings
+  cors:
+    # -- Allow cross-domain access from any client
+    allowAllOrigins: false
+    # -- Explicitly list allowed origins (comma-separated). Example: http://localhost:3000,https://some-app.gemeente.nl
+    allowedOrigins: ""
+    # -- Allowed origin regex patterns (comma-separated). Same as CORS_ALLOWED_ORIGINS, but supports regular expressions
+    allowedOriginRegexes: ""
+    # -- Extra headers allowed in cross-domain requests (comma-separated). By default, Authorization, Accept-Crs and Content-Crs are already included
+    extraAllowHeaders: ""      
+  # -- Content Security Policy settings
+  csp:
+    # -- Extra default source URLs for CSP other than 'self'. Used for img-src, style-src and script-src (comma-separated)
+    extraDefaultSrc: ""
+    # -- Additional form-action sources (comma-separated)
+    extraFormAction: ""
+    # -- Override the default form-action sources (comma-separated)
+    formAction: ""
+    # -- Extra img-src sources (comma-separated)
+    extraImgSrc: ""
+    # -- object-src sources (comma-separated)
+    objectSrc: ""
+    # -- URI for CSP report-uri directive
+    reportUri: ""
+    # -- Fraction (between 0 and 1) of requests to include report-uri directive
+    reportPercentage: 0.0
 
 ##################
 # Redis subchart #
