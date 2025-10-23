@@ -6035,4 +6035,30 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openzaaktypebeheer-0.1.0/openzaaktypebeheer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-23T08:15:59.455726963Z"
+  referentielijsten:
+  - apiVersion: v2
+    appVersion: 0.6.0
+    created: "2025-10-23T11:50:44.108519777Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    - name: maykin-utils-lib
+      repository: https://maykinmedia.github.io/charts/
+      version: 0.2.1
+    description: De Referentielijsten API is een generieke API voor eenvoudige herbruikebare
+      lijsten
+    digest: 1dc9857681bf6420c661791967ce7393c9ea65d1ef74ef074ad2c5c55cd5ea1e
+    name: referentielijsten
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-10-23T11:50:44.108941279Z"
