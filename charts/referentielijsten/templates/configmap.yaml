@@ -6,9 +6,7 @@ metadata:
     {{- include "referentielijsten.labels" . | nindent 4 }}
 data:
   DJANGO_SETTINGS_MODULE: {{ .Values.settings.djangoSettingsModule | toString | quote }}
-  {{- if .Values.settings.useXForwardedHost }}
-  USE_X_FORWARDED_HOST: "True"
-  {{- end }}  
+  USE_X_FORWARDED_HOST: {{ if .Values.settings.useXForwardedHost }}"True"{{ else }}"False"{{ end }}  
   ENVIRONMENT: {{ .Values.settings.environment | default (include "referentielijsten.fullname" .) }}
   ALLOWED_HOSTS: "{{ include "referentielijsten.fullname" . }},{{ include "referentielijsten.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
   {{- if .Values.tags.redis }}
@@ -57,18 +55,14 @@ data:
   {{- end }}
   {{- end }}
   DEBUG: {{ if .Values.settings.debug }}"True"{{ else }}"False"{{ end }}  
-  {{ if .Values.settings.disable2fa }}
-  DISABLE_2FA: "True"
-  {{- end }}
+  DISABLE_2FA: {{ if .Values.settings.disable2fa }}"True"{{ else }}"False"{{ end }}
   IS_HTTPS: {{ if .Values.settings.isHttps }}"True"{{ else }}"False"{{ end }}
   EMAIL_HOST: {{ .Values.settings.email.host | toString | quote }}
   EMAIL_PORT: {{ .Values.settings.email.port | toString | quote }}
   {{- if .Values.settings.email.username }}
   EMAIL_HOST_USER: {{ .Values.settings.email.username | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.email.useTLS }}
-  EMAIL_USE_TLS: "True"
-  {{- end }}
+  EMAIL_USE_TLS: {{ if .Values.settings.email.useTLS }}"True"{{ else }}"False"{{ end }}
   {{- if .Values.settings.email.defaultFrom }}
   DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
   {{- end }}
