@@ -11,6 +11,7 @@ This repository contains Helm charts for:
 - [openarchiefbeheer](./charts/openarchiefbeheer/README.md)
 - [openklant](./charts/openklant/README.md)
 - [openproduct](./charts/openproduct/README.md)
+- [referentielijsten](./charts/referentielijsten/README.md)
 
 ```bash
 helm repo add maykinmedia https://maykinmedia.github.io/charts/

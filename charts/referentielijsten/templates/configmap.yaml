@@ -1,0 +1,156 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "referentielijsten.fullname" . }}
+  labels:
+    {{- include "referentielijsten.labels" . | nindent 4 }}
+data:
+  DJANGO_SETTINGS_MODULE: {{ .Values.settings.djangoSettingsModule | toString | quote }}
+  USE_X_FORWARDED_HOST: {{ if .Values.settings.useXForwardedHost }}"True"{{ else }}"False"{{ end }}  
+  ENVIRONMENT: {{ .Values.settings.environment | default (include "referentielijsten.fullname" .) }}
+  ALLOWED_HOSTS: "{{ include "referentielijsten.fullname" . }},{{ include "referentielijsten.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
+  {{- if .Values.tags.redis }}
+  CACHE_DEFAULT: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  CACHE_AXES: {{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString | quote }}
+  {{ else }}
+  CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
+  CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
+  {{- end }}
+  DB_NAME: {{ .Values.settings.database.name | toString | quote }}
+  DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
+  DB_USER: {{ .Values.settings.database.username | toString | quote }}
+  DB_PORT: {{ .Values.settings.database.port | toString | quote }}
+  PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
+  {{- with .Values.settings.database.db_pool }}
+  {{- if .enabled }}
+  DB_POOL_ENABLED: {{ .enabled | toString | title | quote }}
+  {{- if ne .db_pool_min_size nil }}
+  DB_POOL_MIN_SIZE: {{ int .db_pool_min_size | quote }}
+  {{- end }} 
+  {{- if ne .db_pool_max_size nil }}
+  DB_POOL_MAX_SIZE: {{ int .db_pool_max_size | quote }}
+  {{- end }}
+  {{- if ne .db_pool_timeout nil }}
+  DB_POOL_TIMEOUT: {{ int .db_pool_timeout | quote }}
+  {{- end }}
+  {{- if ne .db_pool_max_waiting nil }}
+  DB_POOL_MAX_WAITING: {{ int .db_pool_max_waiting | quote }}
+  {{- end }}
+  {{- if ne .db_pool_max_lifetime nil }}
+  DB_POOL_MAX_LIFETIME: {{ int .db_pool_max_lifetime | quote }}
+  {{- end }}
+  {{- if ne .db_pool_max_idle nil }}
+  DB_POOL_MAX_IDLE: {{ int .db_pool_max_idle | quote }}
+  {{- end }}
+  {{- if ne .db_pool_reconnect_timeout nil }}
+  DB_POOL_RECONNECT_TIMEOUT: {{ int .db_pool_reconnect_timeout | quote }}
+  {{- end }}
+  {{- if ne .db_pool_num_workers nil }}
+  DB_POOL_NUM_WORKERS: {{ int .db_pool_num_workers | quote }}
+  {{- end }}
+  {{ else }}
+  {{- if ne $.Values.settings.database.db_conn_max_age nil }}
+  DB_CONN_MAX_AGE: {{ int $.Values.settings.database.db_conn_max_age | quote }}
+  {{- end }}     
+  {{- end }}
+  {{- end }}
+  DEBUG: {{ if .Values.settings.debug }}"True"{{ else }}"False"{{ end }}  
+  DISABLE_2FA: {{ if .Values.settings.disable2fa }}"True"{{ else }}"False"{{ end }}
+  IS_HTTPS: {{ if .Values.settings.isHttps }}"True"{{ else }}"False"{{ end }}
+  EMAIL_HOST: {{ .Values.settings.email.host | toString | quote }}
+  EMAIL_PORT: {{ .Values.settings.email.port | toString | quote }}
+  {{- if .Values.settings.email.username }}
+  EMAIL_HOST_USER: {{ .Values.settings.email.username | toString | quote }}
+  {{- end }}
+  EMAIL_USE_TLS: {{ if .Values.settings.email.useTLS }}"True"{{ else }}"False"{{ end }}
+  {{- if .Values.settings.email.defaultFrom }}
+  DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.elasticapm.url }}
+  ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString |  quote }}
+  {{- end }}
+  {{- if .Values.settings.elasticapm.transactionSampleRate }}
+  ELASTIC_APM_TRANSACTION_SAMPLE_RATE: {{ .Values.settings.elasticapm.transactionSampleRate | toString | quote }}
+  {{- end }}  
+  {{- if .Values.settings.uwsgi.master }}
+  UWSGI_MASTER:  {{ if .Values.settings.uwsgi.master }}"1"{{ else }}"0"{{ end }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.threads }}
+  UWSGI_THREADS: {{ .Values.settings.uwsgi.threads  | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.processes }}
+  UWSGI_PROCESSES: {{ .Values.settings.uwsgi.processes | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.maxRequests }}
+  UWSGI_MAX_REQUESTS: {{ .Values.settings.uwsgi.maxRequests | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.uwsgi.harakiri }}
+  UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.siteDomain }}
+  SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
+  {{- end }}
+  # Logging settings
+  {{- if .Values.settings.logging.stdout }}
+  LOG_STDOUT: {{ .Values.settings.logging.stdout | toString | title | quote }}
+  {{- end }}
+  {{- if .Values.settings.logging.level }}
+  LOG_LEVEL: {{ .Values.settings.logging.level | upper | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.logging.queries }}
+  LOG_QUERIES: {{ .Values.settings.logging.queries | toString | title | quote }}
+  {{- end }}
+  {{- if .Values.settings.logging.requests }}
+  LOG_REQUESTS: {{ .Values.settings.logging.requests | toString | title | quote }}
+  {{- end }}
+  {{- if .Values.settings.logging.formatConsole }}
+  LOG_FORMAT_CONSOLE: {{ .Values.settings.logging.formatConsole | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.logging.enableStructlogRequests }}
+  ENABLE_STRUCTLOG_REQUESTS: {{ .Values.settings.logging.enableStructlogRequests | toString | title | quote }}
+  {{- end }}
+  {{- if .Values.settings.logging.outgoingRequests.emitBody }}
+  LOG_OUTGOING_REQUESTS_EMIT_BODY: {{ .Values.settings.logging.outgoingRequests.emitBody | toString | title | quote }}
+  {{- end }}
+  {{- if .Values.settings.logging.outgoingRequests.dbSave }}
+  LOG_OUTGOING_REQUESTS_DB_SAVE: {{ .Values.settings.logging.outgoingRequests.dbSave | toString | title | quote }}
+  {{- end }}
+  {{- if .Values.settings.logging.outgoingRequests.dbSaveBody }}
+  LOG_OUTGOING_REQUESTS_DB_SAVE_BODY: {{ .Values.settings.logging.outgoingRequests.dbSaveBody | toString | title | quote }}
+  {{- end }}
+  {{- if .Values.settings.logging.outgoingRequests.maxAge }}
+  LOG_OUTGOING_REQUESTS_MAX_AGE: {{ .Values.settings.logging.outgoingRequests.maxAge | toString | quote }}
+  {{- end }}
+  # CORS settings
+  CORS_ALLOW_ALL_ORIGINS: {{ .Values.settings.cors.allowAllOrigins | toString | title | quote }}
+  {{- if .Values.settings.cors.allowedOrigins }}
+  CORS_ALLOWED_ORIGINS: {{ .Values.settings.cors.allowedOrigins | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.cors.allowedOriginRegexes }}
+  CORS_ALLOWED_ORIGIN_REGEXES: {{ .Values.settings.cors.allowedOriginRegexes | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.cors.extraAllowHeaders }}
+  CORS_EXTRA_ALLOW_HEADERS: {{ .Values.settings.cors.extraAllowHeaders | toString | quote }}
+  {{- end }}
+    # Content Security Policy settings
+  {{- if .Values.settings.csp.extraDefaultSrc }}
+  CSP_EXTRA_DEFAULT_SRC: {{ .Values.settings.csp.extraDefaultSrc | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.csp.extraFormAction }}
+  CSP_EXTRA_FORM_ACTION: {{ .Values.settings.csp.extraFormAction | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.csp.formAction }}
+  CSP_FORM_ACTION: {{ .Values.settings.csp.formAction | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.csp.extraImgSrc }}
+  CSP_EXTRA_IMG_SRC: {{ .Values.settings.csp.extraImgSrc | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.csp.objectSrc }}
+  CSP_OBJECT_SRC: {{ .Values.settings.csp.objectSrc | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.csp.reportUri }}
+  CSP_REPORT_URI: {{ .Values.settings.csp.reportUri | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.csp.reportPercentage }}
+  CSP_REPORT_PERCENTAGE: {{ .Values.settings.csp.reportPercentage | toString | quote }}
+  {{- end }}
