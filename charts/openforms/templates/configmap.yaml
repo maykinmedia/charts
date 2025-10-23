@@ -116,6 +116,10 @@ data:
   {{- if .Values.settings.environmentLabelForegroundColor }}
   ENVIRONMENT_FOREGROUND_COLOR: {{ .Values.settings.environmentLabelForegroundColor | toString | quote }}
   {{- end }}
+  # Static files configuration
+  {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
+  STATIC_ROOT_VOLUME: "/srv/static/"
+  {{- end }}
   {{- if .Values.settings.crossOriginOpenerPolicy }}
   {{- $allowedValues := list "same-origin" "same-origin-allow-popups" "unsafe-none" "noopener-allow-popups" }}
   {{- if has .Values.settings.crossOriginOpenerPolicy $allowedValues }}

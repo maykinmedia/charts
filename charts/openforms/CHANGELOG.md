@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.11.0 (2025-10-21)
+- [#267] Add nginx static file serving support
+  - Added `nginx.staticFileServing.enabled` (default: true) to enable/disable static file serving directly from nginx 
+  - Hard coded mount path /srv/static/ as a place for the static files
+  - Includes automatic version checking to ensure static file serving only works with compatible OpenForms versions (>= 3.3.0)
+
 ## 1.10.2 (2025-09-14)
 - Fixed Flower deployment to use the `flower.extraVolumes` instead of `extraVolumes` and `flower.extraVolumeMounts` instead of `extraVolumeMounts`.
 

@@ -2,7 +2,7 @@
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
-![Version: 1.10.2](https://img.shields.io/badge/Version-1.10.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0](https://img.shields.io/badge/AppVersion-3.3.0-informational?style=flat-square)
+![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0](https://img.shields.io/badge/AppVersion-3.3.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -11,7 +11,7 @@ This chart can be used to deploy Open Forms on a Kubernetes cluster using the He
 * [Source code](https://github.com/open-formulieren/open-forms/)
 * [Documentation](https://open-forms.readthedocs.io/)
 * [Docker image](https://hub.docker.com/r/openformulieren/open-forms)
-* [Changelog](https://open-forms.readthedocs.io/en/3.3.0/changelog.html)
+* [Changelog](https://open-forms.readthedocs.io/en/stable/changelog.html)
 
 ## Quickstart
 
@@ -184,6 +184,7 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | nginx.service.annotations | object | `{}` |  |
 | nginx.service.port | int | `80` |  |
 | nginx.service.type | string | `"ClusterIP"` |  |
+| nginx.staticFileServing.enabled | bool | `true` | Enable static file serving directly from Nginx (requires OpenForms >= 3.3.0) |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
