@@ -413,6 +413,7 @@ settings:
   # -- Custom JavaScript Configuration
   # Flag to enable the custom JavaScript upload feature in the admin interface. When set to true, this feature allows admins to upload custom JavaScript code that will be loaded on all pages.
   # WARNING: Custom JavaScript can negatively impact security and performance, and should be done with care.
+  # NOTE: This variable can only be set to true with openinwoner version 1.35.0 or higher
   allowCustomJs: false
 
 worker:

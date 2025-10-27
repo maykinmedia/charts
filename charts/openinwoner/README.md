@@ -1,6 +1,6 @@
 # openinwoner
 
-![Version: 1.11.1](https://img.shields.io/badge/Version-1.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.34.0](https://img.shields.io/badge/AppVersion-1.34.0-informational?style=flat-square)
+![Version: 1.11.3](https://img.shields.io/badge/Version-1.11.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.34.0](https://img.shields.io/badge/AppVersion-1.34.0-informational?style=flat-square)
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
@@ -156,7 +156,7 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | serviceAccount.automountServiceAccountToken | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| settings.allowCustomJs | bool | `false` | Custom JavaScript Configuration Enable/disable the ability to upload custom JavaScript files that will be loaded on all pages WARNING: Custom JavaScript can negatively impact security and performance Set to true to enable the custom JavaScript upload feature in the admin interface   |
+| settings.allowCustomJs | bool | `false` | Custom JavaScript Configuration Flag to enable the custom JavaScript upload feature in the admin interface. When set to true, this feature allows admins to upload custom JavaScript code that will be loaded on all pages. WARNING: Custom JavaScript can negatively impact security and performance, and should be done with care. NOTE: This variable can only be set to true with openinwoner version 1.35.0 or higher |
 | settings.allowedHosts | string | `""` |  |
 | settings.brpVersion | string | `""` |  |
 | settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |

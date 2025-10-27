@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.11.1 (2025-09-11)
+## 1.11.3 (2025-10-27)
 - [#287] Add `ALLOW_CUSTOM_JS` environment variable to enable/disable custom JavaScript upload feature (default: "False")
+  - **Note**: This variable can only be used with Openinwoner version 1.35.0 or higher
 
 ## 1.11.0 (2025-09-10)
 
