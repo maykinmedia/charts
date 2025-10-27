@@ -1,9 +1,10 @@
 apiVersion: v2
-name: openklant
-description: Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
+appVersion: 0.6.0
+description: De Referentielijsten API is een generieke API voor eenvoudige herbruikebare lijsten
+
+name: referentielijsten
 type: application
-version: 1.8.2
-appVersion: 2.12.0
+version: 0.1.0
 
 dependencies:
   - name: redis
@@ -16,3 +17,6 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
+  - name: maykin-utils-lib
+    version: 0.2.1
+    repository: https://maykinmedia.github.io/charts/      

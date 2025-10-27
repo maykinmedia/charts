@@ -11,10 +11,7 @@ global:
 configuration:
   enabled: false
   overwrite: true
-  superuser:
-    username: ""
-    password: ""
-    email: ""
+
   job:
     # -- Run the setup configuration command as a job
     enabled: false
@@ -25,16 +22,16 @@ configuration:
     # Note, this field is immutable
     resources: {}
   secrets: {}
-  # data: ""
+  data: ""
   # e.g.
   # data: |-
-  #   oidc_db_config_enable: true
+  #   oidc_db_config_enable: True
   #   oidc_db_config_admin_auth:
   #     items:
   #     - identifier: admin-oidc
-  #       enabled: true
-  #       oidc_rp_client_id: openproduct.example.nl 
-  #       oidc_rp_client_secret: '${keycloak_client_secret}'
+  #       enabled: True
+  #       oidc_rp_client_id: referentielijsten.example.nl
+  #       oidc_rp_client_secret: ${keycloak_client_secret}
   #       oidc_rp_scopes_list:
   #       - openid
   #       - email
@@ -68,10 +65,10 @@ configuration:
 tags:
   redis: true
 
-replicaCount: 2
+replicaCount: 1
 
 image:
-  repository: maykinmedia/openproduct
+  repository: maykinmedia/referentielijsten-api
   pullPolicy: IfNotPresent
   tag: ""
 
@@ -126,34 +123,34 @@ ingress:
   className: ""
   # -- ingress hosts
   hosts: []
-  #  - host: openproduct.gemeente.nl
+  #  - host: referentielijsten.gemeente.nl
   #    paths:
   #      - path: /
   #        pathType: ImplementationSpecific
   tls: []
-  #  - secretName: openproduct-tls
+  #  - secretName: referentielijsten-tls
   #    hosts:
-  #      - openproduct.gemeente.nl
+  #      - referentielijsten.gemeente.nl
 
 # -- Specify extra ingresses, for example if you have multiple ingress classes
 extraIngress: []
 # e.g:
 # extraIngress:
-#  - name: openproduct-azuregateway
+#  - name: referentielijsten-azuregateway
 #    annotations:
 #      appgw.ingress.kubernetes.io/ssl-redirect: "true"
 #    className: azure-application-gateway
 #    hosts:
-#      - host: openproduct.gemeente.nl
+#      - host: referentielijsten.gemeente.nl
 #        paths:
 #          - path: /
 #            pathType: ImplementationSpecific
-#            servicename: openproduct
+#            servicename: referentielijsten
 #            portNumber: 8000
 #    tls:
-#      - secretName: openproduct-tls
+#      - secretName: referentielijsten-tls
 #        hosts:
-#          - "openproduct.gemeente.nl"
+#          - "referentielijsten.gemeente.nl"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -191,8 +188,8 @@ persistence:
   size: 1Gi
   storageClassName: ""
   existingClaim: null
-  mediaMountSubpath: openproduct/media
-  privateMediaMountSubpath: openproduct/private_media
+  mediaMountSubpath: referentielijsten/media
+  privateMediaMountSubpath: referentielijsten/private_media
 
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
@@ -236,12 +233,9 @@ extraVolumeMounts: []
 #  - name: verify-certs
 #    mountPath: /etc/ssl/certs/extra-certs/
 
-#needed for the helm lib chart celery worker
-pythonAppName: openproduct
-
 settings:
   allowedHosts: ""
-  djangoSettingsModule: openproduct.conf.docker
+  djangoSettingsModule: referentielijsten.conf.docker
   useXForwardedHost: false
 
   # -- Disable two factor authentication
@@ -257,6 +251,8 @@ settings:
     url: ""
     token: ""
     serviceName: ""
+      # -- By default, the agent will sample every transaction (e.g. request to your service). To reduce overhead and storage requirements, set the sample rate to a value between 0.0 and 1.0
+    transactionSampleRate: 0.1  
 
   database:
     host: ""
@@ -264,20 +260,21 @@ settings:
     username: ""
     password: ""
     name: ""
-    dbConnMaxAge: 60
+    sslmode: prefer
+    db_conn_max_age: 60
     # @section Django DB Pool Configuration
     # Django database connection pool settings.
-    # These are the default values used by Django and the application; change them if your app requires more connections or different timeouts.    
-    dbPool:
+    # These are the default values used by Django and the application; change them if your app requires more connections or different timeouts.
+    db_pool:
       enabled: false
-      dbPoolMinSize: 4
-      dbPoolMaxSize: 4
-      dbPoolTimeout: 30
-      dbPoolMaxWaiting: 0
-      dbPoolMaxLifetime: 3600
-      dbPoolMaxIdle: 600
-      dbPoolReconnectTimeout: 300
-      dbPoolNumWorkers: 3
+      db_pool_min_size: 4 
+      db_pool_max_size: 4
+      db_pool_timeout: 30
+      db_pool_max_waiting: 0
+      db_pool_max_lifetime: 3600
+      db_pool_max_idle: 600
+      db_pool_reconnect_timeout: 300
+      db_pool_num_workers: 3      
 
   email:
     host: localhost
@@ -293,21 +290,10 @@ settings:
   # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
   cache:
     # e.g.:
-    # default: openforms-redis-master-0:6379/0
-    # axes: openforms-redis-master-0:6379/0
+    # default: referentielijsten-redis-master-0:6379/0
+    # axes: referentielijsten-redis-master-0:6379/0
     default: ""
     axes: ""
-
-  # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
-  celery:
-    # e.g.:
-    # brokerUrl: redis://openforms-redis-master:6379/1
-    # resultBackend: redis://openforms-redis-master:6379/1
-    brokerUrl: ""
-    resultBackend: ""
-    logLevel: debug
-
-  notificationsDisabled: false
 
   isHttps: true
 
@@ -320,67 +306,62 @@ settings:
     maxRequests: ''
     harakiri: ''
 
-worker:
-  label: "1"
-  name: ""
-  queueName: ""
-  replicaCount: 2
-  concurrency: 4
-  podLabels: {}
-  resources: {}
-    # requests:
-    #   cpu: 250m
-    #   memory: 256Mi
-  livenessProbe: 
-    enabled: false
-    exec:
-      command:
-        - /app/liveness/liveness-probe.sh        
-    initialDelaySeconds: 60
-    # Periodeseconds should not exceed maxWorkerLivenessDelta
-    periodSeconds: 50
-    timeoutSeconds: 10
-    failureThreshold: 3
-    successThreshold: 1
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 100
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
-    behaviour: {}
+  # -- Defines the primary domain where the application is hosted. Defaults to ""
+  siteDomain: ""
 
-flower:
-  enabled: true
-  replicaCount: 1
-  podLabels: {}
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
-  resources: {}
-
-beat:
-  enabled: true
-  replicaCount: 1
-  podLabels: {}
-  livenessProbe: {}
-  readinessProbe: {}
-  resources: {}
-
+  # -- Logging configuration
+  logging:
+    # -- Whether to log to stdout or not
+    stdout: true
+    # -- Control the verbosity of logging output. Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG
+    level: "INFO"
+    # -- Enable (query) logging at the database backend level. Note that you must also set DEBUG=1, which should be done very sparingly!
+    queries: false
+    # -- Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database.
+    requests: false
+    # -- The format for the console logging handler, possible options: json, plain_console
+    formatConsole: "json"
+    # -- Enable structured logging of requests
+    enableStructlogRequests: true
+    outgoingRequests:
+      # -- Whether to emit request bodies in logs
+      emitBody: true
+      # -- Whether to save outgoing request logs to database
+      dbSave: false
+      # -- Whether to save request bodies to database
+      dbSaveBody: true
+      # -- Maximum age of request logs in database (days)
+      maxAge: 7
+  # -- CORS (Cross-Origin Resource Sharing) settings
+  cors:
+    # -- Allow cross-domain access from any client
+    allowAllOrigins: false
+    # -- Explicitly list allowed origins (comma-separated). Example: http://localhost:3000,https://some-app.gemeente.nl
+    allowedOrigins: ""
+    # -- Allowed origin regex patterns (comma-separated). Same as CORS_ALLOWED_ORIGINS, but supports regular expressions
+    allowedOriginRegexes: ""
+    # -- Extra headers allowed in cross-domain requests (comma-separated). By default, Authorization, Accept-Crs and Content-Crs are already included
+    extraAllowHeaders: ""      
+  # -- Content Security Policy settings
+  csp:
+    # -- Extra default source URLs for CSP other than 'self'. Used for img-src, style-src and script-src (comma-separated)
+    extraDefaultSrc: ""
+    # -- Additional form-action sources (comma-separated)
+    extraFormAction: ""
+    # -- Override the default form-action sources (comma-separated)
+    formAction: ""
+    # -- Extra img-src sources (comma-separated)
+    extraImgSrc: ""
+    # -- object-src sources (comma-separated)
+    objectSrc: ""
+    # -- URI for CSP report-uri directive
+    reportUri: ""
+    # -- Fraction (between 0 and 1) of requests to include report-uri directive
+    reportPercentage: 0.0
 
 ##################
 # Redis subchart #
 ##################
-
 redis:
   architecture: standalone
   auth:

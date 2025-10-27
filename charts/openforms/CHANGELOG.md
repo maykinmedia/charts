@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.11.0 (2025-10-21)
+- [#267] Add nginx static file serving support
+  - Added `nginx.staticFileServing.enabled` (default: true) to enable/disable static file serving directly from nginx 
+  - Hard coded mount path /srv/static/ as a place for the static files
+  - Includes automatic version checking to ensure static file serving only works with compatible OpenForms versions (>= 3.3.0)
+
+## 1.10.2 (2025-09-14)
+- Fixed Flower deployment to use the `flower.extraVolumes` instead of `extraVolumes` and `flower.extraVolumeMounts` instead of `extraVolumeMounts`.
+
+## 1.10.1 (2025-09-13)
+- [#300] Add startup probe to improve deployment reliability
+  - Add startup probe with 5+ minute timeout for application initialization
+  - Configuration: 15s initial delay + 30 failures × 10s period = 5 minutes 15 seconds total
+  - Prevents premature pod restarts during complex startup scenarios (database migrations, static file collection)
+
+## 1.10.0 (2025-10-03)
+
+- Added environment variables to manage Open Telemetry configuration.
+- Updated the example yaml for automatic configuration.
+
+**Upgrade notes**
+
+⚠️ When upgrading to Open Forms 3.3, a number of manual actions are required. See the [changelog](https://open-forms.readthedocs.io/en/3.3.0/changelog.html) for more details.
+
+In addition, the data in the `configuration.data` value regarding the OIDC configuration (`oidc_db_config_admin_auth`) should be updated to the new format.
+Look at the example in the `values.yaml` file to see the new format.
+
 ## 1.9.0 (2025-08-20)
 ##### Upgraded 
 - Redis Bitnami Helm subchart to version `22.0.1`

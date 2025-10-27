@@ -3,6 +3,16 @@
 ## 1.11.3 (2025-10-27)
 - [#287] Add `ALLOW_CUSTOM_JS` environment variable to enable/disable custom JavaScript upload feature (default: "False")
   - **Note**: This variable can only be used with Openinwoner version 1.35.0 or higher
+  
+## 1.11.2 (2025-09-13)
+- [#300] Add startup probe to improve deployment reliability
+  - Add startup probe with 5+ minute timeout for application initialization
+  - Configuration: 15s initial delay + 30 failures × 10s period = 5 minutes 15 seconds total
+  - Prevents premature pod restarts during complex startup scenarios (database migrations, static file collection)
+
+## 1.11.1 (2025-10-13)
+- [#302] Fix health check probes to use non-redirecting endpoints
+  - Update liveness and readiness probe paths from `/admin/` to `/admin/login/`
 
 ## 1.11.0 (2025-09-10)
 
