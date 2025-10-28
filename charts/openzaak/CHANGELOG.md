@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.11.1 (2025-10-28)
+- Add startup probe to improve deployment reliability
+  - Add startup probe with 5+ minute timeout for application initialization
+  - Configuration: 15s initial delay + 30 failures × 10s period = 5 minutes 15 seconds total
+  - Prevents premature pod restarts during complex startup scenarios (database migrations, static file collection)
+
 ## 1.11.0 (2025-08-08)
 
 - [open-zaak/open-zaak#2132] Expose `result_expires` Celery setting via environment variable `CELERY_RESULT_EXPIRES`.

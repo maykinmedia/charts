@@ -1,6 +1,6 @@
 # openzaak
 
-![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.23.0](https://img.shields.io/badge/AppVersion-1.23.0-informational?style=flat-square)
+![Version: 1.11.1](https://img.shields.io/badge/Version-1.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.23.0](https://img.shields.io/badge/AppVersion-1.23.0-informational?style=flat-square)
 
 Productiewaardige API's voor Zaakgericht Werken
 
@@ -217,6 +217,11 @@ Productiewaardige API's voor Zaakgericht Werken
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
 | settings.zaakIdentificatieGenerator | string | `""` | Sets the method of Zaak.identificatie generation. Possible values are: use-creation-year, use-start-datum-year ; default=use-start-datum-year |
+| startupProbe.failureThreshold | int | `30` |  |
+| startupProbe.initialDelaySeconds | int | `15` | Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)     |
+| startupProbe.periodSeconds | int | `10` |  |
+| startupProbe.successThreshold | int | `1` |  |
+| startupProbe.timeoutSeconds | int | `5` |  |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
 | worker.autoscaling.enabled | bool | `false` |  |
