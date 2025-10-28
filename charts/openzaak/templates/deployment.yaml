@@ -90,7 +90,7 @@ spec:
               protocol: TCP
           startupProbe:
             httpGet:
-              path: /
+              path: /admin/
               port: http
               httpHeaders:
                 - name: Host
@@ -98,7 +98,7 @@ spec:
             {{- toYaml .Values.startupProbe | nindent 12 }}              
           livenessProbe:
             httpGet:
-              path: /
+              path: /admin/
               port: http
               httpHeaders:
                 - name: Host
@@ -106,7 +106,7 @@ spec:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
-              path: /
+              path: /admin/
               port: http
               httpHeaders:
                 - name: Host
