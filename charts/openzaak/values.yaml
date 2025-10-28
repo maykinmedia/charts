@@ -15,9 +15,6 @@ configuration:
     username: ""
     password: ""
     email: ""
-  initContainer:
-    # -- Run the setup configuration command in a init container
-    enabled: true
   job:
     # -- Run the setup configuration command as a job
     enabled: false
