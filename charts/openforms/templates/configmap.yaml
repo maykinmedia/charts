@@ -28,6 +28,9 @@ data:
   CSP_REPORTS_SAVE: {{ if .Values.settings.csp.reportSave }}"True"{{ else }}"False"{{ end }}
   CSP_EXTRA_DEFAULT_SRC: {{ join "," .Values.settings.csp.extraDefaultSrc | toString | quote }}
   CSP_EXTRA_IMG_SRC: {{ join "," .Values.settings.csp.extraImgSrc | toString | quote }}
+  CSP_REPORT_ONLY: {{ if .Values.settings.csp.reportOnly }}"True"{{ else }}"False"{{ end }}
+  CSP_REPORTS_LOG: {{ if .Values.settings.csp.log }}"True"{{ else }}"False"{{ end }}
+  CSP_REPORT_PERCENTAGE: {{ printf "%.1f" .Values.settings.csp.reportPercentage | quote }}
   {{- if .Values.extraVerifyCerts }}
   EXTRA_VERIFY_CERTS: {{ .Values.extraVerifyCerts| toString | quote }}
   {{- end }}

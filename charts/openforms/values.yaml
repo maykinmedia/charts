@@ -409,10 +409,16 @@ settings:
 
   csp:
     reportSave: false
+    # - siteimproveanalytics.com    
     extraDefaultSrc: []
-      # - siteimproveanalytics.com
+    # - "*.siteimproveanalytics.io"
     extraImgSrc: []
-      # - "*.siteimproveanalytics.io"
+    # -- If True, CSP only reports violations but does not block them. Defaults to False
+    reportOnly: false
+    # -- Whether to save violation reports to the database. Defaults to true
+    log: true
+    # -- Float between 0 and 1.0 expressing the percentage of violations that will be reported. Defaults to 1.0 (100%)
+    reportPercentage: 1.0 
 
   throttling:
     enable: true
