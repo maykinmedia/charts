@@ -4,7 +4,7 @@ description: Productiewaardige API's voor Zaakgericht Werken
 
 type: application
 version: 1.12.0
-appVersion: 1.23.0
+appVersion: 1.25.0
 
 dependencies:
   - name: redis
