@@ -52,8 +52,7 @@ spec:
             - "-c"
           args:
           - |
-            /usr/bin/envsubst < /app/configuration/configuration.yaml > /tmp/configuration.yaml &&
-            /app/src/manage.py setup_configuration --yaml-file /tmp/configuration.yaml
+            /app/src/manage.py setup_configuration --yaml-file /app/configuration/configuration.yaml
           volumeMounts:
             - name: configuration
               mountPath: /app/configuration/
