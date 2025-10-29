@@ -34,7 +34,9 @@ configuration:
       # tokenauth:
       #   items:
       #     - identifier: openinwoner-token
-      #       token: ${openklant_openinwoner_token}
+      #       token:
+      #         value_from:
+      #           env: openklant_openinwoner_token
       #       contact_person: Person 1
       #       email: test@example.com
       #       organization: Organization XYZ
@@ -55,7 +57,9 @@ configuration:
       #     enabled: True
       #     oidc_provider_identifier: admin-oidc-provider          
       #     oidc_rp_client_id: openklant.example.nl
-      #     oidc_rp_client_secret: ${keycloak_client_secret}
+      #     oidc_rp_client_secret:
+      #       value_from:
+      #         env: keycloak_client_secret
       #     oidc_rp_scopes_list:
       #     - openid
       #     - email
