@@ -119,6 +119,7 @@ data:
   {{- if .Values.settings.siteDomain }}
   SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
   {{- end }}
+  OBJECTS_ADMIN_SEARCH_DISABLED: {{ if .Values.settings.adminSearchDisabled }}"True"{{ else }}"False"{{ end }}
 
 
 

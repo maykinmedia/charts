@@ -116,6 +116,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | serviceAccount.automountServiceAccountToken | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| settings.adminSearchDisabled | bool | `false` | Disable the search bar in the Objects admin list view |
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |

@@ -379,6 +379,9 @@ settings:
 
   notificationsDisabled: false
 
+  # -- Disable the search bar in the Objects admin list view
+  adminSearchDisabled: false
+
   isHttps: true
 
   debug: false

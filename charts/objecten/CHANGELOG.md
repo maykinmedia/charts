@@ -27,10 +27,12 @@ oidc_rp_client_secret:
     env: KEYCLOAK_CLIENT_SECRET
 ```
 Note: It is still possible to specify values directly. 
+
 **Changes**
 - Updated application to version 1.3.1.
 - Updated job-config to no longer perform the `envsubst` command.
 - Updated the yaml configuration example to reflect the use of environment variables.
+- Add `OBJECTS_ADMIN_SEARCH_DISABLED` environment variable to disable the search bar in the Objects admin list view (default: false)
 
 ## 2.9.0 (2025-08-21)
 ##### Upgraded 
