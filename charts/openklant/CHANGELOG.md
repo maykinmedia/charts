@@ -6,7 +6,7 @@
 
 ⚠️ This release contains breaking changes.
 
-The application version was updated to `1.13.0`. This version of the application uses version `0.9.0` of the `django-setup-configuration` library.
+The application version was updated to `2.13.0`. This version of the application uses version `0.9.0` of the `django-setup-configuration` library.
 
 This version of `django-setup-configuration` removes the need to use `envsubst` to inject secrets into the yaml file used to 
 configure the application. It supports extracting secrets directly from environment variables.
@@ -28,7 +28,7 @@ oidc_rp_client_secret:
 ```
 Note: It is still possible to specify values directly. 
 **Changes**
-- Updated application to version 1.13.0.
+- Updated application to version 2.13.0.
 - Updated job-config to no longer perform the `envsubst` command.
 - Updated the yaml configuration example to reflect the use of environment variables.
 
