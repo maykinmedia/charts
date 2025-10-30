@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.11.2 (2025-10-30)
+- Improve static file serving version check in `_helpers.tpl`:
+  - Extract and compare semantic version from image tags (e.g. `all-extensions-3.3.1`)
+
 ## 1.11.1 (2025-10-29)
 - Added Content Security Policy (CSP) configuration options:
   - `settings.csp.reportOnly`: Enable CSP report-only mode (default: false)

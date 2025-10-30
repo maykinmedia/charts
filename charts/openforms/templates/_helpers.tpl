@@ -254,8 +254,14 @@ Usage:
 {{- define "openforms.staticFileServingSupported" -}}
 {{- $currentVersion := .Values.image.tag | default .Chart.AppVersion -}}
 {{- $minVersion := "3.3.0" -}}
-{{- if semverCompare (printf ">=%s" $minVersion) $currentVersion -}}
+{{- /* Extract semantic version (e.g. 3.3.1) from tags like "all-extensions-3.3.1" */ -}}
+{{- $semver := regexFind "\\d+\\.\\d+\\.\\d+" $currentVersion -}}
+{{- if $semver -}}
+  {{- if semverCompare (printf ">=%s" $minVersion) $semver -}}
 true
+  {{- else -}}
+false
+  {{- end -}}
 {{- else -}}
 false
 {{- end -}}
