@@ -31,6 +31,9 @@ Note: It is still possible to specify values directly.
 - Updated application to version 3.3.0.
 - Updated job-config to no longer perform the `envsubst` command.
 - Updated the yaml configuration example to reflect the use of environment variables.
+- Add 8 environment variables (`DB_POOL_MIN_SIZE`, `DB_POOL_MAX_SIZE`, `DB_POOL_TIMEOUT`, `DB_POOL_MAX_WAITING`, `DB_POOL_MAX_LIFETIME`, `DB_POOL_MAX_IDLE`, `DB_POOL_RECONNECT_TIMEOUT`, `DB_POOL_NUM_WORKERS`) for database connection pooling settings. 
+- Added `DB_CONN_MAX_AGE` environment variable.
+
 
 ## 1.4.0 (2025-08-24)
 ##### Upgraded 
