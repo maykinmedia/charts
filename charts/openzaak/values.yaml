@@ -46,7 +46,9 @@ configuration:
   #       api_type: nrc
   #       auth_type: api_key
   #       header_key: Authorization
-  #       header_value: Token ${opennotificaties_openzaak_secret}
+  #       header_value: 
+  #         value_from: 
+  #            env: opennotificaties_openzaak_secret
   #     - identifier: selectielijst-api
   #       label: Selectielijst API
   #       api_root: https://selectielijst.openzaak.nl/api/v1/
@@ -80,14 +82,18 @@ configuration:
   #   vng_api_common_credentials:
   #     items:
   #     - identifier: open-formulieren
-  #       secret: ${openzaak_openforms_secret}
+  #       secret: 
+  #         value_from: 
+  #            env: openzaak_openforms_secret
   #   oidc_db_config_enable: True
   #   oidc_db_config_admin_auth:
   #     items:
   #     - identifier: admin-oidc
   #       enabled: True
   #       oidc_rp_client_id: openzaak.example.nl 
-  #       oidc_rp_client_secret: ${keycloak_client_secret}
+  #       oidc_rp_client_secret: 
+  #         value_from: 
+  #            env: keycloak_client_secret
   #       oidc_rp_scopes_list:
   #       - openid
   #       - email
