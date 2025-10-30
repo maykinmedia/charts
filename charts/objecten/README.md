@@ -1,6 +1,6 @@
 # objecten
 
-![Version: 2.9.0](https://img.shields.io/badge/Version-2.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.4](https://img.shields.io/badge/AppVersion-3.0.4-informational?style=flat-square)
+![Version: 2.10.0](https://img.shields.io/badge/Version-2.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
 
 API om objecten te beheren die behoren bij een bepaald objecttype
 
@@ -116,6 +116,7 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | serviceAccount.automountServiceAccountToken | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| settings.adminSearchDisabled | bool | `false` | Disable the search bar in the Objects admin list view |
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |

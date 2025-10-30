@@ -44,7 +44,9 @@ configuration:
   #       api_type: orc
   #       auth_type: api_key
   #       header_key: Authorization
-  #       header_value: Token ${object_objecttypes_token}
+  #       header_value:
+  #         value_from:
+  #           env: object_objecttypes_token  # object_objecttypes_token='Token my_token'
   #     - identifier: notifications-api
   #       label: Notificaties API
   #       api_root: https://opennotificaties.example.nl/api/v1/
@@ -52,7 +54,9 @@ configuration:
   #       api_type: nrc
   #       auth_type: api_key
   #       header_key: Authorization
-  #       header_value: Token ${object_notificaties_token}
+  #       header_value:
+  #         value_from:
+  #           env: object_notificaties_token  # object_notificaties_token='Token my_token'
   #   notifications_config_enable: true
   #   notifications_config:
   #     notifications_api_service_identifier: notifications-api
@@ -63,7 +67,9 @@ configuration:
   #   tokenauth:
   #     items:
   #       - identifier: openformulier-token
-  #         token: ${openformulieren_objecten_token}
+  #         token:
+  #           value_from:
+  #             env: openformulieren_objecten_token
   #         contact_person: Person 1
   #         email: person-1@example.com
   #         organization: Organization 1
@@ -89,7 +95,9 @@ configuration:
   #     - identifier: admin-oidc
   #       enabled: true
   #       oidc_rp_client_id: objecten.example.nl 
-  #       oidc_rp_client_secret: '${keycloak_client_secret}'
+  #       oidc_rp_client_secret:
+  #         value_from:
+  #           env: keycloak_client_secret
   #       oidc_rp_scopes_list:
   #       - openid
   #       - email
@@ -370,6 +378,9 @@ settings:
     logLevel: debug
 
   notificationsDisabled: false
+
+  # -- Disable the search bar in the Objects admin list view
+  adminSearchDisabled: false
 
   isHttps: true
 
