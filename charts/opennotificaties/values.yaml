@@ -464,6 +464,11 @@ settings:
   siteDomain: ""
   # -- Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG
   logLevel: "INFO"
+  # -- Time leeway in seconds for JWT validation timestamps
+  # Accounts for clock drift between server and client
+  # Default: nil (uses Django default, typically 0 seconds)
+  # Recommended: not to increase above 300 seconds
+  timeLeeway: nil  
 
 worker:
   replicaCount: 2

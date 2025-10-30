@@ -31,6 +31,7 @@ Note: It is still possible to specify values directly.
 - Updated application to version 1.13.0.
 - Updated job-config to no longer perform the `envsubst` command.
 - Updated the yaml configuration example to reflect the use of environment variables.
+- Add TIME_LEEWAY environment variable for JWT validation time tolerance (replaces deprecated JWT_LEEWAY) (default: nil)
 
 ## 1.11.1 (2025-09-09)
 
