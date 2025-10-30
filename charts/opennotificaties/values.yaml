@@ -40,7 +40,9 @@ configuration:
   #     - identifier: admin-oidc
   #       enabled: True
   #       oidc_rp_client_id: opennotificaties.example.nl
-  #       oidc_rp_client_secret: ${keycloak_client_secret}
+  #       oidc_rp_client_secret:
+  #         value_from:
+  #           env: keycloak_client_secret
   #       oidc_rp_scopes_list:
   #       - openid
   #       - email
@@ -79,7 +81,9 @@ configuration:
   #         api_type: ac
   #         auth_type: zgw
   #         client_id: open-notificaties
-  #         secret: ${opennotificaties_autorisatie_api_secret}
+  #         secret: 
+  #           value_from:
+  #             env: opennotificaties_autorisatie_api_secret
   #         user_id: open-notificaties
   #         user_representation: Open Notificaties
   #   autorisaties_api_config_enable: True
@@ -91,10 +95,14 @@ configuration:
   #     items:
   #     # Credentials for Open Zaak to be able to make requests to Open Notificaties
   #     - identifier: open-zaak
-  #       secret: ${opennotificaties_openzaak_vng_api_common_secret}
+  #       secret: 
+  #         value_from:
+  #           env: opennotificaties_openzaak_vng_api_common_secret
   #     # Credentials for Open Notificaties, required for autorisaties subscription
   #     - identifier: open-notificaties
-  #       secret: ${opennotificaties_autorisaties_vng_api_common_secret}
+  #       secret: 
+  #         value_from:
+  #           env: opennotificaties_autorisaties_vng_api_common_secret
   #   notifications_kanalen_config_enable: true
   #   notifications_kanalen_config:
   #     items:
@@ -456,6 +464,11 @@ settings:
   siteDomain: ""
   # -- Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG
   logLevel: "INFO"
+  # -- Time leeway in seconds for JWT validation timestamps
+  # Accounts for clock drift between server and client
+  # Default: nil (uses Django default, typically 0 seconds)
+  # Recommended: not to increase above 300 seconds
+  timeLeeway: nil  
 
 worker:
   replicaCount: 2

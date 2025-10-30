@@ -132,3 +132,6 @@ data:
   {{- if .Values.settings.siteDomain }}
   SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.timeLeeway }}
+  TIME_LEEWAY: {{ int .Values.settings.timeLeeway | quote }}
+  {{- end }}  
