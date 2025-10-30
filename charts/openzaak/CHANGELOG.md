@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.11.2 (2025-10-28)
+- Removed initContainer as an option for running the setup configuration
+
 ## 1.11.1 (2025-10-28)
 - Add startup probe to improve deployment reliability
   - Add startup probe with 5+ minute timeout for application initialization
