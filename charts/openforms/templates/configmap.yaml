@@ -25,6 +25,9 @@ data:
   CSRF_COOKIE_SAMESITE: {{ .Values.settings.cookieSamesite | toString | }}
   LANGUAGE_COOKIE_SAMESITE: {{ .Values.settings.cookieSamesite | toString | }}
   {{ end }}
+  {{ if .Values.settings.sessionCookieDomain }}
+  SESSION_COOKIE_DOMAIN: {{ .Values.settings.sessionCookieDomain | toString | quote }}
+  {{ end }}
   CSP_REPORTS_SAVE: {{ if .Values.settings.csp.reportSave }}"True"{{ else }}"False"{{ end }}
   CSP_EXTRA_DEFAULT_SRC: {{ join "," .Values.settings.csp.extraDefaultSrc | toString | quote }}
   CSP_EXTRA_IMG_SRC: {{ join "," .Values.settings.csp.extraImgSrc | toString | quote }}

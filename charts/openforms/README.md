@@ -323,6 +323,7 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.sessionCookieDomain | string | `""` | Domain for session cookies (e.g. "example.com" for cross-domain or ".example.com" for all subdomains). Leave empty for standard domain cookies. |
 | settings.showLabelEnvironment | bool | `false` | Display environment information in the header in the admin. Defaults to True. Environment information is only displayed to logged in users. |
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `""` |  |

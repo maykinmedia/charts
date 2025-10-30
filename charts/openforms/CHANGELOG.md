@@ -5,6 +5,7 @@
   - `settings.csp.reportOnly`: Enable CSP report-only mode (default: false)
   - `settings.csp.log`: Log violation reports to stdout/files/Sentry (default: true)
   - `settings.csp.reportPercentage`: Percentage of violations to report, 0.0-1.0 (default: 1.0)
+- Add `settings.sessionCookieDomain` to configure the Django `SESSION_COOKIE_DOMAIN` setting (default: empty, not set)
 
 ## 1.11.0 (2025-10-21)
 - [#267] Add nginx static file serving support

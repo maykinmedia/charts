@@ -382,6 +382,10 @@ settings:
   # -- Choises Strict or Lax
   cookieSamesite: ""
 
+  # -- Domain for session cookies (e.g. "example.com" for cross-domain or ".example.com" for all subdomains).
+  # Leave empty for standard domain cookies.
+  sessionCookieDomain: ""  
+
   environment: null
 
   # -- Display environment information in the header in the admin. Defaults to True. Environment information is only displayed to logged in users.
