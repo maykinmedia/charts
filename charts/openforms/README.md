@@ -2,7 +2,7 @@
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
-![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0](https://img.shields.io/badge/AppVersion-3.3.0-informational?style=flat-square)
+![Version: 1.11.1](https://img.shields.io/badge/Version-1.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0](https://img.shields.io/badge/AppVersion-3.3.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -279,6 +279,9 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | settings.crossOriginOpenerPolicy | string | `""` | Recommended: "same-origin" for production security, "unsafe-none" for development/testing |
 | settings.csp.extraDefaultSrc | list | `[]` |  |
 | settings.csp.extraImgSrc | list | `[]` |  |
+| settings.csp.log | bool | `true` | Whether to save violation reports to the database. Defaults to true |
+| settings.csp.reportOnly | bool | `false` | If True, CSP only reports violations but does not block them. Defaults to False |
+| settings.csp.reportPercentage | float | `1` | Float between 0 and 1.0 expressing the percentage of violations that will be reported. Defaults to 1.0 (100%) |
 | settings.csp.reportSave | bool | `false` |  |
 | settings.csrf.trustedOrigins | list | `[]` |  |
 | settings.database.host | string | `""` |  |
@@ -320,6 +323,7 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.sessionCookieDomain | string | `""` | Domain for session cookies (e.g. "example.com" for cross-domain or ".example.com" for all subdomains). Leave empty for standard domain cookies. |
 | settings.showLabelEnvironment | bool | `false` | Display environment information in the header in the admin. Defaults to True. Environment information is only displayed to logged in users. |
 | settings.throttling.enable | bool | `true` |  |
 | settings.throttling.rateAnonymous | string | `""` |  |
