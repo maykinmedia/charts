@@ -155,7 +155,8 @@ persistence:
 
 # Existing Secret must be defined for AzureVaultSecret to work
 existingSecret: null
-
+# Reference to an existing secret with the values needed for django-setup-configuration
+existingConfigurationSecrets: null
 
 # This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
 # ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
