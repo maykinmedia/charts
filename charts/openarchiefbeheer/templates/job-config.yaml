@@ -38,7 +38,7 @@ spec:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openarchiefbeheer.fullname" .) }}
             - secretRef:
-                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openforms.fullname" .)) }}{{ end }}                
+                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openarchiefbeheer.fullname" .)) }}{{ end }}                
             - configMapRef:
                 name: {{ include "openarchiefbeheer.fullname" . }}
           env:
