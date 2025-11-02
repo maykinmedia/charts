@@ -100,7 +100,7 @@ data:
         include conf.d/proxy;
       }
 
-      {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
+      {{- if and .Values.nginx.staticFileServing.enabled (include "openforms.staticFileServingSupported" .) }}
 
       # Serve collected static files directly from Nginx
       location /static/ {

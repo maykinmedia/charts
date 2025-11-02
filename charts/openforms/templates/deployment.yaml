@@ -84,7 +84,7 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
-            {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
+            {{- if and .Values.nginx.staticFileServing.enabled (include "openforms.staticFileServingSupported" .) }}
             - name: media
               mountPath: "/srv/static/"
               subPath: openforms/static
@@ -365,7 +365,7 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
-            {{- if and .Values.nginx.staticFileServing.enabled (eq (include "openforms.staticFileServingSupported" .) "true") }}
+            {{- if and .Values.nginx.staticFileServing.enabled (include "openforms.staticFileServingSupported" .) }}
             - name: media
               mountPath: "/srv/static/"
               subPath: openforms/static

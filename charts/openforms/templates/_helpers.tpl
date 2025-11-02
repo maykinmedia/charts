@@ -256,13 +256,5 @@ Usage:
 {{- $minVersion := "3.3.0" -}}
 {{- /* Extract semantic version (e.g. 3.3.1) from tags like "all-extensions-3.3.1" */ -}}
 {{- $semver := regexFind "\\d+\\.\\d+\\.\\d+" $currentVersion -}}
-{{- if $semver -}}
-  {{- if semverCompare (printf ">=%s" $minVersion) $semver -}}
-true
-  {{- else -}}
-false
-  {{- end -}}
-{{- else -}}
-false
-{{- end -}}
+{{- if and $semver (semverCompare (printf ">=%s" $minVersion) $semver) -}}true{{- end -}}
 {{- end -}}
