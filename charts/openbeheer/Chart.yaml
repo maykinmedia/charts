@@ -1,0 +1,19 @@
+apiVersion: v2
+name: openbeheer
+description: A Helm chart to deploy Open Beheer
+type: application
+
+version: 0.1.0
+appVersion: 0.1.0
+
+dependencies:
+  - name: redis
+    version: 22.0.1
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - redis
+  - name: common
+    version: 2.31.4
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+    - bitnami-common
