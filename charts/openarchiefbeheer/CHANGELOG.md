@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.1 (2025-10-29)
+- Add `existingConfigurationSecrets` setting to reference an existing secret with the values needed for django-setup-configuration
+
 ## 1.5.0 (2025-10-03)
 
 - [maykinmedia/open-archiefbeheer#857] Added the possibility to configure the environment variables `LOG_STDOUT` and `LOG_LEVEL`. These variables are available from Open Archiefbeheer version `1.1.1`.
