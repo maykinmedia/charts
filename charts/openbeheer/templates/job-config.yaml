@@ -38,7 +38,7 @@ spec:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openbeheer.fullname" .) }}
             - secretRef:
-                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openbeheer.fullname" .)) }}{{ end }}                
+                name: {{ if .Values.existingConfigurationSecret }}{{ .Values.existingConfigurationSecret }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openbeheer.fullname" .)) }}{{ end }}                
             - configMapRef:
                 name: {{ include "openbeheer.fullname" . }}
           env:
@@ -52,7 +52,7 @@ spec:
             - "-c"
           args:
           - |
-            /app/src/manage.py setup_configuration --yaml-file /tmp/configuration.yaml
+            /app/src/manage.py setup_configuration --yaml-file /app/configuration/configuration.yaml
           volumeMounts:
             - name: media
               mountPath: /app/private-media
