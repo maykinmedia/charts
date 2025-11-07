@@ -21,7 +21,7 @@ data:
   SESSION_COOKIE_SAMESITE: "Strict"
   SESSION_COOKIE_SECURE: "true"
   OPEN_ZAAK_ADMIN_BASE_URL: {{ .Values.settings.openzaakBaseUrl | toString | quote }}
-  SESSION_COOKIE_AGE:  {{ printf "https://%s" .Values.settings.apiDomain }}
+  SESSION_COOKIE_AGE:  {{ .Values.settings.sessionCookieAge | toString | quote }}
   # IMPORTANT: This value must equal sessionCookieAge to prevent timeout mismatches
   OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS: {{ .Values.settings.sessionCookieAge | toString | quote }}
   {{- if .Values.tags.redis }}
