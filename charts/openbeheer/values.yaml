@@ -11,10 +11,6 @@ global:
 configuration:
   enabled: false
   overwrite: true
-  superuser:
-    username: ""
-    password: ""
-    email: ""
   job:
     # -- Run the setup configuration command as a job
     enabled: false
