@@ -68,6 +68,36 @@ configuration:
   #           make_users_staff: true
   #           superuser_group_names:
   #             - Superuser
+  #   zgw_consumers_config_enable: true
+  #   zgw_consumers:
+  #     services:
+  #     - identifier: objecttypen-service
+  #       label: Objecttypen API
+  #       api_root: https://objecttypen.example.nl/api/v2/
+  #       api_type: orc
+  #       auth_type: api_key
+  #       header_key: Authorization
+  #       header_value: 
+  #         value_from:
+  #           env: OBJECTTYPEN_OPENBEHEER_API_HEADER_VALUE
+  #     - identifier: catalogi-service
+  #       label: Open Zaak - Catalogi API
+  #       api_root: https://openzaak.example.nl/catalogi/api/v1/
+  #       api_type: ztc
+  #       auth_type: zgw
+  #       client_id: openbeheer.example.nl
+  #       secret: 
+  #         value_from:
+  #           env: OPENZAAK_APPLICATION_SECRET
+  #     - identifier: selectielijst-service
+  #       label: Open Zaak (public) - Selectielijst API
+  #       api_root: https://selectielijst.openzaak.nl/api/v1/
+  #       api_type: orc
+  #       auth_type: no_auth
+  #   api_configuration_enabled: true
+  #   api_configuration:
+  #     selectielijst_service_identifier: selectielijst-service
+  #     objecttypen_service_identifier: objecttypen-service
 
 tags:
   redis: true
