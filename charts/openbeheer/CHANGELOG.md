@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3 (2025-12-31)
+
+* Added support for `OPEN_ZAAK_ADMIN_BASE_URL` url.
+* Improved example for django-setup-configuration yaml.
+* Improved Readme section about using django-setup-configuration.
+
 ## 0.1.2 (2025-12-08)
 
 - Fixed missing `X-Frame-Options` and `Content-Security-Policy` headers in response for static files.
