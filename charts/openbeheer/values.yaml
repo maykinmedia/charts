@@ -255,6 +255,8 @@ settings:
   # -- The domain where the app is deployed. For example: openbeheer.gemeente.nl
   apiDomain: ""
   apiPath: /api/v1
+  # -- The url to configure links that reference openzaak, e.g. https://openzaak.example.nl/
+  openzaakBaseUrl: ""
   # -- Session cookie age in seconds (15 minutes = 900 seconds)
   # IMPORTANT: This value must equal oidcRenewIdTokenExpirySeconds to prevent timeout mismatches
   # If values differ, users may experience unexpected logouts when one expires before the other
