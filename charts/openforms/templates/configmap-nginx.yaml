@@ -107,7 +107,11 @@ data:
           expires max;
           add_header Access-Control-Allow-Origin *;
           alias /srv/static/;
-      }
+          
+          include /etc/nginx/mime.types;
+          types {
+            application/javascript mjs js;
+          }
       {{- else }}
       # Font assets with CORS headers (when static file serving is disabled)
       location ~* ^/static/.*\.(eot|ttf|woff|woff2|svg)$ {
