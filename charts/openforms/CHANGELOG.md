@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.11.3 (2025-11-11)
+- Add allowed MIME-type for Javascript in static file serving
+
 ## 1.11.2 (2025-10-30)
 - Improve static file serving version check in `_helpers.tpl`:
   - Extract and compare semantic version from image tags (e.g. `all-extensions-3.3.1`)
