@@ -856,6 +856,31 @@ entries:
   openarchiefbeheer:
   - apiVersion: v2
     appVersion: 1.1.1
+    created: "2025-11-11T15:46:52.000324716Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: maykin-utils-lib
+      repository: https://maykinmedia.github.io/charts/
+      version: 0.1.0
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik
+      met Zaakgericht werken
+    digest: 93c4ec155b7ee06a5e21d9bff81c6f72d02d98668303d2e384ad59186800531a
+    name: openarchiefbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openarchiefbeheer-1.5.2/openarchiefbeheer-1.5.2.tgz
+    version: 1.5.2
+  - apiVersion: v2
+    appVersion: 1.1.1
     created: "2025-11-03T09:44:46.394738814Z"
     dependencies:
     - name: redis
@@ -1548,6 +1573,28 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openbeheer-0.1.0/openbeheer-0.1.0.tgz
     version: 0.1.0
   openforms:
+  - apiVersion: v2
+    appVersion: 3.3.0
+    created: "2025-11-11T15:46:52.293650488Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Snel en eenvoudig slimme formulieren bouwen en publiceren
+    digest: 805185f4508826e431e83f86080ee5b037b1da33e1e2523357956f6cc44a6ba2
+    icon: https://open-forms.readthedocs.io/en/stable/_static/logo.svg
+    name: openforms
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openforms-1.11.4/openforms-1.11.4.tgz
+    version: 1.11.4
   - apiVersion: v2
     appVersion: 3.3.0
     created: "2025-11-03T09:39:54.959600371Z"
@@ -6354,4 +6401,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2025-11-06T14:41:31.816541584Z"
+generated: "2025-11-11T15:46:52.294345061Z"
