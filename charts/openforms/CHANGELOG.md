@@ -1,6 +1,12 @@
 # Changelog
 
+## 1.11.5 (2025-11-12)
+
+- Fix missing bracket in nginx configuration
+- Removed `application/javascript js;` from the extra types, as this is already defined in the `/etc/nginx/mime.types`. No more warnings are now present in the Nginx logs of the container on startup.
+
 ## 1.11.3 (2025-11-11)
+
 - Add allowed MIME-type for Javascript in static file serving
 
 ## 1.11.2 (2025-10-30)
