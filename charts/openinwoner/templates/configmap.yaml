@@ -84,3 +84,5 @@ data:
   UWSGI_HTTP_KEEPALIVE: {{ if .Values.settings.uwsgi.httpKeepalive }}"1"{{ else }}"0"{{ end }}
   {{- end }}
   ALLOW_CUSTOM_JS:  {{ if .Values.settings.allowCustomJs }}"True"{{ else }}"False"{{ end }}
+  OIDC_FRONTEND_LOGOUT_WITH_HINTS: {{ if .Values.settings.oidcFrontendLogoutWithHints }}"True"{{ else }}"False"{{ end }}
+
