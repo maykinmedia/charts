@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 (2025-11-07)
+
+* Added support for `OPEN_ZAAK_ADMIN_BASE_URL` url.
+* Improved example for django-setup-configuration yaml.
+* Improved Readme section about using django-setup-configuration.
+* Fixed ``SESSION_COOKIE_AGE`` definition in the configmap.
+
 ## 0.1.1 (2025-11-06)
 
 * Fixed the setup configuration command.
