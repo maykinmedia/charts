@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.12.0 (2025-11-25)
+- [#329] Add `OIDC_FRONTEND_LOGOUT_WITH_HINTS` environment variable to enable/disable
+  passing of hints to the OIDC frontchannel logout (default: "True")
+- Bumped minimal `appVersion` to `1.35.3`
+
 ## 1.11.3 (2025-10-27)
 - [#287] Add `ALLOW_CUSTOM_JS` environment variable to enable/disable custom JavaScript upload feature (default: "False")
   - **Note**: This variable can only be used with Openinwoner version 1.35.0 or higher

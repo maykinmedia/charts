@@ -425,6 +425,10 @@ settings:
   # NOTE: This variable can only be set to true with openinwoner version 1.35.0 or higher
   allowCustomJs: false
 
+  # -- Whether to provide a id_token_hint to the IdP broker when initiating a
+  # frontchannel logout
+  oidcFrontendLogoutWithHints: true
+
 worker:
   replicaCount: 2
   concurrency: 4
