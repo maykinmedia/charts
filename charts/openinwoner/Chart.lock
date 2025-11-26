@@ -2,11 +2,14 @@ dependencies:
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 22.0.1
-- name: elasticsearch
-  repository: https://charts.bitnami.com/bitnami
-  version: 22.1.5
+- name: eck-operator
+  repository: https://helm.elastic.co
+  version: 3.2.0
+- name: eck-elasticsearch
+  repository: https://helm.elastic.co
+  version: 0.17.0
 - name: common
   repository: https://charts.bitnami.com/bitnami
   version: 2.31.4
-digest: sha256:bc1a4f47d7cdaca9a55dc5d2859a7bb837393de9e9d4a46fa626c42d2359742e
-generated: "2025-08-22T17:22:24.667546183+02:00"
+digest: sha256:919696adfb6811e692b583f2142e1a668cd0e1c3ec078d103c1b30411e41dad2
+generated: "2025-11-26T15:27:55.302923931+01:00"
