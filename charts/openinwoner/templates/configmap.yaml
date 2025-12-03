@@ -9,7 +9,7 @@ data:
   ENVIRONMENT: {{ .Values.settings.environment | default (include "openinwoner.fullname" .) }}
   ALLOWED_HOSTS: "{{ include "openinwoner.fullname" . }},{{ include "openinwoner.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
   {{- if (index .Values "eck-elasticsearch" "enabled") }}
-  ES_HOST: {{ printf "https://%s-es-http:9200" (index .Values "eck-elasticsearch" "fullnameOverride") | quote }}
+  ES_HOST: {{ printf "http://%s-es-http:9200" (index .Values "eck-elasticsearch" "fullnameOverride") | quote }}
   {{ else }}
   ES_HOST: {{ .Values.settings.elasticSearchHost | toString | quote }}
   {{- end }}
