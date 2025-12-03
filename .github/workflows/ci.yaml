@@ -25,6 +25,7 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo add maykin https://maykinmedia.github.io/charts/
+          helm repo add elastic https://helm.elastic.co
 
       - name: Run Helm lint
         run: |
