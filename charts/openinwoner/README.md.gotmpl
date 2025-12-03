@@ -1,0 +1,107 @@
+# Open Inwoner Chart
+
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Introduction 
+
+This chart can be used to deploy Open Inwoner on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/open-inwoner)
+* [Changelog](https://github.com/maykinmedia/open-inwoner/blob/develop/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install {{ template "chart.name" . }} maykinmedia/{{ template "chart.name" . }}
+```
+
+{{ template "chart.requirementsSection" . }}
+
+## Configuration and installation details
+
+### Elasticsearch
+
+Open Inwoner requires Elastic Search to be deployed to function
+properly. We recommend installing Elastic Search in your cluster using their
+[operator](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-install-helm.html).
+
+To deploy Elasticsearch with Elastic Cloud on Kubernetes (ECK), the cluster wide Custom Resource Definitions (CRDs) need to be present.
+They can be installed by a cluster administrator with (see [the docs](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-installing-eck.html) for more details):
+
+```bash
+helm install elastic-operator-crds elastic/eck-operator-crds
+```
+
+For Open Inwoner it is enough to deploy the following nodes:
+
+- 1 `master` node
+- 1 node with both `data` and `ingest` role.
+
+Currently Open Inwoner does not support sending user authentication details for the requests to Elastic Search.
+Since Elasticsearch is not exposed through an ingress, Open Inwoner connects to its internal http endpoint.
+
+Open Inwoner does not yet support using the self-signed certificates and the custom CA of Elastic Search, so for 
+now TLS has to be turned off.
+
+---
+Note:
+
+After deploying Elastic Search, the indices need to be updated. This can be done from the open-inwoner pods with:
+
+```bash
+src/manage.py search_index --rebuild
+```
+
+To do: Add a Job that performs this.
+
+### Django specific configuration
+
+**Secret key**
+
+Django makes use of a secret key to provide cryptographic signing. 
+This key should be set to a unique, unpredictable value. 
+Without the `SECRET_KEY` environment variable, the application will not start.
+
+The key can be configured with the value `settings.secretKey`. You can use a [web tool](https://djecrety.ir/) to generate it. 
+
+**Warning**: Running with a known secret key defeats many of Django’s security protections and can lead to privilege escalation and remote code execution vulnerabilities. 
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`. 
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Inwoner [documetation](https://open-forms.readthedocs.io/en/stable/installation/setup_configuration.html#installation-configuration-cli).
+
+### Sentry
+
+Open Inwoner makes use of [Sentry](https://sentry.io/welcome/) for automatic reporting of errors. 
+In order to configure it, the value `settings.sentry.dsn` needs to be set. To see where to find the `DSN`, see
+the [Sentry documentation](https://docs.sentry.io/concepts/key-terms/dsn-explainer/#where-to-find-your-data-source-name-dsn).  
+
+```yaml
+settings:
+  sentry:
+    dsn: "https://public@sentry.example.com/1"
+```
+
+The value of the `DSN` is considered sensitive, so it should be handled as a secret.
+
+
+
+{{ template "chart.valuesSection" . }}
