@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.3 (2025-12-08)
+
+- Fixed missing `X-Frame-Options` and `Content-Security-Policy` headers in response for static files.
+
 ## 1.5.1 (2025-10-29)
 - Add `existingConfigurationSecrets` setting to reference an existing secret with the values needed for django-setup-configuration
 
