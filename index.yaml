@@ -856,6 +856,31 @@ entries:
   openarchiefbeheer:
   - apiVersion: v2
     appVersion: 1.1.1
+    created: "2025-12-09T09:00:38.494751875Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: maykin-utils-lib
+      repository: https://maykinmedia.github.io/charts/
+      version: 0.1.0
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik
+      met Zaakgericht werken
+    digest: b77baf1e53df6c7e69698bd016170f060693e4864a542dee4c3f7586a2c35735
+    name: openarchiefbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openarchiefbeheer-1.5.3/openarchiefbeheer-1.5.3.tgz
+    version: 1.5.3
+  - apiVersion: v2
+    appVersion: 1.1.1
     created: "2025-11-11T15:46:52.000324716Z"
     dependencies:
     - name: redis
@@ -1530,6 +1555,27 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openarchiefbeheer-0.9.1/openarchiefbeheer-0.9.1.tgz
     version: 0.9.1
   openbeheer:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2025-12-09T09:00:38.657491629Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: A Helm chart to deploy Open Beheer
+    digest: f6a404df1dbccd5fe7002e7ee85ac95d272e0275acc3a0eec4f4089ed2104ae4
+    name: openbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openbeheer-0.1.2/openbeheer-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: 0.1.0
     created: "2025-11-06T14:41:31.81607932Z"
@@ -6451,4 +6497,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2025-11-25T15:22:33.966275934Z"
+generated: "2025-12-09T09:00:38.658283426Z"
