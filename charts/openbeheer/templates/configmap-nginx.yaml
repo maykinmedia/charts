@@ -10,6 +10,8 @@ data:
     server {
       listen 8080 default_server;
       server_name  {{ .Values.settings.allowedHosts  | replace "," " "}} localhost;
+      add_header X-Frame-Options DENY;
+      add_header Content-Security-Policy "default-src 'self'; font-src 'self' data:; frame-ancestors 'none';";
 
       location ~ ^/admin|oidc|static|assets|api/ {
         proxy_pass http://{{ include "openbeheer.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.port }};
