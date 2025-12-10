@@ -76,16 +76,8 @@ eck-elasticsearch:
         disabled: true
 ```
 
----
-Note:
-
-After deploying Elastic Search, the indices need to be updated. This can be done from the open-inwoner pods with:
-
-```bash
-src/manage.py search_index --rebuild
-```
-
-To do: Add a Job that performs this.
+After deploying Elastic Search, the indices need to be built. If the value `settings.searchInexInitContainer`
+is set to `true` this will be done automatically with an init container.
 
 ### Django specific configuration
 
