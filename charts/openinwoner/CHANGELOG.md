@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.13.0 (2025-12-10)
+
+**Warning**
+
+⚠️ This chart release contains breaking changes.
+
+- [#328] Replaced Bitnami Elastic chart with [ECK](https://www.elastic.co/docs/deploy-manage/deploy/cloud-on-k8s). See the Readme for instructions on how to install ECK in the cluster.
+
+
+
 ## 1.12.0 (2025-11-25)
 - [#329] Add `OIDC_FRONTEND_LOGOUT_WITH_HINTS` environment variable to enable/disable
   passing of hints to the OIDC frontchannel logout (default: "True")
