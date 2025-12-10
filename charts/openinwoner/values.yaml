@@ -418,7 +418,7 @@ settings:
     bufferSize: ""
 
   # -- Runs a init container that will run /app/src/manage.py search_index --rebuild -f. You might want to enable this one time for new deployments if you want to prevent 500 errors when using the search function
-  searchInexInitContainer: false
+  searchIndexInitContainer: false
   # -- Custom JavaScript Configuration
   # Flag to enable the custom JavaScript upload feature in the admin interface. When set to true, this feature allows admins to upload custom JavaScript code that will be loaded on all pages.
   # WARNING: Custom JavaScript can negatively impact security and performance, and should be done with care.
