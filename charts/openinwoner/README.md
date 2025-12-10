@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 1.13.0](https://img.shields.io/badge/Version-1.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.35.3](https://img.shields.io/badge/AppVersion-1.35.3-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.35.3](https://img.shields.io/badge/AppVersion-1.35.3-informational?style=flat-square)
 
 ## Introduction
 
@@ -76,7 +76,7 @@ eck-elasticsearch:
         disabled: true
 ```
 
-After deploying Elastic Search, the indices need to be built. If the value `settings.searchInexInitContainer`
+After deploying Elastic Search, the indices need to be built. If the value `settings.searchIndexInitContainer`
 is set to `true` this will be done automatically with an init container.
 
 ### Django specific configuration
@@ -403,7 +403,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.isHttps | bool | `true` |  |
 | settings.loadFixtures | bool | `false` | Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json |
 | settings.oidcFrontendLogoutWithHints | bool | `true` | Whether to provide a id_token_hint to the IdP broker when initiating a frontchannel logout |
-| settings.searchInexInitContainer | bool | `false` |  |
+| settings.searchIndexInitContainer | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.secretKeyFallback | string | `""` | This optional setting can be used to rotate a secret key, by moving a new value into secretKey, and moving the previous secretKey into secretKeyFallback.  |
 | settings.sentry.dsn | string | `""` |  |

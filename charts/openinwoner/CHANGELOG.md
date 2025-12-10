@@ -1,13 +1,13 @@
 # Changelog
 
-## 1.13.0 (2025-12-10)
+## 2.0.0 (2025-12-10)
 
 **Warning**
 
 ⚠️ This chart release contains breaking changes.
 
 - [#328] Replaced Bitnami Elastic chart with [ECK](https://www.elastic.co/docs/deploy-manage/deploy/cloud-on-k8s). See the Readme for instructions on how to install ECK in the cluster.
-
+- Fixed typo in value `settings.searchInexInitContainer` which is now `settings.searchIndexInitContainer`.
 
 
 ## 1.12.0 (2025-11-25)
