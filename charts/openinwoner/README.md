@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 1.12.0](https://img.shields.io/badge/Version-1.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.35.3](https://img.shields.io/badge/AppVersion-1.35.3-informational?style=flat-square)
+![Version: 1.13.0](https://img.shields.io/badge/Version-1.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.35.3](https://img.shields.io/badge/AppVersion-1.35.3-informational?style=flat-square)
 
 ## Introduction
 
@@ -48,10 +48,33 @@ For Open Inwoner it is enough to deploy the following nodes:
 - 1 node with both `data` and `ingest` role.
 
 Currently Open Inwoner does not support sending user authentication details for the requests to Elastic Search.
-Since Elasticsearch is not exposed through an ingress, Open Inwoner connects to its internal http endpoint.
+The authentication on the nodes can be turned off as follows:
 
+```yaml
+- name: master
+  count: 1
+  config:
+    node.store.allow_mmap: false
+    node.roles: ["master"]
+    xpack.security.authc:
+      anonymous:
+        username: anonymous
+        roles: viewer
+        authz_exception: false
+```
+
+Since Elasticsearch is not exposed through an ingress, Open Inwoner connects to its internal http endpoint.
 Open Inwoner does not yet support using the self-signed certificates and the custom CA of Elastic Search, so for
-now TLS has to be turned off.
+now TLS is to be turned off. The expectation is that this is used in a cluster and that Elastic Search is not exposed
+via the ingress to the outside world. The TLS can be turned off as follows:
+
+```yaml
+eck-elasticsearch:
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+```
 
 ---
 Note:
