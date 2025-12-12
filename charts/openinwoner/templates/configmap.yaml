@@ -8,8 +8,8 @@ data:
   DJANGO_SETTINGS_MODULE: {{ .Values.settings.djangoSettingsModule | toString | quote }}
   ENVIRONMENT: {{ .Values.settings.environment | default (include "openinwoner.fullname" .) }}
   ALLOWED_HOSTS: "{{ include "openinwoner.fullname" . }},{{ include "openinwoner.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
-  {{- if .Values.tags.elasticsearch }}
-  ES_HOST: "{{ if and .Values.elasticsearch.security.enabled .Values.elasticsearch.security.tls.restEncryption }}https{{ else }}http{{ end }}://{{ include "elasticsearch.coordinating.servicename" .Subcharts.elasticsearch }}:{{ .Values.elasticsearch.service.ports.restAPI | default 9200 }}"
+  {{- if (index .Values "eck-elasticsearch" "enabled") }}
+  ES_HOST: {{ printf "http://%s-es-http:9200" (index .Values "eck-elasticsearch" "fullnameOverride") | quote }}
   {{ else }}
   ES_HOST: {{ .Values.settings.elasticSearchHost | toString | quote }}
   {{- end }}
