@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.11.6 (2025-12-11)
+- upgraded open-forms from 3.3.0 to 3.3.9
+  - includes patch for CVE-2025-64515
+
 ## 1.11.5 (2025-11-12)
 
 - Fix missing bracket in nginx configuration
