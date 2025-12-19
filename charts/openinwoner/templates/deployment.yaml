@@ -32,7 +32,7 @@ spec:
       serviceAccountName: {{ include "openinwoner.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.settings.searchInexInitContainer }}
+      {{- if .Values.settings.searchIndexInitContainer }}
       initContainers:
         - name: {{ .Chart.Name }}-search-index
           securityContext:

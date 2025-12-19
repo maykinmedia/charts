@@ -1,16 +1,128 @@
-# openinwoner
-
-![Version: 1.11.3](https://img.shields.io/badge/Version-1.11.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.34.0](https://img.shields.io/badge/AppVersion-1.34.0-informational?style=flat-square)
+# Open Inwoner Chart
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
+
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.35.3](https://img.shields.io/badge/AppVersion-1.35.3-informational?style=flat-square)
+
+## Introduction
+
+This chart can be used to deploy Open Inwoner on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/open-inwoner)
+* [Changelog](https://github.com/maykinmedia/open-inwoner/blob/develop/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install openinwoner maykinmedia/openinwoner
+```
 
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
-| https://charts.bitnami.com/bitnami | elasticsearch | 22.1.5 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
+| https://helm.elastic.co | eck-elasticsearch | 0.17.0 |
+| https://helm.elastic.co | eck-operator | 3.2.0 |
+
+## Configuration and installation details
+
+### Elasticsearch
+
+Open Inwoner requires Elastic Search to be deployed to function
+properly. We recommend installing Elastic Search in your cluster using their
+[operator](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-install-helm.html).
+
+To deploy Elasticsearch with Elastic Cloud on Kubernetes (ECK), the cluster wide Custom Resource Definitions (CRDs) need to be present.
+They can be installed by a cluster administrator with (see [the docs](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-installing-eck.html) for more details):
+
+```bash
+helm install elastic-operator-crds elastic/eck-operator-crds
+```
+
+For Open Inwoner it is enough to deploy the following nodes:
+
+- 1 `master` node
+- 1 node with both `data` and `ingest` role.
+
+Currently Open Inwoner does not support sending user authentication details for the requests to Elastic Search.
+The authentication on the nodes can be turned off as follows:
+
+```yaml
+- name: master
+  count: 1
+  config:
+    node.store.allow_mmap: false
+    node.roles: ["master"]
+    xpack.security.authc:
+      anonymous:
+        username: anonymous
+        roles: viewer
+        authz_exception: false
+```
+
+Since Elasticsearch is not exposed through an ingress, Open Inwoner connects to its internal http endpoint.
+Open Inwoner does not yet support using the self-signed certificates and the custom CA of Elastic Search, so for
+now TLS is to be turned off. The expectation is that this is used in a cluster and that Elastic Search is not exposed
+via the ingress to the outside world. The TLS can be turned off as follows:
+
+```yaml
+eck-elasticsearch:
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+```
+
+After deploying Elastic Search, the indices need to be built. If the value `settings.searchIndexInitContainer`
+is set to `true` this will be done automatically with an init container.
+
+### Django specific configuration
+
+**Secret key**
+
+Django makes use of a secret key to provide cryptographic signing.
+This key should be set to a unique, unpredictable value.
+Without the `SECRET_KEY` environment variable, the application will not start.
+
+The key can be configured with the value `settings.secretKey`. You can use a [web tool](https://djecrety.ir/) to generate it.
+
+**Warning**: Running with a known secret key defeats many of Django’s security protections and can lead to privilege escalation and remote code execution vulnerabilities.
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Inwoner [documetation](https://open-forms.readthedocs.io/en/stable/installation/setup_configuration.html#installation-configuration-cli).
+
+### Sentry
+
+Open Inwoner makes use of [Sentry](https://sentry.io/welcome/) for automatic reporting of errors.
+In order to configure it, the value `settings.sentry.dsn` needs to be set. To see where to find the `DSN`, see
+the [Sentry documentation](https://docs.sentry.io/concepts/key-terms/dsn-explainer/#where-to-find-your-data-source-name-dsn). 
+
+```yaml
+settings:
+  sentry:
+    dsn: "https://public@sentry.example.com/1"
+```
+
+The value of the `DSN` is considered sensitive, so it should be handled as a secret.
 
 ## Values
 
@@ -41,25 +153,129 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | configuration.job.restartPolicy | string | `"OnFailure"` |  |
 | configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
 | configuration.secrets | object | `{}` |  |
-| elasticsearch.coordinating.replicaCount | int | `1` |  |
-| elasticsearch.data.persistence.enabled | bool | `true` |  |
-| elasticsearch.data.persistence.size | string | `"8Gi"` |  |
-| elasticsearch.data.persistence.storageClass | string | `""` |  |
-| elasticsearch.data.replicaCount | int | `1` |  |
-| elasticsearch.data.resources.limits | object | `{}` |  |
-| elasticsearch.data.resources.requests.cpu | string | `"100m"` |  |
-| elasticsearch.data.resources.requests.memory | string | `"512Mi"` |  |
-| elasticsearch.image.repository | string | `"bitnamilegacy/elasticsearch"` |  |
-| elasticsearch.image.tag | string | `"9.0.3-debian-12-r1"` |  |
-| elasticsearch.ingest.enabled | bool | `false` |  |
-| elasticsearch.master.masterOnly | bool | `true` |  |
-| elasticsearch.master.persistence.enabled | bool | `true` |  |
-| elasticsearch.master.persistence.size | string | `"8Gi"` |  |
-| elasticsearch.master.persistence.storageClass | string | `""` |  |
-| elasticsearch.master.replicaCount | int | `1` |  |
-| elasticsearch.master.resources.limits | object | `{}` |  |
-| elasticsearch.master.resources.requests.cpu | string | `"100m"` |  |
-| elasticsearch.master.resources.requests.memory | string | `"640Mi"` |  |
+| eck-elasticsearch.annotations | object | `{}` |  |
+| eck-elasticsearch.auth | object | `{}` |  |
+| eck-elasticsearch.enabled | bool | `true` |  |
+| eck-elasticsearch.fullnameOverride | string | `"openinwoner-elasticsearch"` |  |
+| eck-elasticsearch.http | object | `{}` |  |
+| eck-elasticsearch.ingress.annotations | object | `{}` |  |
+| eck-elasticsearch.ingress.enabled | bool | `false` |  |
+| eck-elasticsearch.ingress.hosts[0].host | string | `"chart-example.local"` |  |
+| eck-elasticsearch.ingress.hosts[0].path | string | `"/"` |  |
+| eck-elasticsearch.ingress.labels | object | `{}` |  |
+| eck-elasticsearch.ingress.pathType | string | `"Prefix"` |  |
+| eck-elasticsearch.ingress.tls.enabled | bool | `false` |  |
+| eck-elasticsearch.labels | object | `{}` |  |
+| eck-elasticsearch.monitoring | object | `{}` |  |
+| eck-elasticsearch.nameOverride | string | `"openinwoner-elasticsearch"` |  |
+| eck-elasticsearch.nodeSets[0].config."node.store.allow_mmap" | bool | `false` |  |
+| eck-elasticsearch.nodeSets[0].count | int | `1` |  |
+| eck-elasticsearch.nodeSets[0].name | string | `"default"` |  |
+| eck-elasticsearch.nodeSets[0].podTemplate.spec.containers[0].name | string | `"elasticsearch"` |  |
+| eck-elasticsearch.nodeSets[0].podTemplate.spec.containers[0].resources.limits.memory | string | `"2Gi"` |  |
+| eck-elasticsearch.nodeSets[0].podTemplate.spec.containers[0].resources.requests.memory | string | `"2Gi"` |  |
+| eck-elasticsearch.remoteClusterServer | object | `{}` |  |
+| eck-elasticsearch.remoteClusters | object | `{}` |  |
+| eck-elasticsearch.secureSettings | list | `[]` |  |
+| eck-elasticsearch.transport | object | `{}` |  |
+| eck-elasticsearch.updateStrategy | object | `{}` |  |
+| eck-elasticsearch.version | string | `"9.2.0"` |  |
+| eck-elasticsearch.volumeClaimDeletePolicy | string | `""` |  |
+| eck-operator.affinity | object | `{}` |  |
+| eck-operator.automountServiceAccountToken | bool | `true` |  |
+| eck-operator.config.caDir | string | `""` |  |
+| eck-operator.config.caRotateBefore | string | `"24h"` |  |
+| eck-operator.config.caValidity | string | `"8760h"` |  |
+| eck-operator.config.certificatesRotateBefore | string | `"24h"` |  |
+| eck-operator.config.certificatesValidity | string | `"8760h"` |  |
+| eck-operator.config.containerRegistry | string | `"docker.elastic.co"` |  |
+| eck-operator.config.disableConfigWatch | bool | `false` |  |
+| eck-operator.config.elasticsearchClientTimeout | string | `"180s"` |  |
+| eck-operator.config.elasticsearchObservationInterval | string | `"10s"` |  |
+| eck-operator.config.enableLeaderElection | bool | `true` |  |
+| eck-operator.config.exposedNodeLabels[0] | string | `"topology.kubernetes.io/.*"` |  |
+| eck-operator.config.exposedNodeLabels[1] | string | `"failure-domain.beta.kubernetes.io/.*"` |  |
+| eck-operator.config.ipFamily | string | `""` |  |
+| eck-operator.config.kubeClientTimeout | string | `"60s"` |  |
+| eck-operator.config.logVerbosity | string | `"0"` |  |
+| eck-operator.config.maxConcurrentReconciles | string | `"3"` |  |
+| eck-operator.config.metrics.port | string | `"0"` |  |
+| eck-operator.config.metrics.secureMode.enabled | bool | `false` |  |
+| eck-operator.config.metrics.secureMode.tls.certificateSecret | string | `""` |  |
+| eck-operator.config.metricsPort | int | `0` |  |
+| eck-operator.config.policies | object | `{}` |  |
+| eck-operator.config.setDefaultSecurityContext | string | `"auto-detect"` |  |
+| eck-operator.config.ubiOnly | bool | `false` |  |
+| eck-operator.config.validateStorageClass | bool | `true` |  |
+| eck-operator.createClusterScopedResources | bool | `true` |  |
+| eck-operator.dnsConfig | object | `{}` |  |
+| eck-operator.dnsPolicy | string | `""` |  |
+| eck-operator.enabled | bool | `true` |  |
+| eck-operator.env | list | `[]` |  |
+| eck-operator.fullnameOverride | string | `"openinwoner-elastic-operator"` |  |
+| eck-operator.hostNetwork | bool | `false` |  |
+| eck-operator.image.fips | bool | `false` |  |
+| eck-operator.image.pullPolicy | string | `"IfNotPresent"` |  |
+| eck-operator.image.repository | string | `"docker.elastic.co/eck/eck-operator"` |  |
+| eck-operator.image.tag | string | `nil` |  |
+| eck-operator.imagePullSecrets | list | `[]` |  |
+| eck-operator.installCRDs | bool | `false` |  |
+| eck-operator.kubeAPIServerIP | string | `nil` |  |
+| eck-operator.managedNamespaces | list | `[]` |  |
+| eck-operator.nameOverride | string | `"openinwoner-elastic-operator"` |  |
+| eck-operator.nodeSelector | object | `{}` |  |
+| eck-operator.podAnnotations | object | `{}` |  |
+| eck-operator.podDisruptionBudget.enabled | bool | `false` |  |
+| eck-operator.podDisruptionBudget.minAvailable | int | `1` |  |
+| eck-operator.podLabels | object | `{}` |  |
+| eck-operator.podMonitor.annotations | object | `{}` |  |
+| eck-operator.podMonitor.enabled | bool | `false` |  |
+| eck-operator.podMonitor.interval | string | `"5m"` |  |
+| eck-operator.podMonitor.labels | object | `{}` |  |
+| eck-operator.podMonitor.podMetricsEndpointConfig | object | `{}` |  |
+| eck-operator.podMonitor.podTargetLabels | list | `[]` |  |
+| eck-operator.podMonitor.scrapeTimeout | string | `"30s"` |  |
+| eck-operator.podSecurityContext.runAsNonRoot | bool | `true` |  |
+| eck-operator.priorityClassName | string | `""` |  |
+| eck-operator.refs.enforceRBAC | bool | `false` |  |
+| eck-operator.replicaCount | int | `1` |  |
+| eck-operator.resources.limits.cpu | int | `1` |  |
+| eck-operator.resources.limits.memory | string | `"1Gi"` |  |
+| eck-operator.resources.requests.cpu | string | `"100m"` |  |
+| eck-operator.resources.requests.memory | string | `"150Mi"` |  |
+| eck-operator.securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| eck-operator.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| eck-operator.securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| eck-operator.securityContext.runAsNonRoot | bool | `true` |  |
+| eck-operator.serviceAccount.annotations | object | `{}` |  |
+| eck-operator.serviceAccount.automountServiceAccountToken | bool | `true` |  |
+| eck-operator.serviceAccount.create | bool | `true` |  |
+| eck-operator.serviceAccount.name | string | `""` |  |
+| eck-operator.serviceMonitor.caMountDirectory | string | `"/etc/prometheus/secrets/"` |  |
+| eck-operator.serviceMonitor.caSecret | string | `""` |  |
+| eck-operator.serviceMonitor.enabled | bool | `true` |  |
+| eck-operator.serviceMonitor.insecureSkipVerify | bool | `true` |  |
+| eck-operator.softMultiTenancy.enabled | bool | `false` |  |
+| eck-operator.statefulsetAnnotations | object | `{}` |  |
+| eck-operator.statefulsetLabels | object | `{}` |  |
+| eck-operator.telemetry.disabled | bool | `false` |  |
+| eck-operator.telemetry.distributionChannel | string | `"helm"` |  |
+| eck-operator.tolerations | list | `[]` |  |
+| eck-operator.tracing.config.ELASTIC_APM_SERVER_TIMEOUT | string | `"30s"` |  |
+| eck-operator.tracing.config.ELASTIC_APM_SERVER_URL | string | `"http://localhost:8200"` |  |
+| eck-operator.tracing.enabled | bool | `false` |  |
+| eck-operator.volumeMounts | list | `[]` |  |
+| eck-operator.volumes | list | `[]` |  |
+| eck-operator.webhook.caBundle | string | `"Cg=="` |  |
+| eck-operator.webhook.certManagerCert | string | `nil` |  |
+| eck-operator.webhook.certsDir | string | `"/tmp/k8s-webhook-server/serving-certs"` |  |
+| eck-operator.webhook.certsSecret | string | `""` |  |
+| eck-operator.webhook.enabled | bool | `true` |  |
+| eck-operator.webhook.failurePolicy | string | `"Ignore"` |  |
+| eck-operator.webhook.manageCerts | bool | `true` |  |
+| eck-operator.webhook.namespaceSelector | object | `{}` |  |
+| eck-operator.webhook.objectSelector | object | `{}` |  |
+| eck-operator.webhook.port | int | `9443` |  |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraDeploy | list | `[]` | Extra objects to deploy (value evaluated as a template) |
@@ -187,7 +403,7 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | settings.isHttps | bool | `true` |  |
 | settings.loadFixtures | bool | `false` | Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json |
 | settings.oidcFrontendLogoutWithHints | bool | `true` | Whether to provide a id_token_hint to the IdP broker when initiating a frontchannel logout |
-| settings.searchInexInitContainer | bool | `false` |  |
+| settings.searchIndexInitContainer | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.secretKeyFallback | string | `""` | This optional setting can be used to rotate a secret key, by moving a new value into secretKey, and moving the previous secretKey into secretKeyFallback.  |
 | settings.sentry.dsn | string | `""` |  |
@@ -229,4 +445,3 @@ Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijk
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
-
