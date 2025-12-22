@@ -133,7 +133,6 @@ data:
   {{- if .Values.settings.timeLeeway }}
   TIME_LEEWAY: {{ int .Values.settings.timeLeeway | quote }}
   {{- end }}
-  {{- end }}
   OTEL_SDK_DISABLED: {{ if .Values.settings.otel.disabled }}"True"{{ else }}"False"{{ end }}
   {{- if not .Values.settings.otel.disabled }}
   OTEL_RESOURCE_ATTRIBUTES: "{{ range $index, $item := .Values.settings.otel.resourceAttributes }}{{ if $index }},{{ end }}{{ .key }}={{ .value }}{{ end }}"
