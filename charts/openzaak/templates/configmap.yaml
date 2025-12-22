@@ -133,6 +133,7 @@ data:
   {{- if .Values.settings.timeLeeway }}
   TIME_LEEWAY: {{ int .Values.settings.timeLeeway | quote }}
   {{- end }}
+  {{- end }}
   OTEL_SDK_DISABLED: {{ if .Values.settings.otel.disabled }}"True"{{ else }}"False"{{ end }}
   {{- if not .Values.settings.otel.disabled }}
   OTEL_RESOURCE_ATTRIBUTES: "{{ range $index, $item := .Values.settings.otel.resourceAttributes }}{{ if $index }},{{ end }}{{ .key }}={{ .value }}{{ end }}"
@@ -141,4 +142,4 @@ data:
   OTEL_EXPORTER_OTLP_PROTOCOL: {{ .Values.settings.otel.exporterOtlpProtocol | toString | quote }}
   OTEL_METRIC_EXPORT_INTERVAL: {{ .Values.settings.otel.metricExportInterval | toString | quote }}
   OTEL_METRIC_EXPORT_TIMEOUT: {{ .Values.settings.otel.metricExportTimeout | toString | quote }}
-  {{ end }}
+  {{- end }}
