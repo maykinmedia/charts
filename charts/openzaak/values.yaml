@@ -98,7 +98,9 @@ configuration:
   #     - identifier: admin-oidc
   #       enabled: true
   #       oidc_rp_client_id: testid
-  #       oidc_rp_client_secret: very-secret
+  #       oidc_rp_client_secret: 
+  #         value_from: 
+  #            env: keycloak_client_secret
   #       oidc_rp_scopes_list:
   #       - openid
   #       - email
@@ -125,25 +127,6 @@ configuration:
   #           make_users_staff: true
   #           superuser_group_names:
   #             - Registreerders
-  #     - identifier: oidc-digid
-  #       enabled: true
-  #       oidc_rp_client_id: testid
-  #       oidc_rp_client_secret: even-more-secret
-  #       oidc_rp_scopes_list:
-  #       - openid
-  #       - email
-  #       - profile
-  #       - bsn
-  #       oidc_rp_sign_algo: RS256
-  #       oidc_provider_identifier: keycloak-provider
-  #       userinfo_claims_source: id_token
-  #       options:
-  #         loa_settings:
-  #           claim_path: ["loa"]
-  #           default: "urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract"
-  #           value_mapping: []
-  #         identity_settings: 
-  #           bsn_claim_path: ["bsn"]
 
 
 tags:
@@ -442,7 +425,7 @@ settings:
 
   otel:
     # -- If the OpenTelemetrySDK should be disabled. Opentelemtry is enabled by default, Set this values to 'true' to disable openTelemetry. 
-    disabled: false
+    disabled: true
     # -- Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317.
     exporterOtlpEndpoint: ""
     # -- If the Opentelemetry Exporter endpoint is Insecure. Default is secured with TLS.   
