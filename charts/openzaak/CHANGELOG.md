@@ -7,22 +7,11 @@
 
 ⚠️ This release contains breaking changes.
 
-In this release, mozilla-django-oidc-db has been updated to version 1.1.0, which requires the new data format. The old format is deprecated and will be removed in future releases.
+With the upgrade from openzaak 1.25.0 to 1.26.0 is mozilla-django-oidc-db bumped to 1.1.0. This requires a new data format. 
 
 The new configuration must be used, as it splits the previous solo model configuration into OIDCProvider and OIDCClient configurations, making it easier to re-use identity provider settings across multiple client IDs.
 
-Additionally, any configuration using django-setup-configuration must be updated to reflect these changes, as it is now split into two distinct sections: one for providers and one for clients. This separation also exists in the admin interface, so both sections can be configured directly through the user interface. For example:
-
-providers:
-  - identifier: example-provider
-    # other provider settings
-
-clients:
-  - identifier: admin-oidc
-    oidc_provider_identifier: example-provider
-    # other client settings
-For detailed configuration, see Admin OIDC Configuration Step. Make sure to check which fields are marked as DEPRECATED and replace them with the fields that are mentioned as replacements.
-
+Refer to the example in the values file or consult the openzaak configuration documentation. 
 
 **Changes**
 - update openzaak container version to 1.26.0
