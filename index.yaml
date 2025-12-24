@@ -2629,6 +2629,39 @@ entries:
   openinwoner:
   - apiVersion: v2
     appVersion: 1.35.3
+    created: "2025-12-24T12:09:35.907077109Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: eck-operator
+      repository: https://helm.elastic.co
+      tags:
+      - eck-operator.enabled
+      version: 3.2.0
+    - name: eck-elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - eck-elasticsearch.enabled
+      version: 0.17.0
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Platform voor gemeenten en overheden om producten inzichtelijker
+      en toegankelijker te maken voor inwoners.
+    digest: 80936898faeda38c2f362194f7fe02087967443f5b1b7aa32f5d52262a852488
+    icon: https://docs.openinwoner.nl/en/latest/_static/logo.png
+    name: openinwoner
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openinwoner-2.0.0/openinwoner-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
+    appVersion: 1.35.3
     created: "2025-11-25T15:22:33.965628229Z"
     dependencies:
     - name: redis
@@ -5606,6 +5639,27 @@ entries:
     version: 0.1.0
   openzaak:
   - apiVersion: v2
+    appVersion: 1.26.0
+    created: "2025-12-24T12:09:36.199777529Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: 114d0a57aa8c5b7140db7476d07e190f137ee8dad8fd3181524a4b0197b6e227
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.13.0/openzaak-1.13.0.tgz
+    version: 1.13.0
+  - apiVersion: v2
     appVersion: 1.25.0
     created: "2025-10-30T09:59:14.325579823Z"
     dependencies:
@@ -6519,4 +6573,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-12T08:48:45.210468995Z"
+generated: "2025-12-24T12:09:36.201159984Z"
