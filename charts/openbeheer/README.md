@@ -2,7 +2,7 @@
 
 A Helm chart to deploy Open Beheer
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -57,5 +57,19 @@ configuration:
     enabled: true
 ```
 
-The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
-how to configure, see the documentation.
+The yaml data needed to configure the application should be provided in the value `configuration.data`.
+In the `values.yaml` file you can find an example of what the configuration should look like.
+
+The configuration can include sensitive data. To avoid having sensitive values in the `values.yaml` file, it is possible to reference
+environment variables. This can be done with the following syntax:
+
+```yaml
+configuration:
+  data:
+    someSensitiveVariable:
+      from_value:
+        env: SOME_SENSITIVE_VARIABLE
+```
+
+These environment variables should be provided in a secret, whose name must then be referenced
+with the value `existingConfigurationSecret` so that it is added to the environment of the Job pod.

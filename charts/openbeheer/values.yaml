@@ -11,10 +11,6 @@ global:
 configuration:
   enabled: false
   overwrite: true
-  superuser:
-    username: ""
-    password: ""
-    email: ""
   job:
     # -- Run the setup configuration command as a job
     enabled: false
@@ -68,6 +64,36 @@ configuration:
   #           make_users_staff: true
   #           superuser_group_names:
   #             - Superuser
+  #   zgw_consumers_config_enable: true
+  #   zgw_consumers:
+  #     services:
+  #     - identifier: objecttypen-service
+  #       label: Objecttypen API
+  #       api_root: https://objecttypen.example.nl/api/v2/
+  #       api_type: orc
+  #       auth_type: api_key
+  #       header_key: Authorization
+  #       header_value: 
+  #         value_from:
+  #           env: OBJECTTYPEN_OPENBEHEER_API_HEADER_VALUE
+  #     - identifier: catalogi-service
+  #       label: Open Zaak - Catalogi API
+  #       api_root: https://openzaak.example.nl/catalogi/api/v1/
+  #       api_type: ztc
+  #       auth_type: zgw
+  #       client_id: openbeheer.example.nl
+  #       secret: 
+  #         value_from:
+  #           env: OPENZAAK_APPLICATION_SECRET
+  #     - identifier: selectielijst-service
+  #       label: Open Zaak (public) - Selectielijst API
+  #       api_root: https://selectielijst.openzaak.nl/api/v1/
+  #       api_type: orc
+  #       auth_type: no_auth
+  #   api_configuration_enabled: true
+  #   api_configuration:
+  #     selectielijst_service_identifier: selectielijst-service
+  #     objecttypen_service_identifier: objecttypen-service
 
 tags:
   redis: true
@@ -255,6 +281,8 @@ settings:
   # -- The domain where the app is deployed. For example: openbeheer.gemeente.nl
   apiDomain: ""
   apiPath: /api/v1
+  # -- The url to configure links that reference openzaak, e.g. https://openzaak.example.nl/admin
+  openzaakBaseUrl: ""
   # -- Session cookie age in seconds (15 minutes = 900 seconds)
   # IMPORTANT: This value must equal oidcRenewIdTokenExpirySeconds to prevent timeout mismatches
   # If values differ, users may experience unexpected logouts when one expires before the other
