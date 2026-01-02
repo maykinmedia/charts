@@ -17,9 +17,6 @@ configuration:
     username: ""
     password: ""
     email: ""
-  initContainer:
-    # -- Run the setup configuration command in a init container
-    enabled: true
   job:
     # -- Run the setup configuration command as a job
     enabled: true
@@ -36,6 +33,62 @@ configuration:
       #   cpu: 100m
       #   memory: 128Mi
   data: ""
+  # e.g.
+  # data: |-
+  #   tokenauth_config_enable: true
+  #   tokenauth:
+  #     items:
+  #       - identifier: openformulier-token
+  #         token:
+  #           value_from:
+  #             env: SECRET_TOKEN
+  #         contact_person: Person 1
+  #         email: person-1@example.com
+  #         organization: Organization 1
+  #         application: Application 1
+  #         administration: Administration 1
+  #   oidc_db_config_enable: true
+  #   oidc_db_config_admin_auth:
+  #     providers:
+  #     - identifier: keycloak-provider
+  #       oidc_use_nonce: true
+  #       oidc_nonce_size: 32
+  #       oidc_state_size: 32
+  #       endpoint_config:
+  #         oidc_op_discovery_endpoint: http://keycloak.example.nl/realms/test/
+  #     items:
+  #     - identifier: admin-oidc
+  #       enabled: true
+  #       oidc_rp_client_id: testid
+  #       oidc_rp_client_secret: 
+  #         value_from:
+  #           env: CLIENT_SECRET
+  #       oidc_rp_scopes_list:
+  #       - openid
+  #       - email
+  #       - profile
+  #       oidc_rp_sign_algo: RS256
+  #       oidc_provider_identifier: keycloak-provider
+  #       userinfo_claims_source: id_token
+  #       options:
+  #         user_settings:
+  #           claim_mappings:
+  #             username:
+  #               - sub
+  #             first_name:
+  #               - given_name
+  #             email:
+  #               - email
+  #           username_case_sensitive: true
+  #         groups_settings:
+  #           claim_mapping:
+  #             - groups
+  #           sync: true
+  #           sync_pattern: '*'
+  #           default_groups: []
+  #           make_users_staff: true
+  #           superuser_group_names:
+  #             - Superusers
 
 tags:
   redis: true
@@ -252,10 +305,8 @@ settings:
     # e.g.:
     # default: openforms-redis-master-0:6379/0
     # axes: openforms-redis-master-0:6379/0
-    # oidc: openforms-redis-master-0:6379/0
     default: ""
     axes: ""
-    oidc: ""
 
   debug: false
 
@@ -268,6 +319,27 @@ settings:
     processes: ''
     maxRequests: ''
     harakiri: ''
+
+  otel:
+    disabled: true
+    # -- Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317.
+    exporterOtlpEndpoint: ""
+    # -- Resources Attributes can be used to specify additional information about the instance.
+    resourceAttributes: []
+    # - key: of.target
+    #   value: test
+    # -- Is true if the endoint is not protected with TLS.
+    exporterOtlpMetricsInsecure: false
+    # -- Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials. 
+    exporterOtlpHeaders: []
+    # - key: Authorization
+    #   value: Basic SomeSecretValue
+    # -- Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf.
+    exporterOtlpProtocol: grpc
+    # -- Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application. 
+    metricExportInterval: 60000 # Once per minute
+    # -- Controls the timeout of the requests to the collector (in milliseconds)
+    metricExportTimeout: 10000
 
 ##################
 # Redis subchart #

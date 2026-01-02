@@ -15,9 +15,6 @@ configuration:
     username: ""
     password: ""
     email: ""
-  initContainer:
-    # -- Run the setup configuration command in a init container
-    enabled: true
   job:
     # -- Run the setup configuration command as a job
     enabled: false
@@ -34,44 +31,48 @@ configuration:
   data: ""
   # e.g.
   # data: |-
-  #   oidc_db_config_enable: True
+  #   oidc_db_config_enable: true
   #   oidc_db_config_admin_auth:
+  #     providers:
+  #     - identifier: keycloak-provider
+  #       oidc_use_nonce: true
+  #       oidc_nonce_size: 32
+  #       oidc_state_size: 32
+  #       endpoint_config:
+  #         oidc_op_discovery_endpoint: http://keycloak.example.nl/realms/test/
   #     items:
   #     - identifier: admin-oidc
-  #       enabled: True
-  #       oidc_rp_client_id: opennotificaties.example.nl
-  #       oidc_rp_client_secret:
+  #       enabled: true
+  #       oidc_rp_client_id: testid
+  #       oidc_rp_client_secret: 
   #         value_from:
-  #           env: keycloak_client_secret
+  #           env: CLIENT_SECRET
   #       oidc_rp_scopes_list:
   #       - openid
   #       - email
   #       - profile
-  #       - roles
   #       oidc_rp_sign_algo: RS256
-  #       endpoint_config:
-  #         oidc_op_discovery_endpoint: https://keycloak.example.nl/realms/example/
-  #       username_claim:
-  #       - sub
-  #       groups_claim:
-  #       - roles
-  #       claim_mapping:
-  #         first_name:
-  #         - given_name
-  #         last_name:
-  #         - family_name
-  #         email:
-  #         - email
-  #       sync_groups: true
-  #       sync_groups_glob_pattern: "*"
-  #       default_groups: []
-  #       make_users_staff: true
-  #       superuser_group_names:
-  #       - Superuser
-  #       oidc_use_nonce: true
-  #       oidc_nonce_size: 32
-  #       oidc_state_size: 32
+  #       oidc_provider_identifier: keycloak-provider
   #       userinfo_claims_source: id_token
+  #       options:
+  #         user_settings:
+  #           claim_mappings:
+  #             username:
+  #               - sub
+  #             first_name:
+  #               - given_name
+  #             email:
+  #               - email
+  #           username_case_sensitive: true
+  #         groups_settings:
+  #           claim_mapping:
+  #             - groups
+  #           sync: true
+  #           sync_pattern: '*'
+  #           default_groups: []
+  #           make_users_staff: true
+  #           superuser_group_names:
+  #             - Superusers
   #   zgw_consumers_config_enable: True
   #   zgw_consumers:
   #     services:
@@ -469,6 +470,27 @@ settings:
   # Default: nil (uses Django default, typically 0 seconds)
   # Recommended: not to increase above 300 seconds
   timeLeeway: nil  
+
+  otel:
+    disabled: true
+    # -- Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317.
+    exporterOtlpEndpoint: ""
+    # -- Resources Attributes can be used to specify additional information about the instance.
+    resourceAttributes: []
+    # - key: of.target
+    #   value: test
+    # -- Is true if the endoint is not protected with TLS.
+    exporterOtlpMetricsInsecure: false
+    # -- Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials. 
+    exporterOtlpHeaders: []
+    # - key: Authorization
+    #   value: Basic SomeSecretValue
+    # -- Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf.
+    exporterOtlpProtocol: grpc
+    # -- Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application. 
+    metricExportInterval: 60000 # Once per minute
+    # -- Controls the timeout of the requests to the collector (in milliseconds)
+    metricExportTimeout: 10000
 
 worker:
   replicaCount: 2
