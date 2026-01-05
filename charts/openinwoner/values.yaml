@@ -429,6 +429,11 @@ settings:
   # frontchannel logout
   oidcFrontendLogoutWithHints: true
 
+  # -- The maximum number of requests allowed for fetching zaken on the Mijn Zaken page.
+  # The total number of zaken fetched will be this number multiplied by the page size
+  # of the ZGW backend's zaken endpoint.
+  zgwMaxRequests: ""
+
 worker:
   replicaCount: 2
   concurrency: 4

@@ -85,4 +85,5 @@ data:
   {{- end }}
   ALLOW_CUSTOM_JS:  {{ if .Values.settings.allowCustomJs }}"True"{{ else }}"False"{{ end }}
   OIDC_FRONTEND_LOGOUT_WITH_HINTS: {{ if .Values.settings.oidcFrontendLogoutWithHints }}"True"{{ else }}"False"{{ end }}
-
+  {{- if .Values.settings.zgwMaxRequests }}
+  ZGW_MAX_REQUESTS: {{ .Values.settings.zgwMaxRequests | toString | quote }}
