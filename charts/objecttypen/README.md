@@ -1,6 +1,6 @@
 # objecttypen
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0](https://img.shields.io/badge/AppVersion-3.3.0-informational?style=flat-square)
+![Version: 1.6.0](https://img.shields.io/badge/Version-1.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.4.0](https://img.shields.io/badge/AppVersion-3.4.0-informational?style=flat-square)
 
 API om object definities te beheren
 
@@ -27,7 +27,6 @@ API om object definities te beheren
 | azureVaultSecret.vaultName | string | `nil` |  |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
-| configuration.initContainer.enabled | bool | `true` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
 | configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
@@ -101,7 +100,6 @@ API om object definities te beheren
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |
-| settings.cache.oidc | string | `""` |  |
 | settings.database.db_conn_max_age | int | `60` |  |
 | settings.database.db_pool.db_pool_max_idle | int | `600` |  |
 | settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
@@ -131,6 +129,14 @@ API om object definities te beheren
 | settings.email.useTLS | bool | `false` |  |
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
+| settings.otel.disabled | bool | `true` |  |
+| settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
+| settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials.  |
+| settings.otel.exporterOtlpMetricsInsecure | bool | `false` | Is true if the endoint is not protected with TLS. |
+| settings.otel.exporterOtlpProtocol | string | `"grpc"` | Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf. |
+| settings.otel.metricExportInterval | int | `60000` | Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application.  |
+| settings.otel.metricExportTimeout | int | `10000` | Controls the timeout of the requests to the collector (in milliseconds) |
+| settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.uwsgi.harakiri | string | `""` |  |

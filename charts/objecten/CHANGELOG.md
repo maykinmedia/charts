@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.11.0 (2025-12-24)
+
+**Warning**
+
+⚠️ This release contains breaking changes.
+
+The library `mozilla-django-oidc-db` has been bumped to 1.1.0, which introduces a new data format. 
+
+The new configuration must be used, as it splits the previous solo model configuration into OIDCProvider and OIDCClient configurations, making it easier to re-use identity provider settings across multiple client IDs.
+
+Refer to the example in the values file or consult the openzaak configuration documentation. 
+
+**Changes**
+
+- Added support for the enivornment variables needed to configure Open Telemetry.
+- Updated examples in values.yaml to reflect the expected new OIDC config
+
+
 ## 2.10.0 (2025-10-29)
 
 **Warning**
