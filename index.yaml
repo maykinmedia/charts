@@ -2649,6 +2649,39 @@ entries:
     version: 1.0.0
   openinwoner:
   - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2026-01-07T08:16:35.771465203Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: eck-operator
+      repository: https://helm.elastic.co
+      tags:
+      - eck-operator.enabled
+      version: 3.2.0
+    - name: eck-elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - eck-elasticsearch.enabled
+      version: 0.17.0
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Platform voor gemeenten en overheden om producten inzichtelijker
+      en toegankelijker te maken voor inwoners.
+    digest: 27bf924796ccc8951c8bf68130c0ae6a4f87a0a76a9b919dbf40937797cc66f7
+    icon: https://docs.openinwoner.nl/en/latest/_static/logo.png
+    name: openinwoner
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openinwoner-2.1.0/openinwoner-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v2
     appVersion: 1.35.3
     created: "2025-12-24T12:09:35.907077109Z"
     dependencies:
@@ -6594,4 +6627,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-02T09:15:01.92078175Z"
+generated: "2026-01-07T08:16:35.772161611Z"
