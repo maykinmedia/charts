@@ -58,6 +58,27 @@ entries:
     version: 0.1.0
   objecten:
   - apiVersion: v2
+    appVersion: 3.5.0
+    created: "2026-01-07T13:38:33.796919618Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: API om objecten te beheren die behoren bij een bepaald objecttype
+    digest: ce838ad0a0d695f7590d059aac2fe93a1af6b52e3f334ab82c77ee290b6da9c8
+    name: objecten
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecten-2.11.0/objecten-2.11.0.tgz
+    version: 2.11.0
+  - apiVersion: v2
     appVersion: 3.3.1
     created: "2025-10-30T09:52:37.194108406Z"
     dependencies:
@@ -530,6 +551,27 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/objecten-0.9.3/objecten-0.9.3.tgz
     version: 0.9.3
   objecttypen:
+  - apiVersion: v2
+    appVersion: 3.4.0
+    created: "2026-01-07T13:38:34.017996541Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: API om object definities te beheren
+    digest: 730b2e242f14b85567cd42b7af75d22429209950426915718a41f88d6687af74
+    name: objecttypen
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecttypen-1.6.0/objecttypen-1.6.0.tgz
+    version: 1.6.0
   - apiVersion: v2
     appVersion: 3.3.0
     created: "2025-10-30T13:17:59.680418697Z"
@@ -3774,6 +3816,28 @@ entries:
     version: 0.9.0
   openklant:
   - apiVersion: v2
+    appVersion: 2.14.0
+    created: "2026-01-07T13:38:34.236657842Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten
+      API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
+    digest: 8e4d4f94e9e534ba8ef57cad5911305cc84714c8c230baac7b8c32b4d36c175a
+    name: openklant
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openklant-1.10.0/openklant-1.10.0.tgz
+    version: 1.10.0
+  - apiVersion: v2
     appVersion: 2.13.0
     created: "2025-10-30T09:46:36.95420953Z"
     dependencies:
@@ -4380,6 +4444,32 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openklant-0.0.1/openklant-0.0.1.tgz
     version: 0.0.1
   opennotificaties:
+  - apiVersion: v2
+    appVersion: 1.14.0
+    created: "2026-01-07T13:38:34.450863757Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - rabbitmq
+      version: 16.0.12
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: API voor het routeren van notificaties
+    digest: b91fbcf343c867d12133a5769ca9a0e4756085a3fea9b5d7a18829093051adc0
+    name: opennotificaties
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.13.0/opennotificaties-1.13.0.tgz
+    version: 1.13.0
   - apiVersion: v2
     appVersion: 1.13.0
     created: "2025-10-30T09:50:17.802868517Z"
@@ -6627,4 +6717,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-07T08:16:35.772161611Z"
+generated: "2026-01-07T13:38:34.451815016Z"
