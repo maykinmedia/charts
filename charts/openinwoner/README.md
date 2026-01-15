@@ -108,7 +108,7 @@ configuration:
 ```
 
 The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
-how to configure, see the Open Inwoner [documetation](https://open-forms.readthedocs.io/en/stable/installation/setup_configuration.html#installation-configuration-cli).
+how to configure, see the Open Inwoner [documentation](https://open-forms.readthedocs.io/en/stable/installation/setup_configuration.html#installation-configuration-cli).
 
 ### Sentry
 
