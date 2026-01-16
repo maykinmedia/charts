@@ -86,6 +86,14 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| otel.disabled | bool | `true` | If the OpenTelemetrySDK should be disabled. Opentelemtry is enabled by default, Set this values to 'true' to disable openTelemetry.  |
+| otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
+| otel.exporterOtlpHeaders | list | `[]` | Specify any additional HTTP headers required (e.g., Basic Auth). This configuration is stored in secret.yaml because it may include sensitive credentials.  |
+| otel.exporterOtlpMetricsInsecure | bool | `false` | If the Opentelemetry Exporter endpoint is Insecure. Default is secured with TLS.    |
+| otel.exporterOtlpProtocol | string | `"grpc"` | What protocol Opentelemtry should use. options: grpc and http/protobuf. |
+| otel.metricExportInterval | int | `60000` | How often (in milliseconds) the metrics are exported. Exports run in a background thread.  |
+| otel.metricExportTimeout | int | `10000` | Timeout of the requests to the collector (in milliseconds) |
+| otel.resourceAttributes | list | `[]` | Resource attributes can be used to specify additional information about the instance. These are collected by the Kubernetes attributes processor. |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
 | pdb.minAvailable | int | `1` |  |
@@ -162,6 +170,7 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
 | settings.useXForwardedHost | bool | `false` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
