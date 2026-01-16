@@ -1,0 +1,71 @@
+# Open Organisatie
+
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Introduction 
+
+This chart can be used to deploy Open Organisatie on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/open-organisatie/)
+* [Documentation](https://open-organisatie.readthedocs.io/)
+* [Docker image](https://hub.docker.com/r/maykinmedia/open-organisatie)
+* [Changelog](https://open-organisatie.readthedocs.io/en/latest/development/changelog.html)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install {{ template "chart.name" . }} maykinmedia/{{ template "chart.name" . }}
+```
+
+{{ template "chart.requirementsSection" . }}
+
+## Configuration and installation details
+
+### Django specific configuration
+
+**Secret key**
+
+Django makes use of a secret key to provide cryptographic signing. 
+This key should be set to a unique, unpredictable value. 
+Without the `SECRET_KEY` environment variable, the application will not start.
+
+The key can be configured with the value `settings.secretKey`. You can use a [web tool](https://djecrety.ir/) to generate it. 
+
+**Warning**: Running with a known secret key defeats many of Django’s security protections and can lead to privilege escalation and remote code execution vulnerabilities. 
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`. 
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`.
+In the `values.yaml` file you can find an example of what the configuration should look like.
+The configuration can include sensitive data. To avoid having sensitive values in the `values.yaml` file, it is possible to reference
+environment variables. This can be done with the following syntax:
+
+```yaml
+configuration:
+  data:
+    someSensitiveVariable:
+      from_value:
+        env: SOME_SENSITIVE_VARIABLE
+```
+These environment variables should be provided in a secret, whose name must then be referenced
+with the value `existingConfigurationSecret` so that it is added to the environment of the Job pod.
+
+
+{{ template "chart.valuesSection" . }}

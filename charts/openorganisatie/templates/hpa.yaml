@@ -1,0 +1,7 @@
+{{- if .Values.autoscaling.enabled }}
+{{- include "maykinUtilsLib.webAppHpa" . -}}
+{{- end }}
+---
+{{- if .Values.worker.autoscaling.enabled }}
+{{- include "maykinUtilsLib.workerHpa" . -}}
+{{- end }}
