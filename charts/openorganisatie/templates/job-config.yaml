@@ -52,7 +52,7 @@ spec:
             - "-c"
           args:
           - |
-            /app/src/manage.py setup_configuration --yaml-file /tmp/configuration.yaml
+            /app/src/manage.py setup_configuration --yaml-file /app/configuration/configuration.yaml
           volumeMounts:
             - name: media
               mountPath: /app/private-media

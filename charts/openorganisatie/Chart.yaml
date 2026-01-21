@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.1.0
+appVersion: 0.2.0
 description: Open Organisatie is een applicatie waar medewerkers beheer kunnen worden.
 name: openorganisatie
 type: application
@@ -11,9 +11,6 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - redis
-  - name: maykin-utils-lib
-    version: 0.2.1
-    repository: https://maykinmedia.github.io/charts/
   - name: common
     version: 2.31.4
     repository: https://charts.bitnami.com/bitnami
