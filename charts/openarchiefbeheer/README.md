@@ -2,7 +2,7 @@
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
-![Version: 2.0.0-rc.0](https://img.shields.io/badge/Version-2.0.0--rc.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 2.0.0-rc.1](https://img.shields.io/badge/Version-2.0.0--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -233,7 +233,7 @@ how to configure, see the Open Archiefbeheer [example](https://github.com/maykin
 | settings.uwsgi.maxRequests | string | `""` |  |
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
-| settings.waitingPeriod | string | `""` | Number of days to wait before destroying a list. Defaults to 7 in the application. |
+| settings.waitingPeriod | string | `"7"` | Number of days to wait before destroying a list. Defaults to 7 in the application. |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
 | worker.autoscaling.enabled | bool | `false` |  |
