@@ -1,11 +1,54 @@
 # Changelog
 
+## 2.0.0 (TBD)
+
+**Warning**
+
+⚠️ This release contains breaking changes.
+
+The application version was updated to `2.0.0`. This involves:
+
+- An upgrade of the `django-setup-configuration` library to version `0.11.0`. This version of `django-setup-configuration` removes the need to use `envsubst` to inject secrets into the yaml file used to configure the application. It supports extracting secrets directly from environment variables.
+- An upgrade of the `mozilla-django-oidc-db` library to version `1.1.1`. This version of `mozilla-django-oidc-db` changed the database schema, so the format of the yaml used to configure it has changed.
+
+---
+
+**Upgrade procedure**
+
+In the `configuration.data` value, any value using the `envsubst` syntax `${...}`, for example:
+
+```yaml
+oidc_rp_client_secret: ${keycloak_client_secret}
+```
+should be changed to:
+```yaml
+oidc_rp_client_secret:
+  value_from:
+    env: KEYCLOAK_CLIENT_SECRET
+```
+For the upgrade of the yaml used to configure the OIDC login, look at the `values.yaml` file for the updated structure.
+
+**Complete list of changes**
+
+- Added environment variables `POST_DESTRUCTION_VISIBILITY_PERIOD` and `FEATURE_RELATED_COUNT_DISABLED`.
+- [#188] Removed the unused init containers for  `django-setup-configuration`.
+- Upgraded libraries in the application:
+
+   - Upgrade of `django-setup-configuration` to version `0.11.0`. 
+   - Upgrade of `mozilla-django-oidc-db` to version `1.1.1`.
+
+- Added a README template.
+- Removed chart dependency on `maykin-utils-lib`
+
+
+
 ## 1.5.3 (2025-12-08)
 
 - Fixed missing `X-Frame-Options` and `Content-Security-Policy` headers in response for static files.
 
 ## 1.5.1 (2025-10-29)
-- Add `existingConfigurationSecrets` setting to reference an existing secret with the values needed for django-setup-configuration
+
+- Add `existingConfigurationSecrets` setting to reference an existing secret with the values needed for `django-setup-configuration`.
 
 ## 1.5.0 (2025-10-03)
 
@@ -18,11 +61,10 @@
   - `settings.sessionCookieAge`: Configure session cookie age in seconds (defaults to 15 minutes = 900 seconds)
 
 ## 1.4.0 (2025-08-24)
-##### Upgraded
-- Redis Bitnami Helm subchart to version `22.0.1`
-- Common Bitnami Helm subchart to version `2.31.4`
-##### Changed
-- Redis: Migrated from Bitnami to official Redis container image (`8.0`, pinned)
+
+- Upgraded Redis Bitnami Helm subchart to version `22.0.1`.
+- Upgraded common Bitnami Helm subchart to version `2.31.4`.
+- Migrated Redis image from Bitnami to official Redis container image (pinned to version `8.0`).
 
 ## 1.3.11 (2025-06-11)
 

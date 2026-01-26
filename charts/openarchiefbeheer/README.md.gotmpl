@@ -1,0 +1,58 @@
+# Open Archiefbeheer Chart
+
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Introduction 
+
+This chart can be used to deploy Open Archiefbeheer on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/open-archiefbeheer)
+* [Documentation](https://open-archiefbeheer.readthedocs.io/en/latest/)
+* [Docker image](https://hub.docker.com/r/maykinmedia/open-archiefbeheer/)
+* [Changelog](https://github.com/maykinmedia/open-archiefbeheer/blob/main/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install {{ template "chart.name" . }} maykinmedia/{{ template "chart.name" . }}
+```
+
+{{ template "chart.requirementsSection" . }}
+
+## Configuration and installation details
+
+### Django specific configuration
+
+**Secret key**
+
+Django makes use of a secret key to provide cryptographic signing. 
+This key should be set to a unique, unpredictable value. 
+Without the `SECRET_KEY` environment variable, the application will not start.
+
+The key can be configured with the value `settings.secretKey`. You can use a [web tool](https://djecrety.ir/) to generate it. 
+
+**Warning**: Running with a known secret key defeats many of Django’s security protections and can lead to privilege escalation and remote code execution vulnerabilities. 
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`. 
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Archiefbeheer [example](https://github.com/maykinmedia/open-archiefbeheer/blob/397d26b0db69ac368bbfdc8ab689d61f61f8eefc/backend/src/openarchiefbeheer/config/setup_configuration/fixtures/data.yaml).
+
+{{ template "chart.valuesSection" . }}
