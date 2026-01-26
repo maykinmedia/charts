@@ -254,7 +254,7 @@ settings:
   environment: ""
   requestsReadTimeout: "30"
   # -- Number of days to wait before destroying a list. Defaults to 7 in the application.
-  waitingPeriod: ""
+  waitingPeriod: "7"
   # -- Number of days for which destruction lists will be visible after successfull destruction.
   postDestructionVisibilityPeriod: "7"
   # -- If true, the inline presentation of the related objects will be disabled. This reduces load on external registers and improves performance.
