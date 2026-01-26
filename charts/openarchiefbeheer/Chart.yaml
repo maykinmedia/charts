@@ -3,8 +3,8 @@ name: openarchiefbeheer
 description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
 type: application
-version: 1.5.3
-appVersion: 1.1.1
+version: 2.0.0-rc.0
+appVersion: 2.0.0
 
 dependencies:
   - name: redis
@@ -12,9 +12,6 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - redis
-  - name: maykin-utils-lib
-    version: 0.1.0
-    repository: https://maykinmedia.github.io/charts/
   - name: common
     version: 2.31.4
     repository: https://charts.bitnami.com/bitnami

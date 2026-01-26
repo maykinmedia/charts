@@ -5,9 +5,6 @@ global:
 
 configuration:
   enabled: false
-  initContainer:
-    # -- Run the setup configuration command in a init container
-    enabled: false
   job:
     # -- Run the setup configuration command as a job
     enabled: true
@@ -25,6 +22,79 @@ configuration:
       #   memory: 128Mi
   secrets: {}
   data: ""
+  # data: |-
+  #   oidc_db_config_enable: false
+  #   oidc_db_config_admin_auth:
+  #     providers:
+  #     - identifier: admin-oidc-provider
+  #       endpoint_config:
+  #         oidc_op_discovery_endpoint: "https://keycloak.example.nl/realms/test/"
+  #       oidc_token_use_basic_auth: false
+  #     items:
+  #       - identifier: admin-oidc
+  #         enabled: true
+  #         oidc_provider_identifier: admin-oidc-provider
+  #         oidc_rp_client_id: openarchiefbeheer
+  #         oidc_rp_client_secret: 
+  #           value_from:
+  #             env: OAB_KEYCLOAK_SECRET
+  #         oidc_rp_sign_algo: "RS256"
+  #         oidc_rp_idp_sign_key: ""
+  #         options:
+  #           user_settings:
+  #             claim_mappings:
+  #               username:
+  #               - preferred_username
+  #             username_case_sensitive: false
+  #           groups_settings:
+  #             superuser_group_names:
+  #             - Superuser
+  #             claim_mapping:
+  #             - roles
+  #             make_users_staff: true
+
+  #   zgw_consumers_config_enable: true
+  #   zgw_consumers:
+  #     services:
+  #     - identifier: selectielijst-api
+  #       label: Selectielijst API
+  #       api_root: https://selectielijst.openzaak.nl/api/v1/
+  #       api_type: orc
+  #       auth_type: no_auth
+  #     - identifier: openklant-klantinteracties
+  #       label: Open Klant Klantinteracties
+  #       api_root: https://openklant.example.nl/klantinteracties/api/v1/
+  #       api_type: orc
+  #       auth_type: api_key
+  #       header_key: Authorization
+  #       header_value: 
+  #         value_from:
+  #             env: OAB_OPENKLANT_TOKEN
+  #     - identifier: objecten-api
+  #       label: Objecten API
+  #       api_root: https://objecten.example.nl/api/v2/
+  #       api_type: orc
+  #       auth_type: api_key
+  #       header_key: Authorization
+  #       header_value: 
+  #         value_from:
+  #             env: OAB_OBJECTEN_TOKEN
+
+  #   api_configuration_enabled: true
+  #   api_configuration:
+  #     selectielijst_service_identifier: selectielijst-api
+
+  #   external_registers_enabled: true
+  #   external_registers:
+  #     openklant:
+  #       enabled: true
+  #       services_identifiers:
+  #       - openklant-klantinteracties
+  #     objecten:
+  #       enabled: true
+  #       services_identifiers: 
+  #       - objecten-api
+
 
 tags:
   redis: true
@@ -185,6 +255,10 @@ settings:
   requestsReadTimeout: "30"
   # -- Number of days to wait before destroying a list. Defaults to 7 in the application.
   waitingPeriod: ""
+  # -- Number of days for which destruction lists will be visible after successfull destruction.
+  postDestructionVisibilityPeriod: "7"
+  # -- If true, the inline presentation of the related objects will be disabled. This reduces load on external registers and improves performance.
+  relatedCountDisabled: false
 
   database:
     host: ""

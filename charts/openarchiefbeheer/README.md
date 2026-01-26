@@ -1,8 +1,24 @@
-# openarchiefbeheer
-
-![Version: 1.5.2](https://img.shields.io/badge/Version-1.5.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.1](https://img.shields.io/badge/AppVersion-1.1.1-informational?style=flat-square)
+# Open Archiefbeheer Chart
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
+
+![Version: 2.0.0-rc.0](https://img.shields.io/badge/Version-2.0.0--rc.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+
+## Introduction
+
+This chart can be used to deploy Open Archiefbeheer on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/open-archiefbeheer)
+* [Documentation](https://open-archiefbeheer.readthedocs.io/en/latest/)
+* [Docker image](https://hub.docker.com/r/maykinmedia/open-archiefbeheer/)
+* [Changelog](https://github.com/maykinmedia/open-archiefbeheer/blob/main/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install openarchiefbeheer maykinmedia/openarchiefbeheer
+```
 
 ## Requirements
 
@@ -10,7 +26,39 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
-| https://maykinmedia.github.io/charts/ | maykin-utils-lib | 0.1.0 |
+
+## Configuration and installation details
+
+### Django specific configuration
+
+**Secret key**
+
+Django makes use of a secret key to provide cryptographic signing.
+This key should be set to a unique, unpredictable value.
+Without the `SECRET_KEY` environment variable, the application will not start.
+
+The key can be configured with the value `settings.secretKey`. You can use a [web tool](https://djecrety.ir/) to generate it.
+
+**Warning**: Running with a known secret key defeats many of Django’s security protections and can lead to privilege escalation and remote code execution vulnerabilities.
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Archiefbeheer [example](https://github.com/maykinmedia/open-archiefbeheer/blob/397d26b0db69ac368bbfdc8ab689d61f61f8eefc/backend/src/openarchiefbeheer/config/setup_configuration/fixtures/data.yaml).
 
 ## Values
 
@@ -34,7 +82,6 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 | beat.resources | object | `{}` |  |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
-| configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
 | configuration.job.backoffLimit | int | `6` |  |
 | configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
@@ -169,6 +216,8 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 | settings.logging.level | string | `"INFO"` | Controls the log levels of project code and of the OIDC library.  Possible values: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL. |
 | settings.logging.toStdout | bool | `false` | Controls whether the logs are output to standard output or to a file |
 | settings.oidcRenewIdTokenExpirySeconds | int | `900` | OIDC token renewal settings (15 minutes = 900 seconds) IMPORTANT: This value must equal sessionCookieAge to prevent timeout mismatches If values differ, users may experience unexpected logouts when one expires before the other |
+| settings.postDestructionVisibilityPeriod | string | `"7"` | Number of days for which destruction lists will be visible after successfull destruction. |
+| settings.relatedCountDisabled | bool | `false` | If true, the inline presentation of the related objects will be disabled. This reduces load on external registers and improves performance. |
 | settings.requestsReadTimeout | string | `"30"` |  |
 | settings.retry.backoffFactor | string | `""` |  |
 | settings.retry.statusForcelist | string | `""` |  |
@@ -206,4 +255,3 @@ Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakg
 | worker.queueName | string | `""` |  |
 | worker.replicaCount | int | `1` |  |
 | worker.resources | object | `{}` |  |
-
