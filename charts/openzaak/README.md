@@ -11,6 +11,30 @@ Productiewaardige API's voor Zaakgericht Werken
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
 
+### Environment variables
+
+For a full overview of the available environment variables and their meaning, 
+see the the Open Zaak [documentation](https://open-zaak.readthedocs.io/en/stable/installation/config/env_config.html).
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Zaak [documentation](https://open-zaak.readthedocs.io/en/stable/installation/config/openzaak_config_cli.html).
+
 ## Values
 
 | Key | Type | Default | Description |
