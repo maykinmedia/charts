@@ -312,6 +312,27 @@ settings:
     processes: ''
     maxRequests: ''
     harakiri: ''
+  
+  otel:
+    disabled: true
+    # -- Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317.
+    exporterOtlpEndpoint: ""
+    # -- Resources Attributes can be used to specify additional information about the instance.
+    resourceAttributes: []
+    # - key: of.target
+    #   value: test
+    # -- Is true if the endoint is not protected with TLS.
+    exporterOtlpMetricsInsecure: false
+    # -- Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials. 
+    exporterOtlpHeaders: []
+    # - key: Authorization
+    #   value: Basic SomeSecretValue
+    # -- Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf.
+    exporterOtlpProtocol: grpc
+    # -- Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application. 
+    metricExportInterval: 60000 # Once per minute
+    # -- Controls the timeout of the requests to the collector (in milliseconds)
+    metricExportTimeout: 10000
 
 worker:
   replicaCount: 2
