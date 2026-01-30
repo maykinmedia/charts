@@ -308,6 +308,10 @@ settings:
   # -- Disable two factor authentication
   disable2fa: false
 
+  # -- Cloudevents
+  enableCloudEvents: false
+  notificationsSource: ""
+
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
 

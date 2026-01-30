@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.12.0 (2025-02-03)
+
+**Changes**
+
+- Bumped application version from 3.5.0 to 3.6.0
+- Added ENABLE_CLOUD_EVENTS & NOTIFICATIONS_SOURCE settings
+
 ## 2.11.0 (2025-12-24)
 
 **Warning**
