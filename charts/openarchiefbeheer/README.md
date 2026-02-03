@@ -2,7 +2,7 @@
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
-![Version: 2.0.0-rc.1](https://img.shields.io/badge/Version-2.0.0--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 2.0.0-rc.2](https://img.shields.io/badge/Version-2.0.0--rc.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0-rc.2](https://img.shields.io/badge/AppVersion-2.0.0--rc.2-informational?style=flat-square)
 
 ## Introduction
 
@@ -59,6 +59,17 @@ configuration:
 
 The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
 how to configure, see the Open Archiefbeheer [example](https://github.com/maykinmedia/open-archiefbeheer/blob/397d26b0db69ac368bbfdc8ab689d61f61f8eefc/backend/src/openarchiefbeheer/config/setup_configuration/fixtures/data.yaml).
+
+### Nginx configuration
+
+Open Archiefbeheer is a Single Page App (SPA), therefore the Nginx configuration is a bit different from that of other Maykin components.
+
+All requests to paths starting with `/admin|oidc|static|assets|api/` are routed to the Django backend.
+On the other hand, all other requests result in loading of the `/static/frontend/index.html` template which retrieves the JS and the CSS of the React frontend.
+All paths are then handled by the `react-router`.
+
+Since the frontend is not served by Django, it does add CSP headers to the responses in the same way as the backend.
+For this reason, Nginx adds CSP headers to responses where they are not already present.
 
 ## Values
 

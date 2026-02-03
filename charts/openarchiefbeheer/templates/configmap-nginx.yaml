@@ -7,11 +7,16 @@ metadata:
     {{- include "openarchiefbeheer.nginxLabels" . | nindent 4 }}
 data:
   default.conf: |
+    map $sent_http_content_security_policy $csp_headers {
+        default   $csp_headers;
+        ""        "default-src 'self'; font-src 'self' data:; frame-ancestors 'none';";
+    }
+
     server {
       listen 8080 default_server;
       server_name  {{ .Values.settings.allowedHosts  | replace "," " "}} localhost;
       add_header X-Frame-Options DENY;
-      add_header Content-Security-Policy "default-src 'self'; font-src 'self' data:; frame-ancestors 'none';";
+      add_header Content-Security-Policy $csp_headers always;
 
       location ~ ^/admin|oidc|static|assets|api/ {
         proxy_pass http://{{ include "openarchiefbeheer.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.port }};

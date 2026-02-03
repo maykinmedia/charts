@@ -40,6 +40,7 @@ For the upgrade of the yaml used to configure the OIDC login, look at the `value
 - Added a README template.
 - Removed chart dependency on `maykin-utils-lib`
 - Fixed bug preventing us from setting `WAITING_PERIOD` to `0`. Now the chart sets it to `7` by default in the same way as the app.
+- Updated the nginx configuration to avoid overriding the CSP headers set by the backend.
 
 
 
