@@ -897,6 +897,28 @@ entries:
     version: 0.9.5
   openarchiefbeheer:
   - apiVersion: v2
+    appVersion: 2.0.0-rc.2
+    created: "2026-02-03T11:21:12.70200348Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik
+      met Zaakgericht werken
+    digest: 08195042445a9185ffd223cc60bf2879a8a594f6d0c252aa8c76fccd270cee60
+    name: openarchiefbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openarchiefbeheer-2.0.0-rc.2/openarchiefbeheer-2.0.0-rc.2.tgz
+    version: 2.0.0-rc.2
+  - apiVersion: v2
     appVersion: 2.0.0
     created: "2026-01-26T18:38:24.521671676Z"
     dependencies:
@@ -6761,4 +6783,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-26T18:38:24.522293573Z"
+generated: "2026-02-03T11:21:12.702585805Z"
