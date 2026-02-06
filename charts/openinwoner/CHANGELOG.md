@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1 (2026-02-06)
+
+- Fix typo in the Readme.
+
 ## 2.0.0 (2025-12-10)
 
 **Warning**
