@@ -2,7 +2,7 @@
 
 Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik met Zaakgericht werken
 
-![Version: 2.0.0-rc.2](https://img.shields.io/badge/Version-2.0.0--rc.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0-rc.2](https://img.shields.io/badge/AppVersion-2.0.0--rc.2-informational?style=flat-square)
+![Version: 2.0.0-rc.3](https://img.shields.io/badge/Version-2.0.0--rc.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0-rc.2](https://img.shields.io/badge/AppVersion-2.0.0--rc.2-informational?style=flat-square)
 
 ## Introduction
 
@@ -227,6 +227,14 @@ For this reason, Nginx adds CSP headers to responses where they are not already 
 | settings.logging.level | string | `"INFO"` | Controls the log levels of project code and of the OIDC library.  Possible values: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL. |
 | settings.logging.toStdout | bool | `false` | Controls whether the logs are output to standard output or to a file |
 | settings.oidcRenewIdTokenExpirySeconds | int | `900` | OIDC token renewal settings (15 minutes = 900 seconds) IMPORTANT: This value must equal sessionCookieAge to prevent timeout mismatches If values differ, users may experience unexpected logouts when one expires before the other |
+| settings.otel.disabled | bool | `true` |  |
+| settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
+| settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials.  |
+| settings.otel.exporterOtlpMetricsInsecure | bool | `false` | Is true if the endoint is not protected with TLS. |
+| settings.otel.exporterOtlpProtocol | string | `"grpc"` | Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf. |
+| settings.otel.metricExportInterval | int | `60000` | Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application.  |
+| settings.otel.metricExportTimeout | int | `10000` | Controls the timeout of the requests to the collector (in milliseconds) |
+| settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
 | settings.postDestructionVisibilityPeriod | string | `"7"` | Number of days for which destruction lists will be visible after successfull destruction. |
 | settings.relatedCountDisabled | bool | `false` | If true, the inline presentation of the related objects will be disabled. This reduces load on external registers and improves performance. |
 | settings.requestsReadTimeout | string | `"30"` |  |
