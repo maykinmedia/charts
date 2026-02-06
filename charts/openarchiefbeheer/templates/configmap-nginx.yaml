@@ -9,7 +9,7 @@ data:
   default.conf: |
     map $sent_http_content_security_policy $csp_headers {
         default   $csp_headers;
-        ""        "default-src 'self'; font-src 'self' data:; frame-ancestors 'none';";
+        ""        "default-src 'self'; font-src 'self' data:; frame-ancestors 'none';  img-src 'self' data:;";
     }
 
     server {
