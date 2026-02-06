@@ -1,8 +1,12 @@
 # Changelog
 
-## 2.0.1 (2026-02-06)
+## 2.1.1 (2026-02-06)
 
-- Fix typo in the Readme.
+- Fixed typo in the readme.
+
+## 2.1.0 (2026-01-06)
+
+- Bumped the app version to `2.0.0`.
 
 ## 2.0.0 (2025-12-10)
 
