@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.11.1 (2026-02-09)
+
+- Update the Readme.
+
 ## 2.11.0 (2025-12-24)
 
 **Warning**

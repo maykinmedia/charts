@@ -1,8 +1,24 @@
-# objecten
-
-![Version: 2.11.0](https://img.shields.io/badge/Version-2.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.0](https://img.shields.io/badge/AppVersion-3.5.0-informational?style=flat-square)
+# Objecten Chart
 
 API om objecten te beheren die behoren bij een bepaald objecttype
+
+![Version: 2.11.1](https://img.shields.io/badge/Version-2.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.0](https://img.shields.io/badge/AppVersion-3.5.0-informational?style=flat-square)
+
+## Introduction
+
+This chart can be used to deploy Objects-api on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/objects-api/)
+* [Documentation](https://objects-and-objecttypes-api.readthedocs.io/)
+* [Docker image](https://hub.docker.com/r/maykinmedia/objects-api)
+* [Changelog](https://github.com/maykinmedia/objects-api/blob/master/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install objecten maykinmedia/objecten
+```
 
 ## Requirements
 
@@ -10,6 +26,32 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
+
+## Configuration and installation details
+
+### Environment variables
+
+For a full overview of the available environment variables and their meaning,
+see the the Objects-api [documentation](https://objects-and-objecttypes-api.readthedocs.io/en/latest/installation/config.html).
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Objects-api [documentation](https://objects-and-objecttypes-api.readthedocs.io/en/latest/installation/config_cli.html).
 
 ## Values
 
@@ -197,4 +239,3 @@ API om objecten te beheren die behoren bij een bepaald objecttype
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
-
