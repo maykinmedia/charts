@@ -1,8 +1,24 @@
-# opennotificaties
-
-![Version: 1.13.0](https://img.shields.io/badge/Version-1.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.14.0](https://img.shields.io/badge/AppVersion-1.14.0-informational?style=flat-square)
+# Open Notificaties Chart
 
 API voor het routeren van notificaties
+
+![Version: 1.13.1](https://img.shields.io/badge/Version-1.13.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.14.0](https://img.shields.io/badge/AppVersion-1.14.0-informational?style=flat-square)
+
+## Introduction
+
+This chart can be used to deploy Open Notificaties on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/open-zaak/open-notificaties/)
+* [Documentation](https://open-notificaties.readthedocs.io/)
+* [Docker image](https://hub.docker.com/r/openzaak/open-notificaties)
+* [Changelog](https://github.com/open-zaak/open-notificaties/blob/main/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install opennotificaties maykinmedia/opennotificaties
+```
 
 ## Requirements
 
@@ -11,6 +27,32 @@ API voor het routeren van notificaties
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
 | https://charts.bitnami.com/bitnami | rabbitmq | 16.0.12 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
+
+## Configuration and installation details
+
+### Environment variables
+
+For a full overview of the available environment variables and their meaning,
+see the the Open Notificaties [documentation](https://open-notificaties.readthedocs.io/en/stable/installation/configuration/env_config.html).
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Notificaties [documentation](https://open-notificaties.readthedocs.io/en/stable/installation/configuration/opennotifs_config_cli.html).
 
 ## Values
 
@@ -241,4 +283,3 @@ API voor het routeren van notificaties
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
 | worker.resources | object | `{}` |  |
-
