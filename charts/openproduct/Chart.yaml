@@ -3,7 +3,7 @@ appVersion: 1.0.0
 description: Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
 name: openproduct
 type: application
-version: 0.2.1
+version: 0.2.2
 
 dependencies:
   - name: redis
