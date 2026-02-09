@@ -11,6 +11,7 @@
 **Changes**
 
 - Bumped application version from 3.6.0 to 3.6.1
+- Update the Readme
 
 ## 2.12.0 (2025-02-03)
 
