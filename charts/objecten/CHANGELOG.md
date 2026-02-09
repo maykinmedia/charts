@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.12.1 (2026-04-21)
+
+- Update the Readme.
+
 ## 2.12.0 (2025-02-03)
 
 **Changes**
