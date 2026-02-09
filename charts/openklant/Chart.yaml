@@ -1,8 +1,8 @@
 apiVersion: v2
 name: openklant
-description: Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
+description: Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index en Contactgegevens API in een enkele applicatie combineert.
 type: application
-version: 1.10.0
+version: 1.10.1
 appVersion: 2.14.0
 
 dependencies:

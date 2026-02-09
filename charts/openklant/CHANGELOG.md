@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.10.1 (2026-02-09)
+
+- Update the Readme.
+
 ## 1.10.0 (2025-12-24)
 
 - Added support for the enivornment variables needed to configure Open Telemetry.
