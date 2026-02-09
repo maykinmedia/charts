@@ -44,6 +44,8 @@ spec:
                 - configMapRef:
                     name: {{ include "openforms.fullname" . }}
               env:
+                - name: OTEL_SERVICE_NAME
+                  value: "openforms-clean-logs"
                 {{- if .Values.extraEnvVars }}
                 {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
                 {{- end }}
@@ -52,18 +54,14 @@ spec:
               command:
                 - "/bin/bash"
                 - "-c"
-
-                -  /app/src/manage.py shell < /app/scripts/clean_logs.py
+                -  /app/src/manage.py prune_timeline_logs --no-input --keep-days {{ .Values.settings.cleanLogs.daysRetained }}
               volumeMounts:
                 - name: media
                   mountPath: /app/private_media
                   subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openforms/private_media" }}
                 - name: media
                   mountPath: /app/media
-                  subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}
-                - name: clean-logs
-                  mountPath: /app/scripts/
-                  readOnly: true                  
+                  subPath: {{ .Values.persistence.mediaMountSubpath  | default "openforms/media" }}         
                 {{- if .Values.extraVolumeMounts }}
                 {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 16 }}
                 {{- end }}
@@ -74,11 +72,7 @@ spec:
                 claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openforms.fullname" . }}{{- end }}
               {{- else }}
               emptyDir: { }
-              {{- end }}
-            - name: clean-logs
-              configMap:
-                name: {{ include "openforms.fullname" . }}-clean-logs
-                defaultMode: 0755              
+              {{- end }}         
             {{- if .Values.extraVolumes }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 12 }}
             {{- end }}

@@ -69,6 +69,13 @@ settings:
 
 The value of the `DSN` is considered sensitive, so it should be handled as a secret.
 
+### Cleaning up logs
+
+It is possible to schedule a `CronJob` resource to clean up Timeline log entries. In order to enable it, set the value `settings.cleanLogs.enabled: true`.
+You can configure the number of days for which the logs should be kept by specifying  `settings.cleanLogs.daysRetained`. A value of `90` will keep all the logs newer than `90` days.
+
+Note that if you have accumulated a large number of logs, it is possible that the job might be OOM killed. Keep an eye on it to make sure that logs are properly deleted.
+
 ### Open Telemetry
 
 Open Forms supports the Open Telemetry Protocol.

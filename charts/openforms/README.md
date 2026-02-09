@@ -2,7 +2,7 @@
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
-![Version: 1.11.6](https://img.shields.io/badge/Version-1.11.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.9](https://img.shields.io/badge/AppVersion-3.3.9-informational?style=flat-square)
+![Version: 1.12.0](https://img.shields.io/badge/Version-1.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.9](https://img.shields.io/badge/AppVersion-3.3.9-informational?style=flat-square)
 
 ## Introduction
 
@@ -73,6 +73,13 @@ settings:
 ```
 
 The value of the `DSN` is considered sensitive, so it should be handled as a secret.
+
+### Cleaning up logs
+
+It is possible to schedule a `CronJob` resource to clean up Timeline log entries. In order to enable it, set the value `settings.cleanLogs.enabled: true`.
+You can configure the number of days for which the logs should be kept by specifying  `settings.cleanLogs.daysRetained`. A value of `90` will keep all the logs newer than `90` days.
+
+Note that if you have accumulated a large number of logs, it is possible that the job might be OOM killed. Keep an eye on it to make sure that logs are properly deleted.
 
 ### Open Telemetry
 
@@ -269,9 +276,9 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | settings.celery.resultBackend | string | `""` |  |
 | settings.cleanLogs.cronjob.historyLimit | int | `1` |  |
 | settings.cleanLogs.cronjob.resources | object | `{}` |  |
-| settings.cleanLogs.cronjob.schedule | string | `"0 0 * * *"` | Schedule to run the clean logs cronjob |
+| settings.cleanLogs.cronjob.schedule | string | `"0 0 * * *"` | Schedule to run the clean logs cronjob. The default will run the job every day at 00:00 |
 | settings.cleanLogs.daysRetained | int | `90` | Number of days to retain logs |
-| settings.cleanLogs.enabled | bool | `false` | Clean Logs, Messages, Timelog Entries |
+| settings.cleanLogs.enabled | bool | `false` | Clean Timeline Log entries |
 | settings.cookieSamesite | string | `""` | Choises Strict or Lax |
 | settings.cors.allowAllOrigins | bool | `false` |  |
 | settings.cors.allowedOrigins | list | `[]` |  |

@@ -366,12 +366,12 @@ settings:
   escapeRegistrationOutput: false
 
   cleanLogs:
-    # -- Clean Logs, Messages, Timelog Entries
+    # -- Clean Timeline Log entries
     enabled: false
     # -- Number of days to retain logs
     daysRetained: 90
     cronjob:
-      # -- Schedule to run the clean logs cronjob
+      # -- Schedule to run the clean logs cronjob. The default will run the job every day at 00:00
       schedule: "0 0 * * *"
       historyLimit: 1
       resources: {}

@@ -1,8 +1,15 @@
 # Changelog
 
+## 1.12.0 (2026-02-09)
+
+- Remove the config map with the clean-logs script. Since version `2.7.0` of the Open Forms app, it is not needed to prune the emails, while from `3.3.0`, Open Forms uses version `5.0.0` of `django-timeline-logger`, which includes a management command to prune the logs. The cronjob now uses this command instead of the script.
+
+  **Note**: the command in `django-timeline-logger` deletes the requested logs in one go, so if there are too many logs to delete, the job might be OOM killed.
+
+
 ## 1.11.6 (2025-12-11)
-- upgraded open-forms from 3.3.0 to 3.3.9
-  - includes patch for CVE-2025-64515
+
+- Upgraded open-forms app version from 3.3.0 to 3.3.9 (which includes a patch for CVE-2025-64515)
 
 ## 1.11.5 (2025-11-12)
 
