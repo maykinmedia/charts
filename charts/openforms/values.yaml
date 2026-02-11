@@ -197,14 +197,14 @@ livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 10
   timeoutSeconds: 5
-  failureThreshold: 6
+  failureThreshold: 10
   successThreshold: 1
 
 readinessProbe:
   initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
-  failureThreshold: 6
+  failureThreshold: 5
   successThreshold: 1
 
 service:
@@ -547,7 +547,7 @@ worker:
     # -- How often the check is performed (in seconds). Should not exceed worker.livenessFileMaxAge
     periodSeconds: 60
     timeoutSeconds: 15
-    failureThreshold: 3
+    failureThreshold: 6
     successThreshold: 1
   readinessProbe: 
     enabled: false
@@ -624,16 +624,16 @@ flower:
   replicaCount: 1
   podLabels: {}
   livenessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 6
+    failureThreshold: 10
     successThreshold: 1
   readinessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 6
+    failureThreshold: 5
     successThreshold: 1
   resources: {}
   # Additional k8s volumes to be created

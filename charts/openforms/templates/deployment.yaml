@@ -498,13 +498,27 @@ spec:
               containerPort: 5555
               protocol: TCP
           livenessProbe:
-            tcpSocket:
-              port: 5555
-            {{- toYaml .Values.flower.livenessProbe | nindent 12 }}
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common health-check --endpoint=http://localhost:5555/
+            initialDelaySeconds: {{ .Values.flower.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.flower.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.flower.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.flower.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.flower.livenessProbe.failureThreshold }}
           readinessProbe:
-            tcpSocket:
-              port: 5555
-            {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common health-check --endpoint=http://localhost:5555/
+            initialDelaySeconds: {{ .Values.flower.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.flower.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.flower.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.flower.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.flower.readinessProbe.failureThreshold }}
           volumeMounts:
             {{- if .Values.flower.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.flower.extraVolumeMounts "context" $ ) | nindent 12 }}
