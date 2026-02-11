@@ -287,9 +287,7 @@ spec:
           livenessProbe:
             exec: 
               command:
-              - /bin/sh
-              - -c
-              - maykin-common worker-health-check --broker={{- if .Values.tags.redis }}{{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString }}{{ else }}{{ .Values.settings.celery.brokerUrl | toString }}{{- end }} --liveness-file=/app/tmp/celery_worker_event_loop.live --max-age={{ .Values.worker.livenessFileMaxAge }} 
+              - /app/liveness/liveness-probe.sh
             initialDelaySeconds: {{ .Values.worker.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.worker.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.worker.livenessProbe.timeoutSeconds }}
@@ -320,6 +318,11 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath | default "openforms/media" }}
+            {{- if .Values.worker.livenessProbe.enabled }}
+            - name: liveness
+              mountPath: /app/liveness/
+              readOnly: true
+            {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
@@ -331,6 +334,12 @@ spec:
           {{- else }}
           emptyDir: { }
           {{- end }}
+        {{- if .Values.worker.livenessProbe.enabled }}
+        - name: liveness
+          configMap:
+            name: {{ include "openforms.fullname" . }}-celery-liveness
+            defaultMode: 0555
+        {{- end }}
           {{- if .Values.extraVolumes }}
           {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
           {{- end }}
