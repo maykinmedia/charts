@@ -283,6 +283,19 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
+          {{- if .Values.worker.startupProbe.enabled }}
+          startupProbe:
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common worker-health-check --skip-ping --skip-event-loop-liveness --no-skip-startup --startup-file=/app/tmp/celery_worker.ready
+            initialDelaySeconds: {{ .Values.worker.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.worker.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.worker.startupProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.worker.startupProbe.successThreshold }}
+            failureThreshold: {{ .Values.worker.startupProbe.failureThreshold }}
+          {{- end }}
           {{- if .Values.worker.livenessProbe.enabled }}
           livenessProbe:
             exec: 
@@ -293,19 +306,6 @@ spec:
             timeoutSeconds: {{ .Values.worker.livenessProbe.timeoutSeconds }}
             successThreshold: {{ .Values.worker.livenessProbe.successThreshold }}
             failureThreshold: {{ .Values.worker.livenessProbe.failureThreshold }}
-          {{- end }}
-          {{- if .Values.worker.readinessProbe.enabled }}
-          readinessProbe:
-            exec: 
-              command:
-              - /bin/sh
-              - -c
-              - maykin-common worker-health-check --skip-ping --skip-event-loop-liveness --no-skip-readiness --readiness-file=/app/tmp/celery_worker.ready
-            initialDelaySeconds: {{ .Values.worker.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.worker.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.worker.readinessProbe.timeoutSeconds }}
-            successThreshold: {{ .Values.worker.readinessProbe.successThreshold }}
-            failureThreshold: {{ .Values.worker.readinessProbe.failureThreshold }}
           {{- end }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}

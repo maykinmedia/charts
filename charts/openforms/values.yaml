@@ -539,22 +539,19 @@ worker:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
-  # -- What is the acceptable maximum period (in seconds) that the liveness file has not been touched for. 
-  livenessFileMaxAge: 70 
-  livenessProbe: 
-    enabled: false
-    initialDelaySeconds: 60
-    # -- How often the check is performed (in seconds). Should not exceed worker.livenessFileMaxAge
-    periodSeconds: 60
-    timeoutSeconds: 15
-    failureThreshold: 6
-    successThreshold: 1
-  readinessProbe: 
+  startupProbe: 
     enabled: false
     initialDelaySeconds: 60
     periodSeconds: 60
     timeoutSeconds: 15
     failureThreshold: 3
+    successThreshold: 1
+  livenessProbe: 
+    enabled: false
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 6
     successThreshold: 1
   autoscaling:
     enabled: false
