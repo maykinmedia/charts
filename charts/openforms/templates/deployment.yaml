@@ -53,7 +53,7 @@ spec:
               protocol: TCP
           startupProbe:
             httpGet:
-              path: /admin/
+              path: /_healthz/
               port: http
               httpHeaders:
                 - name: Host
@@ -61,7 +61,7 @@ spec:
             {{- toYaml .Values.startupProbe | nindent 12 }}
           livenessProbe:
             httpGet:
-              path: /admin/
+              path: /_healthz/livez/
               port: http
               httpHeaders:
                 - name: Host
@@ -69,7 +69,7 @@ spec:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
-              path: /admin/
+              path: /_healthz/readyz/
               port: http
               httpHeaders:
                 - name: Host
