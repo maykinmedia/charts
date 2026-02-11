@@ -183,6 +183,31 @@ spec:
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
+          {{- if .Values.beat.probesEnabled }}
+          startupProbe:
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common beat-health-check --file=/app/tmp/celery_beat.live --max-age=600
+            initialDelaySeconds: {{ .Values.beat.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.beat.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.beat.startupProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.beat.startupProbe.successThreshold }}
+            failureThreshold: {{ .Values.beat.startupProbe.failureThreshold }}
+          livenessProbe:
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              # OF schedules the activate-form/deactivate-form tasks every minute. So we set max-age to 2x that frequency.
+              - maykin-common beat-health-check --file=/app/tmp/celery_beat.live --max-age=120
+            initialDelaySeconds: {{ .Values.beat.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.beat.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.beat.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.beat.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.beat.livenessProbe.failureThreshold }}
+          {{- end }}
       volumes:
         - name: media
           persistentVolumeClaim:

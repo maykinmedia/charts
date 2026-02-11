@@ -665,6 +665,21 @@ beat:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
+  probesEnabled: false
+  startupProbe: 
+    # -- The liveness file will be present only once Open-Forms has scheduled a task. 
+    # The most frequent task is scheduled every minute. We give time to the pod to start.
+    initialDelaySeconds: 60 
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
+    successThreshold: 1
+  livenessProbe: 
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
+    successThreshold: 1
 
 ##################
 # Redis subchart #
