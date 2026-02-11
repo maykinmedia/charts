@@ -51,9 +51,6 @@ data:
   CELERY_BROKER_URL: {{ .Values.settings.celery.brokerUrl | toString | quote }}
   CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackendl | toString | quote }}
   {{- end }}
-  {{ if .Values.worker.maxWorkerLivenessDelta }}
-  MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
-  {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}

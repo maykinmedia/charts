@@ -539,18 +539,20 @@ worker:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
-  # Defaults to 60s
-  maxWorkerLivenessDelta: ""
+  # -- What is the acceptable maximum period (in seconds) that the liveness file has not been touched for. 
+  livenessFileMaxAge: 70 
   livenessProbe: 
     enabled: false
-    exec:
-      command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app openforms.celery inspect --destination celery@${HOSTNAME} active
     initialDelaySeconds: 60
-    # Periodeseconds should not exceed maxWorkerLivenessDelta
-    periodSeconds: 50
+    # -- How often the check is performed (in seconds). Should not exceed worker.livenessFileMaxAge
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
+    successThreshold: 1
+  readinessProbe: 
+    enabled: false
+    initialDelaySeconds: 60
+    periodSeconds: 60
     timeoutSeconds: 15
     failureThreshold: 3
     successThreshold: 1
