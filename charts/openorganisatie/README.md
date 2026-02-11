@@ -41,6 +41,11 @@ The key can be configured with the value `settings.secretKey`. You can use a [we
 
 **Warning**: Running with a known secret key defeats many of Django’s security protections and can lead to privilege escalation and remote code execution vulnerabilities.
 
+### Environment variables
+
+For a full overview of the available environment variables and their meaning,
+see the the Open Organisatie [documentation](https://open-organisatie.readthedocs.io/en/latest/installation/config/env_config.html).
+
 ### Automatic configuration
 
 The application can be automatically configured with `django-setup-configuration`.
@@ -59,6 +64,8 @@ configuration:
 
 The yaml data needed to configure the application should be provided in the value `configuration.data`.
 In the `values.yaml` file you can find an example of what the configuration should look like.
+To see how to configure, see the Open Organisatie [documentation](https://open-organisatie.readthedocs.io/en/latest/installation/config/openorganisatie_config_cli.html).
+
 The configuration can include sensitive data. To avoid having sensitive values in the `values.yaml` file, it is possible to reference
 environment variables. This can be done with the following syntax:
 
