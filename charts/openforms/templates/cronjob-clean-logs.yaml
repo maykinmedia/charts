@@ -44,8 +44,8 @@ spec:
                 - configMapRef:
                     name: {{ include "openforms.fullname" . }}
               env:
-                - name: OTEL_SERVICE_NAME
-                  value: "openforms-clean-logs"
+                - name: OTEL_SDK_DISABLED
+                  value: "true"
                 {{- if .Values.extraEnvVars }}
                 {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 16 }}
                 {{- end }}
