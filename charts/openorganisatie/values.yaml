@@ -1,0 +1,412 @@
+global:
+  configuration:
+    enabled: false
+    overwrite: true
+    secrets: {}
+
+  settings:
+    # -- Global databasehost, overrides setting.database.host
+    databaseHost: ""
+
+configuration:
+  enabled: false
+  overwrite: true
+  superuser:
+    username: ""
+    password: ""
+    email: ""
+  job:
+    # -- Run the setup configuration command as a job
+    enabled: false
+    backoffLimit: 6
+    # -- 0 Will clean the job after it is finished
+    ttlSecondsAfterFinished: 0
+    restartPolicy: OnFailure
+    # Note, this field is immutable
+    resources: {}
+  secrets: {}
+  # data: ""
+  # e.g.
+  # data: |-
+  #   oidc_db_config_enable: true
+  #   oidc_db_config_admin_auth:
+  #     providers:
+  #     - identifier: keycloak-provider
+  #       oidc_use_nonce: true
+  #       oidc_nonce_size: 32
+  #       oidc_state_size: 32
+  #       endpoint_config:
+  #         oidc_op_discovery_endpoint: http://keycloak.example.nl/realms/test/
+  #     items:
+  #     - identifier: admin-oidc
+  #       enabled: true
+  #       oidc_rp_client_id: testid
+  #       oidc_rp_client_secret: very-secret
+  #       oidc_rp_scopes_list:
+  #       - openid
+  #       - email
+  #       - profile
+  #       oidc_rp_sign_algo: RS256
+  #       oidc_provider_identifier: keycloak-provider
+  #       userinfo_claims_source: id_token
+  #       options:
+  #         user_settings:
+  #           claim_mappings:
+  #             username:
+  #               - sub
+  #             first_name:
+  #               - given_name
+  #             email:
+  #               - email
+  #           username_case_sensitive: true
+  #         groups_settings:
+  #           claim_mapping:
+  #             - groups
+  #           sync: true
+  #           sync_pattern: '*'
+  #           default_groups: []
+  #           make_users_staff: true
+  #           superuser_group_names:
+  #             - Superuser
+
+tags:
+  redis: true
+
+replicaCount: 2
+
+image:
+  repository: maykinmedia/open-organisatie
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+  automountServiceAccountToken: true
+
+podAnnotations: {}
+
+podLabels: {}
+
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+startupProbe:
+  # -- Startup probe configuration - allows up to 5 minutes for application startup
+  # -- Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)    
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+  successThreshold: 1   
+
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  className: ""
+  # -- ingress hosts
+  hosts: []
+  #  - host: openorganisatie.gemeente.nl
+  #    paths:
+  #      - path: /
+  #        pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: openorganisatie-tls
+  #    hosts:
+  #      - openorganisatie.gemeente.nl
+
+# -- Specify extra ingresses, for example if you have multiple ingress classes
+extraIngress: []
+# e.g:
+# extraIngress:
+#  - name: openorganisatie-azuregateway
+#    annotations:
+#      appgw.ingress.kubernetes.io/ssl-redirect: "true"
+#    className: azure-application-gateway
+#    hosts:
+#      - host: openorganisatie.gemeente.nl
+#        paths:
+#          - path: /
+#            pathType: ImplementationSpecific
+#            servicename: openorganisatie
+#            portNumber: 8000
+#    tls:
+#      - secretName: openorganisatie-tls
+#        hosts:
+#          - "openorganisatie.gemeente.nl"
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 500m
+  #   memory: 512Mi
+  # requests:
+  #   cpu: 250m
+  #   memory: 256Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+  behaviour: {}
+
+pdb:
+  create: false
+  minAvailable: 1
+  maxUnavailable: ""
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClassName: ""
+  existingClaim: null
+  mediaMountSubpath: openorganisatie/media
+
+# Existing Secret must be defined for AzureVaultSecret to work
+existingSecret: null
+# Reference to an existing secret with the values needed for django-setup-configuration
+existingConfigurationSecret: null
+# If no secret already exists with the values needed for django-setup-configuration, create it with the following name
+configurationSecretsName: ""
+
+# This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
+# ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
+# Using this feature requires you to define existingSecret
+azureVaultSecret:
+  # The name of the Azure Key Vault, setting this will create the AzureVaultSecret
+  vaultName: null
+  # The name of the Multi Key Value Secret
+  objectName: ""
+  # Make sure this matches the content of the secret, can be either 'application/x-json' or 'application/x-yaml'
+  contentType: ""
+  # You must set .Values.existingSecret
+  secretName: "{{ .Values.existingSecret }}"
+
+# -- Array with extra environment variables to add
+extraEnvVars: []
+# e.g:
+# extraEnvVars:
+#   - name: FOO
+#     value: "bar"
+
+# -- Optionally specify extra list of additional volumes
+extraVolumes: []
+# e.g:
+# extraVolumes:
+#   - name: verify-certs
+#     configMap:
+#       name: verify-certs
+
+# -- Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# e.g:
+# extraVolumeMounts:
+#  - name: verify-certs
+#    mountPath: /etc/ssl/certs/extra-certs/
+
+settings:
+  allowedHosts: ""
+  djangoSettingsModule: openorganisatie.conf.docker
+  useXForwardedHost: false
+
+  # -- Disable two factor authentication
+  disable2fa: false
+
+  # -- Generate secret key at https://djecrety.ir/
+  secretKey: ""
+
+  # -- sets the 'ENVIRONMENT' variable
+  environment: ""
+
+  elasticapm:
+    url: ""
+    token: ""
+    serviceName: ""
+
+  database:
+    host: ""
+    port: 5432
+    username: ""
+    password: ""
+    name: ""
+
+  email:
+    host: localhost
+    port: 25
+    username: ""
+    password: ""
+    useTLS: false
+    defaultFrom: ""
+
+  sentry:
+    dsn: ""
+
+  # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
+  cache:
+    # e.g.:
+    # default: openorganisatie-redis-master-0:6379/0
+    # axes: openorganisatie-redis-master-0:6379/0
+    default: ""
+    axes: ""
+
+  # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
+  celery:
+    # e.g.:
+    # brokerUrl: redis://openorganisatie-redis-master:6379/1
+    # resultBackend: redis://openorganisatie-redis-master:6379/1
+    brokerUrl: ""
+    resultBackend: ""
+    logLevel: debug
+
+  isHttps: true
+
+  debug: false
+
+  uwsgi:
+    master: ''
+    threads: ''
+    processes: ''
+    maxRequests: ''
+    harakiri: ''
+  
+  otel:
+    disabled: true
+    # -- Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317.
+    exporterOtlpEndpoint: ""
+    # -- Resources Attributes can be used to specify additional information about the instance.
+    resourceAttributes: []
+    # - key: of.target
+    #   value: test
+    # -- Is true if the endoint is not protected with TLS.
+    exporterOtlpMetricsInsecure: false
+    # -- Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials. 
+    exporterOtlpHeaders: []
+    # - key: Authorization
+    #   value: Basic SomeSecretValue
+    # -- Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf.
+    exporterOtlpProtocol: grpc
+    # -- Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application. 
+    metricExportInterval: 60000 # Once per minute
+    # -- Controls the timeout of the requests to the collector (in milliseconds)
+    metricExportTimeout: 10000
+
+worker:
+  replicaCount: 2
+  concurrency: 4
+  podLabels: {}
+  resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
+  # Defaults to 60s
+  maxWorkerLivenessDelta: ""
+  livenessProbe: 
+    enabled: false
+    exec:
+      command:
+        - /app/liveness/liveness-probe.sh         
+    initialDelaySeconds: 60
+    # Periodeseconds should not exceed maxWorkerLivenessDelta
+    periodSeconds: 50
+    timeoutSeconds: 10
+    failureThreshold: 3
+    successThreshold: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+    behaviour: {}
+
+flower:
+  enabled: true
+  replicaCount: 1
+  podLabels: {}
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  resources: {}
+
+beat:
+  enabled: true
+  replicaCount: 1
+  podLabels: {}
+  livenessProbe: {}
+  readinessProbe: {}
+  resources: {}
+
+##################
+# Redis subchart #
+##################
+
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+      size: 8Gi
+      storageClass: ""
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  image:
+    registry: docker.io  # Docker registry for Redis image
+    repository: redis  # Official Redis image (migrated from Bitnami)
+    tag: "8.0"  # Official Redis image pinned version
