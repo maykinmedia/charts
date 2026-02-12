@@ -2,7 +2,7 @@
 
 De Referentielijsten API is een generieke API voor eenvoudige herbruikebare lijsten
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.0](https://img.shields.io/badge/AppVersion-0.6.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.0](https://img.shields.io/badge/AppVersion-0.6.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -41,6 +41,11 @@ Without the `SECRET_KEY` environment variable, the application will not start.
 The key can be configured with the value `settings.secretKey`. You can use a [web tool](https://djecrety.ir/) to generate it.
 
 **Warning**: Running with a known secret key defeats many of Django’s security protections and can lead to privilege escalation and remote code execution vulnerabilities.
+
+### Environment variables
+
+For a full overview of the available environment variables and their meaning,
+see the the Referentielijsten [documentation](https://referentielijsten-api.readthedocs.io/en/latest/installation/config.html).
 
 ### Automatic configuration
 
