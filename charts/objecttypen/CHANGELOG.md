@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1 (2026-02-09)
+
+- Update the Readme.
+
 ## 1.6.0 (2025-12-31)
 
 **Warning**
