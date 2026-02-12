@@ -1,8 +1,24 @@
-# openklant
+# Open Klant Chart
 
-![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.14.0](https://img.shields.io/badge/AppVersion-2.14.0-informational?style=flat-square)
+Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index en Contactgegevens API in een enkele applicatie combineert.
 
-Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten API | https://contactmomenten-api.vng.cloud/ in een enkel component combineert.
+![Version: 1.10.1](https://img.shields.io/badge/Version-1.10.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.14.0](https://img.shields.io/badge/AppVersion-2.14.0-informational?style=flat-square)
+
+## Introduction
+
+This chart can be used to deploy Open Klant on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/open-klant/)
+* [Documentation](https://open-klant.readthedocs.io/)
+* [Docker image](https://hub.docker.com/r/maykinmedia/open-klant)
+* [Changelog](https://github.com/maykinmedia/open-klant/blob/master/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install openklant maykinmedia/openklant
+```
 
 ## Requirements
 
@@ -10,6 +26,32 @@ Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten AP
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
+
+## Configuration and installation details
+
+### Environment variables
+
+For a full overview of the available environment variables and their meaning,
+see the the Open Klant [documentation](https://open-klant.readthedocs.io/en/stable/installation/config/env_configuration.html).
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Klant [documentation](https://open-klant.readthedocs.io/en/stable/installation/config/setup_configuration.html).
 
 ## Values
 
@@ -204,4 +246,3 @@ Project dat de Klanten API | https://klanten-api.vng.cloud en Contactmomenten AP
 | worker.readinessProbe.timeoutSeconds | int | `5` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
-
