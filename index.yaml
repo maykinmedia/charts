@@ -4611,6 +4611,32 @@ entries:
   opennotificaties:
   - apiVersion: v2
     appVersion: 1.14.0
+    created: "2026-02-12T08:12:56.445720507Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - rabbitmq
+      version: 16.0.12
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: API voor het routeren van notificaties
+    digest: c1923e02b71efd97a54bb375821a76fa6931c6e46a1295db9d416e2af204577b
+    name: opennotificaties
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.13.1/opennotificaties-1.13.1.tgz
+    version: 1.13.1
+  - apiVersion: v2
+    appVersion: 1.14.0
     created: "2026-01-07T13:38:34.450863757Z"
     dependencies:
     - name: redis
@@ -6926,4 +6952,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-12T08:10:26.954927532Z"
+generated: "2026-02-12T08:12:56.446270051Z"
