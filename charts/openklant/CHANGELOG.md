@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.11.0 (2026-02-12)
+
+- Bumped the application version from 2.14.0 to 2.15.0
+- Added support for the environment variables `ENABLE_CLOUD_EVENTS` and `NOTIFICATIONS_SOURCE`.
+
 ## 1.10.1 (2026-02-09)
 
 - Update the Readme.
