@@ -371,6 +371,10 @@ settings:
     # -- Controls the timeout of the requests to the collector (in milliseconds)
     metricExportTimeout: 10000
 
+  enableCloudEvents: false
+  # -- The identifier of this application that will be sent in the notification, e.g. "openklant"
+  notificationsSource: ""
+
 worker:
   replicaCount: 2
   concurrency: 4
