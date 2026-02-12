@@ -5845,6 +5845,29 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.0.0/opennotificaties-1.0.0.tgz
     version: 1.0.0
+  openorganisatie:
+  - apiVersion: v2
+    appVersion: 0.2.0
+    created: "2026-02-12T08:10:26.954420391Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Open Organisatie is een applicatie waar medewerkers beheer kunnen
+      worden.
+    digest: 42107c5bdf007470562ec2b3c12e7179911c47e98fe01ba8f9492684769649d4
+    name: openorganisatie
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openorganisatie-0.1.0/openorganisatie-0.1.0.tgz
+    version: 0.1.0
   openproduct:
   - apiVersion: v2
     appVersion: 1.0.0
@@ -6903,4 +6926,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-10T09:30:16.672450458Z"
+generated: "2026-02-12T08:10:26.954927532Z"
