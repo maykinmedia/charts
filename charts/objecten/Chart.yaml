@@ -3,7 +3,7 @@ name: objecten
 description: API om objecten te beheren die behoren bij een bepaald objecttype
 
 type: application
-version: 2.11.0
+version: 2.11.1
 appVersion: 3.5.0
 
 dependencies:
