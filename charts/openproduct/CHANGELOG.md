@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.2.2 (2026-02-09)
+
+- Update the Readme.
+
 ## 0.2.1 (2025-09-11)
 - [#290] Fix mising env variable dbPool.enable (default: false)
 - Change db pool variable names to camel case

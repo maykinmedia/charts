@@ -1,8 +1,24 @@
-# openproduct
-
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+# Open Product Chart
 
 Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
+
+![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+
+## Introduction
+
+This chart can be used to deploy Open Product on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/open-product/)
+* [Documentation](https://open-product.readthedocs.io/)
+* [Docker image](https://hub.docker.com/r/maykinmedia/open-product)
+* [Changelog](https://github.com/maykinmedia/open-product/blob/master/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install openproduct maykinmedia/openproduct
+```
 
 ## Requirements
 
@@ -11,6 +27,32 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
 | https://maykinmedia.github.io/charts/ | maykin-utils-lib | 0.2.1 |
+
+## Configuration and installation details
+
+### Environment variables
+
+For a full overview of the available environment variables and their meaning,
+see the the Open Product [documentation](https://open-product.readthedocs.io/en/stable/installation/config/env_config.html).
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Product [documentation](https://open-product.readthedocs.io/en/stable/installation/config/openproduct_config_cli.html).
 
 ## Values
 
@@ -190,4 +232,3 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | worker.queueName | string | `""` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
-
