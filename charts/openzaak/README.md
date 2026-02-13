@@ -2,7 +2,7 @@
 
 Productiewaardige API's voor Zaakgericht Werken
 
-![Version: 1.13.1](https://img.shields.io/badge/Version-1.13.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.26.0](https://img.shields.io/badge/AppVersion-1.26.0-informational?style=flat-square)
+![Version: 1.14.0-rc.0](https://img.shields.io/badge/Version-1.14.0--rc.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.27.0](https://img.shields.io/badge/AppVersion-1.27.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -52,6 +52,18 @@ configuration:
 
 The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
 how to configure, see the Open Zaak [documentation](https://open-zaak.readthedocs.io/en/stable/installation/config/openzaak_config_cli.html).
+
+## Documenten API backend
+
+Open Zaak supports using three different backends for the Documenten API: the file system, Azure Blob Storage and S3 storage.
+
+In order to configure the backend, use the `settings.documentApiBackend` value and if using the Azure Blob Storage or the S3 storage,
+configure the values under `settings.azureBlobStorage` and `settings.s3storage`.
+
+You can find more information about how to specify each value in the [Open Zaak documentation](https://open-zaak.readthedocs.io/en/1.27.0/installation/config/env_config.html#documenten-api).
+
+Note that for Azure Blob storage, your cluster needs to have the Blob storage CSI driver enabled. For S3 storage, your cluster needs to have the Amazon S3 CSI driver enabled.
+You can find more information in the Open Zaak documentation for both the [Azure Blob Storage](https://open-zaak.readthedocs.io/en/1.27.0/installation/reference/azure_blob_storage.html) and the [S3 storage](https://open-zaak.readthedocs.io/en/1.27.0/installation/reference/s3_storage.html).
 
 ## Values
 
@@ -202,6 +214,15 @@ how to configure, see the Open Zaak [documentation](https://open-zaak.readthedoc
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
+| settings.azureBlobStorage.accountName | string | `""` |  |
+| settings.azureBlobStorage.apiStorageVersion | string | `""` |  |
+| settings.azureBlobStorage.clientId | string | `""` |  |
+| settings.azureBlobStorage.clientSecret | string | `""` |  |
+| settings.azureBlobStorage.connectionTimeout | int | `5` |  |
+| settings.azureBlobStorage.container | string | `"openzaak"` |  |
+| settings.azureBlobStorage.location | string | `"documenten"` |  |
+| settings.azureBlobStorage.tenantId | string | `""` |  |
+| settings.azureBlobStorage.urlExpirationTime | int | `60` |  |
 | settings.cache.axes | string | `""` |  |
 | settings.cache.default | string | `""` |  |
 | settings.cache.portalLocker | string | `""` |  |
@@ -231,6 +252,7 @@ how to configure, see the Open Zaak [documentation](https://open-zaak.readthedoc
 | settings.debug | bool | `false` |  |
 | settings.disable2fa | bool | `false` | Disable two factor authentication |
 | settings.djangoSettingsModule | string | `"openzaak.conf.docker"` |  |
+| settings.documentApiBackend | string | `"filesystem"` | Backend to use for the Documenten API. Supported values: filesystem | azure_blob_storage | s3_storage |
 | settings.elasticapm.serviceName | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
@@ -240,12 +262,14 @@ how to configure, see the Open Zaak [documentation](https://open-zaak.readthedoc
 | settings.email.port | int | `25` |  |
 | settings.email.useTLS | bool | `false` |  |
 | settings.email.username | string | `""` |  |
+| settings.enableCloudEvents | bool | `false` |  |
 | settings.environment | string | `""` |  |
 | settings.flower.basicAuth | string | `""` |  |
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
 | settings.jwtExpiry | int | `3600` |  |
 | settings.notificationsDisabled | bool | `false` |  |
+| settings.notificationsSource | string | `"openzaak"` |  |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
 | settings.otel.disabled | bool | `true` | If the OpenTelemetrySDK should be disabled. Opentelemtry is enabled by default, Set this values to 'true' to disable openTelemetry.  |
 | settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
@@ -255,6 +279,16 @@ how to configure, see the Open Zaak [documentation](https://open-zaak.readthedoc
 | settings.otel.metricExportInterval | int | `60000` | How often (in milliseconds) the metrics are exported. Exports run in a background thread.  |
 | settings.otel.metricExportTimeout | int | `10000` | Timeout of the requests to the collector (in milliseconds) |
 | settings.otel.resourceAttributes | list | `[]` | Resource attributes can be used to specify additional information about the instance. These are collected by the Kubernetes attributes processor. |
+| settings.s3storage.accessKeyId | string | `""` |  |
+| settings.s3storage.customDomain | string | `""` |  |
+| settings.s3storage.endpointUrl | string | `""` |  |
+| settings.s3storage.fileOverwrite | bool | `false` |  |
+| settings.s3storage.location | string | `"documenten/"` |  |
+| settings.s3storage.maxMemorySize | int | `0` |  |
+| settings.s3storage.querystringExpire | int | `60` |  |
+| settings.s3storage.regionName | string | `""` |  |
+| settings.s3storage.secretAccessKey | string | `""` |  |
+| settings.s3storage.storageBucketName | string | `"openzaak"` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |

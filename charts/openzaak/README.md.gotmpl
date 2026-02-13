@@ -48,4 +48,16 @@ configuration:
 The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
 how to configure, see the Open Zaak [documentation](https://open-zaak.readthedocs.io/en/stable/installation/config/openzaak_config_cli.html).
 
+## Documenten API backend
+
+Open Zaak supports using three different backends for the Documenten API: the file system, Azure Blob Storage and S3 storage.
+
+In order to configure the backend, use the `settings.documentApiBackend` value and if using the Azure Blob Storage or the S3 storage,
+configure the values under `settings.azureBlobStorage` and `settings.s3storage`.
+
+You can find more information about how to specify each value in the [Open Zaak documentation](https://open-zaak.readthedocs.io/en/1.27.0/installation/config/env_config.html#documenten-api).
+
+Note that for Azure Blob storage, your cluster needs to have the Blob storage CSI driver enabled. For S3 storage, your cluster needs to have the Amazon S3 CSI driver enabled.
+You can find more information in the Open Zaak documentation for both the [Azure Blob Storage](https://open-zaak.readthedocs.io/en/1.27.0/installation/reference/azure_blob_storage.html) and the [S3 storage](https://open-zaak.readthedocs.io/en/1.27.0/installation/reference/s3_storage.html).
+
 {{ template "chart.valuesSection" . }}

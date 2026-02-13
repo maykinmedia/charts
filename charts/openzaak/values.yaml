@@ -445,6 +445,34 @@ settings:
     # -- Timeout of the requests to the collector (in milliseconds)
     metricExportTimeout: 10000
 
+  # -- Backend to use for the Documenten API. Supported values: filesystem | azure_blob_storage | s3_storage
+  documentApiBackend: filesystem
+  azureBlobStorage:
+    accountName: ""
+    clientSecret: ""
+    clientId: ""
+    tenantId: ""
+    container: "openzaak"
+    location: "documenten"
+    connectionTimeout: 5
+    apiStorageVersion: ""
+    urlExpirationTime: 60
+  s3storage:
+    accessKeyId: ""
+    secretAccessKey: ""
+    storageBucketName: "openzaak"
+    maxMemorySize: 0
+    querystringExpire: 60
+    fileOverwrite: false
+    location: "documenten/"
+    regionName: ""
+    endpointUrl: ""
+    customDomain: ""
+
+  enableCloudEvents: false
+  notificationsSource: "openzaak"
+  
+
 worker:
   replicaCount: 2
   concurrency: 4

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.14.0 (XXXX-XX-XX)
+
+- Bumped the application version to 1.27.0.
+- Added support for the environment variables to configure Azure Blob Storage and S3 storage for the Documenten API.
+- Added support for the environment variables `ENABLE_CLOUD_EVENTS` and `NOTIFICATIONS_SOURCE` to configure cloud events.
+- Removed leftover variables `NOTIF_OPENZAAK_SECRET` and `OPENZAAK_NOTIF_SECRET` which were no longer used in Open Zaak.
+
 ## 1.13.1 (2026-02-06)
 
 - Updated the Readme.
