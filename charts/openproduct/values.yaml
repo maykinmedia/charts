@@ -279,6 +279,32 @@ settings:
       dbPoolReconnectTimeout: 300
       dbPoolNumWorkers: 3
 
+  # -- Defines the primary domain where the application is hosted. Defaults to ""
+  siteDomain: ""
+
+  otel:
+    # -- If the OpenTelemetrySDK should be disabled. Opentelemtry is enabled by default, Set this values to 'true' to disable openTelemetry. 
+    disabled: true
+    # -- Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317.
+    exporterOtlpEndpoint: ""
+    # -- If the Opentelemetry Exporter endpoint is Insecure. Default is secured with TLS.   
+    exporterOtlpMetricsInsecure: false
+    # -- Specify any additional HTTP headers required (e.g., Basic Auth). This configuration is stored in secret.yaml because it may include sensitive credentials. 
+    exporterOtlpHeaders: []
+    # -- Resource attributes can be used to specify additional information about the instance. These are collected by the Kubernetes attributes processor.
+    resourceAttributes: []
+    # - key: openzaak.target
+    #   value: test
+    # - key: Authorization
+    #   value: Basic SomeSecretValue
+    # -- What protocol Opentelemtry should use. options: grpc and http/protobuf.
+    exporterOtlpProtocol: grpc
+    # -- How often (in milliseconds) the metrics are exported. Exports run in a background thread. 
+    metricExportInterval: 60000 # Once per minute
+    # -- Timeout of the requests to the collector (in milliseconds)
+    metricExportTimeout: 10000
+
+
   email:
     host: localhost
     port: 25
