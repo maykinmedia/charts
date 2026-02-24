@@ -1,0 +1,51 @@
+# Open Product Chart
+
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Introduction 
+
+This chart can be used to deploy Open Product on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/open-product/)
+* [Documentation](https://open-product.readthedocs.io/)
+* [Docker image](https://hub.docker.com/r/maykinmedia/open-product)
+* [Changelog](https://github.com/maykinmedia/open-product/blob/master/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install {{ template "chart.name" . }} maykinmedia/{{ template "chart.name" . }}
+```
+
+{{ template "chart.requirementsSection" . }}
+
+## Configuration and installation details
+
+### Environment variables
+
+For a full overview of the available environment variables and their meaning, 
+see the the Open Product [documentation](https://open-product.readthedocs.io/en/stable/installation/config/env_config.html).
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Open Product [documentation](https://open-product.readthedocs.io/en/stable/installation/config/openproduct_config_cli.html).
+
+{{ template "chart.valuesSection" . }}
