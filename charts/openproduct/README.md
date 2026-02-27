@@ -1,6 +1,6 @@
 # openproduct
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
 
 Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
 
@@ -160,8 +160,17 @@ Open Product is een applicatie waarin producttypen en producten op een enkele pl
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
 | settings.notificationsDisabled | bool | `false` |  |
+| settings.otel.disabled | bool | `true` | If the OpenTelemetrySDK should be disabled. Opentelemtry is enabled by default, Set this values to 'true' to disable openTelemetry.  |
+| settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
+| settings.otel.exporterOtlpHeaders | list | `[]` | Specify any additional HTTP headers required (e.g., Basic Auth). This configuration is stored in secret.yaml because it may include sensitive credentials.  |
+| settings.otel.exporterOtlpMetricsInsecure | bool | `false` | If the Opentelemetry Exporter endpoint is Insecure. Default is secured with TLS.    |
+| settings.otel.exporterOtlpProtocol | string | `"grpc"` | What protocol Opentelemtry should use. options: grpc and http/protobuf. |
+| settings.otel.metricExportInterval | int | `60000` | How often (in milliseconds) the metrics are exported. Exports run in a background thread.  |
+| settings.otel.metricExportTimeout | int | `10000` | Timeout of the requests to the collector (in milliseconds) |
+| settings.otel.resourceAttributes | list | `[]` | Resource attributes can be used to specify additional information about the instance. These are collected by the Kubernetes attributes processor. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
+| settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
 | settings.useXForwardedHost | bool | `false` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |

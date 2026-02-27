@@ -1,6 +1,12 @@
 
 # Changelog
 
+## 0.3.0 (2026-19-01)
+- Bumped application version from 1.0.0 to 1.6.0
+- Added support for the environment variables needed to configure Open Telemetry.
+- Added siteDomain value
+- Added missing config for OPENPRODUCT_SUPERUSER_* fields
+
 ## 0.2.1 (2025-09-11)
 - [#290] Fix mising env variable dbPool.enable (default: false)
 - Change db pool variable names to camel case
