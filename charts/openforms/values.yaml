@@ -197,14 +197,14 @@ livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 10
   timeoutSeconds: 5
-  failureThreshold: 6
+  failureThreshold: 10
   successThreshold: 1
 
 readinessProbe:
   initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
-  failureThreshold: 6
+  failureThreshold: 5
   successThreshold: 1
 
 service:
@@ -539,20 +539,19 @@ worker:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
-  # Defaults to 60s
-  maxWorkerLivenessDelta: ""
-  livenessProbe: 
+  startupProbe: 
     enabled: false
-    exec:
-      command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app openforms.celery inspect --destination celery@${HOSTNAME} active
     initialDelaySeconds: 60
-    # Periodeseconds should not exceed maxWorkerLivenessDelta
-    periodSeconds: 50
+    periodSeconds: 60
     timeoutSeconds: 15
     failureThreshold: 3
+    successThreshold: 1
+  livenessProbe: 
+    enabled: false
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 6
     successThreshold: 1
   autoscaling:
     enabled: false
@@ -622,16 +621,16 @@ flower:
   replicaCount: 1
   podLabels: {}
   livenessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 6
+    failureThreshold: 10
     successThreshold: 1
   readinessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 6
+    failureThreshold: 5
     successThreshold: 1
   resources: {}
   # Additional k8s volumes to be created
@@ -663,6 +662,21 @@ beat:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
+  probesEnabled: false
+  startupProbe: 
+    # -- The liveness file will be present only once Open-Forms has scheduled a task. 
+    # The most frequent task is scheduled every minute. We give time to the pod to start.
+    initialDelaySeconds: 60 
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
+    successThreshold: 1
+  livenessProbe: 
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
+    successThreshold: 1
 
 ##################
 # Redis subchart #
