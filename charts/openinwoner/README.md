@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 2.1.2](https://img.shields.io/badge/Version-2.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
+![Version: 2.1.3](https://img.shields.io/badge/Version-2.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -403,6 +403,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.isHttps | bool | `true` |  |
 | settings.loadFixtures | bool | `false` | Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json |
 | settings.oidcFrontendLogoutWithHints | bool | `true` | Whether to provide a id_token_hint to the IdP broker when initiating a frontchannel logout |
+| settings.oidcRenewIdTokenExpirySeconds | int | `900` | The session renewal interval for OpenID Connect (DigiD/eHerkenning) in seconds. This configures how often the OIDC session should be renewed. Default is 900 seconds (15 minutes). See chapter 10 of the beheerhandleiding (management manual) for more information. |
 | settings.otel.disabled | bool | `true` |  |
 | settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
 | settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials. |
