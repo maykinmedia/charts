@@ -1,5 +1,9 @@
 # Changelog
 
+## X.X.X (TBD)
+
+- Updated the startup, liveness and readiness probes for the web app, celery, celery beat and flower containers. Removed support for the environment variable `MAX_WORKER_LIVENESS_DELTA`.
+
 ## 1.12.0 (2026-02-09)
 
 - Remove the config map with the clean-logs script. Since version `2.7.0` of the Open Forms app, it is not needed to prune the emails, while from `3.3.0`, Open Forms uses version `5.0.0` of `django-timeline-logger`, which includes a management command to prune the logs. The cronjob now uses this command instead of the script.
