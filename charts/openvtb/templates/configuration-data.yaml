@@ -1,0 +1,11 @@
+{{ if and .Values.global.configuration.enabled .Values.configuration.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "openvtb.fullname" . }}-configuration
+  labels:
+    {{- include "openvtb.labels" . | nindent 4 }}
+data:
+  configuration.yaml: |-
+    {{- include "common.tplvalues.render" (dict "value" .Values.configuration.data "context" $) | nindent 4 }}
+{{- end }}
