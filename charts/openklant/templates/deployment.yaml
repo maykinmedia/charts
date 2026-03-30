@@ -264,6 +264,107 @@ spec:
 
 ---
 
+{{ if .Values.flower.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openklant.flowerFullname" . }}
+  labels:
+    {{- include "openklant.flowerLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.flower.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "openklant.flowerSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "openklant.flowerSelectorLabels" . | nindent 8 }}
+        {{- with .Values.flower.podLabels }}
+            {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "openklant.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "openklant.flowerFullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/celery_flower.sh"]
+          resources:
+            {{- toYaml .Values.flower.resources | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "openklant.fullname" .) }}
+            - configMapRef:
+                name: {{ include "openklant.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "openklant.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 5555
+              protocol: TCP
+          livenessProbe:
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common health-check --endpoint=http://localhost:5555/
+            initialDelaySeconds: {{ .Values.flower.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.flower.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.flower.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.flower.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.flower.livenessProbe.failureThreshold }}
+          readinessProbe:
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common health-check --endpoint=http://localhost:5555/
+            initialDelaySeconds: {{ .Values.flower.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.flower.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.flower.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.flower.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.flower.readinessProbe.failureThreshold }}
+          volumeMounts:
+            {{- if .Values.flower.extraVolumeMounts }}
+            {{- include "openklant.tplvalues.render" ( dict "value" .Values.flower.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+          {{- if .Values.flower.extraVolumes }}
+          {{- include "openklant.tplvalues.render" ( dict "value" .Values.flower.extraVolumes "context" $ ) | nindent 8 }}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
+
+---
+
 # Deployment Nginx
 
 apiVersion: apps/v1
