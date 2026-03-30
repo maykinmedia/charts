@@ -77,7 +77,7 @@ data:
           internal;
           alias /app/private_media/;
       }
-      
+
       # Health check endpoints should not be accessible from outside the cluster
       location ^~ /_healthz/ {
         return 404;
