@@ -31,5 +31,5 @@ data:
     maykin-common worker-health-check \
       --broker=CELERY_BROKER \
       --liveness-file=/app/tmp/celery_worker_event_loop.live \
-      --max-age={{ .Values.worker.livenessFileMaxAge }}
+      --max-age=70
 {{- end }}

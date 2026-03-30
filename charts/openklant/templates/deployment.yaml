@@ -189,10 +189,24 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- include "openklant.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
+          {{- if .Values.worker.startupProbe.enabled }}
+          startupProbe:
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common worker-health-check --skip-ping --skip-event-loop-liveness --no-skip-startup --startup-file=/app/tmp/celery_worker.ready
+            initialDelaySeconds: {{ .Values.worker.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.worker.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.worker.startupProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.worker.startupProbe.successThreshold }}
+            failureThreshold: {{ .Values.worker.startupProbe.failureThreshold }}
+          {{- end }}
           {{- if .Values.worker.livenessProbe.enabled }}
           livenessProbe:
             exec: 
-            {{- toYaml .Values.worker.livenessProbe.exec | nindent 14 }}
+              command:
+              - /app/liveness/liveness-probe.sh
             initialDelaySeconds: {{ .Values.worker.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.worker.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.worker.livenessProbe.timeoutSeconds }}
@@ -204,10 +218,34 @@ spec:
           command:
             - /celery_worker.sh
           volumeMounts:
+            - name: media
+              mountPath: /app/private_media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openklant/private_media" }}
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath | default "openklant/media" }}
+            {{- if .Values.worker.livenessProbe.enabled }}
+            - name: liveness
+              mountPath: /app/liveness/
+              readOnly: true
+            {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openklant.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "openklant.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if .Values.worker.livenessProbe.enabled }}
+        - name: liveness
+          configMap:
+            name: {{ include "openklant.fullname" . }}-celery-liveness
+            defaultMode: 0555
+        {{- end }}
         {{- if .Values.extraVolumes }}
         {{- include "openklant.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
