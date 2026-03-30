@@ -387,8 +387,8 @@ settings:
 worker:
   replicaCount: 2
   concurrency: 4
-  podLabels: { }
-  resources: { }
+  podLabels: {}
+  resources: {}
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
