@@ -182,3 +182,34 @@ Usage:
         {{- tpl (.value | toYaml) .context }}
     {{- end }}
 {{- end -}}
+
+{{/*
+Create a name for Flower
+We truncate at 56 chars in order to provide space for the "-flower" suffix
+*/}}
+{{- define "openklant.flowerName" -}}
+{{ include "openklant.name" . | trunc 56 | trimSuffix "-" }}-flower
+{{- end }}
+
+{{/*
+Create a default fully qualified name for Flower.
+We truncate at 56 chars in order to provide space for the "-flower" suffix
+*/}}
+{{- define "openklant.flowerFullname" -}}
+{{ include "openklant.fullname" . | trunc 56 | trimSuffix "-" }}-flower
+{{- end }}
+
+{{/*
+Flower labels
+*/}}
+{{- define "openklant.flowerLabels" -}}
+{{ include "openklant.commonLabels" . }}
+{{ include "openklant.flowerSelectorLabels" . }}
+{{- end }}
+
+{{/*
+Flower selector labels
+*/}}
+{{- define "openklant.flowerSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openklant.flowerName" . }}
+{{- end }}

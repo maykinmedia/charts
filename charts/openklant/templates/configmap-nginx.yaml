@@ -78,6 +78,11 @@ data:
           alias /app/private_media/;
       }
 
+      # Health check endpoints should not be accessible from outside the cluster
+      location ^~ /_healthz/ {
+        return 404;
+      }
+
       error_page  404              /404.html;
       error_page  413              /413.json;
       error_page  500 502 503 504  /500.json;
