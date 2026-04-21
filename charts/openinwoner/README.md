@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 2.1.3](https://img.shields.io/badge/Version-2.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
+![Version: 2.1.4](https://img.shields.io/badge/Version-2.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.0](https://img.shields.io/badge/AppVersion-2.2.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -407,9 +407,12 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.digidMock | string | `""` |  |
 | settings.djangoSettingsModule | string | `"open_inwoner.conf.docker"` |  |
 | settings.eherkenningMock | string | `""` |  |
-| settings.elasticSearchHost | string | `""` | Elasticsearch hostname, only required when tags.elasticsearch is false |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
+| settings.elasticsearch | object | `{"host":"","password":"","username":""}` | Elasticsearch connection settings, only required when tags.elasticsearch is false |
+| settings.elasticsearch.host | string | `""` | Elasticsearch hostname |
+| settings.elasticsearch.password | string | `""` | Password for basic authentication (optional) |
+| settings.elasticsearch.username | string | `""` | Username for basic authentication (optional) |
 | settings.email.defaultFrom | string | `""` |  |
 | settings.email.host | string | `"localhost"` |  |
 | settings.email.password | string | `""` |  |
