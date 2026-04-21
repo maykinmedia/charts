@@ -338,8 +338,14 @@ settings:
   # -- Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json
   loadFixtures: false
 
-  # -- Elasticsearch hostname, only required when tags.elasticsearch is false
-  elasticSearchHost: ""
+  # -- Elasticsearch connection settings, only required when tags.elasticsearch is false
+  elasticsearch:
+    # -- Elasticsearch hostname
+    host: ""
+    # -- Username for basic authentication (optional)
+    username: ""
+    # -- Password for basic authentication (optional)
+    password: ""
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
