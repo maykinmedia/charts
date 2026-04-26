@@ -1,7 +1,11 @@
 
 # Changelog
 
-## 0.3.0 (2026-19-01)
+## 0.3.1 (2026-04-21)
+
+- Update the Readme.
+
+## 0.3.0 (2026-01-19)
 - Bumped application version from 1.0.0 to 1.6.0
 - Added support for the environment variables needed to configure Open Telemetry.
 - Added siteDomain value
