@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.4.0 (2026-04-28)
+- Bumped application version from 1.6.0 to 1.7.0
+- Added missing config variables RUN_SETUP_CONFIG & LOAD_UPL
+
 ## 0.3.1 (2026-04-21)
 
 - Update the Readme.
