@@ -112,3 +112,5 @@ data:
   OTEL_METRIC_EXPORT_INTERVAL: {{ .Values.settings.otel.metricExportInterval | toString | quote }}
   OTEL_METRIC_EXPORT_TIMEOUT: {{ .Values.settings.otel.metricExportTimeout | toString | quote }}
   {{- end }}
+  LOAD_UPL: {{ if .Values.settings.loadUpl }}"True"{{ else }}"False"{{ end }}
+  RUN_SETUP_CONFIG: {{ if .Values.settings.runSetupConfig }}"True"{{ else }}"False"{{ end }}

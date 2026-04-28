@@ -2,7 +2,7 @@
 
 Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
 
-![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -201,6 +201,7 @@ how to configure, see the Open Product [documentation](https://open-product.read
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
+| settings.loadUpl | bool | `true` |  |
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.otel.disabled | bool | `true` | If the OpenTelemetrySDK should be disabled. Opentelemtry is enabled by default, Set this values to 'true' to disable openTelemetry.  |
 | settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
@@ -210,6 +211,7 @@ how to configure, see the Open Product [documentation](https://open-product.read
 | settings.otel.metricExportInterval | int | `60000` | How often (in milliseconds) the metrics are exported. Exports run in a background thread.  |
 | settings.otel.metricExportTimeout | int | `10000` | Timeout of the requests to the collector (in milliseconds) |
 | settings.otel.resourceAttributes | list | `[]` | Resource attributes can be used to specify additional information about the instance. These are collected by the Kubernetes attributes processor. |
+| settings.runSetupConfig | bool | `true` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |

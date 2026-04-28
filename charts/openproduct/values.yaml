@@ -339,6 +339,9 @@ settings:
 
   debug: false
 
+  loadUpl: true
+  runSetupConfig: true
+
   uwsgi:
     master: ''
     threads: ''
