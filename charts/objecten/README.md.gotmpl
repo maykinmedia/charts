@@ -1,0 +1,51 @@
+# Objecten Chart
+
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Introduction 
+
+This chart can be used to deploy Objects-api on a Kubernetes cluster using the Helm package manager.
+
+* [Source code](https://github.com/maykinmedia/objects-api/)
+* [Documentation](https://objects-and-objecttypes-api.readthedocs.io/)
+* [Docker image](https://hub.docker.com/r/maykinmedia/objects-api)
+* [Changelog](https://github.com/maykinmedia/objects-api/blob/master/CHANGELOG.rst)
+
+## Quickstart
+
+```bash
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm install {{ template "chart.name" . }} maykinmedia/{{ template "chart.name" . }}
+```
+
+{{ template "chart.requirementsSection" . }}
+
+## Configuration and installation details
+
+### Environment variables
+
+For a full overview of the available environment variables and their meaning, 
+see the the Objects-api [documentation](https://objects-and-objecttypes-api.readthedocs.io/en/latest/installation/config.html).
+
+### Automatic configuration
+
+The application can be automatically configured with `django-setup-configuration`.
+To enable the automatic configuration, the following values should be set:
+
+```yaml
+global:
+  configuration:
+    enabled: true
+
+configuration:
+  enabled: true
+  job:
+    enabled: true
+```
+
+The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
+how to configure, see the Objects-api [documentation](https://objects-and-objecttypes-api.readthedocs.io/en/latest/installation/config_cli.html).
+
+{{ template "chart.valuesSection" . }}
