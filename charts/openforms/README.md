@@ -126,6 +126,32 @@ The static file serving feature uses the existing media PVC with subPaths to org
 - **Media subPath**: `openforms/media` → `/app/media` (web container)
 - **Static subPath**: `openforms/static` → `/srv/static` (both containers)
 
+### Probes
+
+Open Forms 3.5.0 added new functionality to improve the container health checks for the web application, the Celery worker, the Celery beat and the Flower container. Below you can find additional information about the various checks.
+
+**Web application**
+
+There are now the endpoints `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` which are used for the startup, liveness and readiness probe respectively. You can find more information about what these endpoints check [here](https://github.com/open-formulieren/open-forms/blob/b7da980cc7053c10ae6d920ca0479db4ceb193df/docs/installation/health_checks.rst#http-service).
+
+Important to note: these endpoints are not reacheable from outside the cluster, Nginx is configured to return 404 for these endpoints.
+
+**Celery worker**
+
+You can read more about the worker health checks in the `maykin-common` documentation [here](https://maykin-django-common.readthedocs.io/en/latest/health_checks.html#celery-worker-health-checks). Things to note here are:
+
+* For the startup probe, we only check the presence of the readiness file. This is created when the worker is ready to accept work. Then it is no longer updated and it is cleaned up when the worker shuts down.
+* For the liveness probe, we check the presence of the liveness file, which is touched by the internal event loop of the worker every `60 s` (not a configurable value). We check that the file is not older than `70 s`. We also perform a ping to check the connection with the broker.
+
+Also note that for the liveness probe we use a script to be able to determine the Celery queue name, which is needed to build the name of the worker to check. Open Forms uses by default "default queues", but since the queue name can be changed with the `extraEnvVar` value, we support custom queue names.
+
+**Celery Beat**
+
+You can read more about the Beat health checks in the `maykin-common` documentation [here](https://maykin-django-common.readthedocs.io/en/latest/health_checks.html#celery-beat-health-checks).
+
+* For the startup, we check the presence of a liveness file. This is created when a new beat task is published. In Open Forms, there are the activate-form/deactivate-form tasks which should be published every minute. With the startup probe we aim to check that Beat has started and can schedule tasks, so the age of the file is not particularly important.
+* For the liveness probe we also check the liveness file. However, here we check that it is not older than 2 min, to be sure that Beat can still publish new tasks.
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -140,9 +166,20 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| beat.livenessProbe.failureThreshold | int | `3` |  |
+| beat.livenessProbe.initialDelaySeconds | int | `60` |  |
+| beat.livenessProbe.periodSeconds | int | `60` |  |
+| beat.livenessProbe.successThreshold | int | `1` |  |
+| beat.livenessProbe.timeoutSeconds | int | `15` |  |
 | beat.podLabels | object | `{}` |  |
+| beat.probesEnabled | bool | `false` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
+| beat.startupProbe.failureThreshold | int | `3` |  |
+| beat.startupProbe.initialDelaySeconds | int | `60` | The liveness file will be present only once Open-Forms has scheduled a task.  The most frequent task is scheduled every minute. We give time to the pod to start. |
+| beat.startupProbe.periodSeconds | int | `60` |  |
+| beat.startupProbe.successThreshold | int | `1` |  |
+| beat.startupProbe.timeoutSeconds | int | `15` |  |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.job.backoffLimit | int | `6` |  |
@@ -164,14 +201,14 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | flower.enabled | bool | `true` |  |
 | flower.extraVolumeMounts | list | `[]` |  |
 | flower.extraVolumes | list | `[]` |  |
-| flower.livenessProbe.failureThreshold | int | `6` |  |
-| flower.livenessProbe.initialDelaySeconds | int | `60` |  |
+| flower.livenessProbe.failureThreshold | int | `10` |  |
+| flower.livenessProbe.initialDelaySeconds | int | `120` |  |
 | flower.livenessProbe.periodSeconds | int | `10` |  |
 | flower.livenessProbe.successThreshold | int | `1` |  |
 | flower.livenessProbe.timeoutSeconds | int | `5` |  |
 | flower.podLabels | object | `{}` |  |
-| flower.readinessProbe.failureThreshold | int | `6` |  |
-| flower.readinessProbe.initialDelaySeconds | int | `30` |  |
+| flower.readinessProbe.failureThreshold | int | `5` |  |
+| flower.readinessProbe.initialDelaySeconds | int | `120` |  |
 | flower.readinessProbe.periodSeconds | int | `10` |  |
 | flower.readinessProbe.successThreshold | int | `1` |  |
 | flower.readinessProbe.timeoutSeconds | int | `5` |  |
@@ -193,7 +230,7 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | ingress.tlsSecret.cert | string | `""` |  |
 | ingress.tlsSecret.enabled | bool | `false` |  |
 | ingress.tlsSecret.key | string | `""` |  |
-| livenessProbe.failureThreshold | int | `6` |  |
+| livenessProbe.failureThreshold | int | `10` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
 | livenessProbe.successThreshold | int | `1` |  |
@@ -241,7 +278,7 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
-| readinessProbe.failureThreshold | int | `6` |  |
+| readinessProbe.failureThreshold | int | `5` |  |
 | readinessProbe.initialDelaySeconds | int | `30` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.successThreshold | int | `1` |  |
@@ -357,15 +394,17 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
 | worker.livenessProbe.enabled | bool | `false` |  |
-| worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
-| worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
-| worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app openforms.celery inspect --destination celery@${HOSTNAME} active"` |  |
-| worker.livenessProbe.failureThreshold | int | `3` |  |
+| worker.livenessProbe.failureThreshold | int | `6` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
-| worker.livenessProbe.periodSeconds | int | `50` |  |
+| worker.livenessProbe.periodSeconds | int | `60` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
 | worker.livenessProbe.timeoutSeconds | int | `15` |  |
-| worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
+| worker.startupProbe.enabled | bool | `false` |  |
+| worker.startupProbe.failureThreshold | int | `3` |  |
+| worker.startupProbe.initialDelaySeconds | int | `60` |  |
+| worker.startupProbe.periodSeconds | int | `60` |  |
+| worker.startupProbe.successThreshold | int | `1` |  |
+| worker.startupProbe.timeoutSeconds | int | `15` |  |
