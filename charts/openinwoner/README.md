@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 2.1.4](https://img.shields.io/badge/Version-2.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.0](https://img.shields.io/badge/AppVersion-2.2.0-informational?style=flat-square)
+![Version: 2.1.5](https://img.shields.io/badge/Version-2.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.0](https://img.shields.io/badge/AppVersion-2.2.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -47,20 +47,8 @@ For Open Inwoner it is enough to deploy the following nodes:
 - 1 `master` node
 - 1 node with both `data` and `ingest` role.
 
-Open Inwoner supports basic authentication for Elasticsearch. Configure credentials via:
-
-```yaml
-settings:
-  elasticsearch:
-    username: "myuser"
-    password: "mypassword"
-```
-
-This will set the `ES_USERNAME` and `ES_PASSWORD` environment variables on the application pods. The username
-and password must match a user configured on your Elasticsearch cluster (see the
-[ECK users and roles documentation](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-users-and-roles.html)).
-
-If you do not require authentication, you can disable it on the Elasticsearch nodes as follows:
+Currently Open Inwoner does not support sending user authentication details for the requests to Elastic Search.
+The authentication on the nodes can be turned off as follows:
 
 ```yaml
 - name: master
@@ -76,14 +64,9 @@ If you do not require authentication, you can disable it on the Elasticsearch no
 ```
 
 Since Elasticsearch is not exposed through an ingress, Open Inwoner connects to its internal http endpoint.
-TLS is recommended when using basic auth so that credentials are not transmitted in plaintext. However, Open Inwoner
-does not currently support self-signed certificates, so ECK's default self-signed CA cannot be used directly.
-To enable TLS, configure Elasticsearch with a certificate issued by a trusted CA - for example using
-[cert-manager](https://cert-manager.io/) to provision a certificate from a cluster CA that Open Inwoner can trust.
-
-Until TLS is configured, keep it disabled and rely on the internal cluster network trust boundary, accepting
-that credentials travel in plaintext within the cluster. Elasticsearch should not be exposed via the ingress
-to the outside world. TLS can be turned off as follows:
+Open Inwoner does not yet support using the self-signed certificates and the custom CA of Elastic Search, so for
+now TLS is to be turned off. The expectation is that this is used in a cluster and that Elastic Search is not exposed
+via the ingress to the outside world. The TLS can be turned off as follows:
 
 ```yaml
 eck-elasticsearch:
@@ -131,7 +114,7 @@ how to configure, see the Open Inwoner [documentation](https://open-forms.readth
 
 Open Inwoner makes use of [Sentry](https://sentry.io/welcome/) for automatic reporting of errors.
 In order to configure it, the value `settings.sentry.dsn` needs to be set. To see where to find the `DSN`, see
-the [Sentry documentation](https://docs.sentry.io/concepts/key-terms/dsn-explainer/#where-to-find-your-data-source-name-dsn).
+the [Sentry documentation](https://docs.sentry.io/concepts/key-terms/dsn-explainer/#where-to-find-your-data-source-name-dsn). 
 
 ```yaml
 settings:
