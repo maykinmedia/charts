@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.12.0 (2026-05-04)
+
+- Bumped the application version from 2.15.0 to 2.16.0
+- Added health checks in Open Klant using `maykin-common`, implementing liveness and readiness probes
+- Implement Flower deployment configuration
+
 ## 1.11.0 (2026-02-12)
 
 - Bumped the application version from 2.14.0 to 2.15.0
