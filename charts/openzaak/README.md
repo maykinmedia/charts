@@ -2,7 +2,7 @@
 
 Productiewaardige API's voor Zaakgericht Werken
 
-![Version: 1.14.0](https://img.shields.io/badge/Version-1.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.27.0](https://img.shields.io/badge/AppVersion-1.27.0-informational?style=flat-square)
+![Version: 1.14.1](https://img.shields.io/badge/Version-1.14.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.28.1](https://img.shields.io/badge/AppVersion-1.28.1-informational?style=flat-square)
 
 ## Introduction
 
@@ -60,10 +60,10 @@ Open Zaak supports using three different backends for the Documenten API: the fi
 In order to configure the backend, use the `settings.documentApiBackend` value and if using the Azure Blob Storage or the S3 storage,
 configure the values under `settings.azureBlobStorage` and `settings.s3storage`.
 
-You can find more information about how to specify each value in the [Open Zaak documentation](https://open-zaak.readthedocs.io/en/1.27.0/installation/config/env_config.html#documenten-api).
+You can find more information about how to specify each value in the [Open Zaak documentation](https://open-zaak.readthedocs.io/en/1.28.1/installation/config/env_config.html#documenten-api).
 
 Note that for Azure Blob storage, your cluster needs to have the Blob storage CSI driver enabled. For S3 storage, your cluster needs to have the Amazon S3 CSI driver enabled.
-You can find more information in the Open Zaak documentation for both the [Azure Blob Storage](https://open-zaak.readthedocs.io/en/1.27.0/installation/reference/azure_blob_storage.html) and the [S3 storage](https://open-zaak.readthedocs.io/en/1.27.0/installation/reference/s3_storage.html).
+You can find more information in the Open Zaak documentation for both the [Azure Blob Storage](https://open-zaak.readthedocs.io/en/1.28.1/installation/reference/azure_blob_storage.html) and the [S3 storage](https://open-zaak.readthedocs.io/en/1.28.1/installation/reference/s3_storage.html).
 
 ## Values
 

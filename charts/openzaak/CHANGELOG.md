@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.1 (2026-05-07)
+
+- Bumped the application version to 1.28.1.
+
 ## 1.14.0 (2026-02-13)
 
 - Bumped the application version to 1.27.0.
