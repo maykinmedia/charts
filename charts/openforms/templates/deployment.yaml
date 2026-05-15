@@ -53,7 +53,7 @@ spec:
               protocol: TCP
           startupProbe:
             httpGet:
-              path: /admin/
+              path: /_healthz/
               port: http
               httpHeaders:
                 - name: Host
@@ -61,7 +61,7 @@ spec:
             {{- toYaml .Values.startupProbe | nindent 12 }}
           livenessProbe:
             httpGet:
-              path: /admin/
+              path: /_healthz/livez/
               port: http
               httpHeaders:
                 - name: Host
@@ -69,7 +69,7 @@ spec:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
-              path: /admin/
+              path: /_healthz/readyz/
               port: http
               httpHeaders:
                 - name: Host
@@ -183,6 +183,31 @@ spec:
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
+          {{- if .Values.beat.probesEnabled }}
+          startupProbe:
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common beat-health-check --file=/app/tmp/celery_beat.live --max-age=600
+            initialDelaySeconds: {{ .Values.beat.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.beat.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.beat.startupProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.beat.startupProbe.successThreshold }}
+            failureThreshold: {{ .Values.beat.startupProbe.failureThreshold }}
+          livenessProbe:
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              # OF schedules the activate-form/deactivate-form tasks every minute. So we set max-age to 2x that frequency.
+              - maykin-common beat-health-check --file=/app/tmp/celery_beat.live --max-age=120
+            initialDelaySeconds: {{ .Values.beat.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.beat.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.beat.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.beat.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.beat.livenessProbe.failureThreshold }}
+          {{- end }}
       volumes:
         - name: media
           persistentVolumeClaim:
@@ -258,10 +283,24 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- include "openforms.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
+          {{- if .Values.worker.startupProbe.enabled }}
+          startupProbe:
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common worker-health-check --skip-ping --skip-event-loop-liveness --no-skip-startup --startup-file=/app/tmp/celery_worker.ready
+            initialDelaySeconds: {{ .Values.worker.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.worker.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.worker.startupProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.worker.startupProbe.successThreshold }}
+            failureThreshold: {{ .Values.worker.startupProbe.failureThreshold }}
+          {{- end }}
           {{- if .Values.worker.livenessProbe.enabled }}
           livenessProbe:
             exec: 
-            {{- toYaml .Values.worker.livenessProbe.exec | nindent 14 }}
+              command:
+              - /app/liveness/liveness-probe.sh
             initialDelaySeconds: {{ .Values.worker.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.worker.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.worker.livenessProbe.timeoutSeconds }}
@@ -279,6 +318,11 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath | default "openforms/media" }}
+            {{- if .Values.worker.livenessProbe.enabled }}
+            - name: liveness
+              mountPath: /app/liveness/
+              readOnly: true
+            {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
@@ -290,6 +334,12 @@ spec:
           {{- else }}
           emptyDir: { }
           {{- end }}
+        {{- if .Values.worker.livenessProbe.enabled }}
+        - name: liveness
+          configMap:
+            name: {{ include "openforms.fullname" . }}-celery-liveness
+            defaultMode: 0555
+        {{- end }}
           {{- if .Values.extraVolumes }}
           {{- include "openforms.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
           {{- end }}
@@ -457,13 +507,27 @@ spec:
               containerPort: 5555
               protocol: TCP
           livenessProbe:
-            tcpSocket:
-              port: 5555
-            {{- toYaml .Values.flower.livenessProbe | nindent 12 }}
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common health-check --endpoint=http://localhost:5555/
+            initialDelaySeconds: {{ .Values.flower.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.flower.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.flower.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.flower.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.flower.livenessProbe.failureThreshold }}
           readinessProbe:
-            tcpSocket:
-              port: 5555
-            {{- toYaml .Values.flower.readinessProbe | nindent 12 }}
+            exec: 
+              command:
+              - /bin/sh
+              - -c
+              - maykin-common health-check --endpoint=http://localhost:5555/
+            initialDelaySeconds: {{ .Values.flower.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.flower.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.flower.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.flower.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.flower.readinessProbe.failureThreshold }}
           volumeMounts:
             {{- if .Values.flower.extraVolumeMounts }}
             {{- include "openforms.tplvalues.render" ( dict "value" .Values.flower.extraVolumeMounts "context" $ ) | nindent 12 }}
