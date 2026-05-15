@@ -6313,6 +6313,28 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/openproduct-0.1.0/openproduct-0.1.0.tgz
     version: 0.1.0
+  openvtb:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-05-15T10:24:55.414329068Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Register en API's voor Verzoeken, Taken en Berichten.
+    digest: 28ece22dd42a3518075e62004c7ae94ac746588ede2f8677e9a384554812d3b2
+    name: openvtb
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openvtb-0.1.0/openvtb-0.1.0.tgz
+    version: 0.1.0
   openzaak:
   - apiVersion: v2
     appVersion: 1.28.1
@@ -7337,4 +7359,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-05-12T07:59:49.623382107Z"
+generated: "2026-05-15T10:24:55.414860548Z"
