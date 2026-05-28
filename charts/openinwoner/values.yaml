@@ -503,6 +503,37 @@ worker:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
 
+lowLatencyWorker:
+  replicaCount: 1
+  queue: low-latency
+  concurrency: 8
+  podLabels: {}
+  resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
+  # Defaults to 60s
+  maxWorkerLivenessDelta: ""
+  livenessProbe:
+    enabled: false
+    exec:
+      command:
+        - /bin/sh
+        - -c
+        - celery --workdir src --app open_inwoner.celery inspect --destination celery@${HOSTNAME} active
+    initialDelaySeconds: 60
+    # Periodeseconds should not exceed maxWorkerLivenessDelta
+    periodSeconds: 50
+    timeoutSeconds: 10
+    failureThreshold: 3
+    successThreshold: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
 beat:
   replicaCount: 1
   podLabels: {}

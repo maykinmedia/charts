@@ -161,6 +161,37 @@ app.kubernetes.io/name: {{ include "openinwoner.workerName" . }}
 {{- end }}
 
 {{/*
+Create a name for the low latency worker
+We truncate at 42 chars in order to provide space for the "-low-latency-worker" suffix
+*/}}
+{{- define "openinwoner.lowLatencyWorkerName" -}}
+{{ include "openinwoner.name" . | trunc 42 | trimSuffix "-" }}-low-latency-worker
+{{- end }}
+
+{{/*
+Create a default fully qualified name for the low latency worker.
+We truncate at 42 chars in order to provide space for the "-low-latency-worker" suffix
+*/}}
+{{- define "openinwoner.lowLatencyWorkerFullname" -}}
+{{ include "openinwoner.fullname" . | trunc 42 | trimSuffix "-" }}-low-latency-worker
+{{- end }}
+
+{{/*
+Low latency worker labels
+*/}}
+{{- define "openinwoner.lowLatencyWorkerLabels" -}}
+{{ include "openinwoner.commonLabels" . }}
+{{ include "openinwoner.lowLatencyWorkerSelectorLabels" . }}
+{{- end }}
+
+{{/*
+Low latency worker selector labels
+*/}}
+{{- define "openinwoner.lowLatencyWorkerSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "openinwoner.lowLatencyWorkerName" . }}
+{{- end }}
+
+{{/*
 Create a name for the celery beat
 We truncate at 56 chars in order to provide space for the "-beat" suffix
 */}}

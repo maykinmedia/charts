@@ -301,6 +301,26 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | livenessProbe.periodSeconds | int | `10` |  |
 | livenessProbe.successThreshold | int | `1` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
+| lowLatencyWorker.autoscaling.enabled | bool | `false` |  |
+| lowLatencyWorker.autoscaling.maxReplicas | int | `100` |  |
+| lowLatencyWorker.autoscaling.minReplicas | int | `1` |  |
+| lowLatencyWorker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| lowLatencyWorker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| lowLatencyWorker.concurrency | int | `8` |  |
+| lowLatencyWorker.livenessProbe.enabled | bool | `false` |  |
+| lowLatencyWorker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
+| lowLatencyWorker.livenessProbe.exec.command[1] | string | `"-c"` |  |
+| lowLatencyWorker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app open_inwoner.celery inspect --destination celery@${HOSTNAME} active"` |  |
+| lowLatencyWorker.livenessProbe.failureThreshold | int | `3` |  |
+| lowLatencyWorker.livenessProbe.initialDelaySeconds | int | `60` |  |
+| lowLatencyWorker.livenessProbe.periodSeconds | int | `50` |  |
+| lowLatencyWorker.livenessProbe.successThreshold | int | `1` |  |
+| lowLatencyWorker.livenessProbe.timeoutSeconds | int | `10` |  |
+| lowLatencyWorker.maxWorkerLivenessDelta | string | `""` |  |
+| lowLatencyWorker.podLabels | object | `{}` |  |
+| lowLatencyWorker.queue | string | `"low-latency"` |  |
+| lowLatencyWorker.replicaCount | int | `1` |  |
+| lowLatencyWorker.resources | object | `{}` |  |
 | nameOverride | string | `""` |  |
 | nginx.autoscaling.enabled | bool | `false` |  |
 | nginx.config.basicAuth | object | `{"enabled":false,"users":"usernameexample:$apr1$5QwE2Ysc$ycRucgmLt0iQMMxcnu4CA/"}` | Configure nginx basic authentication, only use if you are unable to set it on your ingress controller |
