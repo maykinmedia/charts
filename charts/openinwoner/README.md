@@ -354,7 +354,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | redis.architecture | string | `"standalone"` |  |
 | redis.auth.enabled | bool | `false` |  |
-| redis.image | object | `{"registry":"docker.io","repository":"redis","tag":"8.0"}` | Redis image configuration - Migration from Bitnami to official Redis image           |
+| redis.image | object | `{"registry":"docker.io","repository":"redis","tag":"8.0"}` | Redis image configuration - Migration from Bitnami to official Redis image |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
@@ -380,6 +380,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
+| settings.cms4MigrationInitContainer | bool | `true` | Runs an init container that executes `python /app/src/manage.py cms4_migration`. Enabled by default to ensure the migration runs on the initial rollout to 2.3.0. This migration only needs to run once: once it has completed successfully, set this to false to avoid re-running it on every pod restart. |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
 | settings.database.password | string | `""` |  |
@@ -417,7 +418,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
 | settings.searchIndexInitContainer | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
-| settings.secretKeyFallback | string | `""` | This optional setting can be used to rotate a secret key, by moving a new value into secretKey, and moving the previous secretKey into secretKeyFallback.  |
+| settings.secretKeyFallback | string | `""` | This optional setting can be used to rotate a secret key, by moving a new value into secretKey, and moving the previous secretKey into secretKeyFallback. |
 | settings.sentry.dsn | string | `""` |  |
 | settings.smsgateway.apikey | string | `""` |  |
 | settings.smsgateway.backend | string | `""` | For example "open_inwoner.accounts.gateways.MessageBird" |
@@ -432,7 +433,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.uwsgi.threads | string | `""` |  |
 | settings.zgwMaxRequests | string | `""` | The maximum number of requests allowed for fetching zaken on the Mijn Zaken page. The total number of zaken fetched will be this number multiplied by the page size of the ZGW backend's zaken endpoint. |
 | startupProbe.failureThreshold | int | `30` |  |
-| startupProbe.initialDelaySeconds | int | `15` | Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)     |
+| startupProbe.initialDelaySeconds | int | `15` | Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds) |
 | startupProbe.periodSeconds | int | `10` |  |
 | startupProbe.successThreshold | int | `1` |  |
 | startupProbe.timeoutSeconds | int | `5` |  |

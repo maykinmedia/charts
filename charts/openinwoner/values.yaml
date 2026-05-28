@@ -16,7 +16,7 @@ configuration:
     enabled: true
     backoffLimit: 6
     # -- 0 Will clean the job after it is finished
-    ttlSecondsAfterFinished: 0    
+    ttlSecondsAfterFinished: 0
     restartPolicy: OnFailure
     # Note, this field is immutable
     resources: {}
@@ -35,10 +35,10 @@ configuration:
   #     items:
   #     - identifier: admin-oidc
   #       enabled: True
-  #       oidc_rp_client_id: openinwoner.example.nl 
+  #       oidc_rp_client_id: openinwoner.example.nl
   #       oidc_rp_client_secret:
   #         value_from:
-  #           env: keycloak_client_secret   
+  #           env: keycloak_client_secret
   #       oidc_rp_scopes_list:
   #       - openid
   #       - email
@@ -77,7 +77,7 @@ configuration:
   #         client_id: openinwoner
   #         secret:
   #           value_from:
-  #             env: openzaak_openinwoner_secret 
+  #             env: openzaak_openinwoner_secret
   #       - identifier: documenten-test
   #         label: Open Zaak - Documenten API
   #         api_root: https://openzaak.example.nl/documenten/api/v1/
@@ -183,14 +183,14 @@ podSecurityContext:
 securityContext:
   capabilities:
     drop:
-    - ALL
+      - ALL
   readOnlyRootFilesystem: false
   runAsNonRoot: true
   runAsUser: 1000
 
 startupProbe:
   # -- Startup probe configuration - allows up to 5 minutes for application startup
-  # -- Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)    
+  # -- Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)
   initialDelaySeconds: 15
   periodSeconds: 10
   timeoutSeconds: 5
@@ -351,7 +351,7 @@ settings:
   secretKey: ""
 
   # -- This optional setting can be used to rotate a secret key, by moving a new value
-  # into secretKey, and moving the previous secretKey into secretKeyFallback. 
+  # into secretKey, and moving the previous secretKey into secretKeyFallback.
   secretKeyFallback: ""
 
   environment: null
@@ -425,6 +425,13 @@ settings:
 
   # -- Runs a init container that will run /app/src/manage.py search_index --rebuild -f. You might want to enable this one time for new deployments if you want to prevent 500 errors when using the search function
   searchIndexInitContainer: false
+
+  # -- Runs an init container that executes `python /app/src/manage.py cms4_migration`.
+  # Enabled by default to ensure the migration runs on the initial rollout to 2.3.0.
+  # This migration only needs to run once: once it has completed successfully, set this
+  # to false to avoid re-running it on every pod restart.
+  cms4MigrationInitContainer: true
+
   # -- Custom JavaScript Configuration
   # Flag to enable the custom JavaScript upload feature in the admin interface. When set to true, this feature allows admins to upload custom JavaScript code that will be loaded on all pages.
   # WARNING: Custom JavaScript can negatively impact security and performance, and should be done with care.
@@ -550,7 +557,7 @@ nginx:
   securityContext:
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: false
     runAsNonRoot: true
     runAsUser: 101
@@ -573,7 +580,6 @@ nginx:
     #   cpu: 250m
     #   memory: 256Mi
 
-
 ##################
 # Redis subchart #
 ##################
@@ -591,11 +597,11 @@ redis:
       requests:
         cpu: 250m
         memory: 256Mi
-  # -- Redis image configuration - Migration from Bitnami to official Redis image          
+  # -- Redis image configuration - Migration from Bitnami to official Redis image
   image:
-    registry: docker.io  # Docker registry for Redis image
-    repository: redis  # Official Redis image (migrated from Bitnami)
-    tag: "8.0"  # Official Redis image pinned version
+    registry: docker.io # Docker registry for Redis image
+    repository: redis # Official Redis image (migrated from Bitnami)
+    tag: "8.0" # Official Redis image pinned version
 
 #########################
 # ECK-Operator subchart #
@@ -1129,160 +1135,158 @@ eck-elasticsearch:
   # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-node-configuration.html
   #
   nodeSets:
-  - name: default
-    count: 1
-    config:
-      # Comment out when setting the vm.max_map_count via initContainer, as these are mutually exclusive.
-      # For production workloads, it is strongly recommended to increase the kernel setting vm.max_map_count to 262144
-      # and leave node.store.allow_mmap unset.
-      # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
-      #
-      node.store.allow_mmap: false
-    podTemplate:
-      # The following spec is exactly the Kubernetes Core V1 PodTemplateSpec. Any fields within the PodTemplateSpec
-      # are supported within the 'spec' field below.  Please see below documentation for the exhaustive list of fields.
-      #
-      # https://v1-24.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#podtemplatespec-v1-core
-      #
-      # Only the commonly overridden/used fields will be noted below.
-      #
-      spec:
+    - name: default
+      count: 1
+      config:
+        # Comment out when setting the vm.max_map_count via initContainer, as these are mutually exclusive.
+        # For production workloads, it is strongly recommended to increase the kernel setting vm.max_map_count to 262144
+        # and leave node.store.allow_mmap unset.
+        # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
+        #
+        node.store.allow_mmap: false
+      podTemplate:
+        # The following spec is exactly the Kubernetes Core V1 PodTemplateSpec. Any fields within the PodTemplateSpec
+        # are supported within the 'spec' field below.  Please see below documentation for the exhaustive list of fields.
+        #
+        # https://v1-24.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#podtemplatespec-v1-core
+        #
+        # Only the commonly overridden/used fields will be noted below.
+        #
+        spec:
+          # If specified, the pod's scheduling constraints
+          # https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-advanced-node-scheduling.html
+          # https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+          # affinity:
+          #   nodeAffinity:
+          #     requiredDuringSchedulingIgnoredDuringExecution:
+          #       nodeSelectorTerms:
+          #       - matchExpressions:
+          #         - key: topology.kubernetes.io/zone
+          #           operator: In
+          #           values:
+          #           - antarctica-east1
+          #           - antarctica-west1
 
-        # If specified, the pod's scheduling constraints
+          # Containers array.  Should only be used to customize the 'elasticsearch' container using the following fields.
+          containers:
+            - name: elasticsearch
+
+              # List of environment variables to set in the 'elasticsearch' container.
+              # https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+              # env:
+              # - name: "my-env-var"
+              #   value: "my-value"
+
+              # Compute Resources required by this container.
+              resources:
+                # Requests describes the minimum amount of compute resources required. If Requests is omitted for a container,
+                # it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value.
+                #
+                # Defaults used by the ECK Operator, if not specified, are below
+                limits:
+                  # cpu: 1
+                  memory: 2Gi
+                requests:
+                  # cpu: 1
+                  memory: 2Gi
+
+                # Example increasing both the requests and limits values:
+                # limits:
+                #   cpu: 4
+                #   memory: 8Gi
+                # requests:
+                #   cpu: 1
+                #   memory: 8Gi
+
+              # SecurityContext defines the security options the container should be run with.
+              # If set, the fields of SecurityContext override the equivalent fields of PodSecurityContext.
+              #
+              # These typically are set automatically by the ECK Operator, and should only be adjusted
+              # with the full knowledge of the effects of each field.
+              #
+              # securityContext:
+
+              # Whether this container has a read-only root filesystem. Default is false.
+              # readOnlyRootFilesystem: false
+
+              # The GID to run the entrypoint of the container process. Uses runtime default if unset.
+              # runAsGroup: 1000
+
+              # Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure
+              # that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed.
+              # runAsNonRoot: true
+
+              # The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified.
+              # runAsUser: 1000
+
+        # ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec.
+        # https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
+        # imagePullSecrets:
+        # - name: "image-pull-secret"
+
+        # List of initialization containers belonging to the pod.
+        #
+        # Common initContainers include setting sysctl, or in 7.x versions of Elasticsearch,
+        # installing Elasticsearch plugins.
+        #
+        # https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+        # initContainers:
+        # - command:
+        #   - sh
+        #   - "-c"
+        #   - sysctl -w vm.max_map_count=262144
+        #   name: sysctl
+        #   securityContext:
+        #     privileged: true
+        # - command:
+        #   - sh
+        #   - "-c"
+        #   - bin/elasticsearch-plugin remove --purge analysis-icu ; bin/elasticsearch-plugin install --batch analysis-icu
+        #   name: install-plugins
+        #   securityContext:
+        #     privileged: true
+
+        # NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
         # https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-advanced-node-scheduling.html
-        # https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-        # affinity:
-        #   nodeAffinity:
-        #     requiredDuringSchedulingIgnoredDuringExecution:
-        #       nodeSelectorTerms:
-        #       - matchExpressions:
-        #         - key: topology.kubernetes.io/zone
-        #           operator: In
-        #           values:
-        #           - antarctica-east1
-        #           - antarctica-west1
+        # nodeSelector:
+        #   diskType: ssd
+        #   environment: production
 
-        # Containers array.  Should only be used to customize the 'elasticsearch' container using the following fields.
-        containers:
-        - name: elasticsearch
+        # If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority.
+        # Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
+        # https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/
+        # priorityClassName: ""
 
-          # List of environment variables to set in the 'elasticsearch' container.
-          # https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
-          # env:
-          # - name: "my-env-var"
-          #   value: "my-value"
+        # SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty. See type description for default values of each field.
+        # See previously defined 'securityContext' within 'podTemplate' for all available fields.
+        # securityContext: {}
 
-          # Compute Resources required by this container.
-          resources:
-            # Requests describes the minimum amount of compute resources required. If Requests is omitted for a container,
-            # it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value.
-            #
-            # Defaults used by the ECK Operator, if not specified, are below
-            limits:
-              # cpu: 1
-              memory: 2Gi
-            requests:
-              # cpu: 1
-              memory: 2Gi
+        # ServiceAccountName is the name of the ServiceAccount to use to run this pod.
+        # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+        # serviceAccountName: ""
 
-            # Example increasing both the requests and limits values:
-            # limits:
-            #   cpu: 4
-            #   memory: 8Gi
-            # requests:
-            #   cpu: 1
-            #   memory: 8Gi
+        # Optional duration in seconds to wait for the Elasticsearch pod to terminate gracefully.
+        # terminationGracePeriodSeconds: 30s
 
-          # SecurityContext defines the security options the container should be run with.
-          # If set, the fields of SecurityContext override the equivalent fields of PodSecurityContext.
-          #
-          # These typically are set automatically by the ECK Operator, and should only be adjusted
-          # with the full knowledge of the effects of each field.
-          #
-          # securityContext:
+        # If specified, the pod's tolerations that will apply to all containers within the pod.
+        # https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+        # tolerations:
+        # - key: "node-role.kubernetes.io/elasticsearch"
+        #   effect: "NoSchedule"
+        #   operator: "Exists"
 
-            # Whether this container has a read-only root filesystem. Default is false.
-            # readOnlyRootFilesystem: false
+        # TopologySpreadConstraints describes how a group of pods ought to spread across topology domains.
+        # Scheduler will schedule pods in a way which abides by the constraints. All topologySpreadConstraints are ANDed.
+        #
+        # These settings are generally applied within each `nodeSets[].podTemplate` field to apply to a specific Elasticsearch nodeset.
+        #
+        # https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-advanced-node-scheduling.html
+        # topologySpreadConstraints: {}
 
-            # The GID to run the entrypoint of the container process. Uses runtime default if unset.
-            # runAsGroup: 1000
-
-            # Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure
-            # that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed.
-            # runAsNonRoot: true
-
-            # The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified.
-            # runAsUser: 1000
-
-      # ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec.
-      # https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
-      # imagePullSecrets:
-      # - name: "image-pull-secret"
-
-      # List of initialization containers belonging to the pod.
-      #
-      # Common initContainers include setting sysctl, or in 7.x versions of Elasticsearch,
-      # installing Elasticsearch plugins.
-      #
-      # https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-      # initContainers:
-      # - command:
-      #   - sh
-      #   - "-c"
-      #   - sysctl -w vm.max_map_count=262144
-      #   name: sysctl
-      #   securityContext:
-      #     privileged: true
-      # - command:
-      #   - sh
-      #   - "-c"
-      #   - bin/elasticsearch-plugin remove --purge analysis-icu ; bin/elasticsearch-plugin install --batch analysis-icu
-      #   name: install-plugins
-      #   securityContext:
-      #     privileged: true
-
-
-      # NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
-      # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-      # https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-advanced-node-scheduling.html
-      # nodeSelector:
-      #   diskType: ssd
-      #   environment: production
-
-      # If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority.
-      # Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
-      # https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/
-      # priorityClassName: ""
-
-      # SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty. See type description for default values of each field.
-      # See previously defined 'securityContext' within 'podTemplate' for all available fields.
-      # securityContext: {}
-
-      # ServiceAccountName is the name of the ServiceAccount to use to run this pod.
-      # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-      # serviceAccountName: ""
-
-      # Optional duration in seconds to wait for the Elasticsearch pod to terminate gracefully.
-      # terminationGracePeriodSeconds: 30s
-
-      # If specified, the pod's tolerations that will apply to all containers within the pod.
-      # https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
-      # tolerations:
-      # - key: "node-role.kubernetes.io/elasticsearch"
-      #   effect: "NoSchedule"
-      #   operator: "Exists"
-
-      # TopologySpreadConstraints describes how a group of pods ought to spread across topology domains.
-      # Scheduler will schedule pods in a way which abides by the constraints. All topologySpreadConstraints are ANDed.
-      #
-      # These settings are generally applied within each `nodeSets[].podTemplate` field to apply to a specific Elasticsearch nodeset.
-      #
-      # https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-advanced-node-scheduling.html
-      # topologySpreadConstraints: {}
-
-      # List of volumes that can be mounted by containers belonging to the pod.
-      # https://kubernetes.io/docs/concepts/storage/volumes
-      # volumes: []
+        # List of volumes that can be mounted by containers belonging to the pod.
+        # https://kubernetes.io/docs/concepts/storage/volumes
+        # volumes: []
 
   # Settings for controlling Elasticsearch ingress. Enabling ingress will expose your Elasticsearch instance
   # to the public internet, and as such is disabled by default.
@@ -1297,7 +1301,7 @@ eck-elasticsearch:
     enabled: false
 
     # Annotations that will be applied to the Ingress resource. Note that some ingress controllers are controlled via annotations.
-    # 
+    #
     # Nginx Annotations: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/
     #
     # Common annotations:
@@ -1354,4 +1358,3 @@ eck-elasticsearch:
       # Optional Kubernetes secret name that contains a base64 encoded PEM certificate and private key that corresponds to the above 'hosts' definitions.
       # If tls is enabled, but this field is not set, the self-signed certificate and key created by the ECK operator will be used.
       # secretName: chart-example-tls
-
