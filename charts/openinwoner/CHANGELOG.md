@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.2.0 (2026-05-29)
+
+- Bumped the app version to `2.3.0`.
+- Added `settings.cms4MigrationInitContainer` (default: `true`) - an init container that runs
+  `python /app/src/manage.py cms4_migration`. Enabled by default to ensure the migration runs
+  on the initial rollout to 2.3.0. Once it has completed successfully it can be set to `false`
+  to prevent it from re-running on every pod restart.
+- Added `lowLatencyWorker` - a dedicated Celery worker for the `low-latency` queue
+  (concurrency 8), keeping the default worker unchanged.
+- Exposed `settings.zgwApisCacheDuration` to configure the ZGW cache timeout.
+- Configured the `low-latency` queue for cache seeding tasks via `settings.cacheSeederQueue`.
+
 ## 2.1.1 (2026-02-06)
 
 - Fixed typo in the readme.

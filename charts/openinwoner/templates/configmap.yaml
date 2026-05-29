@@ -94,6 +94,10 @@ data:
   {{- if .Values.settings.zgwMaxRequests }}
   ZGW_MAX_REQUESTS: {{ .Values.settings.zgwMaxRequests | toString | quote }}
   {{- end }}
+  {{- if .Values.settings.cacheZgwZakenTimeout }}
+  CACHE_ZGW_ZAKEN_TIMEOUT: {{ .Values.settings.cacheZgwZakenTimeout | toString | quote }}
+  {{- end }}
+  CACHE_SEEDING_QUEUE: {{ .Values.settings.cacheSeedingQueue | default .Values.lowLatencyWorker.queue | toString | quote }}
   OTEL_SDK_DISABLED: {{ if .Values.settings.otel.disabled }}"True"{{ else }}"False"{{ end }}
   {{- if not .Values.settings.otel.disabled }}
   OTEL_RESOURCE_ATTRIBUTES: "{{ range $index, $item := .Values.settings.otel.resourceAttributes }}{{ if $index }},{{ end }}{{ .key }}={{ .value }}{{ end }}"
