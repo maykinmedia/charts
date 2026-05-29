@@ -452,6 +452,9 @@ settings:
   # of the ZGW backend's zaken endpoint.
   zgwMaxRequests: ""
 
+  # -- Timeout in seconds for cached ZGW zaken requests. Leave empty to use the application default.
+  cacheZgwZakenTimeout: ""
+
   otel:
     disabled: true
     # -- Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317.

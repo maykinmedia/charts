@@ -397,6 +397,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.brpVersion | string | `""` |  |
 | settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |
 | settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
+| settings.cacheZgwZakenTimeout | string | `""` | Timeout in seconds for cached ZGW zaken requests. Leave empty to use the application default. |
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
