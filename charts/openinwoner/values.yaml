@@ -455,6 +455,9 @@ settings:
   # -- Timeout in seconds for cached ZGW zaken requests. Leave empty to use the application default.
   cacheZgwZakenTimeout: ""
 
+  # -- The Celery queue used for cache seeding tasks. Defaults to the low-latency worker queue.
+  cacheSeedingQueue: ""
+
   otel:
     disabled: true
     # -- Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317.
