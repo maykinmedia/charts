@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 4.0.0
-description: API om objecten te beheren die behoren bij een bepaald objecttype
+description: API for managing objects that belong to a specific object type
 name: openobject
 type: application
+appVersion: 4.0.1
 version: 0.1.0
 
 dependencies:
