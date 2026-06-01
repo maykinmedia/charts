@@ -467,7 +467,7 @@ settings:
   # Accounts for clock drift between server and client
   # Default: nil (uses Django default, typically 0 seconds)
   # Recommended: not to increase above 300 seconds
-  timeLeeway: nil  
+  timeLeeway: 0
 
   otel:
     disabled: true

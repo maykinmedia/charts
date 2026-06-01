@@ -22,7 +22,7 @@ data:
   CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
   CACHE_OIDC: {{ .Values.settings.cache.oidc | toString | quote }}
   CELERY_BROKER_URL: {{ .Values.settings.celery.brokerUrl | toString | quote }}
-  CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackendl | toString | quote }}
+  CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackend | toString | quote }}
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
   {{- if .Values.settings.logLevel }}

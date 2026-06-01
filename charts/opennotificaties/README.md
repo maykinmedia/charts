@@ -237,7 +237,7 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
-| settings.timeLeeway | string | `"nil"` | Time leeway in seconds for JWT validation timestamps Accounts for clock drift between server and client Default: nil (uses Django default, typically 0 seconds) Recommended: not to increase above 300 seconds |
+| settings.timeLeeway | int | `0` | Time leeway in seconds for JWT validation timestamps Accounts for clock drift between server and client Default: nil (uses Django default, typically 0 seconds) Recommended: not to increase above 300 seconds |
 | settings.useXForwardedHost | bool | `true` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
