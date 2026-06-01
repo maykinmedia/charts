@@ -1,0 +1,18 @@
+apiVersion: v2
+description: API for managing objects that belong to a specific object type
+name: openobject
+type: application
+appVersion: 4.0.1
+version: 0.1.0
+
+dependencies:
+  - name: redis
+    version: 22.0.1
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - redis
+  - name: common
+    version: 2.31.4
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common

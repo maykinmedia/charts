@@ -14,6 +14,7 @@ This repository contains Helm charts for:
 - [openproduct](./charts/openproduct/README.md)
 - [openorganisatie](./charts/openorganisatie/README.md)
 - [openvtb](./charts/openvtb/README.md)
+- [openobject](./charts/openobject/README.md)
 - [referentielijsten](./charts/referentielijsten/README.md)
 
 ```bash
