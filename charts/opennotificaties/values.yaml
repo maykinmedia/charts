@@ -357,6 +357,11 @@ settings:
       historyLimit: 1
       resources: {}
 
+  # -- The amount of seconds between starting the ``execute_notifications`` task that creates the actual notification request tasks (minimum 5 seconds).
+  notificationSecInterval: 20
+  # -- The maximum of scheduled notifications to be handled during ``execute_notifications``.
+  notificationLimit: 500
+
   # -- The maximum number of automatic retries. After this amount of retries, Open Notificaties stops trying to deliver the message. Application default is 5.
   maxRetries: ""
   # --  If specified, a factor applied to the exponential backoff. This allows you to tune how quickly automatic retries are performed. Application default is 3.
@@ -429,6 +434,8 @@ settings:
     # When not using the redis subcharts you can set them manually like this:
     # default: myredisserver:6379/0
     # axes: myredisserver:6379/0
+    # -- Sets 'CACHE_OIDC' var, only required when tags.redis is false
+    oidc: ""
 
   celery:
     # -- Celery loglevel

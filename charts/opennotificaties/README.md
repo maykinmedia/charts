@@ -174,6 +174,7 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |
 | settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
+| settings.cache.oidc | string | `""` | Sets 'CACHE_OIDC' var, only required when tags.redis is false |
 | settings.celery.brokerUrl | string | `""` | Sets the 'CELERY_BROKER_URL' var |
 | settings.celery.logLevel | string | `"debug"` | Celery loglevel |
 | settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISH_BROKER_URL' var |
@@ -219,6 +220,8 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | settings.logLevel | string | `"INFO"` | Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
 | settings.logNotifications | bool | `true` | When set to true notifications are saved to the database and accessible from the admin interface |
 | settings.maxRetries | string | `""` | The maximum number of automatic retries. After this amount of retries, Open Notificaties stops trying to deliver the message. Application default is 5. |
+| settings.notificationLimit | int | `500` | The maximum of scheduled notifications to be handled during ``execute_notifications``. |
+| settings.notificationSecInterval | int | `20` | The amount of seconds between starting the ``execute_notifications`` task that creates the actual notification request tasks (minimum 5 seconds). |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
 | settings.otel.disabled | bool | `true` |  |
 | settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
