@@ -252,7 +252,7 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | worker.autoscaling.minReplicas | int | `1` |  |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
-| worker.concurrency | int | `4` |  |
+| worker.concurrency | int | `100` |  |
 | worker.livenessProbe.enabled | bool | `false` |  |
 | worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
 | worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
