@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.0 (XXXX-XX-XX)
+
+- Bumped application version 1.16.0
+
 ## 1.13.1 (2026-02-09)
 
 - Updated the Readme.
