@@ -26,11 +26,6 @@ data:
   CELERY_RESULT_EXPIRES: {{ .Values.settings.celery.resultExpires | toString | quote }}
   {{ if .Values.worker.maxWorkerLivenessDelta }}
   MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
-  {{- end }}    
-  {{- if .Values.tags.rabbitmq }}
-  RABBITMQ_HOST: {{ include "common.names.fullname" .Subcharts.rabbitmq | toString | quote }}
-  {{- else }}
-  RABBITMQ_HOST: {{ .Values.settings.celery.rabbitmqHost | toString | quote }}
   {{- end }}
   {{- if .Values.settings.logNotifications }}
   LOG_NOTIFICATIONS_IN_DB: "True"

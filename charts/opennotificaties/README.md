@@ -25,7 +25,6 @@ helm install opennotificaties maykinmedia/opennotificaties
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
-| https://charts.bitnami.com/bitnami | rabbitmq | 16.0.12 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.1 |
 
 ## Configuration and installation details
@@ -147,19 +146,6 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
-| rabbitmq.auth.erlangCookie | string | `""` |  |
-| rabbitmq.auth.password | string | `"dummy"` |  |
-| rabbitmq.auth.username | string | `"user"` |  |
-| rabbitmq.clustering.enabled | bool | `false` |  |
-| rabbitmq.extraConfiguration | string | `"consumer_timeout = 86400000"` | RabbitMQ configuration file content This configuration will be appended to the default RabbitMQ configuration It will be mounted as /bitnami/rabbitmq/conf/rabbitmq.conf in the RabbitMQ container The mount name is "configuration" consumer_timeout: RabbitMQ's default consumer timeout is 30 minutes, but OpenNotificaties schedules tasks that can be further in the future. This timeout prevents errors when tasks are scheduled more than 30 minutes ahead. Set to 24 hours (86400000ms) to ensure compatibility. You can customize these settings by modifying the values below |
-| rabbitmq.image.registry | string | `"docker.io"` |  |
-| rabbitmq.image.repository | string | `"bitnamilegacy/rabbitmq"` |  |
-| rabbitmq.image.tag | string | `"4.1.3-debian-12-r0"` |  |
-| rabbitmq.persistence.enabled | bool | `false` |  |
-| rabbitmq.persistence.existingClaim | string | `nil` |  |
-| rabbitmq.persistence.size | string | `"1Gi"` |  |
-| rabbitmq.rbac.create | bool | `false` |  |
-| rabbitmq.resources | object | `{}` |  |
 | readinessProbe.failureThreshold | int | `6` |  |
 | readinessProbe.initialDelaySeconds | int | `30` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
@@ -188,10 +174,9 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | settings.allowedHosts | string | `""` |  |
 | settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |
 | settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
-| settings.celery.brokerUrl | string | `""` | Sets the 'CELERY_BROKER_URL' var, only required when tags.rabbitmq is false |
+| settings.celery.brokerUrl | string | `""` | Sets the 'CELERY_BROKER_URL' var |
 | settings.celery.logLevel | string | `"debug"` | Celery loglevel |
-| settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISH_BROKER_URL' var, only required when tags.rabbitmq is false |
-| settings.celery.rabbitmqHost | string | `""` | RabbitMQ server hostname |
+| settings.celery.publishBrokerUrl | string | `""` | Sets the 'PUBLISH_BROKER_URL' var |
 | settings.celery.resultBackend | string | `""` | Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false |
 | settings.celery.resultExpires | int | `3600` | Sets the 'CELERY_RESULT_EXPIRES' var |
 | settings.cleanOldNotifications.cronjob.historyLimit | int | `1` |  |
@@ -256,7 +241,6 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | settings.uwsgi.maxRequests | string | `""` |  |
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
-| tags.rabbitmq | bool | `true` |  |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
 | worker.autoscaling.behavior | object | `{}` |  |
