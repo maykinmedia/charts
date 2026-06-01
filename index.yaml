@@ -6100,6 +6100,28 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/opennotificaties-1.0.0/opennotificaties-1.0.0.tgz
     version: 1.0.0
+  openobject:
+  - apiVersion: v2
+    appVersion: 4.0.1
+    created: "2026-06-01T09:03:28.27748793Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: API for managing objects that belong to a specific object type
+    digest: e2fbc73ec906873f30a429740edb62bba5ee6dc8b59dec0b31d7331a55212a54
+    name: openobject
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openobject-0.1.0/openobject-0.1.0.tgz
+    version: 0.1.0
   openorganisatie:
   - apiVersion: v2
     appVersion: 0.2.0
@@ -7392,4 +7414,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-05-29T16:14:36.693487273Z"
+generated: "2026-06-01T09:03:28.499065376Z"
