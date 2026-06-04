@@ -20,7 +20,7 @@ data:
   CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
   CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
   CELERY_BROKER_URL: {{ .Values.settings.celery.brokerUrl | toString | quote }}
-  CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackendl | toString | quote }}
+  CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackend | toString | quote }}
   {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
