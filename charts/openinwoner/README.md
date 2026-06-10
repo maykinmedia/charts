@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 2.2.1](https://img.shields.io/badge/Version-2.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.1](https://img.shields.io/badge/AppVersion-2.3.1-informational?style=flat-square)
+![Version: 2.3.0-rc.1](https://img.shields.io/badge/Version-2.3.0--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.0](https://img.shields.io/badge/AppVersion-2.4.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -308,9 +308,9 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | lowLatencyWorker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | lowLatencyWorker.concurrency | int | `8` |  |
 | lowLatencyWorker.livenessProbe.enabled | bool | `false` |  |
-| lowLatencyWorker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
-| lowLatencyWorker.livenessProbe.exec.command[1] | string | `"-c"` |  |
-| lowLatencyWorker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app open_inwoner.celery inspect --destination celery@${HOSTNAME} active"` |  |
+| lowLatencyWorker.livenessProbe.exec.command[0] | string | `"maykin-common"` |  |
+| lowLatencyWorker.livenessProbe.exec.command[1] | string | `"worker-health-check"` |  |
+| lowLatencyWorker.livenessProbe.exec.command[2] | string | `"--skip ping"` |  |
 | lowLatencyWorker.livenessProbe.failureThreshold | int | `3` |  |
 | lowLatencyWorker.livenessProbe.initialDelaySeconds | int | `60` |  |
 | lowLatencyWorker.livenessProbe.periodSeconds | int | `50` |  |
@@ -432,6 +432,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.loadFixtures | bool | `false` | Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json |
 | settings.oidcFrontendLogoutWithHints | bool | `true` | Whether to provide a id_token_hint to the IdP broker when initiating a frontchannel logout |
 | settings.oidcRenewIdTokenExpirySeconds | int | `900` | The session renewal interval for OpenID Connect (DigiD/eHerkenning) in seconds. This configures how often the OIDC session should be renewed. Default is 900 seconds (15 minutes). See chapter 10 of the beheerhandleiding (management manual) for more information. |
+| settings.oidcUseLegacyEndpoints | bool | `true` | Whether the DigiD/eHerkenning/eIDAS OIDC clients use their legacy per-provider callback URLs (true, default) or the shared generic /oidc/callback/ URL (false). Only disable after the IdP broker's redirect URI whitelist has been updated accordingly. See chapter 10 of the beheerhandleiding (management manual) for more information. |
 | settings.otel.disabled | bool | `true` |  |
 | settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
 | settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials. |
@@ -471,9 +472,9 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
 | worker.livenessProbe.enabled | bool | `false` |  |
-| worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
-| worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
-| worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app open_inwoner.celery inspect --destination celery@${HOSTNAME} active"` |  |
+| worker.livenessProbe.exec.command[0] | string | `"maykin-common"` |  |
+| worker.livenessProbe.exec.command[1] | string | `"worker-health-check"` |  |
+| worker.livenessProbe.exec.command[2] | string | `"--skip-ping"` |  |
 | worker.livenessProbe.failureThreshold | int | `3` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
 | worker.livenessProbe.periodSeconds | int | `50` |  |
