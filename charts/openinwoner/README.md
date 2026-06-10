@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.0](https://img.shields.io/badge/AppVersion-2.3.0-informational?style=flat-square)
+![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.0](https://img.shields.io/badge/AppVersion-2.3.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -398,7 +398,6 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |
 | settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
 | settings.cacheSeedingQueue | string | `""` | The Celery queue used for cache seeding tasks. Defaults to the low-latency worker queue. |
-| settings.cacheZgwZakenTimeout | string | `""` | Timeout in seconds for cached ZGW zaken requests. Leave empty to use the application default. |
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
