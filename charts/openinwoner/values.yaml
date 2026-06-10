@@ -452,9 +452,6 @@ settings:
   # of the ZGW backend's zaken endpoint.
   zgwMaxRequests: ""
 
-  # -- Timeout in seconds for cached ZGW zaken requests. Leave empty to use the application default.
-  cacheZgwZakenTimeout: ""
-
   # -- The Celery queue used for cache seeding tasks. Defaults to the low-latency worker queue.
   cacheSeedingQueue: ""
 

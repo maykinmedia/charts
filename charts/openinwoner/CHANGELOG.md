@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.3.0 (2026-06-10)
+- Removed `CACHE_ZGW_ZAKEN_TIMEOUT` environment variable.
+
 ## 2.2.0 (2026-05-29)
 
 - Bumped the app version to `2.3.0`.
