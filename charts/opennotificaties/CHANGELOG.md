@@ -1,8 +1,24 @@
 # Changelog
 
-## 1.14.0 (XXXX-XX-XX)
+## 1.14.0 (2026-06-05)
 
-- Bumped application version 1.16.0
+**Warning**
+
+⚠️ This release contains breaking changes.
+
+- Upgraded Open Notificaties to **1.16.0**.
+- Removed `RabbitMQ` support from the Helm chart, including all RabbitMQ-related configuration values.
+- Updated the default Celery configuration to use Redis for both `CELERY_BROKER_URL` and `CELERY_RESULT_BACKEND`.
+
+**Changes**
+
+- Added new settings for notifications:
+
+  - `NOTIFICATION_LIMIT` 
+  - `NOTIFICATION_SEC_INTERVAL`
+
+- Increased the default `CELERY_WORKER_CONCURRENCY` from **4** to **100** to align with Open Notificaties 1.16.0
+- Enabled support for the periodic notification processing task through Celery Beat.
 
 ## 1.13.1 (2026-02-09)
 
