@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1 (2026-06-10)
+
+- Bumped the app version to `2.3.1`.
+
 ## 2.2.0 (2026-05-29)
 
 - Bumped the app version to `2.3.0`.
