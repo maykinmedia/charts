@@ -80,16 +80,13 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /app/media
-              subPath: {{ .Values.persistence.mediaMountSubpath  | default "openorganisatie/media" }}
+              subPath: {{ .Values.persistence.mediaMountSubpath | default "openorganisatie/media" }}
+            - name: media
+              mountPath: /app/private_media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openorganisatie/private_media" }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openorganisatie.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
-            - name: media
-              mountPath: /app/private_media
-              subPath: {{ .Values.persistence.privateMediaMountSubpath | default "openorganisatie/private_media" }}         
-            {{- if .Values.extraVolumeMounts }}
-            {{- include "openorganisatie.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
-            {{- end }}            
       volumes:
         - name: media
           persistentVolumeClaim:
