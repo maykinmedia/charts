@@ -339,7 +339,7 @@ settings:
       db_pool_reconnect_timeout: 300
       db_pool_num_workers: 3
 
-  # -- Defines the primary domain where the application is hosted, Required value
+  # -- Defines the primary domain where the application is hosted. Required value
   siteDomain: ""
   # -- Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG
   logLevel: "INFO"

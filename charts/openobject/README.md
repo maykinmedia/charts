@@ -249,7 +249,7 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
-| settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted, Required value |
+| settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Required value |
 | settings.useXForwardedHost | bool | `false` |  |
 | settings.uwsgi.harakiri | string | `""` |  |
 | settings.uwsgi.master | string | `""` |  |
