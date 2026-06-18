@@ -115,9 +115,7 @@ data:
   OBJECTS_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
   OBJECTS_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.siteDomain }}
-  SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
-  {{- end }}
+  SITE_DOMAIN: {{ required "settings.siteDomain is required" .Values.settings.siteDomain | toString | quote }}
   OBJECTS_ADMIN_SEARCH_DISABLED: {{ if .Values.settings.adminSearchDisabled }}"True"{{ else }}"False"{{ end }}
   OTEL_SDK_DISABLED: {{ if .Values.settings.otel.disabled }}"True"{{ else }}"False"{{ end }}
   {{- if not .Values.settings.otel.disabled }}
