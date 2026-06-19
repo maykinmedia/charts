@@ -2,7 +2,7 @@
 
 API for managing objects that belong to a specific object type
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
 
 > [!NOTE]
 > This chart is only compatible with **Open Object 4.0.0 and higher**.
@@ -240,7 +240,7 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | settings.isHttps | bool | `true` |  |
 | settings.logLevel | string | `"INFO"` | Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
 | settings.logOutgoingRequests | bool | `false` |  |
-| settings.logRequests | bool | `false` |  |
+| settings.logRequests | bool | `true` |  |
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.notificationsSource | string | `""` |  |
 | settings.otel.disabled | bool | `true` |  |

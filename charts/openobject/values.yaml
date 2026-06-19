@@ -343,7 +343,7 @@ settings:
   siteDomain: ""
   # -- Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG
   logLevel: "INFO"
-  logRequests: false
+  logRequests: true
   logOutgoingRequests: false
 
   email:
