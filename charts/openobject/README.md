@@ -4,6 +4,10 @@ API for managing objects that belong to a specific object type
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
 
+> [!NOTE]
+> This chart is only compatible with **Open Object 4.0.0 and higher**.
+> If you are running an older version, use the [objecten](https://github.com/maykinmedia/charts/tree/main/charts/objecten) chart instead.
+
 ## Introduction
 
 This chart can be used to deploy Open Object on a Kubernetes cluster using the Helm package manager.

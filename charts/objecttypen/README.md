@@ -4,6 +4,15 @@ API om object definities te beheren
 
 ![Version: 1.6.1](https://img.shields.io/badge/Version-1.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.4.0](https://img.shields.io/badge/AppVersion-3.4.0-informational?style=flat-square)
 
+> [!WARNING]
+> ⚠️ **DEPRECATED** ⚠️
+>
+> The `objecttypen` chart is deprecated and is only necessary for Objecten API
+> versions up to and including **3.6.x**.
+>
+> From Open Object `4.0` onward, the objecttypen and objecten API are combined
+> into a single application, for which the `openobject` Helm chart should be used instead.
+
 ## Introduction
 
 This chart can be used to deploy Objecttypes-api on a Kubernetes cluster using the Helm package manager.
