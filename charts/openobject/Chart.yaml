@@ -2,8 +2,8 @@ apiVersion: v2
 description: API for managing objects that belong to a specific object type
 name: openobject
 type: application
-appVersion: 4.0.1
-version: 0.1.0
+appVersion: 4.1.0
+version: 1.0.0
 
 dependencies:
   - name: redis
