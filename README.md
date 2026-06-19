@@ -1,5 +1,6 @@
 # Maykin Media charts
 
+
 This repository contains Helm charts for:
 
 - [openzaak](./charts/openzaak/README.md)
@@ -40,3 +41,9 @@ Then, within a chart directory you can run:
 ```bash 
 helm-docs .
 ```
+## Deprecated Helm charts
+
+> [!WARNING]
+>
+> The `objecten` and `objecttypen` Helm charts are deprecated.
+> For Open Object `4.0` and later, use the `openobject` Helm chart instead.

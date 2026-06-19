@@ -4,6 +4,15 @@
 
 {{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
 
+> [!WARNING]
+> ⚠️ **DEPRECATED** ⚠️
+>
+> The `objecttypen` chart is deprecated and is only necessary for Objecten API
+> versions up to and including **3.6.x**.
+>
+> From Open Object `4.0` onward, the objecttypen and objecten API are combined
+> into a single application, for which the `openobject` Helm chart should be used instead.
+
 ## Introduction 
 
 This chart can be used to deploy Objecttypes-api on a Kubernetes cluster using the Helm package manager.

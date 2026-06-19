@@ -1,5 +1,11 @@
 # Changelog
 
+**⚠️ Deprecated ⚠️**
+
+- With the release of Open Object `4.0`, the new `openobject` Helm chart was
+  introduced and should be used for Open Object `4.0` and later versions.
+  This chart is only supported for Objecten API versions up to and including **3.6.x**.
+
 ## 2.12.0 (2025-02-03)
 
 **Changes**

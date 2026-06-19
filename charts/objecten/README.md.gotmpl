@@ -1,20 +1,35 @@
-# Open Object Chart
+# objecten
 
-{{ template "chart.description" . }}
 
 {{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
 
-> [!NOTE]
-> This chart is only compatible with **Open Object 4.0.0 and higher**.
-> If you are running an older version, use the [objecten](https://github.com/maykinmedia/charts/tree/main/charts/objecten) chart instead.
+{{ template "chart.description" . }}
 
 ## Introduction 
+
+> [!WARNING]
+> ⚠️ **DEPRECATED** ⚠️
+> 
+> With the release of Open Object `4.0`, which combines the `objects-api` and
+> `objecttypes-api` into a single application, a new Helm chart, `openobject`,
+> was introduced. This chart is now the recommended and supported solution for
+> deploying Open Object.
+> 
+> The `objecten` and `objecttypen` charts remain available only for existing
+> deployments running Objecten API `3.6.x` and earlier. They are not compatible
+> with Open Object `4.0` or later versions.
+> 
+> For a complete overview of the changes included in Open Object `4.0`, please
+> refer to the application's CHANGELOG: https://open-object.readthedocs.io/en/latest/changelog.html
+> 
+> The `objecten` chart follows the application's deprecation policy and will
+> remain available for **12 months after the deprecation announcement**. After this period, the chart may be removed.
 
 This chart can be used to deploy Open Object on a Kubernetes cluster using the Helm package manager.
 
 * [Source code](https://github.com/maykinmedia/open-object/)
 * [Documentation](https://open-object.readthedocs.io/)
-* [Docker image](https://hub.docker.com/r/maykinmedia/open-object)
+* [Docker image](https://hub.docker.com/r/maykinmedia/objects-api)
 * [Changelog](https://open-object.readthedocs.io/en/latest/changelog.html)
 
 ## Quickstart
