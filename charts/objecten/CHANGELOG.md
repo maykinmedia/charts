@@ -6,6 +6,12 @@
   introduced and should be used for Open Object `4.0` and later versions.
   This chart is only supported for Objecten API versions up to and including **3.6.x**.
 
+## 2.12.1 (2026-06-22)
+
+**Changes**
+
+- Bumped application version from 3.6.0 to 3.6.1
+
 ## 2.12.0 (2025-02-03)
 
 **Changes**
