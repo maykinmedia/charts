@@ -76,6 +76,27 @@ entries:
     version: 0.1.0
   objecten:
   - apiVersion: v2
+    appVersion: 3.6.1
+    created: "2026-06-22T07:54:27.535959732Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: API om objecten te beheren die behoren bij een bepaald objecttype
+    digest: 55552412c882d240a9005179ec0970347dcad2812af8668db44d6c2e1d1e171a
+    name: objecten
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/objecten-2.12.1/objecten-2.12.1.tgz
+    version: 2.12.1
+  - apiVersion: v2
     appVersion: 3.6.0
     created: "2026-02-12T13:52:04.067204635Z"
     dependencies:
@@ -7540,4 +7561,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-19T15:11:53.037881898Z"
+generated: "2026-06-22T07:54:27.536887754Z"
