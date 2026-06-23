@@ -81,7 +81,7 @@ configuration:
         env: SOME_SENSITIVE_VARIABLE
 ```
 These environment variables should be provided in a secret, whose name must then be referenced
-with the value `existingConfigurationSecret` so that it is added to the environment of the Job pod.
+with the value `existingConfigurationSecrets` so that it is added to the environment of the Job pod.
 
 ### Open Telemetry
 
@@ -120,7 +120,7 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | configuration.superuser.password | string | `""` |  |
 | configuration.superuser.username | string | `""` |  |
 | configurationSecretsName | string | `""` |  |
-| existingConfigurationSecret | string | `nil` |  |
+| existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
 | extraIngress | list | `[]` | Specify extra ingresses, for example if you have multiple ingress classes |
