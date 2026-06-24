@@ -1,6 +1,7 @@
 name: Release Charts
 
-permissions: {}
+permissions:
+  contents: write  # required to create releases and push tag
 
 on:
   push:
