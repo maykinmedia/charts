@@ -2,11 +2,21 @@
 
 API for managing objects that belong to a specific object type
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
 
 > [!NOTE]
 > This chart is only compatible with **Open Object 4.0.0 and higher**.
 > If you are running an older version, use the [objecten](https://github.com/maykinmedia/charts/tree/main/charts/objecten) chart instead.
+
+> [!WARNING]
+> Before deploying and use this Helm chart, ensure that all objecttypes have been migrated successfully.
+>
+> To perform the migration, first upgrade your existing `objecten` chart to
+> the latest version with `objects-api` **3.6.1** and execute the objecttype import
+> command as described in the migration documentation.
+>
+> For detailed migration instructions and additional information, please refer
+> to the [documentation](https://open-object.readthedocs.io/en/latest/changelog.html)
 
 ## Introduction
 

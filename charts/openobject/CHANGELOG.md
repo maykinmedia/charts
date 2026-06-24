@@ -1,12 +1,24 @@
 # Changelog
 
+## 1.1.0 (2026-06-24)
+
+**Changes**
+
+- Fixed the ``existingConfigurationSecret`` value name
+
 ## 1.0.0 (2026-06-19)
 
 **Changes**
 
-- Bumped the application version to 4.1.0.
+- Bumped the application version to **4.1.0**.
+    
+    * ``siteDomain`` value is required now
+
 - [#402] Fixed duplicate volumes entries in Open Object Helm chart configuration
-- [#404] Added missing django-setup-config values
+- [#404] Added missing ``django_setup_configuration`` values.
+
+    * Removed `sites_config` from `django_setup_configuration`.
+    * Removed the `objecttypes-api` service from the `zgw_consumers` `django_setup_configuration`.
 
 **Documentation**
 
