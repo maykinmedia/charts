@@ -6229,6 +6229,27 @@ entries:
   openobject:
   - apiVersion: v2
     appVersion: 4.1.0
+    created: "2026-06-24T10:47:04.073837905Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: API for managing objects that belong to a specific object type
+    digest: ed6444ab6e186f00d10290dfccc48d20f824c7ed59b60b494aae22c5ffedcb38
+    name: openobject
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openobject-1.1.0/openobject-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
+    appVersion: 4.1.0
     created: "2026-06-19T15:11:53.037344773Z"
     dependencies:
     - name: redis
@@ -7561,4 +7582,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-22T07:54:27.536887754Z"
+generated: "2026-06-24T10:47:04.074354127Z"
