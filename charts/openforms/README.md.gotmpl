@@ -121,4 +121,35 @@ The static file serving feature uses the existing media PVC with subPaths to org
 - **Media subPath**: `openforms/media` → `/app/media` (web container)
 - **Static subPath**: `openforms/static` → `/srv/static` (both containers)
 
+
+### Probes
+
+Open Forms 3.5.0 added new functionality to improve the container health checks for the web application, the Celery worker, the Celery beat and the Flower container. Below you can find additional information about the various checks.
+
+**Web application**
+
+There are now the endpoints `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` which are used for the startup, liveness and readiness probe respectively. You can find more information about what these endpoints check [here](https://github.com/open-formulieren/open-forms/blob/b7da980cc7053c10ae6d920ca0479db4ceb193df/docs/installation/health_checks.rst#http-service).
+
+Important to note: these endpoints are not reacheable from outside the cluster, Nginx is configured to return 404 for these endpoints.
+
+**Celery worker**
+
+You can read more about the worker health checks in the `maykin-common` documentation [here](https://maykin-django-common.readthedocs.io/en/latest/health_checks.html#celery-worker-health-checks). Things to note here are:
+
+* For the startup probe, we only check the presence of the readiness file. This is created when the worker is ready to accept work. Then it is no longer updated and it is cleaned up when the worker shuts down.
+* For the liveness probe, we check the presence of the liveness file, which is touched by the internal event loop of the worker every `60 s` (not a configurable value). We check that the file is not older than `70 s`. We also perform a ping to check the connection with the broker.
+
+Also note that for the liveness probe we use a script to be able to determine the Celery queue name, which is needed to build the name of the worker to check. Open Forms uses by default "default queues", but since the queue name can be changed with the `extraEnvVar` value, we support custom queue names.
+
+**Celery Beat**
+
+You can read more about the Beat health checks in the `maykin-common` documentation [here](https://maykin-django-common.readthedocs.io/en/latest/health_checks.html#celery-beat-health-checks).
+
+* For the startup, we check the presence of a liveness file. This is created when a new beat task is published. In Open Forms, there are the activate-form/deactivate-form tasks which should be published every minute. With the startup probe we aim to check that Beat has started and can schedule tasks, so the age of the file is not particularly important.
+* For the liveness probe we also check the liveness file. However, here we check that it is not older than 2 min, to be sure that Beat can still publish new tasks.
+
+The probes for Beat can be enabled by setting `beat.probesEnabled: true`.
+
+
+
 {{ template "chart.valuesSection" . }}
