@@ -3,7 +3,7 @@ description: API for managing objects that belong to a specific object type
 name: openobject
 type: application
 appVersion: 4.1.0
-version: 1.1.0
+version: 1.1.1
 
 dependencies:
   - name: redis

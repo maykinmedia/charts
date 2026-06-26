@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1 (2026-06-26)
+
+**Changes**
+
+- Fixed inconsistent naming of configuration secret
+
 ## 1.1.0 (2026-06-24)
 
 **Changes**
