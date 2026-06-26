@@ -38,7 +38,7 @@ spec:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openobject.fullname" .) }}
             - secretRef:
-                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secret" (include "openobject.fullname" .)) }}{{ end }}                
+                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openobject.fullname" .)) }}{{ end }}                
             - configMapRef:
                 name: {{ include "openobject.fullname" . }}
           env:
