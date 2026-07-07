@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.14.2-rc.1 (2026-07-07)
+
+- Exposed enableServiceLinks. Default value is `false`.
+  This fixes the automatic override of `uwsgi_port`, which in turn fixes the problem with the health checks.
+
 ## 1.14.1 (2026-05-07)
 
 - Bumped the application version to 1.28.1.
