@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.14.2-rc.1 (2026-07-07)
+## 1.14.2 (2026-07-07)
 
 - Bumped the application version to 1.28.3.
 - Exposed enableServiceLinks for the deployment of the pod that runs the uWSGI server. Default value is `false`.
