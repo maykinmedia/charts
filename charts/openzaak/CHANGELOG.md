@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.14.2-rc.1 (2026-07-07)
+
+- Bumped the application version to 1.28.3.
+- Exposed enableServiceLinks for the deployment of the pod that runs the uWSGI server. Default value is `false`.
+  This fixes the automatic override of `OPENZAAK_PORT`, which overrides `uwsgi_port`, which caused the problem with the health checks.
+
 ## 1.14.1 (2026-05-07)
 
 - Bumped the application version to 1.28.1.
