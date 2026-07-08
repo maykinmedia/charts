@@ -493,9 +493,9 @@ worker:
     enabled: false
     exec:
       command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app open_inwoner.celery inspect --destination celery@${HOSTNAME} active
+        - maykin-common
+        - worker-health-check
+        - --skip-ping
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
@@ -524,9 +524,9 @@ lowLatencyWorker:
     enabled: false
     exec:
       command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app open_inwoner.celery inspect --destination celery@${HOSTNAME} active
+        - maykin-common
+        - worker-health-check
+        - --skip ping
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
