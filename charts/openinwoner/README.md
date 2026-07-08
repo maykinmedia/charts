@@ -415,7 +415,9 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.eherkenningMock | string | `""` |  |
 | settings.elasticapm.token | string | `""` |  |
 | settings.elasticapm.url | string | `""` |  |
-| settings.elasticsearch | object | `{"host":"","password":"","username":""}` | Elasticsearch connection settings, only required when tags.elasticsearch is false |
+| settings.elasticsearch | object | `{"dslAutoRefresh":true,"dslAutosync":true,"host":"","password":"","username":""}` | Elasticsearch connection settings, only required when tags.elasticsearch is false |
+| settings.elasticsearch.dslAutoRefresh | bool | `true` | Refresh affected shards after each index operation so changes are immediately visible in search results. |
+| settings.elasticsearch.dslAutosync | bool | `true` | Update the search index on each model save. Set to false when Elasticsearch is not guaranteed to be available, to avoid 500s on admin operations; the index is then only updated by the periodic Celery index rebuild task. |
 | settings.elasticsearch.host | string | `""` | Elasticsearch hostname |
 | settings.elasticsearch.password | string | `""` | Password for basic authentication (optional) |
 | settings.elasticsearch.username | string | `""` | Username for basic authentication (optional) |

@@ -346,6 +346,14 @@ settings:
     username: ""
     # -- Password for basic authentication (optional)
     password: ""
+    # -- Update the search index on each model save. Set to false when
+    # Elasticsearch is not guaranteed to be available, to avoid 500s on admin
+    # operations; the index is then only updated by the periodic Celery
+    # index rebuild task.
+    dslAutosync: true
+    # -- Refresh affected shards after each index operation so changes are
+    # immediately visible in search results.
+    dslAutoRefresh: true
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
