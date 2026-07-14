@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.0 (2026-07-14)
+
+- Bumped the application version from 2.16.0 to 2.17.1, fixing the health-checks issue.
+
 ## 1.12.0 (2026-05-04)
 
 - Bumped the application version from 2.15.0 to 2.16.0
