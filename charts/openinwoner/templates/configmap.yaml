@@ -93,6 +93,7 @@ data:
   {{- if .Values.settings.oidcRenewIdTokenExpirySeconds }}
   OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS: {{ .Values.settings.oidcRenewIdTokenExpirySeconds | toString | quote }}
   {{- end }}
+  OIDC_USE_LEGACY_ENDPOINTS: {{ .Values.settings.oidcUseLegacyEndpoints | toString | quote }}
   {{- if .Values.settings.zgwMaxRequests }}
   ZGW_MAX_REQUESTS: {{ .Values.settings.zgwMaxRequests | toString | quote }}
   {{- end }}

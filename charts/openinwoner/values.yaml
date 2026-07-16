@@ -455,6 +455,13 @@ settings:
   # See chapter 10 of the beheerhandleiding (management manual) for more information.
   oidcRenewIdTokenExpirySeconds: 900
 
+  # -- Whether the DigiD/eHerkenning/eIDAS OIDC clients use their legacy
+  # per-provider callback URLs (true, default) or the shared generic
+  # /oidc/callback/ URL (false). Only disable after the IdP broker's
+  # redirect URI whitelist has been updated accordingly.
+  # See chapter 10 of the beheerhandleiding (management manual) for more information.
+  oidcUseLegacyEndpoints: true
+
   # -- The maximum number of requests allowed for fetching zaken on the Mijn Zaken page.
   # The total number of zaken fetched will be this number multiplied by the page size
   # of the ZGW backend's zaken endpoint.
