@@ -587,6 +587,8 @@ flower:
   resources: {}
 
 beat:
+  # -- Deploy the Celery beat scheduler. Set to false to omit the beat Deployment entirely.
+  enabled: true
   replicaCount: 1
   podLabels: {}
   livenessProbe:

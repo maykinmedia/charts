@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Added `beat.enabled` (default `true`) to gate the Celery beat scheduler Deployment.
+  Set it to `false` to omit the beat Deployment entirely, mirroring `flower.enabled`.
+  Previously the beat Deployment was rendered unconditionally and could only be scaled
+  down via `beat.replicaCount: 0`, which left an idle 0-replica Deployment behind.
+
 ## 1.14.2 (2026-07-07)
 
 - Bumped the application version to 1.28.3.
