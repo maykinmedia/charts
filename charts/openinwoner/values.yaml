@@ -346,6 +346,14 @@ settings:
     username: ""
     # -- Password for basic authentication (optional)
     password: ""
+    # -- Update the search index on each model save. Set to false when
+    # Elasticsearch is not guaranteed to be available, to avoid 500s on admin
+    # operations; the index is then only updated by the periodic Celery
+    # index rebuild task.
+    dslAutosync: true
+    # -- Refresh affected shards after each index operation so changes are
+    # immediately visible in search results.
+    dslAutoRefresh: true
 
   # -- Generate secret key at https://djecrety.ir/
   secretKey: ""
@@ -447,6 +455,13 @@ settings:
   # See chapter 10 of the beheerhandleiding (management manual) for more information.
   oidcRenewIdTokenExpirySeconds: 900
 
+  # -- Whether the DigiD/eHerkenning/eIDAS OIDC clients use their legacy
+  # per-provider callback URLs (true, default) or the shared generic
+  # /oidc/callback/ URL (false). Only disable after the IdP broker's
+  # redirect URI whitelist has been updated accordingly.
+  # See chapter 10 of the beheerhandleiding (management manual) for more information.
+  oidcUseLegacyEndpoints: true
+
   # -- The maximum number of requests allowed for fetching zaken on the Mijn Zaken page.
   # The total number of zaken fetched will be this number multiplied by the page size
   # of the ZGW backend's zaken endpoint.
@@ -493,9 +508,9 @@ worker:
     enabled: false
     exec:
       command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app open_inwoner.celery inspect --destination celery@${HOSTNAME} active
+        - maykin-common
+        - worker-health-check
+        - --skip-ping
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
@@ -524,9 +539,9 @@ lowLatencyWorker:
     enabled: false
     exec:
       command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app open_inwoner.celery inspect --destination celery@${HOSTNAME} active
+        - maykin-common
+        - worker-health-check
+        - --skip ping
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
