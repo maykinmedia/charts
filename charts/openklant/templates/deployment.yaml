@@ -195,7 +195,7 @@ spec:
               command:
               - /bin/sh
               - -c
-              - maykin-common worker-health-check --skip-ping --skip-event-loop-liveness --no-skip-startup --startup-file=/app/tmp/celery_worker.ready
+              - maykin-common worker-health-check --skip-ping --skip-event-loop-liveness --no-skip-readiness --readiness-file=/app/tmp/celery_worker.ready
             initialDelaySeconds: {{ .Values.worker.startupProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.worker.startupProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.worker.startupProbe.timeoutSeconds }}
