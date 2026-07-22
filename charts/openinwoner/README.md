@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 2.3.0-rc.1](https://img.shields.io/badge/Version-2.3.0--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.0](https://img.shields.io/badge/AppVersion-2.4.0-informational?style=flat-square)
+![Version: 2.3.0-rc.2](https://img.shields.io/badge/Version-2.3.0--rc.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.1](https://img.shields.io/badge/AppVersion-2.4.1-informational?style=flat-square)
 
 ## Introduction
 
@@ -310,7 +310,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | lowLatencyWorker.livenessProbe.enabled | bool | `false` |  |
 | lowLatencyWorker.livenessProbe.exec.command[0] | string | `"maykin-common"` |  |
 | lowLatencyWorker.livenessProbe.exec.command[1] | string | `"worker-health-check"` |  |
-| lowLatencyWorker.livenessProbe.exec.command[2] | string | `"--skip ping"` |  |
+| lowLatencyWorker.livenessProbe.exec.command[2] | string | `"--skip-ping"` |  |
 | lowLatencyWorker.livenessProbe.failureThreshold | int | `3` |  |
 | lowLatencyWorker.livenessProbe.initialDelaySeconds | int | `60` |  |
 | lowLatencyWorker.livenessProbe.periodSeconds | int | `50` |  |
