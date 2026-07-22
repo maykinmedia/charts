@@ -541,7 +541,7 @@ lowLatencyWorker:
       command:
         - maykin-common
         - worker-health-check
-        - --skip ping
+        - --skip-ping
     initialDelaySeconds: 60
     # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
