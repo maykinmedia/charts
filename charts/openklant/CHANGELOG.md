@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.1 (2026-07-22)
+
+- Fix worker-health-check bug for startupProbe
+
 ## 1.13.0 (2026-07-14)
 
 - Bumped the application version from 2.16.0 to 2.17.1, fixing the health-checks issue.
