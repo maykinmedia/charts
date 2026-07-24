@@ -485,14 +485,14 @@ worker:
     #   cpu: 250m
     #   memory: 256Mi
   startupProbe: 
-    enabled: false
+    enabled: true
     initialDelaySeconds: 60
     periodSeconds: 50
     timeoutSeconds: 10
     failureThreshold: 3
     successThreshold: 1
   livenessProbe: 
-    enabled: false
+    enabled: true
     initialDelaySeconds: 60
     periodSeconds: 60
     timeoutSeconds: 15

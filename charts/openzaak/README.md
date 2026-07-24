@@ -37,16 +37,14 @@ see the the Open Zaak [documentation](https://open-zaak.readthedocs.io/en/stable
 ### Probes
 
 Open Zaak 1.30.0 added new functionality to improve the container health checks for the web application,
-the Celery worker and the Flower container. Below you can find additional information about the various checks.
+the Celery worker, Flower container and Celery beat container. Below you can find additional information about the various checks.
 
 **Web application**
 
 There are now the endpoints `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` which are used for the startup,
 liveness and readiness probe respectively.
 
-# TODO check openzaak docs
-You can find more information about what these endpoints check [here](https://github.com/open-zaak/open-zaak/tree/main/docs/installation).
-# TODO
+You can find more information about what these endpoints check [here](https://open-zaak.readthedocs.io/en/stable/installation/health_checks.html).
 
 Important to note: these endpoints are not reacheable from outside the cluster, Nginx is configured to return 404 for these endpoints.
 
@@ -359,7 +357,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
-| worker.livenessProbe.enabled | bool | `false` |  |
+| worker.livenessProbe.enabled | bool | `true` |  |
 | worker.livenessProbe.failureThreshold | int | `6` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
 | worker.livenessProbe.periodSeconds | int | `60` |  |
@@ -368,7 +366,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
-| worker.startupProbe.enabled | bool | `false` |  |
+| worker.startupProbe.enabled | bool | `true` |  |
 | worker.startupProbe.failureThreshold | int | `3` |  |
 | worker.startupProbe.initialDelaySeconds | int | `60` |  |
 | worker.startupProbe.periodSeconds | int | `50` |  |

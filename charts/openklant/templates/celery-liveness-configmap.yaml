@@ -26,10 +26,11 @@ data:
       fi
     fi
 
-    CELERY_BROKER={{- if .Values.tags.redis }}{{ printf "%s-master.%s:6379/0" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString }}{{ else }}{{ .Values.settings.celery.brokerUrl | toString }}{{- end }}
-    # Use CELERY_WORKER_NAME to set the --destination flag
+    CELERY_BROKER={{- if .Values.tags.redis }}{{ printf "%s-master.%s:6379/1" (include "common.names.fullname" .Subcharts.redis) .Release.Namespace | toString }}{{ else }}{{ .Values.settings.celery.brokerUrl | toString }}{{- end }}
+
     maykin-common worker-health-check \
-      --broker=CELERY_BROKER \
+      --broker=${CELERY_BROKER} \
+      --worker-name=${WORKER_NAME} \
       --liveness-file=/app/tmp/celery_worker_event_loop.live \
       --max-age=70
 {{- end }}
