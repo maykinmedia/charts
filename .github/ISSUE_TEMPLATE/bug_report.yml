@@ -1,0 +1,48 @@
+name: Probleem melden / Bug report
+description: Meld een probleem om ons te helpen verbeteren / Create a report to help us improve
+title: "Title here"
+type: "Bug"
+labels: ["triage"]
+projects: []
+assignees: []
+body:
+  - type: input
+    id: application-version
+    attributes:
+      label: Applicatieversie / Application version
+      description: Welke applicatieversie gebruikt u? / Which application version do you use?
+      placeholder: "1.1.0"
+    validations:
+      required: true
+  - type: input
+    id: chart-version
+    attributes:
+      label: Chartversie / Chart version
+      description: Welke chartversie gebruikt u? / Which chart version do you use?
+      placeholder: "1.1.0"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Omschrijf het probleem / Describe the bug
+      description: Een duidelijke omschrijving van het probleem (de "bug") / A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Stappen om te reproduceren / Steps to reproduce
+      description: Stappen die leiden tot het probleem / Steps to reproduce the behavior
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: false
+  - type: textarea
+    id: expected-behaviour
+    attributes:
+      label: Verwacht gedrag / Expected behavior
+      description: Een duidelijke omschrijving van wat de verwachting is / A clear and concise description of what you expected to happen.
+    validations:
+      required: false
