@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.0 (2026-08-10)
+- Bumped the app version to `2.4.2`.
+
 ## 2.3.0 (2026-07-21)
 - Bumped the app version to `2.4.0`.
 - Added `OIDC_USE_LEGACY_ENDPOINTS` setting for DigiD/eHerkenning/eIDAS
