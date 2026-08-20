@@ -2,7 +2,7 @@
 
 Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index en Contactgegevens API in een enkele applicatie combineert.
 
-![Version: 1.13.1](https://img.shields.io/badge/Version-1.13.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.17.1](https://img.shields.io/badge/AppVersion-2.17.1-informational?style=flat-square)
+![Version: 1.13.2-rc.1](https://img.shields.io/badge/Version-1.13.2--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.17.1](https://img.shields.io/badge/AppVersion-2.17.1-informational?style=flat-square)
 
 ## Introduction
 
@@ -93,7 +93,6 @@ Also note that for the liveness probe we use a script to be able to determine th
 | configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
 | configuration.job.restartPolicy | string | `"OnFailure"` |  |
-| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
 | configuration.secrets | object | `{}` |  |
 | configurationSecretsName | string | `""` |  |
 | existingConfigurationSecrets | string | `nil` |  |
