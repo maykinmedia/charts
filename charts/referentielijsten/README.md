@@ -2,7 +2,7 @@
 
 De Referentielijsten API is een generieke API voor eenvoudige herbruikebare lijsten
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.0](https://img.shields.io/badge/AppVersion-0.6.0-informational?style=flat-square)
+![Version: 0.2.0-rc.1](https://img.shields.io/badge/Version-0.2.0-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.7.4](https://img.shields.io/badge/AppVersion-0.7.4-informational?style=flat-square)
 
 ## Introduction
 
@@ -105,6 +105,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
 | configurationSecretsName | string | `""` |  |
+| enableServiceLinks | bool | `false` | Prevents K8s from automatically injecting service related environment variables to the pods |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
