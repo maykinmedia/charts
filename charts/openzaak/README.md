@@ -79,6 +79,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| beat.enabled | bool | `true` | Deploy the Celery beat scheduler. Set to false to omit the beat Deployment entirely. |
 | beat.livenessProbe.failureThreshold | int | `6` |  |
 | beat.livenessProbe.initialDelaySeconds | int | `60` |  |
 | beat.livenessProbe.periodSeconds | int | `10` |  |
