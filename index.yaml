@@ -4433,6 +4433,28 @@ entries:
   openklant:
   - apiVersion: v2
     appVersion: 2.17.1
+    created: "2026-08-20T10:03:59.181050005Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index
+      en Contactgegevens API in een enkele applicatie combineert.
+    digest: 6fd6392bc0fe2a656d811401c0f16e139faa9e66e08f17847719c4a6d9d5959b
+    name: openklant
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openklant-1.13.2-rc.1/openklant-1.13.2-rc.1.tgz
+    version: 1.13.2-rc.1
+  - apiVersion: v2
+    appVersion: 2.17.1
     created: "2026-07-23T07:07:09.188784611Z"
     dependencies:
     - name: redis
@@ -7872,4 +7894,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-11T11:04:12.362112334Z"
+generated: "2026-08-20T10:03:59.181995049Z"
