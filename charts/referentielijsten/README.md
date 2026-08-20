@@ -97,11 +97,10 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | azureVaultSecret.vaultName | string | `nil` |  |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
-| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.backoffLimit | int | `0` |  |
 | configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
-| configuration.job.restartPolicy | string | `"OnFailure"` |  |
-| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.job.restartPolicy | string | `"Never"` |  |
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
 | configurationSecretsName | string | `""` |  |

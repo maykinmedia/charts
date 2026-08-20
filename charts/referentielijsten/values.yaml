@@ -15,10 +15,8 @@ configuration:
   job:
     # -- Run the setup configuration command as a job
     enabled: false
-    backoffLimit: 6
-    # -- 0 Will clean the job after it is finished
-    ttlSecondsAfterFinished: 0
-    restartPolicy: OnFailure
+    backoffLimit: 0
+    restartPolicy: Never
     # Note, this field is immutable
     resources: {}
   secrets: {}
