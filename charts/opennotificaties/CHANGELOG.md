@@ -5,6 +5,7 @@
 - Bumped the application version to 1.16.2
 - Exposed `enableServiceLinks` for the deployment of the pod that runs the uWSGI server. Default value is `false`.
   This fixes the automatic override of `OPENNOTIFICATIES_PORT`, which overrides `uwsgi_port`, which caused the problem with the health checks.
+- Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.
 
 ## 2.0.0 (2026-06-19)
 
