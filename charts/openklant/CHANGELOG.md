@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.14.0 (2026-08-20)
+
+- Bumped the application version to 2.18.0
+- Exposed `enableServiceLinks` for the deployment of the pod that runs the uWSGI server. Default value is `false`.
+  This fixes the automatic override of `OPENKLANT_PORT`, which overrides `uwsgi_port`, which caused the problem with the health checks.
+- Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.
+
 ## 1.13.1 (2026-07-22)
 
 - Fix worker-health-check bug for startupProbe

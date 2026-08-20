@@ -14,8 +14,8 @@ configuration:
   job:
     # -- Run the setup configuration command as a job
     enabled: true
-    backoffLimit: 6
-    restartPolicy: OnFailure
+    backoffLimit: 0
+    restartPolicy: Never
     # Note, this field is immutable
     resources: {}
       # limits:
@@ -110,6 +110,9 @@ serviceAccount:
 podAnnotations: {}
 
 podLabels: {}
+
+# -- Prevents K8s from automatically injecting service related environment variables to the pods
+enableServiceLinks: false
 
 podSecurityContext:
   fsGroup: 1000
