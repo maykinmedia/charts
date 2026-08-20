@@ -187,6 +187,9 @@ podAnnotations: {}
 
 podLabels: {}
 
+# -- Prevents K8s from automatically injecting service related environment variables to the pods
+enableServiceLinks: false
+
 podSecurityContext:
   fsGroup: 1000
 
