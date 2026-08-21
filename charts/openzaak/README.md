@@ -2,7 +2,7 @@
 
 Productiewaardige API's voor Zaakgericht Werken
 
-![Version: 1.14.2](https://img.shields.io/badge/Version-1.14.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.28.3](https://img.shields.io/badge/AppVersion-1.28.3-informational?style=flat-square)
+![Version: 1.15.0-rc.1](https://img.shields.io/badge/Version-1.15.0-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.30.0](https://img.shields.io/badge/AppVersion-1.30.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -137,10 +137,10 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | beat.startupProbe.timeoutSeconds | int | `15` |  |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
-| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.backoffLimit | int | `0` |  |
 | configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
-| configuration.job.restartPolicy | string | `"OnFailure"` |  |
+| configuration.job.restartPolicy | string | `"Never"` |  |
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
 | configuration.superuser.email | string | `""` |  |

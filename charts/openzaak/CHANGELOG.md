@@ -4,6 +4,7 @@
 
 - Bumped the application version to 1.30.0.
 - Added container health checks using `maykin-common`, including liveness and readiness probes to monitor application health and ensure that unhealthy containers are detected and restarted when necessary.
+- Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.
 
 ## 1.14.2 (2026-07-07)
 
