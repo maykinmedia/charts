@@ -250,8 +250,12 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | settings.isHttps | bool | `true` |  |
 | settings.jsonschemaUseFormatChecker | bool | `true` | Whether or not JSON Schema format validation for objects is enabled by default. Defaults to: True. |
 | settings.logLevel | string | `"INFO"` | Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
-| settings.logOutgoingRequests | bool | `false` |  |
-| settings.logRequests | bool | `true` |  |
+| settings.logOutgoingRequests | bool | `false` | Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database. Defaults to: False. |
+| settings.logOutgoingRequestsDBSave | bool | `false` | Whether or not outgoing request logs should always be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsDBSaveBody | bool | `false` | Whether or not outgoing request bodies should be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsMaxAge | int | `7` | The number of days after which request logs should be deleted from the database. Defaults to: 7. |
+| settings.logOutgoingRequestsResetDBSaveAfter | int | `60` | After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60. |
+| settings.logRequests | bool | `true` | Enable structured logging of requests. Defaults to: True. |
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.notificationsSource | string | `""` |  |
 | settings.otel.disabled | bool | `true` |  |

@@ -30,6 +30,14 @@ data:
   {{- end }}
   LOG_REQUESTS: {{ if .Values.settings.logRequests }}"True"{{ else }}"False"{{ end }}
   LOG_OUTGOING_REQUESTS: {{ if .Values.settings.logOutgoingRequests }}"True"{{ else }}"False"{{ end }}
+  LOG_OUTGOING_REQUESTS_DB_SAVE: {{ if .Values.settings.logOutgoingRequestsDBSave }}"True"{{ else }}"False"{{ end }}
+  LOG_OUTGOING_REQUESTS_DB_SAVE_BODY: {{ if .Values.settings.logOutgoingRequestsDBSaveBody }}"True"{{ else }}"False"{{ end }}
+  {{- if ne .Values.settings.logOutgoingRequestsResetDBSaveAfter nil }}
+  LOG_OUTGOING_REQUESTS_RESET_DB_SAVE_AFTER: {{ int .Values.settings.logOutgoingRequestsResetDBSaveAfter | quote }}
+  {{- end }}
+  {{- if ne .Values.settings.logOutgoingRequestsMaxAge nil }}
+  LOG_OUTGOING_REQUESTS_MAX_AGE: {{ int .Values.settings.logOutgoingRequestsMaxAge | quote }}
+  {{- end }}
   {{ if .Values.worker.maxWorkerLivenessDelta }}
   MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
   {{- end }}
