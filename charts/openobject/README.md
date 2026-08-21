@@ -2,7 +2,7 @@
 
 API for managing objects that belong to a specific object type
 
-![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
+![Version: 1.2.0-rc.1](https://img.shields.io/badge/Version-1.2.0-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.2.1](https://img.shields.io/badge/AppVersion-4.2.1-informational?style=flat-square)
 
 > [!NOTE]
 > This chart is only compatible with **Open Object 4.0.0 and higher**.
@@ -119,17 +119,17 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | azureVaultSecret.vaultName | string | `nil` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
-| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.backoffLimit | int | `0` |  |
 | configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
-| configuration.job.restartPolicy | string | `"OnFailure"` |  |
-| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.job.restartPolicy | string | `"Never"` |  |
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
 | configuration.superuser.email | string | `""` |  |
 | configuration.superuser.password | string | `""` |  |
 | configuration.superuser.username | string | `""` |  |
 | configurationSecretsName | string | `""` |  |
+| enableServiceLinks | bool | `false` | Prevents K8s from automatically injecting service related environment variables to the pods |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
@@ -248,9 +248,16 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | settings.enableCloudEvents | bool | `false` | Cloudevents |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
+| settings.jsonschemaUseFormatChecker | bool | `true` | Whether or not JSON Schema format validation for objects is enabled by default. Defaults to: True. |
 | settings.logLevel | string | `"INFO"` | Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
-| settings.logOutgoingRequests | bool | `false` |  |
-| settings.logRequests | bool | `true` |  |
+| settings.logNotificationsInDb | bool | `true` | Indicates whether or not failed notifications/cloud events should be saved to the database |
+| settings.logOutgoingRequests | bool | `true` | Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database. Defaults to: False. |
+| settings.logOutgoingRequestsDBSave | bool | `false` | Whether or not outgoing request logs should always be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsDBSaveBody | bool | `false` | Whether or not outgoing request bodies should be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsMaxAge | int | `7` | The number of days after which request logs should be deleted from the database. Defaults to: 7. |
+| settings.logOutgoingRequestsResetDBSaveAfter | int | `60` | After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60. |
+| settings.logRequests | bool | `true` | Enable structured logging of requests. Defaults to: True. |
+| settings.notificationNumberOfDaysRetained | int | `60` | The number of days for which you wish to keep failed notifications/cloud events in the database |
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.notificationsSource | string | `""` |  |
 | settings.otel.disabled | bool | `true` |  |
