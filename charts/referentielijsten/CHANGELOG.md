@@ -13,6 +13,16 @@
   - Update `LOG_OUTGOING_REQUESTS_DB_SAVE_BODY` default value to `True` instead of `False`.
   - Add `LOG_OUTGOING_REQUESTS_RESET_DB_SAVE_AFTER` 
 
+- Add application settings for otel configuration
+
+  - `OTEL_SDK_DISABLED`
+  - `OTEL_RESOURCE_ATTRIBUTES`
+  - `OTEL_EXPORTER_OTLP_ENDPOINT`
+  - `OTEL_EXPORTER_OTLP_METRICS_INSECURE`
+  - `OTEL_EXPORTER_OTLP_PROTOCOL`
+  - `OTEL_METRIC_EXPORT_INTERVAL`
+  - `OTEL_METRIC_EXPORT_TIMEOUT`
+
 ## 0.1.1 (2026-02-09)
 
 - Update the Readme.

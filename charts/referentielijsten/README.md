@@ -80,6 +80,15 @@ settings:
 
 The value of the `DSN` is considered sensitive, so it should be handled as a secret.
 
+### Open Telemetry
+
+Referentielijsten supports the Open Telemetry Protocol.
+
+We recommend deploying one or more Open Telemetry Collector instances in your cluster to receive
+telemetry. Alternatively, you can use any vendor that speaks the OTLP protocol.
+
+The environment variables that the Open Telemetry SDK supports can be found [here](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#general-sdk-configuration).
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -228,6 +237,14 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.logging.queries | bool | `false` | Enable (query) logging at the database backend level. Note that you must also set DEBUG=1, which should be done very sparingly! |
 | settings.logging.requests | bool | `true` | Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database. |
 | settings.logging.stdout | bool | `true` | Whether to log to stdout or not |
+| settings.otel.disabled | bool | `true` |  |
+| settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
+| settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials.  |
+| settings.otel.exporterOtlpMetricsInsecure | bool | `false` | Is true if the endoint is not protected with TLS. |
+| settings.otel.exporterOtlpProtocol | string | `"grpc"` | Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf. |
+| settings.otel.metricExportInterval | int | `60000` | Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application.  |
+| settings.otel.metricExportTimeout | int | `10000` | Controls the timeout of the requests to the collector (in milliseconds) |
+| settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |
