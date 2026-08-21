@@ -174,20 +174,20 @@ startupProbe:
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 30
-  successThreshold: 1   
+  successThreshold: 1  
 
 livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 10
   timeoutSeconds: 5
-  failureThreshold: 6
+  failureThreshold: 10
   successThreshold: 1
 
 readinessProbe:
   initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
-  failureThreshold: 6
+  failureThreshold: 5
   successThreshold: 1
 
 service:
@@ -483,20 +483,20 @@ worker:
   resources: {}
     # requests:
     #   cpu: 250m
-    #   memory: 512Mi
-  maxWorkerLivenessDelta: ""
-  livenessProbe:
-    enabled: false
-    exec:
-      command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app openzaak.celery inspect --destination celery@${HOSTNAME} active
+    #   memory: 256Mi
+  startupProbe: 
+    enabled: true
     initialDelaySeconds: 60
-    # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
     timeoutSeconds: 10
     failureThreshold: 3
+    successThreshold: 1
+  livenessProbe: 
+    enabled: true
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 6
     successThreshold: 1
   autoscaling:
     enabled: false
@@ -569,37 +569,40 @@ nginx:
     clientMaxBodySize: "4G"   
 
 flower:
-  enabled: false
+  enabled: true
   replicaCount: 1
   podLabels: {}
   livenessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 6
+    failureThreshold: 10
     successThreshold: 1
   readinessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 6
+    failureThreshold: 5
     successThreshold: 1
   resources: {}
 
 beat:
   replicaCount: 1
   podLabels: {}
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
+  probesEnabled: false
+  startupProbe: 
+    # -- The liveness file will be present only once Open-Forms has scheduled a task. 
+    # The most frequent task is scheduled every minute. We give time to the pod to start.
+    initialDelaySeconds: 60 
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
     successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
+  livenessProbe: 
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
     successThreshold: 1
   resources: {}
     # requests:
