@@ -114,3 +114,5 @@ data:
   {{- end }}
   LOAD_UPL: {{ if .Values.settings.loadUpl }}"True"{{ else }}"False"{{ end }}
   RUN_SETUP_CONFIG: {{ if .Values.settings.runSetupConfig }}"True"{{ else }}"False"{{ end }}
+  JSONSCHEMA_USE_FORMAT_CHECKER: {{ if .Values.settings.jsonschemaUseFormatChecker }}"True"{{ else }}"False"{{ end }}
+
