@@ -4476,6 +4476,28 @@ entries:
     - https://github.com/maykinmedia/charts/releases/download/openklant-1.14.0-rc.1/openklant-1.14.0-rc.1.tgz
     version: 1.14.0-rc.1
   - apiVersion: v2
+    appVersion: 2.18.0
+    created: "2026-08-21T14:31:27.497981905Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index
+      en Contactgegevens API in een enkele applicatie combineert.
+    digest: 6dfc1ecaddecfe2f8c6a64b33de9db4d2eb350800e9f9db0c416dea16a053850
+    name: openklant
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openklant-1.14.0-rc.1/openklant-1.14.0-rc.1.tgz
+    version: 1.14.0-rc.1
+  - apiVersion: v2
     appVersion: 2.17.1
     created: "2026-08-20T10:03:59.181050005Z"
     dependencies:
@@ -6916,6 +6938,27 @@ entries:
     version: 0.1.0
   openzaak:
   - apiVersion: v2
+    appVersion: 1.30.0
+    created: "2026-08-21T14:31:27.649672246Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: 0cd1b0c2c8564652a8b95a47f0fa2c07390a1727c1fc548213fc47b69ddefd5b
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.15.0-rc.1/openzaak-1.15.0-rc.1.tgz
+    version: 1.15.0-rc.1
+  - apiVersion: v2
     appVersion: 1.28.3
     created: "2026-07-07T14:11:27.192839667Z"
     dependencies:
@@ -7980,4 +8023,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-21T14:20:27.676491638Z"
+generated: "2026-08-21T14:31:27.650855128Z"
