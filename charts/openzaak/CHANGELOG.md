@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.15.0 (2026-08-21)
+
+- Bumped the application version to 1.30.0.
+- Added container health checks using `maykin-common`, including liveness and readiness probes to monitor application health and ensure that unhealthy containers are detected and restarted when necessary.
+
 ## 1.14.2 (2026-07-07)
 
 - Bumped the application version to 1.28.3.
