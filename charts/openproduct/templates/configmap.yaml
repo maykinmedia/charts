@@ -23,6 +23,22 @@ data:
   CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackend | toString | quote }}
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
+  {{- if .Values.settings.logLevel }}
+  LOG_LEVEL: {{ .Values.settings.logLevel | toString | quote }}
+  {{- end }}
+  LOG_REQUESTS: {{ if .Values.settings.logRequests }}"True"{{ else }}"False"{{ end }}
+  LOG_OUTGOING_REQUESTS_DB_SAVE: {{ if .Values.settings.logOutgoingRequestsDBSave }}"True"{{ else }}"False"{{ end }}
+  LOG_OUTGOING_REQUESTS_DB_SAVE_BODY: {{ if .Values.settings.logOutgoingRequestsDBSaveBody }}"True"{{ else }}"False"{{ end }}
+  {{- if ne .Values.settings.logOutgoingRequestsResetDBSaveAfter nil }}
+  LOG_OUTGOING_REQUESTS_RESET_DB_SAVE_AFTER: {{ int .Values.settings.logOutgoingRequestsResetDBSaveAfter | quote }}
+  {{- end }}
+  {{- if ne .Values.settings.logOutgoingRequestsMaxAge nil }}
+  LOG_OUTGOING_REQUESTS_MAX_AGE: {{ int .Values.settings.logOutgoingRequestsMaxAge | quote }}
+  {{- end }}
+  LOG_NOTIFICATIONS_IN_DB: {{ if .Values.settings.logNotificationsInDb }}"True"{{ else }}"False"{{ end }}
+  {{- if ne .Values.settings.logOutgoingRequestsMaxAge nil }}
+  NOTIFICATION_NUMBER_OF_DAYS_RETAINED: {{ int .Values.settings.notificationNumberOfDaysRetained | quote }}
+  {{- end }}
   DB_NAME: {{ .Values.settings.database.name | toString | quote }}
   DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
   DB_USER: {{ .Values.settings.database.username | toString | quote }}
