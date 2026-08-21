@@ -220,6 +220,11 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | settings.isHttps | bool | `true` |  |
 | settings.logLevel | string | `"INFO"` | Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
 | settings.logNotifications | bool | `true` | When set to true notifications are saved to the database and accessible from the admin interface |
+| settings.logOutgoingRequestsDBSave | bool | `false` | Whether or not outgoing request logs should always be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsDBSaveBody | bool | `false` | Whether or not outgoing request bodies should be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsMaxAge | int | `7` | The number of days after which request logs should be deleted from the database. Defaults to: 7. |
+| settings.logOutgoingRequestsResetDBSaveAfter | int | `60` | After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60. |
+| settings.logRequests | bool | `true` | Enable structured logging of requests. Defaults to: True. |
 | settings.maxRetries | string | `""` | The maximum number of automatic retries. After this amount of retries, Open Notificaties stops trying to deliver the message. Application default is 5. |
 | settings.notificationLimit | int | `500` | The maximum of scheduled notifications to be handled during ``execute_notifications``. |
 | settings.notificationSecInterval | int | `20` | The amount of seconds between starting the ``execute_notifications`` task that creates the actual notification request tasks (minimum 5 seconds). |
