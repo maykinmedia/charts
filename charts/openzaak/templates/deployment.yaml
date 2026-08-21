@@ -269,7 +269,7 @@ spec:
           livenessProbe:
             exec: 
               command:
-              - /app/liveness/liveness-probe.sh
+              - /celery_worker_liveness_probe.sh
             initialDelaySeconds: {{ .Values.worker.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.worker.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.worker.livenessProbe.timeoutSeconds }}
@@ -287,11 +287,6 @@ spec:
             - name: media
               mountPath: /app/media
               subPath: {{ .Values.persistence.mediaMountSubpath | default "openzaak/media" }}
-            {{- if .Values.worker.livenessProbe.enabled }}
-            - name: liveness
-              mountPath: /app/liveness/
-              readOnly: true
-            {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "openzaak.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
