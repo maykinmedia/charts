@@ -312,6 +312,12 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | settings.flower.urlPrefix | string | `""` |  |
 | settings.isHttps | bool | `true` |  |
 | settings.jwtExpiry | int | `3600` |  |
+| settings.logLevel | string | `"INFO"` |  |
+| settings.logOutgoingRequestsDBSave | bool | `false` | Whether or not outgoing request logs should always be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsDBSaveBody | bool | `false` | Whether or not outgoing request bodies should be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsMaxAge | int | `7` | The number of days after which request logs should be deleted from the database. Defaults to: 7. |
+| settings.logOutgoingRequestsResetDBSaveAfter | int | `60` | After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60. |
+| settings.logRequests | bool | `true` | Enable structured logging of requests. Defaults to: True. |
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.notificationsSource | string | `"openzaak"` |  |
 | settings.numProxies | int | `1` | use 2 if enabling ingress |
