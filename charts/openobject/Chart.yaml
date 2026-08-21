@@ -2,7 +2,7 @@ apiVersion: v2
 description: API for managing objects that belong to a specific object type
 name: openobject
 type: application
-appVersion: 4.2.0
+appVersion: 4.2.1
 version: 1.2.0-rc.1
 
 dependencies:

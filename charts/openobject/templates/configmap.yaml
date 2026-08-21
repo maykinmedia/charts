@@ -119,6 +119,10 @@ data:
   {{- if .Values.settings.notificationsDisabled }}
   NOTIFICATIONS_DISABLED: "True"
   {{- end }}
+  LOG_NOTIFICATIONS_IN_DB: {{ if .Values.settings.logNotificationsInDb }}"True"{{ else }}"False"{{ end }}
+  {{- if ne .Values.settings.logOutgoingRequestsMaxAge nil }}
+  NOTIFICATION_NUMBER_OF_DAYS_RETAINED: {{ int .Values.settings.notificationNumberOfDaysRetained | quote }}
+  {{- end }}
   {{ if .Values.configuration.superuser.username }}
   OBJECTS_SUPERUSER_USERNAME: {{ .Values.configuration.superuser.username | toString | quote }}
   OBJECTS_SUPERUSER_EMAIL: {{ .Values.configuration.superuser.email | toString | quote }}
