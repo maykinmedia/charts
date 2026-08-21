@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.15.0 (2026-08-21)
+
+- Bumped the application version to 1.30.0.
+- Added container health checks using `maykin-common`, including liveness and readiness probes to monitor application health and ensure that unhealthy containers are detected and restarted when necessary.
+- Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.
+- Add application settings for outgoing request logging configuration
+
+  - `LOG_LEVEL`
+  - `LOG_REQUESTS`
+  - `LOG_OUTGOING_REQUESTS_DB_SAVE`
+  - `LOG_OUTGOING_REQUESTS_DB_SAVE_BODY`
+  - `LOG_OUTGOING_REQUESTS_RESET_DB_SAVE_AFTER`
+  - `LOG_OUTGOING_REQUESTS_MAX_AGE`
+
 ## 1.14.2 (2026-07-07)
 
 - Bumped the application version to 1.28.3.
