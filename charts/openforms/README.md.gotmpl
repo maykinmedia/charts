@@ -121,4 +121,27 @@ The static file serving feature uses the existing media PVC with subPaths to org
 - **Media subPath**: `openforms/media` → `/app/media` (web container)
 - **Static subPath**: `openforms/static` → `/srv/static` (both containers)
 
+### Gateway API (HTTPRoute)
+
+This chart can render an [HTTPRoute](https://gateway-api.sigs.k8s.io/reference/api-types/httproute/) so Open Forms can attach to a shared cluster Gateway. Classic `Ingress` is unchanged and stays available.
+
+Gateway API is the [recommended Kubernetes direction](https://gateway-api.sigs.k8s.io/) for HTTP routing.
+
+The chart does **not** install Gateway API CRDs, a Gateway controller, or a `Gateway` object. Those are platform responsibilities.
+
+To enable, set `parentRefs` to the **shared Gateway already running on the cluster** (name and namespace come from the platform team, not from this chart):
+
+```yaml
+httpRoute:
+  enabled: true
+  parentRefs:
+    - name: your-gateway-name            # Gateway object name
+      namespace: your-gateway-namespace  # namespace of that Gateway (usually not the Open Forms namespace)
+      # sectionName: https               # optional: bind to a named listener
+  hostnames:
+    - openformulieren.gemeente.nl
+```
+
+`parentRefs` is required when `httpRoute.enabled` is `true`. The backend is the chart nginx Service (same as Ingress). The HTTPRoute is controller-agnostic (Envoy Gateway, Cilium, NGINX Gateway Fabric, Istio, cloud Gateway, …).
+
 {{ template "chart.valuesSection" . }}

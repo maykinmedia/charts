@@ -264,6 +264,37 @@ extraIngress: []
 #        hosts:
 #          - "openformulieren.gemeente.nl"
 
+# Gateway API HTTPRoute (opt-in).
+# Requires Gateway API CRDs and a programmed Gateway on the cluster.
+# This chart does not install CRDs, a Gateway controller, or a Gateway object.
+# ref: https://gateway-api.sigs.k8s.io/reference/api-types/httproute/
+httpRoute:
+  # -- Enable HTTPRoute generation. Ingress stays independent (both can be enabled).
+  enabled: false
+  # -- Additional annotations for the HTTPRoute resource
+  annotations: {}
+  # -- Additional labels for the HTTPRoute resource
+  labels: {}
+  # -- Gateways this HTTPRoute attaches to. Required when enabled. Cross-namespace attachment needs `namespace` plus a Gateway that allows routes from this namespace (`allowedRoutes`). Optional `sectionName` binds to a named listener (for example `https`).
+  parentRefs: []
+  #  - name: your-gateway-name            # Gateway object name (from the platform)
+  #    namespace: your-gateway-namespace  # namespace of that Gateway
+  #    # sectionName: https
+  # -- Hostnames to match on the HTTP Host header. Empty matches all hostnames allowed by the Gateway listener.
+  hostnames: []
+  #  - openformulieren.gemeente.nl
+  # -- Path / header matches for the default rule. If empty, Gateway API defaults to PathPrefix `/`.
+  matches:
+    - path:
+        type: PathPrefix
+        value: /
+  # -- HTTPRoute filters (RequestHeaderModifier, URLRewrite, RequestRedirect, …)
+  filters: []
+  # -- Timeouts for the default rule (Gateway API >= 1.2). Example: request: 10s
+  timeouts: {}
+  # -- Extra HTTPRoute rules appended after the default nginx backend rule
+  extraRules: []
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.13.0 (2026-08-17)
+
+- Add optional Gateway API `HTTPRoute` support (`httpRoute.enabled`, default `false`).
+  Ingress is unchanged and remains available. The chart does not install Gateway API
+  CRDs, a Gateway controller, or a `Gateway` object — set `httpRoute.parentRefs` and
+  `httpRoute.hostnames` to attach to the platform Gateway.
+
 ## 1.12.0 (2026-02-09)
 
 - Remove the config map with the clean-logs script. Since version `2.7.0` of the Open Forms app, it is not needed to prune the emails, while from `3.3.0`, Open Forms uses version `5.0.0` of `django-timeline-logger`, which includes a management command to prune the logs. The cronjob now uses this command instead of the script.
