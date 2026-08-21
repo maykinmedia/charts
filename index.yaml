@@ -7974,6 +7974,31 @@ entries:
     version: 0.1.0
   referentielijsten:
   - apiVersion: v2
+    appVersion: 0.7.4
+    created: "2026-08-21T14:32:58.629061634Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    - name: maykin-utils-lib
+      repository: https://maykinmedia.github.io/charts/
+      version: 0.2.1
+    description: De Referentielijsten API is een generieke API voor eenvoudige herbruikebare
+      lijsten
+    digest: f7a1c177d417e464bc4a6b4d98df83cd6ea8196d3c97592160e7f8ed95840051
+    name: referentielijsten
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.2.0-rc.1/referentielijsten-0.2.0-rc.1.tgz
+    version: 0.2.0-rc.1
+  - apiVersion: v2
     appVersion: 0.6.0
     created: "2026-02-12T08:16:05.867351195Z"
     dependencies:
@@ -8023,4 +8048,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-21T14:31:27.650855128Z"
+generated: "2026-08-21T14:32:58.630313783Z"
