@@ -2,7 +2,7 @@
 
 De Referentielijsten API is een generieke API voor eenvoudige herbruikebare lijsten
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.0](https://img.shields.io/badge/AppVersion-0.6.0-informational?style=flat-square)
+![Version: 0.2.0-rc.1](https://img.shields.io/badge/Version-0.2.0-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.7.4](https://img.shields.io/badge/AppVersion-0.7.4-informational?style=flat-square)
 
 ## Introduction
 
@@ -80,6 +80,15 @@ settings:
 
 The value of the `DSN` is considered sensitive, so it should be handled as a secret.
 
+### Open Telemetry
+
+Referentielijsten supports the Open Telemetry Protocol.
+
+We recommend deploying one or more Open Telemetry Collector instances in your cluster to receive
+telemetry. Alternatively, you can use any vendor that speaks the OTLP protocol.
+
+The environment variables that the Open Telemetry SDK supports can be found [here](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#general-sdk-configuration).
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -97,14 +106,14 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | azureVaultSecret.vaultName | string | `nil` |  |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
-| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.backoffLimit | int | `0` |  |
 | configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
-| configuration.job.restartPolicy | string | `"OnFailure"` |  |
-| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.job.restartPolicy | string | `"Never"` |  |
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
 | configurationSecretsName | string | `""` |  |
+| enableServiceLinks | bool | `false` | Prevents K8s from automatically injecting service related environment variables to the pods |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
@@ -216,17 +225,26 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
-| settings.logging | object | `{"enableStructlogRequests":true,"formatConsole":"json","level":"INFO","outgoingRequests":{"dbSave":false,"dbSaveBody":true,"emitBody":true,"maxAge":7},"queries":false,"requests":false,"stdout":true}` | Logging configuration |
+| settings.logging | object | `{"enableStructlogRequests":true,"formatConsole":"json","level":"INFO","outgoingRequests":{"dbSave":false,"dbSaveBody":false,"emitBody":true,"maxAge":7,"resetDBSaveAfter":60},"queries":false,"requests":true,"stdout":true}` | Logging configuration |
 | settings.logging.enableStructlogRequests | bool | `true` | Enable structured logging of requests |
 | settings.logging.formatConsole | string | `"json"` | The format for the console logging handler, possible options: json, plain_console |
 | settings.logging.level | string | `"INFO"` | Control the verbosity of logging output. Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
 | settings.logging.outgoingRequests.dbSave | bool | `false` | Whether to save outgoing request logs to database |
-| settings.logging.outgoingRequests.dbSaveBody | bool | `true` | Whether to save request bodies to database |
+| settings.logging.outgoingRequests.dbSaveBody | bool | `false` | Whether to save request bodies to database |
 | settings.logging.outgoingRequests.emitBody | bool | `true` | Whether to emit request bodies in logs |
 | settings.logging.outgoingRequests.maxAge | int | `7` | Maximum age of request logs in database (days) |
+| settings.logging.outgoingRequests.resetDBSaveAfter | int | `60` | After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60. |
 | settings.logging.queries | bool | `false` | Enable (query) logging at the database backend level. Note that you must also set DEBUG=1, which should be done very sparingly! |
-| settings.logging.requests | bool | `false` | Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database. |
+| settings.logging.requests | bool | `true` | Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database. |
 | settings.logging.stdout | bool | `true` | Whether to log to stdout or not |
+| settings.otel.disabled | bool | `true` |  |
+| settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
+| settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials.  |
+| settings.otel.exporterOtlpMetricsInsecure | bool | `false` | Is true if the endoint is not protected with TLS. |
+| settings.otel.exporterOtlpProtocol | string | `"grpc"` | Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf. |
+| settings.otel.metricExportInterval | int | `60000` | Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application.  |
+| settings.otel.metricExportTimeout | int | `10000` | Controls the timeout of the requests to the collector (in milliseconds) |
+| settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
 | settings.siteDomain | string | `""` | Defines the primary domain where the application is hosted. Defaults to "" |

@@ -118,6 +118,9 @@ data:
   {{- if .Values.settings.logging.outgoingRequests.dbSaveBody }}
   LOG_OUTGOING_REQUESTS_DB_SAVE_BODY: {{ .Values.settings.logging.outgoingRequests.dbSaveBody | toString | title | quote }}
   {{- end }}
+  {{- if .Values.settings.logging.outgoingRequests.resetDBSaveAfter }}
+  LOG_OUTGOING_REQUESTS_RESET_DB_SAVE_AFTER: {{ .Values.settings.logging.outgoingRequests.resetDBSaveAfter | toString | quote }}
+  {{- end }}
   {{- if .Values.settings.logging.outgoingRequests.maxAge }}
   LOG_OUTGOING_REQUESTS_MAX_AGE: {{ .Values.settings.logging.outgoingRequests.maxAge | toString | quote }}
   {{- end }}
@@ -153,4 +156,13 @@ data:
   {{- end }}
   {{- if .Values.settings.csp.reportPercentage }}
   CSP_REPORT_PERCENTAGE: {{ .Values.settings.csp.reportPercentage | toString | quote }}
+  {{- end }}
+  OTEL_SDK_DISABLED: {{ if .Values.settings.otel.disabled }}"True"{{ else }}"False"{{ end }}
+  {{- if not .Values.settings.otel.disabled }}
+  OTEL_RESOURCE_ATTRIBUTES: "{{ range $index, $item := .Values.settings.otel.resourceAttributes }}{{ if $index }},{{ end }}{{ .key }}={{ .value }}{{ end }}"
+  OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.settings.otel.exporterOtlpEndpoint | toString | quote }}
+  OTEL_EXPORTER_OTLP_METRICS_INSECURE: {{ if .Values.settings.otel.exporterOtlpMetricsInsecure }}"True"{{ else }}"False"{{ end }}
+  OTEL_EXPORTER_OTLP_PROTOCOL: {{ .Values.settings.otel.exporterOtlpProtocol | toString | quote }}
+  OTEL_METRIC_EXPORT_INTERVAL: {{ .Values.settings.otel.metricExportInterval | toString | quote }}
+  OTEL_METRIC_EXPORT_TIMEOUT: {{ .Values.settings.otel.metricExportTimeout | toString | quote }}
   {{- end }}
