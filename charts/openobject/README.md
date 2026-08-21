@@ -2,7 +2,7 @@
 
 API for managing objects that belong to a specific object type
 
-![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
+![Version: 1.2.0-rc.1](https://img.shields.io/badge/Version-1.2.0-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.2.0](https://img.shields.io/badge/AppVersion-4.2.0-informational?style=flat-square)
 
 > [!NOTE]
 > This chart is only compatible with **Open Object 4.0.0 and higher**.
@@ -130,6 +130,7 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | configuration.superuser.password | string | `""` |  |
 | configuration.superuser.username | string | `""` |  |
 | configurationSecretsName | string | `""` |  |
+| enableServiceLinks | bool | `false` | Prevents K8s from automatically injecting service related environment variables to the pods |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
@@ -248,6 +249,7 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | settings.enableCloudEvents | bool | `false` | Cloudevents |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
+| settings.jsonschemaUseFormatChecker | bool | `true` | Whether or not JSON Schema format validation for objects is enabled by default. Defaults to: True. |
 | settings.logLevel | string | `"INFO"` | Default value "INFO" ; Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
 | settings.logOutgoingRequests | bool | `false` |  |
 | settings.logRequests | bool | `true` |  |

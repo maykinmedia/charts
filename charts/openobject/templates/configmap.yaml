@@ -130,4 +130,5 @@ data:
   {{- if .Values.settings.notificationsSource }}
   NOTIFICATIONS_SOURCE: {{ .Values.settings.notificationsSource | toString | quote }}
   {{- end }}
+  JSONSCHEMA_USE_FORMAT_CHECKER: {{ if .Values.settings.jsonschemaUseFormatChecker }}"True"{{ else }}"False"{{ end }}
 

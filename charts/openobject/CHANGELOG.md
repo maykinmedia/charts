@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0 (2026-08-20)
+
+- Bumped the application version to 4.2.0
+- Exposed `enableServiceLinks` for the deployment of the pod that runs the uWSGI server. Default value is `false`.
+  This fixes the automatic override of `OPENOBJECT_PORT`, which overrides `uwsgi_port`, which caused the problem with the health checks.
+- Add the `jsonschemaUseFormatChecker` setting to control JSON Schema format validation. The default value is `true`.
+
+
 ## 1.1.1 (2026-06-26)
 
 **Changes**

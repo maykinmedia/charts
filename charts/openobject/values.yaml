@@ -138,6 +138,9 @@ podAnnotations: {}
 
 podLabels: {}
 
+# -- Prevents K8s from automatically injecting service related environment variables to the pods
+enableServiceLinks: false
+
 podSecurityContext:
   fsGroup: 1000
 
@@ -345,6 +348,9 @@ settings:
   logLevel: "INFO"
   logRequests: true
   logOutgoingRequests: false
+
+  # -- Whether or not JSON Schema format validation for objects is enabled by default. Defaults to: True.
+  jsonschemaUseFormatChecker: true
 
   email:
     host: localhost
