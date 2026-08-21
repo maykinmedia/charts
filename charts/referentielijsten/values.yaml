@@ -319,7 +319,7 @@ settings:
     # -- Enable (query) logging at the database backend level. Note that you must also set DEBUG=1, which should be done very sparingly!
     queries: false
     # -- Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database.
-    requests: false
+    requests: True
     # -- The format for the console logging handler, possible options: json, plain_console
     formatConsole: "json"
     # -- Enable structured logging of requests
@@ -330,7 +330,9 @@ settings:
       # -- Whether to save outgoing request logs to database
       dbSave: false
       # -- Whether to save request bodies to database
-      dbSaveBody: true
+      dbSaveBody: false
+      # -- After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60.
+      resetDBSaveAfter: 60
       # -- Maximum age of request logs in database (days)
       maxAge: 7
   # -- CORS (Cross-Origin Resource Sharing) settings

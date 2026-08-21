@@ -216,16 +216,17 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
-| settings.logging | object | `{"enableStructlogRequests":true,"formatConsole":"json","level":"INFO","outgoingRequests":{"dbSave":false,"dbSaveBody":true,"emitBody":true,"maxAge":7},"queries":false,"requests":false,"stdout":true}` | Logging configuration |
+| settings.logging | object | `{"enableStructlogRequests":true,"formatConsole":"json","level":"INFO","outgoingRequests":{"dbSave":false,"dbSaveBody":false,"emitBody":true,"maxAge":7,"resetDBSaveAfter":60},"queries":false,"requests":true,"stdout":true}` | Logging configuration |
 | settings.logging.enableStructlogRequests | bool | `true` | Enable structured logging of requests |
 | settings.logging.formatConsole | string | `"json"` | The format for the console logging handler, possible options: json, plain_console |
 | settings.logging.level | string | `"INFO"` | Control the verbosity of logging output. Available values are CRITICAL, ERROR, WARNING, INFO and DEBUG |
 | settings.logging.outgoingRequests.dbSave | bool | `false` | Whether to save outgoing request logs to database |
-| settings.logging.outgoingRequests.dbSaveBody | bool | `true` | Whether to save request bodies to database |
+| settings.logging.outgoingRequests.dbSaveBody | bool | `false` | Whether to save request bodies to database |
 | settings.logging.outgoingRequests.emitBody | bool | `true` | Whether to emit request bodies in logs |
 | settings.logging.outgoingRequests.maxAge | int | `7` | Maximum age of request logs in database (days) |
+| settings.logging.outgoingRequests.resetDBSaveAfter | int | `60` | After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60. |
 | settings.logging.queries | bool | `false` | Enable (query) logging at the database backend level. Note that you must also set DEBUG=1, which should be done very sparingly! |
-| settings.logging.requests | bool | `false` | Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database. |
+| settings.logging.requests | bool | `true` | Enable logging of the outgoing requests. This must be enabled along with LOG_OUTGOING_REQUESTS_DB_SAVE to save outgoing request logs in the database. |
 | settings.logging.stdout | bool | `true` | Whether to log to stdout or not |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` |  |
