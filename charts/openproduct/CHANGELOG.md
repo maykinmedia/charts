@@ -6,6 +6,7 @@
 - Exposed `enableServiceLinks` for the deployment of the pod that runs the uWSGI server. Default value is `false`. 
   This fixes the automatic override of `OPENPRODUCT_PORT`, which overrides `uwsgi_port`, which caused the problem with the health checks.
 - Add the `jsonschemaUseFormatChecker` setting to control JSON Schema format validation. The default value is `true`.
+- Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.
 
 ## 0.4.1 (2026-04-29)
 - Bumped application version from 1.7.0 to 1.7.1
