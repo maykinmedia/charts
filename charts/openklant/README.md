@@ -2,7 +2,7 @@
 
 Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index en Contactgegevens API in een enkele applicatie combineert.
 
-![Version: 1.13.2-rc.1](https://img.shields.io/badge/Version-1.13.2-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.17.1](https://img.shields.io/badge/AppVersion-2.17.1-informational?style=flat-square)
+![Version: 1.14.0-rc.1](https://img.shields.io/badge/Version-1.14.0-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.18.0](https://img.shields.io/badge/AppVersion-2.18.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -89,12 +89,13 @@ Also note that for the liveness probe we use a script to be able to determine th
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
-| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.backoffLimit | int | `0` |  |
 | configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
-| configuration.job.restartPolicy | string | `"OnFailure"` |  |
+| configuration.job.restartPolicy | string | `"Never"` |  |
 | configuration.secrets | object | `{}` |  |
 | configurationSecretsName | string | `""` |  |
+| enableServiceLinks | bool | `false` | Prevents K8s from automatically injecting service related environment variables to the pods |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraDeploy | list | `[]` | Extra objects to deploy (value evaluated as a template) |
@@ -238,6 +239,12 @@ Also note that for the liveness probe we use a script to be able to determine th
 | settings.enableCloudEvents | bool | `false` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
+| settings.logLevel | string | `"INFO"` |  |
+| settings.logOutgoingRequestsDBSave | bool | `false` | Whether or not outgoing request logs should always be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsDBSaveBody | bool | `false` | Whether or not outgoing request bodies should be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsMaxAge | int | `7` | The number of days after which request logs should be deleted from the database. Defaults to: 7. |
+| settings.logOutgoingRequestsResetDBSaveAfter | int | `60` | After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60. |
+| settings.logRequests | bool | `true` | Enable structured logging of requests. Defaults to: True. |
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.notificationsSource | string | `""` | The identifier of this application that will be sent in the notification, e.g. "openklant" |
 | settings.otel.disabled | bool | `true` |  |
