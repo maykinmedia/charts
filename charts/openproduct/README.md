@@ -2,7 +2,7 @@
 
 Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
 
-![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
+![Version: 0.5.0-rc.1](https://img.shields.io/badge/Version-0.5.0-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -76,17 +76,17 @@ how to configure, see the Open Product [documentation](https://open-product.read
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
 | configuration.enabled | bool | `false` |  |
-| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.backoffLimit | int | `0` |  |
 | configuration.job.enabled | bool | `false` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
-| configuration.job.restartPolicy | string | `"OnFailure"` |  |
-| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.job.restartPolicy | string | `"Never"` |  |
 | configuration.overwrite | bool | `true` |  |
 | configuration.secrets | object | `{}` |  |
 | configuration.superuser.email | string | `""` |  |
 | configuration.superuser.password | string | `""` |  |
 | configuration.superuser.username | string | `""` |  |
 | configurationSecretsName | string | `""` |  |
+| enableServiceLinks | bool | `false` | Prevents K8s from automatically injecting service related environment variables to the pods |
 | existingConfigurationSecrets | string | `nil` |  |
 | existingSecret | string | `nil` |  |
 | extraEnvVars | list | `[]` | Array with extra environment variables to add |
@@ -201,7 +201,16 @@ how to configure, see the Open Product [documentation](https://open-product.read
 | settings.email.username | string | `""` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
+| settings.jsonschemaUseFormatChecker | bool | `true` | Whether or not JSON Schema format validation for objects is enabled by default. Defaults to: True. |
 | settings.loadUpl | bool | `true` |  |
+| settings.logLevel | string | `"INFO"` |  |
+| settings.logNotificationsInDb | bool | `true` | Indicates whether or not failed notifications/cloud events should be saved to the database |
+| settings.logOutgoingRequestsDBSave | bool | `false` | Whether or not outgoing request logs should always be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsDBSaveBody | bool | `false` | Whether or not outgoing request bodies should be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsMaxAge | int | `7` | The number of days after which request logs should be deleted from the database. Defaults to: 7. |
+| settings.logOutgoingRequestsResetDBSaveAfter | int | `60` | After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60. |
+| settings.logRequests | bool | `true` | Enable structured logging of requests. Defaults to: True. |
+| settings.notificationNumberOfDaysRetained | int | `60` | The number of days for which you wish to keep failed notifications/cloud events in the database |
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.otel.disabled | bool | `true` | If the OpenTelemetrySDK should be disabled. Opentelemtry is enabled by default, Set this values to 'true' to disable openTelemetry.  |
 | settings.otel.exporterOtlpEndpoint | string | `""` | Network address where to send the metrics to. Examples are: https://otel.example.com:4318 or http://otel-collector.namespace.cluster.svc:4317. |
