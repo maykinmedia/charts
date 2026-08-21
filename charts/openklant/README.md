@@ -239,6 +239,12 @@ Also note that for the liveness probe we use a script to be able to determine th
 | settings.enableCloudEvents | bool | `false` |  |
 | settings.environment | string | `""` | sets the 'ENVIRONMENT' variable |
 | settings.isHttps | bool | `true` |  |
+| settings.logLevel | string | `"INFO"` |  |
+| settings.logOutgoingRequestsDBSave | bool | `false` | Whether or not outgoing request logs should always be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsDBSaveBody | bool | `false` | Whether or not outgoing request bodies should be saved to the database. Defaults to: False. |
+| settings.logOutgoingRequestsMaxAge | int | `7` | The number of days after which request logs should be deleted from the database. Defaults to: 7. |
+| settings.logOutgoingRequestsResetDBSaveAfter | int | `60` | After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60. |
+| settings.logRequests | bool | `true` | Enable structured logging of requests. Defaults to: True. |
 | settings.notificationsDisabled | bool | `false` |  |
 | settings.notificationsSource | string | `""` | The identifier of this application that will be sent in the notification, e.g. "openklant" |
 | settings.otel.disabled | bool | `true` |  |
