@@ -89,6 +89,9 @@ podAnnotations: {}
 
 podLabels: {}
 
+# -- Prevents K8s from automatically injecting service related environment variables to the pods
+enableServiceLinks: false
+
 podSecurityContext:
   fsGroup: 1000
 
@@ -281,6 +284,9 @@ settings:
 
   # -- Defines the primary domain where the application is hosted. Defaults to ""
   siteDomain: ""
+  
+  # -- Whether or not JSON Schema format validation for objects is enabled by default. Defaults to: True.
+  jsonschemaUseFormatChecker: true
 
   otel:
     # -- If the OpenTelemetrySDK should be disabled. Opentelemtry is enabled by default, Set this values to 'true' to disable openTelemetry. 
