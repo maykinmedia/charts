@@ -2,7 +2,7 @@
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
-![Version: 1.12.0](https://img.shields.io/badge/Version-1.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.9](https://img.shields.io/badge/AppVersion-3.3.9-informational?style=flat-square)
+![Version: 1.13.0](https://img.shields.io/badge/Version-1.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.9](https://img.shields.io/badge/AppVersion-3.3.9-informational?style=flat-square)
 
 ## Introduction
 
@@ -126,6 +126,29 @@ The static file serving feature uses the existing media PVC with subPaths to org
 - **Media subPath**: `openforms/media` → `/app/media` (web container)
 - **Static subPath**: `openforms/static` → `/srv/static` (both containers)
 
+### Gateway API (HTTPRoute)
+
+This chart can render an [HTTPRoute](https://gateway-api.sigs.k8s.io/reference/api-types/httproute/) so Open Forms can attach to a shared cluster Gateway. Classic `Ingress` is unchanged and stays available.
+
+Gateway API is the [recommended Kubernetes direction](https://gateway-api.sigs.k8s.io/) for HTTP routing.
+
+The chart does **not** install Gateway API CRDs, a Gateway controller, or a `Gateway` object. Those are platform responsibilities.
+
+To enable, set `parentRefs` to the **shared Gateway already running on the cluster** (name and namespace come from the platform team, not from this chart):
+
+```yaml
+httpRoute:
+  enabled: true
+  parentRefs:
+    - name: your-gateway-name            # Gateway object name
+      namespace: your-gateway-namespace  # namespace of that Gateway (usually not the Open Forms namespace)
+      # sectionName: https               # optional: bind to a named listener
+  hostnames:
+    - openformulieren.gemeente.nl
+```
+
+`parentRefs` is required when `httpRoute.enabled` is `true`. The backend is the chart nginx Service (same as Ingress). The HTTPRoute is controller-agnostic (Envoy Gateway, Cilium, NGINX Gateway Fabric, Istio, cloud Gateway, …).
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -181,6 +204,15 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | global.configuration.enabled | bool | `false` |  |
 | global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global databasehost, overrides setting.database.host |
+| httpRoute.annotations | object | `{}` | Additional annotations for the HTTPRoute resource |
+| httpRoute.enabled | bool | `false` | Enable HTTPRoute generation. Ingress stays independent (both can be enabled). |
+| httpRoute.extraRules | list | `[]` | Extra HTTPRoute rules appended after the default nginx backend rule |
+| httpRoute.filters | list | `[]` | HTTPRoute filters (RequestHeaderModifier, URLRewrite, RequestRedirect, …) |
+| httpRoute.hostnames | list | `[]` | Hostnames to match on the HTTP Host header. Empty matches all hostnames allowed by the Gateway listener. |
+| httpRoute.labels | object | `{}` | Additional labels for the HTTPRoute resource |
+| httpRoute.matches | list | `[{"path":{"type":"PathPrefix","value":"/"}}]` | Path / header matches for the default rule. If empty, Gateway API defaults to PathPrefix `/`. |
+| httpRoute.parentRefs | list | `[]` | Gateways this HTTPRoute attaches to. Required when enabled. Cross-namespace attachment needs `namespace` plus a Gateway that allows routes from this namespace (`allowedRoutes`). Optional `sectionName` binds to a named listener (for example `https`). |
+| httpRoute.timeouts | object | `{}` | Timeouts for the default rule (Gateway API >= 1.2). Example: request: 10s |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"openformulieren/open-forms"` |  |
 | image.tag | string | `""` |  |

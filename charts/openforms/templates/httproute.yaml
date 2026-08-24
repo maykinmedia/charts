@@ -1,0 +1,45 @@
+{{- if .Values.httpRoute.enabled }}
+{{- if not .Values.httpRoute.parentRefs }}
+{{- fail "httpRoute.parentRefs is required when httpRoute.enabled is true. Set name and namespace of the platform Gateway. This chart does not create a Gateway, GatewayClass, or Gateway API CRDs." }}
+{{- end }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "openforms.fullname" . }}
+  labels:
+    {{- include "openforms.labels" . | nindent 4 }}
+    {{- with .Values.httpRoute.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.httpRoute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  parentRefs:
+    {{- include "openforms.tplvalues.render" (dict "value" .Values.httpRoute.parentRefs "context" $) | nindent 4 }}
+  {{- with .Values.httpRoute.hostnames }}
+  hostnames:
+    {{- include "openforms.tplvalues.render" (dict "value" . "context" $) | nindent 4 }}
+  {{- end }}
+  rules:
+    - backendRefs:
+        - name: {{ include "openforms.nginxFullname" . }}
+          port: {{ .Values.nginx.service.port }}
+          weight: 1
+      {{- with .Values.httpRoute.matches }}
+      matches:
+        {{- include "openforms.tplvalues.render" (dict "value" . "context" $) | nindent 8 }}
+      {{- end }}
+      {{- with .Values.httpRoute.filters }}
+      filters:
+        {{- include "openforms.tplvalues.render" (dict "value" . "context" $) | nindent 8 }}
+      {{- end }}
+      {{- with .Values.httpRoute.timeouts }}
+      timeouts:
+        {{- include "openforms.tplvalues.render" (dict "value" . "context" $) | nindent 8 }}
+      {{- end }}
+    {{- with .Values.httpRoute.extraRules }}
+    {{- include "openforms.tplvalues.render" (dict "value" . "context" $) | nindent 4 }}
+    {{- end }}
+{{- end }}
