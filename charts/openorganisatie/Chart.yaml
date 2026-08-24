@@ -1,9 +1,9 @@
 apiVersion: v2
-appVersion: 0.2.0
 description: Open Organisatie is een applicatie waar medewerkers beheer kunnen worden.
 name: openorganisatie
 type: application
-version: 0.1.1
+appVersion: 0.2.0
+version: 0.2.0
 
 dependencies:
   - name: redis
