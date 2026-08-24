@@ -1830,6 +1830,27 @@ entries:
   openbeheer:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2026-08-24T09:02:41.668228774Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: A Helm chart to deploy Open Beheer
+    digest: adbd98c53b2831499e35d895d63d9718447138505d3d129571575bd7a9c51ae5
+    name: openbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openbeheer-0.2.0-rc.1/openbeheer-0.2.0-rc.1.tgz
+    version: 0.2.0-rc.1
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2026-01-02T09:15:01.920288359Z"
     dependencies:
     - name: redis
@@ -8048,4 +8069,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-21T14:32:58.630313783Z"
+generated: "2026-08-24T09:02:41.668662999Z"
