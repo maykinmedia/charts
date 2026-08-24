@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 2.5.0](https://img.shields.io/badge/Version-2.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.3](https://img.shields.io/badge/AppVersion-2.4.3-informational?style=flat-square)
+![Version: 2.6.0-rc.1](https://img.shields.io/badge/Version-2.6.0-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.3](https://img.shields.io/badge/AppVersion-2.4.3-informational?style=flat-square)
 
 ## Introduction
 
@@ -147,11 +147,10 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.initContainer.enabled | bool | `false` | Run the setup configuration command in a init container |
-| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.backoffLimit | int | `0` |  |
 | configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
-| configuration.job.restartPolicy | string | `"OnFailure"` |  |
-| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.job.restartPolicy | string | `"Never"` |  |
 | configuration.secrets | object | `{}` |  |
 | eck-elasticsearch.annotations | object | `{}` |  |
 | eck-elasticsearch.auth | object | `{}` |  |
