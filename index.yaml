@@ -6960,6 +6960,27 @@ entries:
   openvtb:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2026-08-24T09:03:55.377561802Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Register en API's voor Verzoeken, Taken en Berichten.
+    digest: 6bb4cfe9d6f00c6141fb02323e31b256f55c641df3df26b7b03ece220cde2e2e
+    name: openvtb
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openvtb-0.2.0/openvtb-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2026-05-15T10:24:55.414329068Z"
     dependencies:
     - name: redis
@@ -8091,4 +8112,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-24T09:03:10.43730194Z"
+generated: "2026-08-24T09:03:55.378136716Z"
