@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.0 (2026-08-24)
+
+- Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.
+
 ## 1.12.0 (2026-02-09)
 
 - Remove the config map with the clean-logs script. Since version `2.7.0` of the Open Forms app, it is not needed to prune the emails, while from `3.3.0`, Open Forms uses version `5.0.0` of `django-timeline-logger`, which includes a management command to prune the logs. The cronjob now uses this command instead of the script.

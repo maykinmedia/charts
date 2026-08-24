@@ -2,7 +2,7 @@
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
-![Version: 1.12.0](https://img.shields.io/badge/Version-1.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.9](https://img.shields.io/badge/AppVersion-3.3.9-informational?style=flat-square)
+![Version: 1.13.0-rc.1](https://img.shields.io/badge/Version-1.13.0-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.9](https://img.shields.io/badge/AppVersion-3.3.9-informational?style=flat-square)
 
 ## Introduction
 
@@ -145,11 +145,10 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | beat.resources | object | `{}` |  |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
-| configuration.job.backoffLimit | int | `6` |  |
+| configuration.job.backoffLimit | int | `0` |  |
 | configuration.job.enabled | bool | `true` | Run the setup configuration command as a job |
 | configuration.job.resources | object | `{}` |  |
-| configuration.job.restartPolicy | string | `"OnFailure"` |  |
-| configuration.job.ttlSecondsAfterFinished | int | `0` | 0 Will clean the job after it is finished |
+| configuration.job.restartPolicy | string | `"Never"` |  |
 | configuration.secrets | object | `{}` |  |
 | configurationSecretsName | string | `""` |  |
 | existingConfigurationSecrets | string | `nil` |  |
