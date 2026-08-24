@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0 (2026-08-24)
+
+* Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.
+
 ## 0.1.3 (2025-12-31)
 
 * Added support for `OPEN_ZAAK_ADMIN_BASE_URL` url.
