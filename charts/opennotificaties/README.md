@@ -53,6 +53,48 @@ configuration:
 The yaml data needed to configure the application should be provided in the value `configuration.data`. To see
 how to configure, see the Open Notificaties [documentation](https://open-notificaties.readthedocs.io/en/stable/installation/configuration/opennotifs_config_cli.html).
 
+### Probes
+
+Open Notificaties x.y.z added new functionality to improve the container health checks for the web application,
+the Celery worker, Flower container and Celery beat container. Below you can find additional information about the various checks.
+
+**Web application**
+
+There are now the endpoints `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` which are used for the startup,
+liveness and readiness probe respectively.
+
+You can find more information about what these endpoints check [here](https://open-notificaties.readthedocs.io/en/stable/installation/health_checks.html).
+
+Important to note: these endpoints are not reacheable from outside the cluster, Nginx is configured to return 404 for these endpoints.
+
+**Celery worker**
+
+You can read more about the worker health checks in the `maykin-common` documentation [here](https://maykin-django-common.readthedocs.io/en/latest/health_checks.html#celery-worker-health-checks).
+Things to note here are:
+
+* For the startup probe, we only check the presence of the readiness file. This is created when the worker is ready to accept work.
+Then it is no longer updated and it is cleaned up when the worker shuts down.
+* For the liveness probe, we check the presence of the liveness file, which is touched by the internal event loop of the worker every `60 s`
+(not a configurable value). We check that the file is not older than `70 s`.
+We also perform a ping to check the connection with the broker.
+
+Also note that for the liveness probe we use a script to be able to determine the Celery queue name, which is needed to build the name of the worker to check. Open Notificaties uses by default "default queues",
+but since the queue name can be changed with the `extraEnvVar` value, we support custom queue names.
+
+**Celery Beat**
+
+You can read more about the Beat health checks in the `maykin-common` documentation [here](https://maykin-django-common.readthedocs.io/en/latest/health_checks.html#celery-beat-health-checks).
+
+* For the startup probe, we check the presence of a liveness file. This is created when a new beat task is published.
+* For the liveness probe we also check the liveness file. However, here we check that it is not older than 2 min, to be sure that Beat can still publish new tasks.
+
+**Celery Flower**
+
+Flower exposes an HTTP endpoint that can be used to verify that the service is up and responding.
+
+* For the readiness probe, we perform an HTTP health check against the Flower web interface (`http://localhost:5555/`) using the `maykin-common health-check` command.
+* For the liveness probe, we perform the same HTTP health check to ensure that the Flower web interface is reacheable.
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -68,19 +110,20 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
-| beat.livenessProbe.failureThreshold | int | `6` |  |
+| beat.livenessProbe.failureThreshold | int | `3` |  |
 | beat.livenessProbe.initialDelaySeconds | int | `60` |  |
-| beat.livenessProbe.periodSeconds | int | `10` |  |
+| beat.livenessProbe.periodSeconds | int | `60` |  |
 | beat.livenessProbe.successThreshold | int | `1` |  |
-| beat.livenessProbe.timeoutSeconds | int | `5` |  |
+| beat.livenessProbe.timeoutSeconds | int | `15` |  |
 | beat.podLabels | object | `{}` |  |
-| beat.readinessProbe.failureThreshold | int | `6` |  |
-| beat.readinessProbe.initialDelaySeconds | int | `30` |  |
-| beat.readinessProbe.periodSeconds | int | `10` |  |
-| beat.readinessProbe.successThreshold | int | `1` |  |
-| beat.readinessProbe.timeoutSeconds | int | `5` |  |
+| beat.probesEnabled | bool | `false` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
+| beat.startupProbe.failureThreshold | int | `3` |  |
+| beat.startupProbe.initialDelaySeconds | int | `60` | The liveness file will be present only once Open-Forms has scheduled a task.  The most frequent task is scheduled every minute. We give time to the pod to start. |
+| beat.startupProbe.periodSeconds | int | `60` |  |
+| beat.startupProbe.successThreshold | int | `1` |  |
+| beat.startupProbe.timeoutSeconds | int | `15` |  |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.job.backoffLimit | int | `0` |  |
@@ -102,14 +145,14 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | flower.enabled | bool | `false` |  |
-| flower.livenessProbe.failureThreshold | int | `6` |  |
-| flower.livenessProbe.initialDelaySeconds | int | `60` |  |
+| flower.livenessProbe.failureThreshold | int | `10` |  |
+| flower.livenessProbe.initialDelaySeconds | int | `120` |  |
 | flower.livenessProbe.periodSeconds | int | `10` |  |
 | flower.livenessProbe.successThreshold | int | `1` |  |
 | flower.livenessProbe.timeoutSeconds | int | `5` |  |
 | flower.podLabels | object | `{}` |  |
-| flower.readinessProbe.failureThreshold | int | `6` |  |
-| flower.readinessProbe.initialDelaySeconds | int | `30` |  |
+| flower.readinessProbe.failureThreshold | int | `5` |  |
+| flower.readinessProbe.initialDelaySeconds | int | `120` |  |
 | flower.readinessProbe.periodSeconds | int | `10` |  |
 | flower.readinessProbe.successThreshold | int | `1` |  |
 | flower.readinessProbe.timeoutSeconds | int | `5` |  |
@@ -129,7 +172,7 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | ingress.enabled | bool | `false` |  |
 | ingress.hosts | list | `[]` | ingress hosts |
 | ingress.tls | list | `[]` |  |
-| livenessProbe.failureThreshold | int | `6` |  |
+| livenessProbe.failureThreshold | int | `10` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
 | livenessProbe.successThreshold | int | `1` |  |
@@ -147,7 +190,7 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
-| readinessProbe.failureThreshold | int | `6` |  |
+| readinessProbe.failureThreshold | int | `5` |  |
 | readinessProbe.initialDelaySeconds | int | `30` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.successThreshold | int | `1` |  |
@@ -250,6 +293,11 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | settings.uwsgi.maxRequests | string | `""` |  |
 | settings.uwsgi.processes | string | `""` |  |
 | settings.uwsgi.threads | string | `""` |  |
+| startupProbe.failureThreshold | int | `30` |  |
+| startupProbe.initialDelaySeconds | int | `15` | Total time: 15s initial delay + (30 failures × 10s period) = 315s (5 minutes 15 seconds)     |
+| startupProbe.periodSeconds | int | `10` |  |
+| startupProbe.successThreshold | int | `1` |  |
+| startupProbe.timeoutSeconds | int | `5` |  |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
 | worker.autoscaling.behavior | object | `{}` |  |
@@ -259,16 +307,12 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `100` |  |
-| worker.livenessProbe.enabled | bool | `false` |  |
-| worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
-| worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
-| worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app nrc.celery inspect --destination celery@${HOSTNAME} active"` |  |
-| worker.livenessProbe.failureThreshold | int | `10` |  |
+| worker.livenessProbe.enabled | bool | `true` |  |
+| worker.livenessProbe.failureThreshold | int | `6` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
-| worker.livenessProbe.periodSeconds | int | `50` |  |
+| worker.livenessProbe.periodSeconds | int | `60` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
 | worker.livenessProbe.timeoutSeconds | int | `15` |  |
-| worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.pdb.create | bool | `false` |  |
 | worker.pdb.maxUnavailable | string | `""` |  |
 | worker.pdb.minAvailable | int | `1` |  |
@@ -276,3 +320,9 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
 | worker.resources | object | `{}` |  |
+| worker.startupProbe.enabled | bool | `true` |  |
+| worker.startupProbe.failureThreshold | int | `3` |  |
+| worker.startupProbe.initialDelaySeconds | int | `60` |  |
+| worker.startupProbe.periodSeconds | int | `50` |  |
+| worker.startupProbe.successThreshold | int | `1` |  |
+| worker.startupProbe.timeoutSeconds | int | `10` |  |
