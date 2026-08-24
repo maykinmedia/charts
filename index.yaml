@@ -6692,6 +6692,28 @@ entries:
   openorganisatie:
   - apiVersion: v2
     appVersion: 0.2.0
+    created: "2026-08-24T09:03:10.436465013Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Open Organisatie is een applicatie waar medewerkers beheer kunnen
+      worden.
+    digest: 6a17a40043a511a2f4a84af35b3de11d27101bbe4ef5ade385d7a6a20b9f8d56
+    name: openorganisatie
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openorganisatie-0.2.0/openorganisatie-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 0.2.0
     created: "2026-05-12T07:59:49.622850304Z"
     dependencies:
     - name: redis
@@ -8069,4 +8091,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-24T09:02:41.668662999Z"
+generated: "2026-08-24T09:03:10.43730194Z"
