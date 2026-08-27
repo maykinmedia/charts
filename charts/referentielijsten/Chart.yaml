@@ -4,7 +4,7 @@ description: De Referentielijsten API is een generieke API voor eenvoudige herbr
 
 name: referentielijsten
 type: application
-version: 0.2.0-rc.1
+version: 0.2.0
 
 dependencies:
   - name: redis
