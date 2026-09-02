@@ -283,6 +283,18 @@ settings:
   # -- Defines the primary domain where the application is hosted. Defaults to ""
   siteDomain: ""
   
+  logLevel: "INFO"
+  # -- Enable structured logging of requests. Defaults to: True.
+  logRequests: true
+  # -- Whether or not outgoing request logs should always be saved to the database. Defaults to: False.
+  logOutgoingRequestsDBSave: false
+  # -- Whether or not outgoing request bodies should be saved to the database. Defaults to: False.
+  logOutgoingRequestsDBSaveBody: false
+  # -- After the config has been changed via the admin, reset back to the default LOG_OUTGOING_REQUESTS_DB_SAVE after x minutes. Defaults to: 60.
+  logOutgoingRequestsResetDBSaveAfter: 60
+  # -- The number of days after which request logs should be deleted from the database. Defaults to: 7.
+  logOutgoingRequestsMaxAge: 7
+
   # -- Whether or not JSON Schema format validation for objects is enabled by default. Defaults to: True.
   jsonschemaUseFormatChecker: true
 
@@ -338,6 +350,11 @@ settings:
     logLevel: debug
 
   notificationsDisabled: false
+
+  # -- Indicates whether or not failed notifications/cloud events should be saved to the database
+  logNotificationsInDb: true
+  # -- The number of days for which you wish to keep failed notifications/cloud events in the database
+  notificationNumberOfDaysRetained: 60
 
   isHttps: true
 
