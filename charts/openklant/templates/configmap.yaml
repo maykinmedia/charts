@@ -24,6 +24,8 @@ data:
   CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackend | toString | quote }}
   {{- end }}
   CELERY_LOGLEVEL:  {{ .Values.settings.celery.logLevel | upper | toString | quote }}
+  CELERY_RESULT_EXPIRES: {{ .Values.settings.celery.resultExpires | toString | quote }}
+  CELERY_WORKER_CONCURRENCY: {{ .Values.worker.concurrency | toString | quote }}
   {{- if .Values.settings.logLevel }}
   LOG_LEVEL: {{ .Values.settings.logLevel | toString | quote }}
   {{- end }}

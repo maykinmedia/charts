@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.14.1 (2026-09-04)
+
+- Expose `result_expires` Celery setting via envvar
+- Increase `worker.concurrency` from `4` to `100`
+
 ## 1.14.0 (2026-08-21)
 
 - Bumped the application version to 2.18.0

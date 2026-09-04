@@ -2,7 +2,7 @@
 
 Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index en Contactgegevens API in een enkele applicatie combineert.
 
-![Version: 1.14.0](https://img.shields.io/badge/Version-1.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.18.0](https://img.shields.io/badge/AppVersion-2.18.0-informational?style=flat-square)
+![Version: 1.14.1-rc.1](https://img.shields.io/badge/Version-1.14.1-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.18.1](https://img.shields.io/badge/AppVersion-2.18.1-informational?style=flat-square)
 
 ## Introduction
 
@@ -205,9 +205,10 @@ Also note that for the liveness probe we use a script to be able to determine th
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | settings.allowedHosts | string | `""` |  |
-| settings.celery.brokerUrl | string | `""` |  |
-| settings.celery.logLevel | string | `"debug"` |  |
-| settings.celery.resultBackend | string | `""` |  |
+| settings.celery.brokerUrl | string | `""` | Sets the 'CELERY_BROKER_URL' var |
+| settings.celery.logLevel | string | `"debug"` | Celery loglevel |
+| settings.celery.resultBackend | string | `""` | Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false |
+| settings.celery.resultExpires | int | `3600` | Sets the 'CELERY_RESULT_EXPIRES' var |
 | settings.database.db_conn_max_age | int | `60` |  |
 | settings.database.db_pool.db_pool_max_idle | int | `600` |  |
 | settings.database.db_pool.db_pool_max_lifetime | int | `3600` |  |
@@ -276,7 +277,7 @@ Also note that for the liveness probe we use a script to be able to determine th
 | worker.autoscaling.minReplicas | int | `1` |  |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
-| worker.concurrency | int | `4` |  |
+| worker.concurrency | int | `100` |  |
 | worker.livenessProbe.enabled | bool | `false` |  |
 | worker.livenessProbe.failureThreshold | int | `6` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
