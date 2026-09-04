@@ -2,7 +2,7 @@
 
 Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index en Contactgegevens API in een enkele applicatie combineert.
 
-![Version: 1.14.1-rc.1](https://img.shields.io/badge/Version-1.14.1-rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.18.1](https://img.shields.io/badge/AppVersion-2.18.1-informational?style=flat-square)
+![Version: 1.14.1-rc.2](https://img.shields.io/badge/Version-1.14.1-rc.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.18.1](https://img.shields.io/badge/AppVersion-2.18.1-informational?style=flat-square)
 
 ## Introduction
 
@@ -277,7 +277,7 @@ Also note that for the liveness probe we use a script to be able to determine th
 | worker.autoscaling.minReplicas | int | `1` |  |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
-| worker.concurrency | int | `100` |  |
+| worker.concurrency | int | `4` |  |
 | worker.livenessProbe.enabled | bool | `false` |  |
 | worker.livenessProbe.failureThreshold | int | `6` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
