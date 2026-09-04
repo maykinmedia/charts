@@ -355,9 +355,15 @@ settings:
     # e.g.:
     # brokerUrl: redis://openklant-redis-master:6379/1
     # resultBackend: redis://openklant-redis-master:6379/1
+    # -- Sets the 'CELERY_BROKER_URL' var
     brokerUrl: ""
+    # -- Sets the 'CELERY_RESULT_BACKEND' var, only required when tags.redis is false
     resultBackend: ""
+    # -- Celery loglevel
     logLevel: debug
+    # -- Sets the 'CELERY_RESULT_EXPIRES' var
+    resultExpires: 3600
+
   # -- Defines the primary domain where the application is hosted. Defaults to ""
   siteDomain: ""
 
@@ -400,7 +406,7 @@ settings:
 
 worker:
   replicaCount: 2
-  concurrency: 4
+  concurrency: 100
   podLabels: {}
   resources: {}
     # requests:
