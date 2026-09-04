@@ -406,7 +406,7 @@ settings:
 
 worker:
   replicaCount: 2
-  concurrency: 100
+  concurrency: 4
   podLabels: {}
   resources: {}
     # requests:
