@@ -157,20 +157,20 @@ startupProbe:
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 30
-  successThreshold: 1   
+  successThreshold: 1  
 
 livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 10
   timeoutSeconds: 5
-  failureThreshold: 6
+  failureThreshold: 10
   successThreshold: 1
 
 readinessProbe:
   initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
-  failureThreshold: 6
+  failureThreshold: 5
   successThreshold: 1
 
 service:
@@ -443,20 +443,19 @@ worker:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
-  # Defaults to 60s
-  maxWorkerLivenessDelta: ""
-  livenessProbe: 
-    enabled: false
-    exec:
-      command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app objects.celery inspect --destination celery@${HOSTNAME} active
+  startupProbe: 
+    enabled: true
     initialDelaySeconds: 60
-    # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
     timeoutSeconds: 10
     failureThreshold: 3
+    successThreshold: 1
+  livenessProbe: 
+    enabled: true
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 6
     successThreshold: 1
   autoscaling:
     enabled: false
@@ -464,23 +463,22 @@ worker:
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
-    behaviour: {}
 
 flower:
   enabled: true
   replicaCount: 1
   podLabels: {}
   livenessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 6
+    failureThreshold: 10
     successThreshold: 1
   readinessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
-    failureThreshold: 6
+    failureThreshold: 5
     successThreshold: 1
   resources: {}
 

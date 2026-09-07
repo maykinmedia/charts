@@ -120,7 +120,7 @@ data:
   NOTIFICATIONS_DISABLED: "True"
   {{- end }}
   LOG_NOTIFICATIONS_IN_DB: {{ if .Values.settings.logNotificationsInDb }}"True"{{ else }}"False"{{ end }}
-  {{- if ne .Values.settings.logOutgoingRequestsMaxAge nil }}
+  {{- if ne .Values.settings.notificationNumberOfDaysRetained nil }}
   NOTIFICATION_NUMBER_OF_DAYS_RETAINED: {{ int .Values.settings.notificationNumberOfDaysRetained | quote }}
   {{- end }}
   {{ if .Values.configuration.superuser.username }}
