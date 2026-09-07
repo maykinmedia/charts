@@ -2,7 +2,7 @@ apiVersion: v2
 name: openklant
 description: Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index en Contactgegevens API in een enkele applicatie combineert.
 type: application
-version: 1.14.1-rc.2
+version: 1.14.1
 appVersion: 2.18.1
 
 dependencies:
