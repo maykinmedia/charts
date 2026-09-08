@@ -131,7 +131,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
 | beat.startupProbe.failureThreshold | int | `3` |  |
-| beat.startupProbe.initialDelaySeconds | int | `60` | The liveness file will be present only once Open-Forms has scheduled a task.  The most frequent task is scheduled every minute. We give time to the pod to start. |
+| beat.startupProbe.initialDelaySeconds | int | `60` | The liveness file will be present only once Open-Zaak has scheduled a task.  The most frequent task is scheduled every minute. We give time to the pod to start. |
 | beat.startupProbe.periodSeconds | int | `60` |  |
 | beat.startupProbe.successThreshold | int | `1` |  |
 | beat.startupProbe.timeoutSeconds | int | `15` |  |
