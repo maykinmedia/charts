@@ -604,7 +604,7 @@ beat:
   podLabels: {}
   probesEnabled: false
   startupProbe: 
-    # -- The liveness file will be present only once Open-Forms has scheduled a task. 
+    # -- The liveness file will be present only once Open-Zaak has scheduled a task. 
     # The most frequent task is scheduled every minute. We give time to the pod to start.
     initialDelaySeconds: 60 
     periodSeconds: 60
