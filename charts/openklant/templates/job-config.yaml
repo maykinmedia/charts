@@ -40,7 +40,7 @@ spec:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "openklant.fullname" .) }}
             - secretRef:
-                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openklant.fullname" .)) }}{{ end }}               
+                name: {{ if .Values.existingConfigurationSecrets }}{{ .Values.existingConfigurationSecrets }}{{ else }}{{ .Values.configurationSecretsName | default (printf "%s-config-secrets" (include "openklant.fullname" .)) }}{{ end }}
             - configMapRef:
                 name: {{ include "openklant.fullname" . }}
           env:
@@ -60,13 +60,13 @@ spec:
               mountPath: /app/configuration/
               readOnly: true
             {{- if .Values.extraVolumeMounts }}
-            {{- include "openklant.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 2 }}
+            {{- include "openklant.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
       volumes:
         - name: configuration
           configMap:
             name: {{ include "openklant.fullname" . }}-configuration
-            defaultMode: 0755          
+            defaultMode: 0755
         {{- if .Values.extraVolumes }}
         {{- include "openklant.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
         {{- end }}
