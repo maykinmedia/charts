@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ include "openarchiefbeheer.fullname" . }}-worker-{{ .Values.worker.label | default "celery" }}
 data: 
-  CELERY_WORKER_QUEUE: {{ .Values.worker.queueName | default "" }}
-  CELERY_WORKER_NAME: {{ .Values.worker.name | default "" }}
+  CELERY_WORKER_QUEUE: {{ .Values.worker.queueName | default "" | quote }}
+  CELERY_WORKER_NAME: {{ .Values.worker.name | default "" | quote  }}
