@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.14.2-rc.1 (2026-09-25)
+## 1.14.2 (2026-09-25)
 
 - Fix nindent for openklant job-config extraVolumeMounts
 
