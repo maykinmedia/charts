@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.5.1-rc.1 (2026-09-25)
+
+- Corrected image repository from openproduct to open-product
+
 ## 0.5.0 (2026-09-02)
 - Bumped the application version to 1.9.0
 - Exposed `enableServiceLinks` for the deployment of the pod that runs the uWSGI server. Default value is `false`. 
