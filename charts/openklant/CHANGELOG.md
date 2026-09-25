@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.2-rc.1 (2026-09-25)
+
+- Fix nindent for openklant job-config extraVolumeMounts
+
 ## 1.14.1 (2026-09-04)
 
 - Expose `result_expires` Celery setting via envvar
