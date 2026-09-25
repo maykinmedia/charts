@@ -2,7 +2,7 @@
 
 Open Product is een applicatie waarin producttypen en producten op een enkele plek kunnen worden beheerd.
 
-![Version: 0.5.1-rc.1](https://img.shields.io/badge/Version-0.5.1--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 ## Introduction
 

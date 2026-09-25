@@ -1,7 +1,7 @@
 
 # Changelog
 
-## 0.5.1-rc.1 (2026-09-25)
+## 0.5.1 (2026-09-25)
 
 - Corrected image repository from openproduct to open-product
 
