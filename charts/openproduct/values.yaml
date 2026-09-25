@@ -69,7 +69,7 @@ tags:
 replicaCount: 2
 
 image:
-  repository: maykinmedia/openproduct
+  repository: maykinmedia/open-product
   pullPolicy: IfNotPresent
   tag: ""
 
