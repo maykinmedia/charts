@@ -91,7 +91,7 @@ image:
   # -- Container image repository (required)
   repository: "maykinmedia/application"
   # -- Image pull policy
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # -- Image tag; defaults to .Chart.AppVersion when empty
   tag: "0.0.0"
 

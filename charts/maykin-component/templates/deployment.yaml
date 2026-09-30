@@ -52,7 +52,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           {{- end }}
           image: {{ include "application.image" . | quote }}
-          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "application.fullname" .) }}
@@ -226,7 +226,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "application.image" . | quote }}
-          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
           envFrom:
             - secretRef:
                 name: {{ .Values.existingSecret | default (include "application.fullname" .) }}
@@ -335,7 +335,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "application.image" . | quote }}
-          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
           command: ["/celery_flower.sh"]
           resources:
             {{- toYaml .Values.flower.resources | nindent 12 }}
