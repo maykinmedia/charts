@@ -1,0 +1,62 @@
+applicationName: "openorganisatie"
+
+image:
+  repository: maykinmedia/open-organisatie
+  tag: 0.2.0
+
+startupProbe:
+  enabled: true
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: true
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    acme.cert-manager.io/http01-edit-in-place: "true"
+  className: "nginx"
+  hosts:
+   - host: "openorganisatie-dev.test.opengem.nl"
+     paths:
+       - path: /
+         pathType: ImplementationSpecific
+  tls:
+   - secretName: "openorganisatie-test-tls"
+     hosts:
+       - "openorganisatie-dev.test.opengem.nl"
+
+existingSecret: openorganisatie
+
+settings:
+  djangoSettingsModule: openorganisatie.conf.docker
+  allowedHosts: "openorganisatie-dev.test.opengem.nl"
+  secretKey: "openorganisatie-maykin-secret-key"
+  environment: "openorganisatie-maykin-test-aks"
+
+  database:
+    host: "openorganisatie-db-host"
+    port: 5432
+    username: openorganisatie
+    name: openorganisatie
+
+  elasticapm:
+    url: apm.maykinmedia.nl
+    serviceName: "openorganisatie-maykin-test-aks"
+
+
+  email:
+    host: smtp.sendgrid.net
+    port: 587
+    username: apikey
+    useTLS: true
+    defaultFrom: no-reply-on@opengem.nl
+
+persistence:
+  enabled: true
+  storageClassName: "azurefile-uuid1000"
+  mediaMountSubpath: openorganisatie/media
+  privateMediaMountSubpath: openorganisatie/private_media
