@@ -47,3 +47,36 @@ helm-docs .
 >
 > The `objecten` and `objecttypen` Helm charts are deprecated.
 > For Open Object `4.0` and later, use the `openobject` Helm chart instead.
+
+
+# Maykin Component Chart
+
+Generic Helm chart for deploying Maykin applications on Kubernetes
+
+## Tested applications
+
+This chart has been tested against the following Maykin applications:
+
+- [Open VTB](https://github.com/maykinmedia/open-vtb)
+- [Open Organisatie](https://github.com/maykinmedia/open-organisatie)
+
+## Documentation
+
+Full parameter documentation (all `values.yaml` options, defaults, and descriptions) lives in [`./charts/maykin-component/README.md`](./charts/maykin-component/README.md) and is auto-generated with [helm-docs](https://github.com/norwoodj/helm-docs).
+
+
+## CI scope
+
+- TODO
+
+## License
+
+- TODO
+
+## Values Schema Validation
+
+- TODO
+
+## Contributing
+
+- TODO
