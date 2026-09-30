@@ -13,7 +13,6 @@ This repository contains Helm charts for:
 - [openbeheer](./charts/openbeheer/README.md)
 - [openklant](./charts/openklant/README.md)
 - [openproduct](./charts/openproduct/README.md)
-- [openorganisatie](./charts/openorganisatie/README.md)
 - [openobject](./charts/openobject/README.md)
 - [referentielijsten](./charts/referentielijsten/README.md)
 
