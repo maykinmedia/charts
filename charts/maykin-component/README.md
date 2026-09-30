@@ -136,7 +136,7 @@ helm lint maykin-component
 | global.configuration.overwrite | bool | `true` | Whether the setup-configuration job is allowed to overwrite existing config |
 | global.configuration.secrets | object | `{}` |  |
 | global.settings.databaseHost | string | `""` | Global database host, overrides settings.database.host when set |
-| image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| image.pullPolicy | string | `"Always"` | Image pull policy |
 | image.repository | string | `"maykinmedia/application"` | Container image repository (required) |
 | image.tag | string | `"0.0.0"` | Image tag; defaults to .Chart.AppVersion when empty |
 | imagePullSecrets | list | `[]` | References to secrets for pulling images from private registries |
