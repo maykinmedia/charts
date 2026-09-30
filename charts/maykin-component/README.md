@@ -186,7 +186,7 @@ helm lint maykin-component
 | redis.auth.enabled | bool | `false` | Enable Redis authentication |
 | redis.image.registry | string | `"docker.io"` |  |
 | redis.image.repository | string | `"redis"` |  |
-| redis.image.tag | string | `"8.0"` |  |
+| redis.image.tag | string | `"8.10"` |  |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
