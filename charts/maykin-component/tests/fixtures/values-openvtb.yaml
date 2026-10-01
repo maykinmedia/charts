@@ -1,0 +1,62 @@
+applicationName: "openvtb"
+ 
+image:
+  repository: maykinmedia/open-vtb
+  tag: 0.1.0
+
+startupProbe:
+  enabled: true
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: true
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    acme.cert-manager.io/http01-edit-in-place: "true"
+  className: "nginx"
+  hosts:
+   - host: "openvtb-dev.test.opengem.nl"
+     paths:
+       - path: /
+         pathType: ImplementationSpecific
+  tls:
+   - secretName: "openvtb-test-tls"
+     hosts:
+       - "openvtb-dev.test.opengem.nl"
+
+existingSecret: openvtb
+
+settings:
+  djangoSettingsModule: openvtb.conf.docker
+  allowedHosts: "openvtb-dev.test.opengem.nl"
+  secretKey: "openvtb-maykin-secret-key"
+  environment: "openvtb-maykin-test-aks"
+
+  database:
+    host: "openvtb-db-host"
+    port: 5432
+    username: openvtb
+    name: openvtb
+
+  elasticapm:
+    url: apm.maykinmedia.nl
+    serviceName: "openvtb-maykin-test-aks"
+
+  email:
+    host: smtp.sendgrid.net
+    port: 587
+    username: apikey
+    useTLS: true
+    defaultFrom: no-reply-on@opengem.nl
+
+
+persistence:
+  enabled: true
+  storageClassName: "azurefile-uuid1000"
+  mediaMountSubpath: openvtb/media
+  privateMediaMountSubpath: openvtb/private_media
