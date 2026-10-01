@@ -1,4 +1,4 @@
-# Maykin Media charts
+# Maykin charts
 
 
 This repository contains Helm charts for:
