@@ -102,6 +102,41 @@ telemetry. Alternatively, you can use any vendor that speaks the OTLP protocol.
 
 The environment variables that the Open Telemetry SDK supports can be found [here](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#general-sdk-configuration).
 
+### Probes
+
+Open Object 4.3.0 added new functionality to improve the container health checks for the web application,
+the Celery worker, Flower container and Celery beat container. Below you can find additional information about the various checks.
+
+**Web application**
+
+There are now the endpoints `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` which are used for the startup,
+liveness and readiness probe respectively.
+
+You can find more information about what these endpoints check [here](http://open-object.readthedocs.io/en/latest/installation/health_checks.html).
+
+Important to note: these endpoints are not reacheable from outside the cluster, Nginx is configured to return 404 for these endpoints.
+
+**Celery worker**
+
+You can read more about the worker health checks in the `maykin-common` documentation [here](https://maykin-django-common.readthedocs.io/en/latest/health_checks.html#celery-worker-health-checks).
+Things to note here are:
+
+* For the startup probe, we only check the presence of the readiness file. This is created when the worker is ready to accept work.
+Then it is no longer updated and it is cleaned up when the worker shuts down.
+* For the liveness probe, we check the presence of the liveness file, which is touched by the internal event loop of the worker every `60 s`
+(not a configurable value). We check that the file is not older than `70 s`.
+We also perform a ping to check the connection with the broker.
+
+Also note that for the liveness probe we use a script to be able to determine the Celery queue name, which is needed to build the name of the worker to check. Open Zaak uses by default "default queues",
+but since the queue name can be changed with the `extraEnvVar` value, we support custom queue names.
+
+**Celery Flower**
+
+Flower exposes an HTTP endpoint that can be used to verify that the service is up and responding.
+
+* For the readiness probe, we perform an HTTP health check against the Flower web interface (`http://localhost:5555/`) using the `maykin-common health-check` command.
+* For the liveness probe, we perform the same HTTP health check to ensure that the Flower web interface is reacheable.
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -137,14 +172,14 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | extraVolumeMounts | list | `[]` | Optionally specify extra list of additional volumeMounts |
 | extraVolumes | list | `[]` | Optionally specify extra list of additional volumes |
 | flower.enabled | bool | `true` |  |
-| flower.livenessProbe.failureThreshold | int | `6` |  |
-| flower.livenessProbe.initialDelaySeconds | int | `60` |  |
+| flower.livenessProbe.failureThreshold | int | `10` |  |
+| flower.livenessProbe.initialDelaySeconds | int | `120` |  |
 | flower.livenessProbe.periodSeconds | int | `10` |  |
 | flower.livenessProbe.successThreshold | int | `1` |  |
 | flower.livenessProbe.timeoutSeconds | int | `5` |  |
 | flower.podLabels | object | `{}` |  |
-| flower.readinessProbe.failureThreshold | int | `6` |  |
-| flower.readinessProbe.initialDelaySeconds | int | `30` |  |
+| flower.readinessProbe.failureThreshold | int | `5` |  |
+| flower.readinessProbe.initialDelaySeconds | int | `120` |  |
 | flower.readinessProbe.periodSeconds | int | `10` |  |
 | flower.readinessProbe.successThreshold | int | `1` |  |
 | flower.readinessProbe.timeoutSeconds | int | `5` |  |
@@ -164,7 +199,7 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | ingress.enabled | bool | `false` |  |
 | ingress.hosts | list | `[]` | ingress hosts |
 | ingress.tls | list | `[]` |  |
-| livenessProbe.failureThreshold | int | `6` |  |
+| livenessProbe.failureThreshold | int | `10` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
 | livenessProbe.successThreshold | int | `1` |  |
@@ -182,7 +217,7 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
-| readinessProbe.failureThreshold | int | `6` |  |
+| readinessProbe.failureThreshold | int | `5` |  |
 | readinessProbe.initialDelaySeconds | int | `30` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.successThreshold | int | `1` |  |
@@ -284,23 +319,24 @@ The environment variables that the Open Telemetry SDK supports can be found [her
 | startupProbe.timeoutSeconds | int | `5` |  |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
-| worker.autoscaling.behaviour | object | `{}` |  |
 | worker.autoscaling.enabled | bool | `false` |  |
 | worker.autoscaling.maxReplicas | int | `100` |  |
 | worker.autoscaling.minReplicas | int | `1` |  |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
-| worker.livenessProbe.enabled | bool | `false` |  |
-| worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
-| worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
-| worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app objects.celery inspect --destination celery@${HOSTNAME} active"` |  |
-| worker.livenessProbe.failureThreshold | int | `3` |  |
+| worker.livenessProbe.enabled | bool | `true` |  |
+| worker.livenessProbe.failureThreshold | int | `6` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
-| worker.livenessProbe.periodSeconds | int | `50` |  |
+| worker.livenessProbe.periodSeconds | int | `60` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
-| worker.livenessProbe.timeoutSeconds | int | `10` |  |
-| worker.maxWorkerLivenessDelta | string | `""` |  |
+| worker.livenessProbe.timeoutSeconds | int | `15` |  |
 | worker.podLabels | object | `{}` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
+| worker.startupProbe.enabled | bool | `true` |  |
+| worker.startupProbe.failureThreshold | int | `3` |  |
+| worker.startupProbe.initialDelaySeconds | int | `60` |  |
+| worker.startupProbe.periodSeconds | int | `50` |  |
+| worker.startupProbe.successThreshold | int | `1` |  |
+| worker.startupProbe.timeoutSeconds | int | `10` |  |
