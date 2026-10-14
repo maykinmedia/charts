@@ -439,6 +439,7 @@ spec:
 
 ---
 
+{{ if .Values.beat.enabled -}}
 # Deployment Beat
 
 apiVersion: apps/v1
@@ -553,5 +554,6 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- end }}
 
 ---

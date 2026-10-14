@@ -4,6 +4,7 @@
 
 - Expose the Deployment update strategy per component: `strategy` (web), `worker.strategy`, `nginx.strategy`, `flower.strategy` and `beat.strategy`, rendered as-is as `.spec.strategy` when set. Empty (the default) keeps the Kubernetes default, so existing releases render unchanged.
   Typical uses: `{type: RollingUpdate, rollingUpdate: {maxSurge: 0, maxUnavailable: 1}}` on the worker, so a rollout no longer briefly runs an extra worker pod (which counts against a namespace ResourceQuota), and `{type: Recreate}` on beat, so two schedulers never overlap.
+- Add `beat.enabled` (default `true`), like `flower.enabled`: `false` skips the Celery beat Deployment, where `replicaCount: 0` still rendered an empty one.
 
 ## 1.15.0 (2026-08-21)
 

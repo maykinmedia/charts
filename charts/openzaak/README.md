@@ -121,6 +121,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| beat.enabled | bool | `true` | Run the Celery beat Deployment. Unlike `replicaCount: 0`, `false` renders no Deployment at all. |
 | beat.livenessProbe.failureThreshold | int | `3` |  |
 | beat.livenessProbe.initialDelaySeconds | int | `60` |  |
 | beat.livenessProbe.periodSeconds | int | `60` |  |

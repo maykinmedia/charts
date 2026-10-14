@@ -609,6 +609,8 @@ flower:
   resources: {}
 
 beat:
+  # -- Run the Celery beat Deployment. Unlike `replicaCount: 0`, `false` renders no Deployment at all.
+  enabled: true
   replicaCount: 1
   # -- Update strategy of the Celery beat Deployment, see `strategy`. `{type: Recreate}` makes sure two beat schedulers never run at the same time during a rollout.
   strategy: {}
