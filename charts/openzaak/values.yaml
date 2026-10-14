@@ -134,6 +134,9 @@ tags:
 
 replicaCount: 2
 
+# -- Update strategy of the web Deployment (`.spec.strategy`), rendered as-is when set. Empty keeps the Kubernetes default (`RollingUpdate` with maxSurge and maxUnavailable 25%), which starts a new pod before stopping an old one, so a rollout briefly needs extra resources, e.g. against a namespace ResourceQuota. `{type: RollingUpdate, rollingUpdate: {maxSurge: 0, maxUnavailable: 1}}` replaces pods one at a time without that overlap.
+strategy: {}
+
 image:
   repository: openzaak/open-zaak
   pullPolicy: IfNotPresent
@@ -491,6 +494,8 @@ settings:
 
 worker:
   replicaCount: 2
+  # -- Update strategy of the Celery worker Deployment, see `strategy`. `{type: RollingUpdate, rollingUpdate: {maxSurge: 0, maxUnavailable: 1}}` avoids running an extra worker pod during a rollout; tasks published meanwhile wait in the broker.
+  strategy: {}
   concurrency: 4
   podLabels: {}
   resources: {}
@@ -543,6 +548,8 @@ nginx:
   #     mountPath: /tmp
   extraVolumeMounts: []
   replicaCount: 1
+  # -- Update strategy of the nginx Deployment, see `strategy`.
+  strategy: {}
   podLabels: {}
   securityContext:
     capabilities:
@@ -584,6 +591,8 @@ nginx:
 flower:
   enabled: true
   replicaCount: 1
+  # -- Update strategy of the Flower Deployment, see `strategy`.
+  strategy: {}
   podLabels: {}
   livenessProbe:
     initialDelaySeconds: 120
@@ -601,6 +610,8 @@ flower:
 
 beat:
   replicaCount: 1
+  # -- Update strategy of the Celery beat Deployment, see `strategy`. `{type: Recreate}` makes sure two beat schedulers never run at the same time during a rollout.
+  strategy: {}
   podLabels: {}
   probesEnabled: false
   startupProbe: 

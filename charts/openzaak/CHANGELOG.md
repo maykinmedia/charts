@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.16.0 (2026-10-14)
+
+- Expose the Deployment update strategy per component: `strategy` (web), `worker.strategy`, `nginx.strategy`, `flower.strategy` and `beat.strategy`, rendered as-is as `.spec.strategy` when set. Empty (the default) keeps the Kubernetes default, so existing releases render unchanged.
+  Typical uses: `{type: RollingUpdate, rollingUpdate: {maxSurge: 0, maxUnavailable: 1}}` on the worker, so a rollout no longer briefly runs an extra worker pod (which counts against a namespace ResourceQuota), and `{type: Recreate}` on beat, so two schedulers never overlap.
+
 ## 1.15.0 (2026-08-21)
 
 - Bumped the application version to 1.30.0.
