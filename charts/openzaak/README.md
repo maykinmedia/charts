@@ -2,7 +2,7 @@
 
 Productiewaardige API's voor Zaakgericht Werken
 
-![Version: 1.15.0](https://img.shields.io/badge/Version-1.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.30.0](https://img.shields.io/badge/AppVersion-1.30.0-informational?style=flat-square)
+![Version: 1.16.0](https://img.shields.io/badge/Version-1.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.30.0](https://img.shields.io/badge/AppVersion-1.30.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -121,6 +121,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| beat.enabled | bool | `true` | Run the Celery beat Deployment. Unlike `replicaCount: 0`, `false` renders no Deployment at all. |
 | beat.livenessProbe.failureThreshold | int | `3` |  |
 | beat.livenessProbe.initialDelaySeconds | int | `60` |  |
 | beat.livenessProbe.periodSeconds | int | `60` |  |
@@ -135,6 +136,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | beat.startupProbe.periodSeconds | int | `60` |  |
 | beat.startupProbe.successThreshold | int | `1` |  |
 | beat.startupProbe.timeoutSeconds | int | `15` |  |
+| beat.strategy | object | `{}` | Update strategy of the Celery beat Deployment, see `strategy`. `{type: Recreate}` makes sure two beat schedulers never run at the same time during a rollout. |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.job.backoffLimit | int | `0` |  |
@@ -169,6 +171,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | flower.readinessProbe.timeoutSeconds | int | `5` |  |
 | flower.replicaCount | int | `1` |  |
 | flower.resources | object | `{}` |  |
+| flower.strategy | object | `{}` | Update strategy of the Flower Deployment, see `strategy`. |
 | fullnameOverride | string | `""` |  |
 | global.configuration.enabled | bool | `false` |  |
 | global.configuration.overwrite | bool | `true` |  |
@@ -219,6 +222,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | nginx.service.annotations | object | `{}` |  |
 | nginx.service.port | int | `80` |  |
 | nginx.service.type | string | `"ClusterIP"` |  |
+| nginx.strategy | object | `{}` | Update strategy of the nginx Deployment, see `strategy`. |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `false` |  |
 | pdb.maxUnavailable | string | `""` |  |
@@ -355,6 +359,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | startupProbe.periodSeconds | int | `10` |  |
 | startupProbe.successThreshold | int | `1` |  |
 | startupProbe.timeoutSeconds | int | `5` |  |
+| strategy | object | `{}` | Update strategy of the web Deployment (`.spec.strategy`), rendered as-is when set. Empty keeps the Kubernetes default (`RollingUpdate` with maxSurge and maxUnavailable 25%), which starts a new pod before stopping an old one, so a rollout briefly needs extra resources, e.g. against a namespace ResourceQuota. `{type: RollingUpdate, rollingUpdate: {maxSurge: 0, maxUnavailable: 1}}` replaces pods one at a time without that overlap. |
 | tags.redis | bool | `true` |  |
 | tolerations | list | `[]` |  |
 | worker.autoscaling.enabled | bool | `false` |  |
@@ -378,3 +383,4 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | worker.startupProbe.periodSeconds | int | `50` |  |
 | worker.startupProbe.successThreshold | int | `1` |  |
 | worker.startupProbe.timeoutSeconds | int | `10` |  |
+| worker.strategy | object | `{}` | Update strategy of the Celery worker Deployment, see `strategy`. `{type: RollingUpdate, rollingUpdate: {maxSurge: 0, maxUnavailable: 1}}` avoids running an extra worker pod during a rollout; tasks published meanwhile wait in the broker. |
