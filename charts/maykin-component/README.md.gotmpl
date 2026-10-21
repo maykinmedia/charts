@@ -1,0 +1,57 @@
+# Maykin Component Chart
+
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Installing the Chart
+
+### From the Helm repository (deprecated)
+
+```shell
+
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm repo update
+helm install <application-name> ./maykin-component --namespace test -f values.yaml
+```
+
+## Uninstall the Chart
+
+To uninstall the chart:
+
+```shell
+helm uninstall <application-name> --namespace test
+```
+
+## Testing
+
+This chart ships `helm-unittest` test suites under `tests/`:
+
+```bash
+helm plugin install https://github.com/helm-unittest/helm-unittest
+helm unittest maykin-component
+```
+
+And is linted with:
+
+```bash
+helm lint maykin-component
+```
+
+## Chart Dependencies
+
+{{ template "chart.requirementsSection" . }}
+
+## Naming convention for ConfigMap, Secret, SealedSecret and ExternalSecret
+
+- TODO
+
+## Consuming environment variable in application chart
+
+- TODO
+
+## Configuring probes
+
+- TODO
+
+{{ template "chart.valuesSection" . }}
