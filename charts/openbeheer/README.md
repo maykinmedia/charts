@@ -161,7 +161,7 @@ with the value `existingConfigurationSecret` so that it is added to the environm
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | redis.architecture | string | `"standalone"` |  |
 | redis.auth.enabled | bool | `false` |  |
-| redis.image | object | `{"registry":"docker.io","repository":"redis","tag":"8.0"}` | Redis image configuration - Migration from Bitnami to official Redis image         |
+| redis.image | object | `{"registry":"docker.io","repository":"redis","tag":"8.10"}` | Redis image configuration - Migration from Bitnami to official Redis image         |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.master.persistence.storageClass | string | `""` |  |
