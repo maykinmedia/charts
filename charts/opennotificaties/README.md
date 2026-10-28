@@ -2,7 +2,7 @@
 
 API voor het routeren van notificaties
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.2](https://img.shields.io/badge/AppVersion-1.16.2-informational?style=flat-square)
+![Version: 2.2.0-rc.1](https://img.shields.io/badge/Version-2.2.0--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.17.0](https://img.shields.io/badge/AppVersion-1.17.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -55,7 +55,7 @@ how to configure, see the Open Notificaties [documentation](https://open-notific
 
 ### Probes
 
-Open Notificaties x.y.z added new functionality to improve the container health checks for the web application,
+Open Notificaties 1.17.0 added new functionality to improve the container health checks for the web application,
 the Celery worker, Flower container and Celery beat container. Below you can find additional information about the various checks.
 
 **Web application**
@@ -120,7 +120,7 @@ Flower exposes an HTTP endpoint that can be used to verify that the service is u
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
 | beat.startupProbe.failureThreshold | int | `3` |  |
-| beat.startupProbe.initialDelaySeconds | int | `60` | The liveness file will be present only once Open-Forms has scheduled a task.  The most frequent task is scheduled every minute. We give time to the pod to start. |
+| beat.startupProbe.initialDelaySeconds | int | `60` | The liveness file will be present only once Open-Notificaties has scheduled a task.  The most frequent task is scheduled every minute. We give time to the pod to start. |
 | beat.startupProbe.periodSeconds | int | `60` |  |
 | beat.startupProbe.successThreshold | int | `1` |  |
 | beat.startupProbe.timeoutSeconds | int | `15` |  |
