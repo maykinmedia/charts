@@ -5587,6 +5587,27 @@ entries:
     version: 0.0.1
   opennotificaties:
   - apiVersion: v2
+    appVersion: 1.17.0
+    created: "2026-10-28T10:30:48.043564595Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: API voor het routeren van notificaties
+    digest: 766793b2c9e1ee703600c640cebe2c676cb85460da373777d7621cbdb7722dbc
+    name: opennotificaties
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/opennotificaties-2.2.0-rc.1/opennotificaties-2.2.0-rc.1.tgz
+    version: 2.2.0-rc.1
+  - apiVersion: v2
     appVersion: 1.16.2
     created: "2026-08-27T13:27:41.826635733Z"
     dependencies:
@@ -7519,6 +7540,27 @@ entries:
     version: 1.16.0-rc.1
   - apiVersion: v2
     appVersion: 1.30.0
+    created: "2026-10-28T10:30:48.252147115Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: bce770b3bfdfcc55689ed207257a78682895db643316056a36d96fc54d0a169b
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.16.0-rc.1/openzaak-1.16.0-rc.1.tgz
+    version: 1.16.0-rc.1
+  - apiVersion: v2
+    appVersion: 1.30.0
     created: "2026-08-27T13:25:59.861999411Z"
     dependencies:
     - name: redis
@@ -8674,4 +8716,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-10-28T10:17:00.361481362Z"
+generated: "2026-10-28T10:30:48.252519835Z"
