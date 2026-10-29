@@ -58,6 +58,11 @@ This chart has been tested against the following Maykin applications:
 - [Open VTB](https://github.com/maykinmedia/open-vtb)
 - [Open Organisatie](https://github.com/maykinmedia/open-organisatie)
 
+> [!WARNING]
+>
+> The individual Helm charts for these applications are no longer available.
+> Use this generic chart if you want to deploy them.
+
 ## Documentation
 
 Full parameter documentation (all `values.yaml` options, defaults, and descriptions) lives in [`./charts/maykin-component/README.md`](./charts/maykin-component/README.md) and is auto-generated with [helm-docs](https://github.com/norwoodj/helm-docs).
