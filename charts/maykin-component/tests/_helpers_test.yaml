@@ -1,0 +1,102 @@
+suite: Helpers (_helpers.tpl)
+
+templates:
+  - deployment.yaml
+
+set:
+  image.repository: test-repository/test-image
+  image.tag: "0.1.0"
+
+tests:
+  - it: application.name falls back to release name when applicationName is not set
+    documentIndex: 0
+    release:
+      name: myrelease
+    set:
+      applicationName: ""
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels["app.kubernetes.io/name"]
+          value: myrelease
+
+  - it: application.name uses applicationName when set, and concatenates
+    documentIndex: 0
+    release:
+      name: myrelease
+    set:
+      applicationName: test-app
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels["app.kubernetes.io/name"]
+          value: test-app
+
+  - it: fullname uses fullnameOverride when set, ignoring everything else
+    documentIndex: 0
+    release:
+      name: myrelease
+    set:
+      applicationName: test-app
+      fullnameOverride: custom-name
+    asserts:
+      - equal:
+          path: metadata.name
+          value: custom-name
+
+  - it: fullname equals release name when applicationName is not set
+    documentIndex: 0
+    release:
+      name: myrelease
+    set:
+      applicationName: ""
+    asserts:
+      - equal:
+          path: metadata.name
+          value: myrelease
+
+  - it: fullname equals release name when applicationName is contained in it
+    documentIndex: 0
+    release:
+      name: myrelease
+    set:
+      applicationName: release
+    asserts:
+      - equal:
+          path: metadata.name
+          value: myrelease
+
+  - it: worker name and fullname get the -worker suffix
+    release:
+      name: myrelease
+    set:
+      applicationName: test-app
+      worker.enabled: true
+    asserts:
+      - equal:
+          path: metadata.name
+          value: myrelease-test-app-worker
+        template: deployment.yaml
+        documentIndex: 1
+
+  - it: worker selector labels use the worker name
+    set:
+      applicationName: test-app
+      worker.enabled: true
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels["app.kubernetes.io/name"]
+          value: test-app-worker
+        template: deployment.yaml
+        documentIndex: 1
+
+  - it: flower name and fullname get the -flower suffix
+    release:
+      name: myrelease
+    set:
+      applicationName: test-app
+      flower.enabled: true
+    asserts:
+      - equal:
+          path: metadata.name
+          value: myrelease-test-app-flower
+        template: deployment.yaml
+        documentIndex: 2
