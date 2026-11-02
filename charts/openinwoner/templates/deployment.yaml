@@ -230,6 +230,16 @@ spec:
                 name: {{ .Values.existingSecret | default (include "openinwoner.fullname" .) }}
             - configMapRef:
                 name: {{ include "openinwoner.fullname" . }}
+          {{- if .Values.beat.livenessProbe.enabled }}
+          livenessProbe:
+            exec:
+            {{- toYaml .Values.beat.livenessProbe.exec | nindent 14 }}
+            initialDelaySeconds: {{ .Values.beat.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.beat.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.beat.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.beat.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.beat.livenessProbe.failureThreshold }}
+          {{- end }}
           resources:
             {{- toYaml .Values.beat.resources | nindent 12 }}
           command:

@@ -131,23 +131,32 @@ configuration:
   #     action_required_deadline_days: 1874
   #     zaken_filter_enabled: 'true'
   #     allowed_file_extensions:
-  #       - .pdf
-  #       - .txt
+  #       - pdf
+  #       - txt
   #     api_groups:
   #       - zaken_api_identifier: zaken-test
   #         documenten_api_identifier: documenten-test
   #         catalogi_api_identifier: catalogi-test
   #         fetch_eherkenning_zaken_with_rsin: true
-  #   openklant_config_enable: false
-  #   # OpenKlant2
-  #   openklant2_config_enable: true
-  #   openklant2_config:
-  #     service_identifier: klanten-test
-  #     mijn_vragen_kanaal: formulier
-  #     mijn_vragen_organisatie_naam: De Gemeente
-  #     mijn_vragen_actor: e412c6f6-bc31-4fd4-b883-0fb5e88d3f5b
-  #     interne_taak_gevraagde_handeling: Vraag beantwoorden
-  #     interne_taak_toelichting: Vraag via OIP, graag beantwoorden
+  #   klantensysteem_config_enable: true
+  #   klantensysteem_config:
+  #     primary_backend: openklant2
+  #     register_contact_via_api: true
+  #     register_contact_email: admin@example.nl
+  #     openklant2_config:
+  #       service_identifier: klanten-test
+  #       mijn_vragen_kanaal: formulier
+  #       mijn_vragen_organisatie_naam: De Gemeente
+  #       mijn_vragen_actor: e412c6f6-bc31-4fd4-b883-0fb5e88d3f5b
+  #       interne_taak_gevraagde_handeling: Vraag beantwoorden
+  #       interne_taak_toelichting: Vraag via OIP, graag beantwoorden
+  #       subjects:
+  #         - subject: Algemene vraag
+  #   # Other available steps (see the Open Inwoner setup-configuration
+  #   # documentation for their fields): site_config, digid_saml_config,
+  #   # eherkenning_saml_config, soap_services_config, haalcentraal_config,
+  #   # objects_api_config, mijn_afval_config, kvk_config, ssd_config,
+  #   # sites_config, default_user_configuration and cms_pages_config.
 
 tags:
   redis: true
@@ -403,6 +412,19 @@ settings:
     # When not using the redis subcharts you can set them manually like this:
     # default: myredisserver:6379/0
     # axes: myredisserver:6379/0
+    # -- Cache used to rate limit notifications sent on behalf of users, such as
+    # contact invitations. Leave the options empty to use those of the default cache.
+    # Requires openinwoner version 2.5.0 or higher.
+    notificationThrottle:
+      # -- Sets 'CACHE_NOTIFICATION_THROTTLE_BACKEND' var, e.g. django_redis.cache.RedisCache
+      backend: ""
+      # -- Sets 'CACHE_NOTIFICATION_THROTTLE_LOCATION' var, the full location, e.g. redis://myredisserver:6379/0
+      location: ""
+      # -- Sets 'CACHE_NOTIFICATION_THROTTLE_CLIENT_CLASS' var, the django-redis client class
+      clientClass: ""
+      # -- Sets 'CACHE_NOTIFICATION_THROTTLE_IGNORE_EXCEPTIONS' var. If true, notifications are
+      # not rate limited while the cache is unavailable. Leave empty (null) to use the setting of the default cache.
+      ignoreExceptions: null
 
   # Celery cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services
   celery:
@@ -470,6 +492,57 @@ settings:
 
   # -- The Celery queue used for cache seeding tasks. Defaults to the low-latency worker queue.
   cacheSeedingQueue: ""
+
+  # -- Allow staff users to run interactive configuration checks from the admin
+  # interface. These checks may perform real requests against connected services,
+  # so only enable this when needed. Requires openinwoner version 2.5.0 or higher.
+  enableInteractiveChecks: false
+
+  # -- Display environment information in the header in the admin. Environment information is only displayed to logged in users. Requires openinwoner version 2.5.0 or higher.
+  showLabelEnvironment: false
+  # -- Environment information to display, defaults to the value of ENVIRONMENT. Only displayed when SHOW_ENVIRONMENT is set to True. You can set this to strings like OpenGem PROD or simply PROD, depending on your needs.
+  environmentLabelName: ""
+  # -- CSS color value for the environment information background color. Defaults to orange, example values can be specified in HEX format too, e.g.: #FF0000 for red.
+  environmentLabelBackgroundColor: ""
+  # -- CSS color value for the environment information text color. Defaults to black. Follows the same rules as ENVIRONMENT_BACKGROUND_COLOR.
+  environmentLabelForegroundColor: ""
+
+  # -- Custom product branding in the admin footer, for when the application is
+  # redistributed as part of another product. Leave `name` empty to only show the
+  # standard Open Inwoner branding. Requires openinwoner version 2.5.0 or higher.
+  customProduct:
+    name: ""
+    # -- Optional link for the custom product.
+    url: ""
+    # -- Optional path to a favicon-sized logo, relative to the static files. Ignored if `logoUrl` is set.
+    logoPath: ""
+    # -- Optional URL of the logo. Externally hosted logos may require tweaking the Content-Security-Policy.
+    logoUrl: ""
+
+  # -- Apply the Content Security Policy in report-only mode: violations are reported
+  # but not blocked. Use only to test the policy, e.g. with custom JavaScript or embedded
+  # widgets, as it disables enforcement while active.
+  cspReportOnly: false
+
+  # -- Apply the Permissions Policy in report-only mode: violations are reported but
+  # not blocked. Use only to test the policy, e.g. with custom JavaScript or embedded
+  # widgets, as it disables enforcement while active. Requires openinwoner version 2.5.0 or higher.
+  permissionsPolicyReportOnly: false
+
+  # -- Endpoint for reports sent by browsers, e.g. Permissions Policy violations.
+  # Requires openinwoner version 2.5.0 or higher. See also `nginx.config.reportingApiRateLimit`.
+  reportingApi:
+    # -- Ask browsers to send reports to the endpoint. When disabled, browsers send no
+    # reports and the endpoint is unavailable; policies are still applied.
+    enabled: true
+    # -- Maximum number of reports processed per request, further reports are ignored.
+    maxReportsPerRequest: 100
+    # -- Log the received reports, up to `maxLoggedViolationsPerRequest` per request.
+    loggingEnabled: true
+    # -- Maximum number of violations logged per request; the rest are summarized in a single log entry.
+    maxLoggedViolationsPerRequest: 5
+    # -- Emit OpenTelemetry metrics for the received reports.
+    metricsEnabled: true
 
   otel:
     disabled: true
@@ -560,6 +633,21 @@ beat:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
+  livenessProbe:
+    # -- Requires openinwoner version 2.5.0 or higher, which schedules a sentinel
+    # task every minute so that the health check reflects whether beat is publishing tasks.
+    enabled: false
+    exec:
+      command:
+        - maykin-common
+        - beat-health-check
+        - --max-age
+        - "1200"
+    initialDelaySeconds: 120
+    periodSeconds: 300
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
 
 celeryMonitor:
   replicaCount: 1
@@ -585,6 +673,17 @@ nginx:
       # -- You need to generate the encrypted basic auth password yourself
       users: |-
         usernameexample:$apr1$5QwE2Ysc$ycRucgmLt0iQMMxcnu4CA/
+    # -- Rate limit the Reporting API endpoint (/api/reporting-api/), which accepts
+    # unauthenticated requests. Requires openinwoner version 2.5.0 or higher.
+    reportingApiRateLimit:
+      enabled: true
+      # -- Key the requests are limited by. Note that behind an ingress controller
+      # $binary_remote_addr is the address of the controller, which makes the limit
+      # apply to all clients together.
+      key: $binary_remote_addr
+      rate: 10r/m
+      burst: 10
+      clientMaxBodySize: 64k
   # extraVolumes Optionally specify extra list of additional volumes
   # e.g:
   # extraVolumes:

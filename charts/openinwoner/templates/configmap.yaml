@@ -101,6 +101,50 @@ data:
   CACHE_ZGW_ZAKEN_TIMEOUT: {{ .Values.settings.cacheZgwZakenTimeout | toString | quote }}
   {{- end }}
   CACHE_SEEDING_QUEUE: {{ .Values.settings.cacheSeedingQueue | default .Values.lowLatencyWorker.queue | toString | quote }}
+  ENABLE_INTERACTIVE_CHECKS: {{ if .Values.settings.enableInteractiveChecks }}"True"{{ else }}"False"{{ end }}
+  SHOW_ENVIRONMENT: {{ if .Values.settings.showLabelEnvironment }}"True"{{ else }}"False"{{ end }}
+  {{- if .Values.settings.environmentLabelName }}
+  ENVIRONMENT_LABEL: {{ .Values.settings.environmentLabelName | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.environmentLabelBackgroundColor }}
+  ENVIRONMENT_BACKGROUND_COLOR: {{ .Values.settings.environmentLabelBackgroundColor | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.environmentLabelForegroundColor }}
+  ENVIRONMENT_FOREGROUND_COLOR: {{ .Values.settings.environmentLabelForegroundColor | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.customProduct.name }}
+  CUSTOM_PRODUCT_NAME: {{ .Values.settings.customProduct.name | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.customProduct.url }}
+  CUSTOM_PRODUCT_URL: {{ .Values.settings.customProduct.url | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.customProduct.logoPath }}
+  CUSTOM_PRODUCT_LOGO_PATH: {{ .Values.settings.customProduct.logoPath | toString | quote }}
+  {{- end }}
+  {{- if .Values.settings.customProduct.logoUrl }}
+  CUSTOM_PRODUCT_LOGO_URL: {{ .Values.settings.customProduct.logoUrl | toString | quote }}
+  {{- end }}
+  CSP_REPORT_ONLY: {{ if .Values.settings.cspReportOnly }}"True"{{ else }}"False"{{ end }}
+  PERMISSIONS_POLICY_REPORT_ONLY: {{ if .Values.settings.permissionsPolicyReportOnly }}"True"{{ else }}"False"{{ end }}
+  REPORTING_API_ENABLED: {{ if .Values.settings.reportingApi.enabled }}"True"{{ else }}"False"{{ end }}
+  REPORTING_API_MAX_REPORTS_PER_REQUEST: {{ .Values.settings.reportingApi.maxReportsPerRequest | toString | quote }}
+  REPORTING_API_LOGGING_ENABLED: {{ if .Values.settings.reportingApi.loggingEnabled }}"True"{{ else }}"False"{{ end }}
+  REPORTING_API_MAX_LOGGED_VIOLATIONS_PER_REQUEST: {{ .Values.settings.reportingApi.maxLoggedViolationsPerRequest | toString | quote }}
+  REPORTING_API_METRICS_ENABLED: {{ if .Values.settings.reportingApi.metricsEnabled }}"True"{{ else }}"False"{{ end }}
+  {{- with .Values.settings.cache.notificationThrottle }}
+  {{- if .backend }}
+  CACHE_NOTIFICATION_THROTTLE_BACKEND: {{ .backend | toString | quote }}
+  {{- end }}
+  {{- if .location }}
+  CACHE_NOTIFICATION_THROTTLE_LOCATION: {{ .location | toString | quote }}
+  {{- end }}
+  {{- if .clientClass }}
+  CACHE_NOTIFICATION_THROTTLE_CLIENT_CLASS: {{ .clientClass | toString | quote }}
+  {{- end }}
+  {{- if not (kindIs "invalid" .ignoreExceptions) }}
+  CACHE_NOTIFICATION_THROTTLE_IGNORE_EXCEPTIONS: {{ if .ignoreExceptions }}"True"{{ else }}"False"{{ end }}
+  {{- end }}
+  {{- end }}
   OTEL_SDK_DISABLED: {{ if .Values.settings.otel.disabled }}"True"{{ else }}"False"{{ end }}
   {{- if not .Values.settings.otel.disabled }}
   OTEL_RESOURCE_ATTRIBUTES: "{{ range $index, $item := .Values.settings.otel.resourceAttributes }}{{ if $index }},{{ end }}{{ .key }}={{ .value }}{{ end }}"
