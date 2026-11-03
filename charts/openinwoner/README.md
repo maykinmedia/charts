@@ -2,7 +2,7 @@
 
 Platform voor gemeenten en overheden om producten inzichtelijker en toegankelijker te maken voor inwoners.
 
-![Version: 2.6.0](https://img.shields.io/badge/Version-2.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.3](https://img.shields.io/badge/AppVersion-2.4.3-informational?style=flat-square)
+![Version: 2.7.0-rc.1](https://img.shields.io/badge/Version-2.7.0--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
 
 ## Introduction
 
@@ -138,6 +138,16 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| beat.livenessProbe.enabled | bool | `false` | Requires openinwoner version 2.5.0 or higher, which schedules a sentinel task every minute so that the health check reflects whether beat is publishing tasks. |
+| beat.livenessProbe.exec.command[0] | string | `"maykin-common"` |  |
+| beat.livenessProbe.exec.command[1] | string | `"beat-health-check"` |  |
+| beat.livenessProbe.exec.command[2] | string | `"--max-age"` |  |
+| beat.livenessProbe.exec.command[3] | string | `"1200"` |  |
+| beat.livenessProbe.failureThreshold | int | `3` |  |
+| beat.livenessProbe.initialDelaySeconds | int | `120` |  |
+| beat.livenessProbe.periodSeconds | int | `300` |  |
+| beat.livenessProbe.successThreshold | int | `1` |  |
+| beat.livenessProbe.timeoutSeconds | int | `5` |  |
 | beat.podLabels | object | `{}` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
@@ -328,6 +338,8 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | nginx.config.clientMaxBodySize | string | `"10M"` |  |
 | nginx.config.proxyConnectTimeoutSeconds | int | `300` |  |
 | nginx.config.proxyReadTimeoutSeconds | int | `300` |  |
+| nginx.config.reportingApiRateLimit | object | `{"burst":10,"clientMaxBodySize":"64k","enabled":true,"key":"$binary_remote_addr","rate":"10r/m"}` | Rate limit the Reporting API endpoint (/api/reporting-api/), which accepts unauthenticated requests. Requires openinwoner version 2.5.0 or higher. |
+| nginx.config.reportingApiRateLimit.key | string | `"$binary_remote_addr"` | Key the requests are limited by. Note that behind an ingress controller $binary_remote_addr is the address of the controller, which makes the limit apply to all clients together. |
 | nginx.extraVolumeMounts | list | `[]` |  |
 | nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -396,12 +408,22 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.brpVersion | string | `""` |  |
 | settings.cache.axes | string | `""` | Sets 'CACHE_AXES' var, only required when tags.redis is false |
 | settings.cache.default | string | `""` | Sets 'CACHE_DEFAULT' var, only required when tags.redis is false |
+| settings.cache.notificationThrottle | object | `{"backend":"","clientClass":"","ignoreExceptions":null,"location":""}` | Cache used to rate limit notifications sent on behalf of users, such as contact invitations. Leave the options empty to use those of the default cache. Requires openinwoner version 2.5.0 or higher. |
+| settings.cache.notificationThrottle.backend | string | `""` | Sets 'CACHE_NOTIFICATION_THROTTLE_BACKEND' var, e.g. django_redis.cache.RedisCache |
+| settings.cache.notificationThrottle.clientClass | string | `""` | Sets 'CACHE_NOTIFICATION_THROTTLE_CLIENT_CLASS' var, the django-redis client class |
+| settings.cache.notificationThrottle.ignoreExceptions | string | `nil` | Sets 'CACHE_NOTIFICATION_THROTTLE_IGNORE_EXCEPTIONS' var. If true, notifications are not rate limited while the cache is unavailable. Leave empty (null) to use the setting of the default cache. |
+| settings.cache.notificationThrottle.location | string | `""` | Sets 'CACHE_NOTIFICATION_THROTTLE_LOCATION' var, the full location, e.g. redis://myredisserver:6379/0 |
 | settings.cacheSeedingQueue | string | `""` | The Celery queue used for cache seeding tasks. Defaults to the low-latency worker queue. |
 | settings.cacheZgwZakenTimeout | string | `""` | Timeout in seconds for cached ZGW zaken requests. Leave empty to use the application default. |
 | settings.celery.brokerUrl | string | `""` |  |
 | settings.celery.logLevel | string | `"debug"` |  |
 | settings.celery.resultBackend | string | `""` |  |
 | settings.cms4MigrationInitContainer | bool | `true` | Runs an init container that executes `python /app/src/manage.py cms4_migration`. Enabled by default to ensure the migration runs on the initial rollout to 2.3.0. This migration only needs to run once: once it has completed successfully, set this to false to avoid re-running it on every pod restart. |
+| settings.cspReportOnly | bool | `false` | Apply the Content Security Policy in report-only mode: violations are reported but not blocked. Use only to test the policy, e.g. with custom JavaScript or embedded widgets, as it disables enforcement while active. |
+| settings.customProduct | object | `{"logoPath":"","logoUrl":"","name":"","url":""}` | Custom product branding in the admin footer, for when the application is redistributed as part of another product. Leave `name` empty to only show the standard Open Inwoner branding. Requires openinwoner version 2.5.0 or higher. |
+| settings.customProduct.logoPath | string | `""` | Optional path to a favicon-sized logo, relative to the static files. Ignored if `logoUrl` is set. |
+| settings.customProduct.logoUrl | string | `""` | Optional URL of the logo. Externally hosted logos may require tweaking the Content-Security-Policy. |
+| settings.customProduct.url | string | `""` | Optional link for the custom product. |
 | settings.database.host | string | `""` |  |
 | settings.database.name | string | `""` |  |
 | settings.database.password | string | `""` |  |
@@ -426,7 +448,11 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.email.port | int | `25` |  |
 | settings.email.useTLS | bool | `false` |  |
 | settings.email.username | string | `""` |  |
+| settings.enableInteractiveChecks | bool | `false` | Allow staff users to run interactive configuration checks from the admin interface. These checks may perform real requests against connected services, so only enable this when needed. Requires openinwoner version 2.5.0 or higher. |
 | settings.environment | string | `nil` |  |
+| settings.environmentLabelBackgroundColor | string | `""` | CSS color value for the environment information background color. Defaults to orange, example values can be specified in HEX format too, e.g.: #FF0000 for red. |
+| settings.environmentLabelForegroundColor | string | `""` | CSS color value for the environment information text color. Defaults to black. Follows the same rules as ENVIRONMENT_BACKGROUND_COLOR. |
+| settings.environmentLabelName | string | `""` | Environment information to display, defaults to the value of ENVIRONMENT. Only displayed when SHOW_ENVIRONMENT is set to True. You can set this to strings like OpenGem PROD or simply PROD, depending on your needs. |
 | settings.isHttps | bool | `true` |  |
 | settings.loadFixtures | bool | `false` | Will load all fixtures in /app/src/open_inwoner/conf/fixtures/*.json |
 | settings.oidcFrontendLogoutWithHints | bool | `true` | Whether to provide a id_token_hint to the IdP broker when initiating a frontchannel logout |
@@ -440,10 +466,18 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | settings.otel.metricExportInterval | int | `60000` | Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application. |
 | settings.otel.metricExportTimeout | int | `10000` | Controls the timeout of the requests to the collector (in milliseconds) |
 | settings.otel.resourceAttributes | list | `[]` | Resources Attributes can be used to specify additional information about the instance. |
+| settings.permissionsPolicyReportOnly | bool | `false` | Apply the Permissions Policy in report-only mode: violations are reported but not blocked. Use only to test the policy, e.g. with custom JavaScript or embedded widgets, as it disables enforcement while active. Requires openinwoner version 2.5.0 or higher. |
+| settings.reportingApi | object | `{"enabled":true,"loggingEnabled":true,"maxLoggedViolationsPerRequest":5,"maxReportsPerRequest":100,"metricsEnabled":true}` | Endpoint for reports sent by browsers, e.g. Permissions Policy violations. Requires openinwoner version 2.5.0 or higher. See also `nginx.config.reportingApiRateLimit`. |
+| settings.reportingApi.enabled | bool | `true` | Ask browsers to send reports to the endpoint. When disabled, browsers send no reports and the endpoint is unavailable; policies are still applied. |
+| settings.reportingApi.loggingEnabled | bool | `true` | Log the received reports, up to `maxLoggedViolationsPerRequest` per request. |
+| settings.reportingApi.maxLoggedViolationsPerRequest | int | `5` | Maximum number of violations logged per request; the rest are summarized in a single log entry. |
+| settings.reportingApi.maxReportsPerRequest | int | `100` | Maximum number of reports processed per request, further reports are ignored. |
+| settings.reportingApi.metricsEnabled | bool | `true` | Emit OpenTelemetry metrics for the received reports. |
 | settings.searchIndexInitContainer | bool | `false` |  |
 | settings.secretKey | string | `""` | Generate secret key at https://djecrety.ir/ |
 | settings.secretKeyFallback | string | `""` | This optional setting can be used to rotate a secret key, by moving a new value into secretKey, and moving the previous secretKey into secretKeyFallback. |
 | settings.sentry.dsn | string | `""` |  |
+| settings.showLabelEnvironment | bool | `false` | Display environment information in the header in the admin. Environment information is only displayed to logged in users. Requires openinwoner version 2.5.0 or higher. |
 | settings.smsgateway.apikey | string | `""` |  |
 | settings.smsgateway.backend | string | `""` | For example "open_inwoner.accounts.gateways.MessageBird" |
 | settings.uwsgi.bufferSize | string | `""` |  |

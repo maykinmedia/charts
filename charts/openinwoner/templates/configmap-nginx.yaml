@@ -19,6 +19,12 @@ data:
     proxy_pass http://{{ include "openinwoner.fullname" . }}.{{ .Release.Namespace }};
 
   default.conf: |
+    {{- with .Values.nginx.config.reportingApiRateLimit }}
+    {{- if .enabled }}
+    limit_req_zone {{ .key }} zone=reporting_api:1m rate={{ .rate }};
+    {{- end }}
+    {{- end }}
+
     server {
         listen 8080 default_server;
         server_name {{ .Values.settings.allowedHosts  | replace "," " "}} localhost;
@@ -61,6 +67,22 @@ data:
             auth_basic_user_file /etc/.basicauth/.basicauth;
             {{- end }}
         }
+
+        {{- with .Values.nginx.config.reportingApiRateLimit }}
+        {{- if .enabled }}
+
+        location = /api/reporting-api/ {
+            limit_req zone=reporting_api burst={{ .burst }} nodelay;
+            limit_req_status 429;
+            client_max_body_size {{ .clientMaxBodySize }};
+            include conf.d/proxy;
+            {{- if $.Values.nginx.config.basicAuth.enabled }}
+            auth_basic "{{ include "openinwoner.fullname" $ }}";
+            auth_basic_user_file /etc/.basicauth/.basicauth;
+            {{- end }}
+        }
+        {{- end }}
+        {{- end }}
 
         location /_health/ {
             access_log /var/log/nginx/access.log;

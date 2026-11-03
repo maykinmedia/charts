@@ -1,5 +1,118 @@
 # Changelog
 
+## 2.7.0-rc.1 (2026-11-03)
+
+**Warning**
+
+⚠️ This release contains breaking changes.
+
+The application version was updated to `2.5.0`. This version of the application
+removes the setup configuration through environment variables: `setup_configuration`
+only accepts the YAML format, and environment variables such as those starting with
+`KIC_`, `ADMIN_OIDC_`, `DIGID_OIDC_`, `DIGID_SAML_`, `EHERKENNING_OIDC_`,
+`EHERKENNING_SAML_`, `CMS_`, `SITE_` (except `SITE_ID`) and most `ZGW_` variables
+are ignored. See the
+[Open Inwoner changelog](https://github.com/maykinmedia/open-inwoner/blob/v2.5.0/CHANGELOG.rst)
+for the full list.
+
+This version also sends a `Permissions-Policy` header that only allows autoplay
+and fullscreen (for the site itself and embedded YouTube and Vimeo videos), WebAuthn
+(`publickey-credentials-get` and `-create`) and writing to the clipboard. All other
+features are denied, including camera, microphone, geolocation, payment, reading
+the clipboard, screen capture, USB, Bluetooth and the motion sensors. See the
+[Permissions Policy documentation](https://docs.openinwoner.nl/en/v2.5.0/configuration/03_permissions_policy.html)
+for the full policy.
+
+The Content Security Policy is stricter, and now also applies to logged in staff
+users (the admin remains excluded). The CSP settings in the admin are migrated
+automatically.
+
+---
+
+**Upgrade procedure**
+
+If any of the removed environment variables are set, for example through
+`extraEnvVars` or `existingSecret`, move that configuration to the `configuration.data`
+value in the YAML format. See the
+[setup configuration documentation](https://docs.openinwoner.nl/en/v2.5.0/configuration/01_setup_config.html)
+for the available steps and fields.
+
+If custom JavaScript or embedded widgets (such as a chat widget or map) use any of
+the denied features, for example geolocation or the camera, set
+`settings.permissionsPolicyReportOnly` to `true` to test the policy in
+report-only mode first. If they load resources from other domains that the stricter
+Content Security Policy now blocks, add those as CSP settings in the admin. Only as a
+last resort, set `settings.cspReportOnly` to `true`, which disables enforcement of
+the Content Security Policy.
+
+The primary key of the `NotificationRecord` table is converted to a UUID, which
+updates every row individually. This only affects installations that use ZGW
+notifications. Migrations run when the web container starts (or in the
+`search-index` init container, if `settings.searchIndexInitContainer` is enabled),
+so on a large table the default `livenessProbe` may restart the pod before the
+migration has finished. Before upgrading, check the number of rows:
+
+```sql
+SELECT COUNT(*) FROM notifications_notificationrecord;
+```
+
+If it is large, prune the table first with
+`python src/manage.py prune_notification_records`, or temporarily increase
+`livenessProbe.initialDelaySeconds` and the timeout of `helm upgrade --wait`.
+
+During the upgrade, data migrations remove links and images with an unsupported URL
+scheme from rich text entered by administrators, and log a warning for every removal.
+Keep the logs of the first startup of the web container (or the `search-index` init
+container), so the administrators can check and restore the affected content.
+
+We recommend enabling the celery beat liveness probe (`beat.livenessProbe.enabled`).
+Open Inwoner 2.5 schedules a task every minute, so the probe reliably reflects
+whether beat is still scheduling tasks.
+
+**Changes**
+
+- Bumped the app version to `2.5.0`.
+- Added `settings.enableInteractiveChecks` (default: `false`), which sets
+  `ENABLE_INTERACTIVE_CHECKS`. Required to use the interactive configuration
+  checks in the admin.
+- Added `settings.showLabelEnvironment` (default: `false`),
+  `settings.environmentLabelName`, `settings.environmentLabelBackgroundColor` and
+  `settings.environmentLabelForegroundColor` for the environment label in the
+  admin, which set `SHOW_ENVIRONMENT`, `ENVIRONMENT_LABEL`,
+  `ENVIRONMENT_BACKGROUND_COLOR` and `ENVIRONMENT_FOREGROUND_COLOR`.
+- Added `settings.customProduct` (`name`, `url`, `logoPath`, `logoUrl`) for custom
+  product branding in the admin, which set `CUSTOM_PRODUCT_NAME`,
+  `CUSTOM_PRODUCT_URL`, `CUSTOM_PRODUCT_LOGO_PATH` and `CUSTOM_PRODUCT_LOGO_URL`.
+- Added `settings.cspReportOnly` (default: `false`), which sets `CSP_REPORT_ONLY`,
+  to test the Content Security Policy in report-only mode.
+- Added `settings.permissionsPolicyReportOnly` (default: `false`), which sets
+  `PERMISSIONS_POLICY_REPORT_ONLY`. Open Inwoner 2.5 enforces a Permissions
+  Policy by default; enable this to test the policy in report-only mode first.
+- Added `settings.reportingApi` (`enabled`, `maxReportsPerRequest`,
+  `loggingEnabled`, `maxLoggedViolationsPerRequest`, `metricsEnabled`) for the
+  endpoint that receives violation reports from browsers, which set
+  `REPORTING_API_ENABLED`, `REPORTING_API_MAX_REPORTS_PER_REQUEST`,
+  `REPORTING_API_LOGGING_ENABLED`,
+  `REPORTING_API_MAX_LOGGED_VIOLATIONS_PER_REQUEST` and
+  `REPORTING_API_METRICS_ENABLED`.
+- The bundled nginx rate limits the unauthenticated `/api/reporting-api/`
+  endpoint, configurable through `nginx.config.reportingApiRateLimit` (default:
+  enabled, 10 requests per minute with a burst of 10, 64k maximum body size).
+  Behind an ingress controller the default key `$binary_remote_addr` is the
+  address of the controller, so the limit applies to all clients together.
+- Added `settings.cache.notificationThrottle` (`backend`, `location`,
+  `clientClass`, `ignoreExceptions`) for an optional separate cache to rate
+  limit notifications sent on behalf of users, which set
+  `CACHE_NOTIFICATION_THROTTLE_BACKEND`, `CACHE_NOTIFICATION_THROTTLE_LOCATION`,
+  `CACHE_NOTIFICATION_THROTTLE_CLIENT_CLASS` and
+  `CACHE_NOTIFICATION_THROTTLE_IGNORE_EXCEPTIONS`. By default the default cache
+  is used, so no action is required.
+- Added an optional liveness probe for celery beat (`beat.livenessProbe`, default:
+  disabled) using `maykin-common beat-health-check`.
+- Updated the example setup configuration in `values.yaml` to the
+  `klantensysteem_config` step and to file extensions without a leading dot.
+  Open Inwoner 2.5 only supports setup configuration through YAML.
+
 ## 2.6.0 (2026-08-24)
 
 - Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.
