@@ -1,0 +1,23 @@
+apiVersion: v2
+name: maykin-component
+description: Generic Helm chart for deploying Maykin applications on Kubernetes
+type: application
+home: https://github.com/maykinmedia/charts/
+version: 0.1.0
+maintainers:
+  - name: maykinmedia
+    email: info@maykin.nl
+
+dependencies:
+  - name: redis
+    version: 17.3.14
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - redis
+  - name: common
+    version: 2.27.0
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+    - bitnami-common
+
+

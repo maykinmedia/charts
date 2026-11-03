@@ -1,0 +1,54 @@
+# Maykin Component Chart
+
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Installing the Chart
+
+### From the Helm repository
+
+```shell
+
+helm repo add maykinmedia https://maykinmedia.github.io/charts/
+helm repo update
+helm install <application-name> ./maykin-component --namespace test -f values.yaml
+```
+
+## Uninstall the Chart
+
+To uninstall the chart:
+
+```shell
+helm uninstall <application-name> --namespace test
+```
+
+## Testing
+
+This chart ships `helm-unittest` test suites under `tests/`:
+
+```bash
+helm plugin install https://github.com/helm-unittest/helm-unittest
+helm unittest maykin-component
+```
+
+And is linted with:
+
+```bash
+helm lint maykin-component
+```
+
+## Chart Dependencies
+
+{{ template "chart.requirementsSection" . }}
+
+## Chart Migrations
+
+- Use the same `values.yaml` as the app, and remove the fields the generic chart no longer uses
+- For reference, see the example in `charts/maykin-component/tests/fixtures/values-<application-name>.yaml`
+- Set the required fields: `applicationName`, `image.repository`, `image.tag`
+- Move app-specific env vars into `settings.extraSettings`
+- Verify with `helm lint` and `helm template`
+- Compare the old and new manifests (resource names, `spec.selector.matchLabels`, PVC)
+
+{{ template "chart.valuesSection" . }}

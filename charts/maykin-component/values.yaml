@@ -1,0 +1,623 @@
+# -- Name of the application, used in resource naming templates
+applicationName: ""
+# -- Override the chart's fullname template
+fullnameOverride: ""
+# -- Override the namespace resources are deployed into
+namespaceOverride: ""
+# -- Override the chart version label used on resources
+chartVersionOverride: ""
+
+# -- Extra labels applied to all resources created by this chart
+additionalLabels: {}
+# -- Override the "app.kubernetes.io/component" label value
+componentOverride: ""
+# -- Override the "app.kubernetes.io/part-of" label value
+partOfOverride: ""
+
+global:
+  configuration:
+    # -- Master switch: must be true (together with configuration.enabled) for
+    # django-setup-configuration resources (ConfigMap/Secret/Job) to be rendered at all
+    enabled: false
+    # -- Whether the setup-configuration job is allowed to overwrite existing config
+    overwrite: true
+    secrets: {}
+
+  settings:
+    # -- Global database host, overrides settings.database.host when set
+    databaseHost: ""
+
+configuration:
+  # -- Enable django-setup-configuration support for this release
+  # (must also have global.configuration.enabled: true)
+  enabled: false
+  # -- Whether re-running setup_configuration is allowed to overwrite existing values
+  overwrite: true
+  superuser:
+    # -- Username for the Django superuser created by setup_configuration
+    username: ""
+    # -- Password for the Django superuser created by setup_configuration
+    password: ""
+    # -- Email address for the Django superuser created by setup_configuration
+    email: ""
+  job:
+    # -- Run "manage.py setup_configuration" as a post-install/post-upgrade Helm hook Job.
+    # The Job only renders when this AND configuration.enabled AND configuration.data
+    # (non-empty) are all set — see templates/configuration-job.yaml
+    enabled: false
+    # -- Extra labels merged onto the Job and its Pod template
+    additionalLabels: {}
+    # -- Extra annotations merged onto the Job (helm hook annotations are always set)
+    annotations: {}
+    # -- Number of retries before the Job is considered failed
+    backoffLimit: 0
+    # -- Pod restart policy for the Job. Job pods generally should not restart in place;
+    # a failed attempt is retried by creating a new pod, governed by backoffLimit
+    restartPolicy: Never
+    # -- Resource requests/limits for the setup-configuration container.
+    # NOTE: this field is immutable once the Job has been created by Helm
+    resources: {}
+      # limits:
+      #   cpu: 200m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+  # -- Extra Kubernetes Secret data referenced by the generated configuration.yaml
+  # (e.g. credentials that setup_configuration should read)
+  secrets: {}
+  # -- YAML content consumed by "manage.py setup_configuration". Rendered into a ConfigMap
+  # and mounted into the Job at /app/configuration/configuration.yaml.
+  data: ""
+  # e.g.
+  # data: |-
+  #   sites_config_enable: true
+  #   sites_config:
+  #     items:
+  #     - domain: openzaak.example.nl
+  #       name: Open-Zaak Test
+
+tags:
+  # -- Whether the bundled Redis subchart is used for cache/celery broker
+  redis: true
+
+# -- Disable auto-injected Kubernetes Service environment variables in pods
+enableServiceLinks: false
+
+# -- Number of application pod replicas
+replicaCount: 2
+
+image:
+  # -- Container image repository (required)
+  repository: "maykinmedia/application"
+  # -- Image pull policy
+  pullPolicy: Always
+  # -- Image tag; defaults to .Chart.AppVersion when empty
+  tag: "0.0.0"
+
+# -- References to secrets for pulling images from private registries
+imagePullSecrets: []
+
+serviceAccount:
+  # -- Whether a ServiceAccount should be created
+  create: true
+  # -- Annotations to add to the ServiceAccount
+  annotations: {}
+  # -- Extra labels for the ServiceAccount
+  additionalLabels: {}
+  # -- Name of the ServiceAccount to use; generated from the fullname template if not set
+  name: ""
+  # -- Whether to auto-mount the ServiceAccount token into pods using it
+  automountServiceAccountToken: true
+
+# -- Annotations added to application pods
+podAnnotations: {}
+
+# -- Labels added to application pods
+podLabels: {}
+
+# -- Pod-level securityContext
+podSecurityContext:
+  fsGroup: 1000
+
+# -- Container-level securityContext
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+startupProbe:
+  # -- Enable the startup probe (useful for slow-starting apps, e.g. large migrations)
+  enabled: false
+  # -- Startup probe configuration - allows up to 5 minutes for application startup
+  # -- Total time: 15s initial delay + (30 failures x 10s period) = 315s (5 minutes 15 seconds)
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  timeoutSeconds: 10
+  failureThreshold: 30
+  successThreshold: 1
+  httpGet:
+    path: /admin/
+    port: http
+
+livenessProbe:
+  # -- Enable the liveness probe
+  enabled: false
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 10
+  failureThreshold: 6
+  successThreshold: 1
+  httpGet:
+    path: /admin/
+    port: http
+
+readinessProbe:
+  # -- Enable the readiness probe
+  enabled: false
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 10
+  failureThreshold: 6
+  successThreshold: 1
+  httpGet:
+    path: /admin/
+    port: http
+
+service:
+  # -- Kubernetes Service type
+  type: ClusterIP
+  # -- Kubernetes Service port (used only when service.ports is not set)
+  port: 80
+  # -- Extra labels for the Service
+  additionalLabels: {}
+  # -- Extra annotations for the Service
+  annotations: {}
+  # -- Static ClusterIP address to assign (leave empty to let Kubernetes allocate one)
+  clusterIP: ""
+  # -- loadBalancerClass, only used when service.type is LoadBalancer
+  loadBalancerClass: ""
+  # -- Static loadBalancerIP to request, only used when service.type is LoadBalancer
+  loadBalancerIP: ""
+  # -- Restrict access to the LoadBalancer to these CIDRs, only used when service.type is LoadBalancer
+  loadBalancerSourceRanges: []
+  # -- Assign additional external IPs to the Service
+  externalIPs: []
+  # -- Full custom port list; overrides service.port entirely when set
+  ports: []
+  # e.g.:
+  # ports:
+  #   - port: 80
+  #     targetPort: 8000
+  #     protocol: TCP
+  #     name: http
+  #   - port: 9000
+  #     targetPort: 9000
+  #     protocol: TCP
+  #     name: metrics
+
+ingress:
+  # -- Enable the primary Ingress resource
+  enabled: false
+  # -- Extra annotations for the Ingress
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  # -- IngressClass name
+  className: ""
+  # -- Extra labels for the Ingress
+  additionalLabels: {}
+  # -- Ingress hosts and path rules
+  hosts: []
+  #  - host: application.gemeente.nl
+  #    paths:
+  #      - path: /
+  #        pathType: ImplementationSpecific
+  # -- TLS configuration for the Ingress
+  tls: []
+  #  - secretName: application-tls
+  #    hosts:
+  #      - application.gemeente.nl
+
+# -- Specify extra ingresses, for example if you have multiple ingress classes
+extraIngress: []
+# e.g:
+# extraIngress:
+#  - name: application-azuregateway
+#    annotations:
+#      appgw.ingress.kubernetes.io/ssl-redirect: "true"
+#    className: azure-application-gateway
+#    hosts:
+#      - host: application.gemeente.nl
+#        paths:
+#          - path: /
+#            pathType: ImplementationSpecific
+#            servicename: application
+#            portNumber: 8000
+#    tls:
+#      - secretName: application-tls
+#        hosts:
+#          - "application.gemeente.nl"
+
+# -- Resource requests/limits for the main application container
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 500m
+  #   memory: 512Mi
+  # requests:
+  #   cpu: 250m
+  #   memory: 256Mi
+
+autoscaling:
+  # -- Enable HorizontalPodAutoscaler for the main application deployment
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+  # -- Extra labels for the HorizontalPodAutoscaler
+  additionalLabels: {}
+  # -- Extra annotations for the HorizontalPodAutoscaler
+  annotations: {}
+  # -- Extra custom/external metrics, appended alongside the CPU/memory targets above
+  metrics: []
+  # -- Optional HPA scale-up/scale-down behavior policy (spec.behavior)
+  behavior: {}
+
+pdb:
+  # -- Create a PodDisruptionBudget for the main application deployment
+  create: false
+  minAvailable: 1
+  maxUnavailable: ""
+
+# -- Node selector for application pods
+nodeSelector: {}
+
+# -- Tolerations for application pods
+tolerations: []
+
+# -- Affinity rules for application pods
+affinity: {}
+
+persistence:
+  # -- Enable persistent storage (PVC) for media files; falls back to emptyDir when false
+  enabled: true
+  # -- Use an existing PVC instead of creating a new one
+  existingClaim: null
+  accessMode: ReadWriteMany
+  size: 1Gi
+  storageClassName: ""
+  volumeMode: ""
+  volumeName: ""
+  additionalLabels: {}
+  annotations: {}
+  # -- If null, use "<application.name>/media" and "<application.name>/private_media"
+  mediaMountSubpath: ""
+  privateMediaMountSubpath: ""
+
+# -- Use an existing Secret instead of the one generated by the chart.
+# Required if azureVaultSecret is used
+existingSecret: null
+# -- Reference to an existing secret with the values needed for django-setup-configuration
+existingConfigurationSecret: null
+# -- If no secret already exists with the values needed for django-setup-configuration,
+# create one with this name (defaults to "<fullname>-config-secret")
+configurationSecretsName: ""
+
+# This will create an AzureVaultSecret object in k8s, only Multi Key Value Secret are supported by this chart
+# ref: https://akv2k8s.io/tutorials/sync/4-multi-key-value-secret/ https://learn.microsoft.com/en-us/azure/key-vault/secrets/multiline-secrets
+# Using this feature requires you to define existingSecret
+azureVaultSecret:
+  # -- Name of the Azure Key Vault; setting this creates the AzureVaultSecret resource
+  vaultName: null
+  # -- Name of the Multi Key Value Secret in the vault
+  objectName: ""
+  # -- Content type of the secret; must match its actual content
+  # ('application/x-json' or 'application/x-yaml')
+  contentType: ""
+  # -- Target secret name; you must also set .Values.existingSecret
+  secretName: "{{ .Values.existingSecret }}"
+
+# -- Array with extra environment variables to add to the main container
+extraEnvVars: []
+# e.g:
+# extraEnvVars:
+#   - name: FOO
+#     value: "bar"
+
+# -- Optionally specify extra list of additional volumes
+extraVolumes: []
+# e.g:
+# extraVolumes:
+#   - name: verify-certs
+#     configMap:
+#       name: verify-certs
+
+# -- Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# e.g:
+# extraVolumeMounts:
+#  - name: verify-certs
+#    mountPath: /etc/ssl/certs/extra-certs/
+
+configMap:
+  # -- Extra labels for the generated ConfigMap
+  additionalLabels: {}
+  # -- Extra annotations for the generated ConfigMap
+  annotations: {}
+
+secret:
+  # -- Extra labels for the generated Secret
+  additionalLabels: {}
+  # -- Extra annotations for the generated Secret
+  annotations: {}
+
+settings:
+  # -- Comma-separated (or templated) list of allowed hosts for Django's ALLOWED_HOSTS
+  allowedHosts: ""
+  
+  # -- Python path to the Django settings module to use
+  djangoSettingsModule: ""
+  
+  # -- Whether Django should trust the X-Forwarded-Host header (behind a proxy/ingress)
+  useXForwardedHost: false
+
+  # Primary domain of the application
+  siteDomain: ""
+
+  # -- Disable two factor authentication
+  disable2fa: false
+
+  # -- Django SECRET_KEY. Generate one at https://djecrety.ir/
+  secretKey: ""
+
+  # -- Sets the 'ENVIRONMENT' variable (e.g. staging, production)
+  environment: ""
+
+  elasticapm:
+    # -- Elastic APM server URL
+    url: ""
+    # -- Elastic APM secret token
+    token: ""
+    # -- Service name reported to Elastic APM
+    serviceName: ""
+
+  database:
+    # -- Database host; overridden by global.settings.databaseHost when set
+    host: ""
+    port: 5432
+    username: ""
+    password: ""
+    name: ""
+    sslmode: prefer
+    # -- Max connection age in seconds (Django CONN_MAX_AGE); null uses Django default
+    db_conn_max_age: null
+    db_pool:
+      # -- Enable database connection pooling
+      enabled: false
+      db_pool_min_size: null
+      db_pool_max_size: null
+      db_pool_timeout: null
+      db_pool_max_waiting: null
+      db_pool_max_lifetime: null
+      db_pool_max_idle: null
+      db_pool_reconnect_timeout: null
+      db_pool_num_workers: null
+
+  email:
+    # -- SMTP host
+    host: localhost
+    # -- SMTP port
+    port: 25
+    username: ""
+    password: ""
+    # -- Use TLS for SMTP connections
+    useTLS: false
+    # -- Default "From" address for outgoing email
+    defaultFrom: ""
+
+  sentry:
+    # -- Sentry DSN for error tracking; leave empty to disable
+    dsn: ""
+
+  # Cache settings, when the redis subchart is enabled these settings will be ignored and caching will default to the redis subchart services.
+  cache:
+    # e.g.:
+    # default: myapp-redis-master-0:6379/0
+    # axes: myapp-redis-master-0:6379/0
+    default: ""
+    axes: ""
+    oidc: ""
+
+  # Celery settings, when the redis subchart is enabled these settings will be ignored and the broker/backend default to the redis subchart services
+  celery:
+    # e.g.:
+    # brokerUrl: redis://myapp-redis-master:6379/1
+    # resultBackend: redis://myapp-redis-master:6379/1
+    brokerUrl: ""
+    resultBackend: ""
+    logLevel: debug
+    resultExpires: ""
+
+  logging:
+    # -- Root log level (e.g. DEBUG, INFO, WARNING)
+    level: ""
+    # -- Log incoming requests
+    requests: false
+    # -- Log outgoing requests
+    outgoingRequests: false
+    # -- Persist outgoing request logs to the database
+    outgoingRequestsDBSave: false
+    # -- Include request/response body when saving outgoing request logs
+    outgoingRequestsDBSaveBody: false
+    # -- Days after which saved outgoing request logs are purged; null disables purging
+    outgoingRequestsResetDBSaveAfter: null
+    # -- Max age (days) of outgoing request logs kept in the database
+    outgoingRequestsMaxAge: null
+
+  notifications:
+    # -- Disable the notifications (NRC) integration
+    disabled: true
+    # -- Log notifications to the database
+    logInDb: false
+    # -- Retention period (days) for logged notifications; null keeps them indefinitely
+    numberOfDaysRetained: null
+    # -- Notification source identifier
+    source: ""
+
+  otel:
+    # -- Disable OpenTelemetry instrumentation
+    disabled: true
+    # -- Extra OTEL resource attributes (list of "key=value" strings)
+    resourceAttributes: []
+    # e.g.:
+    # resourceAttributes:
+    #   - key: service.namespace
+    #     value: myapp
+    # -- OTLP exporter endpoint
+    exporterOtlpEndpoint: ""
+    # -- Disable TLS for the OTLP metrics exporter
+    exporterOtlpMetricsInsecure: false
+    # -- Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials. 
+    exporterOtlpHeaders: []
+    # - key: Authorization
+    #   value: Basic SomeSecretValue
+    # -- Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf.
+    # -- OTLP exporter protocol (e.g. grpc, http/protobuf)
+    exporterOtlpProtocol: ""
+    # -- Metric export interval
+    metricExportInterval: ""
+    # -- Metric export timeout
+    metricExportTimeout: ""
+
+  # -- Whether the app is served over HTTPS (affects secure cookie / redirect settings)
+  isHttps: true
+
+  # -- Enable Django DEBUG mode. Never enable in production
+  debug: false
+
+  uwsgi:
+    # -- uWSGI master process mode
+    master: ""
+    # -- Number of uWSGI threads per worker
+    threads: ""
+    # -- Number of uWSGI worker processes
+    processes: ""
+    # -- Max requests served by a worker before respawn
+    maxRequests: ""
+    # -- uWSGI harakiri timeout (seconds) for stuck requests
+    harakiri: ""
+
+  # -- Extra arbitrary key/value environment variables injected as Django settings
+  extraSettings: {}
+  #  CUSTOM_FEATURE_FLAG: "True"
+  #  THIRD_PARTY_API_KEY: mysecretkey
+
+worker:
+  # -- Enable the Celery worker deployment
+  enabled: true
+  replicaCount: 2
+  # -- Celery worker concurrency (number of child processes/threads)
+  concurrency: 4
+  additionalLabels: {}
+  annotations: {}
+  podLabels: {}
+  resources: {}
+    # requests:
+    #   cpu: 250m
+    #   memory: 256Mi
+  # -- Label used to identify this worker (e.g. for celery queue routing)
+  label: celery
+  # -- Override the default worker start command
+  command: "" # TODO make generic
+  # -- Name of the Celery queue this worker consumes from
+  queueName: ""
+  # -- Override the generated worker resource name
+  name: ""
+  # -- Max allowed delta (seconds) before the worker liveness check considers it stuck.
+  # Defaults to 60s
+  maxWorkerLivenessDelta: ""
+  livenessProbe:
+    enabled: false
+    exec:
+      command:
+        - /app/liveness/liveness-probe.sh
+    initialDelaySeconds: 60
+    # Periodseconds should not exceed maxWorkerLivenessDelta
+    periodSeconds: 50
+    timeoutSeconds: 10
+    failureThreshold: 3
+    successThreshold: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
+flower:
+  # -- Enable the Flower (Celery monitoring UI) deployment
+  enabled: true
+  replicaCount: 1
+  additionalLabels: {}
+  annotations: {}
+  podLabels: {}
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  resources: {}
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
+beat:
+  # -- Enable the Celery beat (scheduler) deployment
+  enabled: true
+  replicaCount: 1
+  podLabels: {}
+  livenessProbe: {}
+  readinessProbe: {}
+  resources: {}
+
+##################
+# Redis subchart #
+##################
+
+redis:
+  # -- Redis deployment topology (standalone or replication)
+  architecture: standalone
+  auth:
+    # -- Enable Redis authentication
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+      size: 8Gi
+      storageClass: ""
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  image:
+    registry: docker.io  # Docker registry for Redis image
+    repository: redis  # Official Redis image (migrated from Bitnami)
+    tag: "8.10"  # Official Redis image pinned version

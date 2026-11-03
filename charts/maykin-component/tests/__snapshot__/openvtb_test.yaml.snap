@@ -1,0 +1,327 @@
+matches the expected manifest for Open VTB:
+  1: |
+    apiVersion: v1
+    data:
+      ALLOWED_HOSTS: RELEASE-NAME-openvtb,RELEASE-NAME-openvtb.NAMESPACE,openvtb-dev.test.opengem.nl
+      CACHE_AXES: RELEASE-NAME-redis-master.NAMESPACE:6379/0
+      CACHE_DEFAULT: RELEASE-NAME-redis-master.NAMESPACE:6379/0
+      CACHE_OIDC: RELEASE-NAME-redis-master.NAMESPACE:6379/0
+      CELERY_BROKER_URL: redis://RELEASE-NAME-redis-master.NAMESPACE:6379/1
+      CELERY_LOGLEVEL: DEBUG
+      CELERY_RESULT_BACKEND: redis://RELEASE-NAME-redis-master.NAMESPACE:6379/1
+      DB_HOST: openvtb-db-host
+      DB_NAME: openvtb
+      DB_PORT: "5432"
+      DB_USER: openvtb
+      DEFAULT_FROM_EMAIL: no-reply-on@opengem.nl
+      DJANGO_SETTINGS_MODULE: openvtb.conf.docker
+      ELASTIC_APM_SERVICE_NAME: openvtb-maykin-test-aks
+      EMAIL_HOST: smtp.sendgrid.net
+      EMAIL_HOST_USER: apikey
+      EMAIL_PORT: "587"
+      EMAIL_USE_TLS: "True"
+      ENVIRONMENT: openvtb-maykin-test-aks
+      IS_HTTPS: "True"
+      NOTIFICATIONS_DISABLED: "True"
+      OTEL_SDK_DISABLED: "True"
+      PGSSLMODE: prefer
+    kind: ConfigMap
+    metadata:
+      labels:
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: openvtb
+        helm.sh/chart: maykin-component-0.1.0
+      name: RELEASE-NAME-openvtb
+      namespace: NAMESPACE
+  2: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: openvtb
+        helm.sh/chart: maykin-component-0.1.0
+      name: RELEASE-NAME-openvtb
+      namespace: NAMESPACE
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: openvtb
+      template:
+        metadata:
+          annotations: null
+          labels:
+            app.kubernetes.io/name: openvtb
+        spec:
+          containers:
+            - env: null
+              envFrom:
+                - secretRef:
+                    name: openvtb
+                - configMapRef:
+                    name: RELEASE-NAME-openvtb
+              image: maykinmedia/open-vtb:0.1.0
+              imagePullPolicy: Always
+              livenessProbe:
+                failureThreshold: 6
+                httpGet:
+                  httpHeaders:
+                    - name: Host
+                      value: RELEASE-NAME-openvtb
+                  path: /admin/
+                  port: http
+                initialDelaySeconds: 60
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 10
+              name: openvtb
+              ports:
+                - containerPort: 8000
+                  name: http
+                  protocol: TCP
+              readinessProbe:
+                failureThreshold: 6
+                httpGet:
+                  httpHeaders:
+                    - name: Host
+                      value: RELEASE-NAME-openvtb
+                  path: /admin/
+                  port: http
+                initialDelaySeconds: 30
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 10
+              securityContext:
+                capabilities:
+                  drop:
+                    - ALL
+                readOnlyRootFilesystem: false
+                runAsNonRoot: true
+                runAsUser: 1000
+              startupProbe:
+                failureThreshold: 30
+                httpGet:
+                  httpHeaders:
+                    - name: Host
+                      value: RELEASE-NAME-openvtb
+                  path: /admin/
+                  port: http
+                initialDelaySeconds: 15
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 10
+              volumeMounts:
+                - mountPath: /app/media
+                  name: media
+                  subPath: openvtb/media
+                - mountPath: /app/private_media
+                  name: media
+                  subPath: openvtb/private_media
+          enableServiceLinks: false
+          securityContext:
+            fsGroup: 1000
+          serviceAccountName: RELEASE-NAME-openvtb
+          volumes:
+            - name: media
+              persistentVolumeClaim:
+                claimName: RELEASE-NAME-openvtb
+  3: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/name: openvtb-worker
+        helm.sh/chart: maykin-component-0.1.0
+      name: RELEASE-NAME-openvtb-worker
+      namespace: NAMESPACE
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: openvtb-worker
+      template:
+        metadata:
+          annotations: null
+          labels:
+            app.kubernetes.io/name: openvtb-worker
+        spec:
+          containers:
+            - command:
+                - /celery_worker.sh
+              env: null
+              envFrom:
+                - secretRef:
+                    name: openvtb
+                - configMapRef:
+                    name: RELEASE-NAME-openvtb
+              image: maykinmedia/open-vtb:0.1.0
+              imagePullPolicy: Always
+              name: RELEASE-NAME-openvtb-worker
+              resources: {}
+              securityContext:
+                capabilities:
+                  drop:
+                    - ALL
+                readOnlyRootFilesystem: false
+                runAsNonRoot: true
+                runAsUser: 1000
+              volumeMounts:
+                - mountPath: /app/media
+                  name: media
+                  subPath: openvtb/media
+          securityContext:
+            fsGroup: 1000
+          serviceAccountName: RELEASE-NAME-openvtb
+          volumes:
+            - name: media
+              persistentVolumeClaim:
+                claimName: RELEASE-NAME-openvtb
+  4: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/name: openvtb-flower
+        helm.sh/chart: maykin-component-0.1.0
+      name: RELEASE-NAME-openvtb-flower
+      namespace: NAMESPACE
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: openvtb-flower
+      template:
+        metadata:
+          annotations: null
+          labels:
+            app.kubernetes.io/name: openvtb-flower
+        spec:
+          containers:
+            - command:
+                - /celery_flower.sh
+              env: null
+              envFrom:
+                - secretRef:
+                    name: openvtb
+                - configMapRef:
+                    name: RELEASE-NAME-openvtb
+              image: maykinmedia/open-vtb:0.1.0
+              imagePullPolicy: Always
+              livenessProbe:
+                failureThreshold: 6
+                initialDelaySeconds: 60
+                periodSeconds: 10
+                successThreshold: 1
+                tcpSocket:
+                  port: 5555
+                timeoutSeconds: 5
+              name: RELEASE-NAME-openvtb-flower
+              ports:
+                - containerPort: 5555
+                  name: http
+                  protocol: TCP
+              readinessProbe:
+                failureThreshold: 6
+                initialDelaySeconds: 30
+                periodSeconds: 10
+                successThreshold: 1
+                tcpSocket:
+                  port: 5555
+                timeoutSeconds: 5
+              resources: {}
+              securityContext:
+                capabilities:
+                  drop:
+                    - ALL
+                readOnlyRootFilesystem: false
+                runAsNonRoot: true
+                runAsUser: 1000
+          securityContext:
+            fsGroup: 1000
+          serviceAccountName: RELEASE-NAME-openvtb
+  5: |
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      annotations:
+        acme.cert-manager.io/http01-edit-in-place: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      labels:
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: openvtb
+        helm.sh/chart: maykin-component-0.1.0
+      name: RELEASE-NAME-openvtb
+      namespace: NAMESPACE
+    spec:
+      ingressClassName: nginx
+      rules:
+        - host: openvtb-dev.test.opengem.nl
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: RELEASE-NAME-openvtb
+                    port:
+                      number: 80
+                path: /
+                pathType: ImplementationSpecific
+      tls:
+        - hosts:
+            - openvtb-dev.test.opengem.nl
+          secretName: openvtb-test-tls
+  6: |
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      labels:
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: openvtb
+        helm.sh/chart: maykin-component-0.1.0
+      name: RELEASE-NAME-openvtb
+      namespace: NAMESPACE
+    spec:
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: azurefile-uuid1000
+  7: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: openvtb
+        helm.sh/chart: maykin-component-0.1.0
+      name: RELEASE-NAME-openvtb
+      namespace: NAMESPACE
+    spec:
+      ports:
+        - name: http
+          port: 80
+          protocol: TCP
+          targetPort: 8000
+      selector:
+        app.kubernetes.io/name: openvtb
+      type: ClusterIP
+  8: |
+    apiVersion: v1
+    automountServiceAccountToken: true
+    kind: ServiceAccount
+    metadata:
+      labels:
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: openvtb
+        helm.sh/chart: maykin-component-0.1.0
+      name: RELEASE-NAME-openvtb
+      namespace: NAMESPACE

@@ -1,0 +1,391 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "application.fullname" . }}
+  namespace: {{ include "application.namespace" . }}
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+    {{- if .Values.additionalLabels }}
+    {{- toYaml .Values.additionalLabels | nindent 4 }}
+    {{- end }}
+  {{- if .Values.annotations }}
+  annotations:
+    {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "application.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- if .Files.Glob "templates/configmap.yaml" }}
+        checksum/configmap: {{ tpl (.Files.Get "templates/configmap.yaml") . | sha256sum }}
+        {{- end }}
+        {{- if .Files.Glob "templates/secret.yaml" }}
+        checksum/secret: {{ tpl (.Files.Get "templates/secret.yaml") . | sha256sum }}
+        {{- end }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "application.selectorLabels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "application.serviceAccountName" . }}
+      enableServiceLinks: {{ .Values.enableServiceLinks | default false }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ template "application.name" . }}
+          {{- if .Values.securityContext }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
+          image: {{ include "application.image" . | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "application.fullname" .) }}
+            - configMapRef:
+                name: {{ include "application.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "application.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          {{- if .Values.ports }}
+          ports:
+            {{- toYaml .Values.ports | nindent 10 }}
+          {{- else }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          {{- end }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: {{ (.Values.startupProbe.httpGet).path | default "/admin/" }}
+              port: {{ (.Values.startupProbe.httpGet).port | default "http" }}
+              httpHeaders:
+                - name: Host
+                  value: {{ include "application.fullname" . | quote }}
+            failureThreshold: {{ .Values.startupProbe.failureThreshold | default 30 }}
+            periodSeconds: {{ .Values.startupProbe.periodSeconds | default 10 }}
+            successThreshold: {{ .Values.startupProbe.successThreshold | default 1 }}
+            timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds | default 1 }}
+            {{- if not (kindIs "invalid" .Values.startupProbe.initialDelaySeconds) }}
+            initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: {{ (.Values.livenessProbe.httpGet).path | default "/admin/" }}
+              port: {{ (.Values.livenessProbe.httpGet).port | default "http" }}
+              httpHeaders:
+                - name: Host
+                  value: {{ include "application.fullname" . | quote }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold | default 3 }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds | default 10 }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold | default 1 }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds | default 1 }}
+            {{- if not (kindIs "invalid" .Values.livenessProbe.initialDelaySeconds) }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: {{ (.Values.readinessProbe.httpGet).path | default "/admin/" }}
+              port: {{ (.Values.readinessProbe.httpGet).port | default "http" }}
+              httpHeaders:
+                - name: Host
+                  value: {{ include "application.fullname" . | quote }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold | default 3 }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds | default 10 }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold | default 1 }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds | default 1 }}
+            {{- if not (kindIs "invalid" .Values.readinessProbe.initialDelaySeconds) }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.resources }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath | default (printf "%s/media" (include "application.name" .)) }}
+            - name: media
+              mountPath: /app/private_media
+              subPath: {{ .Values.persistence.privateMediaMountSubpath | default (printf "%s/private_media" (include "application.name" .)) }}
+            {{- if .Values.volumeMounts }}
+            {{- range $key, $value := .Values.volumeMounts }}
+            - name: {{ $key }}
+              {{- include "application.tplvalues.render" ( dict "value" $value "context" $ ) | nindent 14 }}
+            {{- end }}
+            {{- end }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "application.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      {{- if .Values.dnsConfig }}
+      dnsConfig:
+        {{- toYaml .Values.dnsConfig | nindent 8 }}
+      {{- end }}
+      {{- if .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- end }}
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "application.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- include "application.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- if .Values.hostNetwork }}
+      hostNetwork: {{ .Values.hostNetwork }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+---
+{{- if .Values.worker.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "application.workerFullname" . }}
+  namespace: {{ include "application.namespace" . }}
+  labels:
+    {{- include "application.workerLabels" . | nindent 4 }}
+    {{- if .Values.worker.additionalLabels }}
+    {{- toYaml .Values.worker.additionalLabels | nindent 4 }}
+    {{- end }}
+  {{- if .Values.worker.annotations }}
+  annotations:
+    {{- toYaml .Values.worker.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if not .Values.worker.autoscaling.enabled }}
+  replicas: {{ .Values.worker.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "application.workerSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- if .Files.Glob "templates/configmap.yaml" }}
+        checksum/configmap: {{ tpl (.Files.Get "templates/configmap.yaml") . | sha256sum }}
+        {{- end }}
+        {{- if .Files.Glob "templates/secret.yaml" }}
+        checksum/secret: {{ tpl (.Files.Get "templates/secret.yaml") . | sha256sum }}
+        {{- end }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "application.workerSelectorLabels" . | nindent 8 }}
+        {{- with .Values.worker.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "application.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "application.workerFullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ include "application.image" . | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "application.fullname" .) }}
+            - configMapRef:
+                name: {{ include "application.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "application.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          {{- if .Values.worker.livenessProbe.enabled }}
+          livenessProbe:
+            exec:
+              {{- toYaml .Values.worker.livenessProbe.exec | nindent 14 }}
+            initialDelaySeconds: {{ .Values.worker.livenessProbe.initialDelaySeconds | default 60 }}
+            periodSeconds: {{ .Values.worker.livenessProbe.periodSeconds | default 50 }}
+            timeoutSeconds: {{ .Values.worker.livenessProbe.timeoutSeconds | default 10 }}
+            successThreshold: {{ .Values.worker.livenessProbe.successThreshold | default 1 }}
+            failureThreshold: {{ .Values.worker.livenessProbe.failureThreshold | default 3 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+          command:
+            - /celery_worker.sh
+          volumeMounts:
+            - name: media
+              mountPath: /app/media
+              subPath: {{ .Values.persistence.mediaMountSubpath | default (printf "%s/media" (include "application.name" .)) }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- include "application.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+            {{- end }}
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+          {{- if .Values.persistence.enabled }}
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "application.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- include "application.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
+
+---
+{{- if .Values.flower.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "application.flowerFullname" . }}
+  namespace: {{ include "application.namespace" . }}
+  labels:
+    {{- include "application.flowerLabels" . | nindent 4 }}
+    {{- if .Values.flower.additionalLabels }}
+    {{- toYaml .Values.flower.additionalLabels | nindent 4 }}
+    {{- end }}
+  {{- if .Values.flower.annotations }}
+  annotations:
+    {{- toYaml .Values.flower.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if not .Values.flower.autoscaling.enabled }}
+  replicas: {{ .Values.flower.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "application.flowerSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- if .Files.Glob "templates/configmap.yaml" }}
+        checksum/configmap: {{ tpl (.Files.Get "templates/configmap.yaml") . | sha256sum }}
+        {{- end }}
+        {{- if .Files.Glob "templates/secret.yaml" }}
+        checksum/secret: {{ tpl (.Files.Get "templates/secret.yaml") . | sha256sum }}
+        {{- end }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "application.flowerSelectorLabels" . | nindent 8 }}
+        {{- with .Values.flower.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "application.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "application.flowerFullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ include "application.image" . | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
+          command: ["/celery_flower.sh"]
+          resources:
+            {{- toYaml .Values.flower.resources | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret | default (include "application.fullname" .) }}
+            - configMapRef:
+                name: {{ include "application.fullname" . }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "application.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 5555
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 5555
+            initialDelaySeconds: {{ .Values.flower.livenessProbe.initialDelaySeconds | default 60 }}
+            periodSeconds: {{ .Values.flower.livenessProbe.periodSeconds | default 10 }}
+            timeoutSeconds: {{ .Values.flower.livenessProbe.timeoutSeconds | default 5 }}
+            failureThreshold: {{ .Values.flower.livenessProbe.failureThreshold | default 6 }}
+            successThreshold: {{ .Values.flower.livenessProbe.successThreshold | default 1 }}
+          readinessProbe:
+            tcpSocket:
+              port: 5555
+            initialDelaySeconds: {{ .Values.flower.readinessProbe.initialDelaySeconds | default 30 }}
+            periodSeconds: {{ .Values.flower.readinessProbe.periodSeconds | default 10 }}
+            timeoutSeconds: {{ .Values.flower.readinessProbe.timeoutSeconds | default 5 }}
+            failureThreshold: {{ .Values.flower.readinessProbe.failureThreshold | default 6 }}
+            successThreshold: {{ .Values.flower.readinessProbe.successThreshold | default 1 }}
+          {{- if .Values.extraVolumeMounts }}
+          volumeMounts:
+            {{- include "application.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
+          {{- end }}
+      {{- if .Values.extraVolumes }}
+      volumes:
+        {{- include "application.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
