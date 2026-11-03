@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.7.0-rc.1 (2026-11-03)
+## 2.7.0 (2026-11-03)
 
 **Warning**
 
@@ -15,18 +15,6 @@ are ignored. See the
 [Open Inwoner changelog](https://github.com/maykinmedia/open-inwoner/blob/v2.5.0/CHANGELOG.rst)
 for the full list.
 
-This version also sends a `Permissions-Policy` header that only allows autoplay
-and fullscreen (for the site itself and embedded YouTube and Vimeo videos), WebAuthn
-(`publickey-credentials-get` and `-create`) and writing to the clipboard. All other
-features are denied, including camera, microphone, geolocation, payment, reading
-the clipboard, screen capture, USB, Bluetooth and the motion sensors. See the
-[Permissions Policy documentation](https://docs.openinwoner.nl/en/v2.5.0/configuration/03_permissions_policy.html)
-for the full policy.
-
-The Content Security Policy is stricter, and now also applies to logged in staff
-users (the admin remains excluded). The CSP settings in the admin are migrated
-automatically.
-
 ---
 
 **Upgrade procedure**
@@ -37,13 +25,13 @@ value in the YAML format. See the
 [setup configuration documentation](https://docs.openinwoner.nl/en/v2.5.0/configuration/01_setup_config.html)
 for the available steps and fields.
 
-If custom JavaScript or embedded widgets (such as a chat widget or map) use any of
-the denied features, for example geolocation or the camera, set
-`settings.permissionsPolicyReportOnly` to `true` to test the policy in
-report-only mode first. If they load resources from other domains that the stricter
-Content Security Policy now blocks, add those as CSP settings in the admin. Only as a
-last resort, set `settings.cspReportOnly` to `true`, which disables enforcement of
-the Content Security Policy.
+The application has a new, unauthenticated endpoint `/api/reporting-api/` that
+receives reports sent by browsers. The bundled nginx exposes it with a rate limit
+(see `nginx.config.reportingApiRateLimit`). If requests reach the application through
+another reverse proxy or ingress, we recommend rate limiting the endpoint there as
+well. Behind an ingress controller, the default key `$binary_remote_addr` of the
+bundled nginx is the address of the controller, so the limit applies to all clients
+together.
 
 The primary key of the `NotificationRecord` table is converted to a UUID, which
 updates every row individually. This only affects installations that use ZGW
@@ -83,23 +71,19 @@ whether beat is still scheduling tasks.
 - Added `settings.customProduct` (`name`, `url`, `logoPath`, `logoUrl`) for custom
   product branding in the admin, which set `CUSTOM_PRODUCT_NAME`,
   `CUSTOM_PRODUCT_URL`, `CUSTOM_PRODUCT_LOGO_PATH` and `CUSTOM_PRODUCT_LOGO_URL`.
-- Added `settings.cspReportOnly` (default: `false`), which sets `CSP_REPORT_ONLY`,
-  to test the Content Security Policy in report-only mode.
-- Added `settings.permissionsPolicyReportOnly` (default: `false`), which sets
-  `PERMISSIONS_POLICY_REPORT_ONLY`. Open Inwoner 2.5 enforces a Permissions
-  Policy by default; enable this to test the policy in report-only mode first.
+- Added `settings.cspReportOnly` and `settings.permissionsPolicyReportOnly`
+  (default: `false`), which set `CSP_REPORT_ONLY` and
+  `PERMISSIONS_POLICY_REPORT_ONLY`.
 - Added `settings.reportingApi` (`enabled`, `maxReportsPerRequest`,
   `loggingEnabled`, `maxLoggedViolationsPerRequest`, `metricsEnabled`) for the
-  endpoint that receives violation reports from browsers, which set
+  endpoint that receives reports from browsers, which set
   `REPORTING_API_ENABLED`, `REPORTING_API_MAX_REPORTS_PER_REQUEST`,
   `REPORTING_API_LOGGING_ENABLED`,
   `REPORTING_API_MAX_LOGGED_VIOLATIONS_PER_REQUEST` and
   `REPORTING_API_METRICS_ENABLED`.
-- The bundled nginx rate limits the unauthenticated `/api/reporting-api/`
-  endpoint, configurable through `nginx.config.reportingApiRateLimit` (default:
-  enabled, 10 requests per minute with a burst of 10, 64k maximum body size).
-  Behind an ingress controller the default key `$binary_remote_addr` is the
-  address of the controller, so the limit applies to all clients together.
+- The bundled nginx exposes the `/api/reporting-api/` endpoint with a rate limit,
+  configurable through `nginx.config.reportingApiRateLimit` (default: enabled,
+  10 requests per minute with a burst of 10, 64k maximum body size).
 - Added `settings.cache.notificationThrottle` (`backend`, `location`,
   `clientClass`, `ignoreExceptions`) for an optional separate cache to rate
   limit notifications sent on behalf of users, which set
