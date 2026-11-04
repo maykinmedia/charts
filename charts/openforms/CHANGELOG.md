@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.1 (2026-11-04)
+
+- Upgrade `redis` to 8.10
+
 ## 1.13.0 (2026-08-24)
 
 - Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.

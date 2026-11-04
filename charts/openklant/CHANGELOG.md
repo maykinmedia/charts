@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.3 (2026-11-04)
+
+- Upgrade `redis` to 8.10
+
 ## 1.14.2 (2026-09-25)
 
 - Fix nindent for openklant job-config extraVolumeMounts

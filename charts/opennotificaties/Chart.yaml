@@ -3,7 +3,7 @@ name: opennotificaties
 description: API voor het routeren van notificaties
 
 type: application
-version: 2.2.0-rc.1
+version: 2.2.0-rc.2
 appVersion: 1.17.0
 
 dependencies:
