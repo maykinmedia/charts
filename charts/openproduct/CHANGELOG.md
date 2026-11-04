@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.5.2 (2026-11-04)
+
+- Upgrade `redis` to 8.10
+
 ## 0.5.1 (2026-09-25)
 
 - Corrected image repository from openproduct to open-product
