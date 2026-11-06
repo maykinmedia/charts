@@ -4,8 +4,8 @@ description: Snel en eenvoudig slimme formulieren bouwen en publiceren
 
 type: application
 
-version: 1.13.0
-appVersion: 3.3.9
+version: 1.14.0-rc.1
+appVersion: 3.5.15
 
 icon: https://open-forms.readthedocs.io/en/stable/_static/logo.svg
 

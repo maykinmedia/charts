@@ -173,6 +173,19 @@ spec:
             {{- toYaml .Values.beat.resources | nindent 12 }}
           command:
             - /celery_beat.sh
+          {{- if .Values.beat.livenessProbe.enabled }}
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - maykin-common beat-health-check --file=/app/tmp/celery_beat.live --max-age={{ .Values.beat.livenessProbe.maxAge }}
+            initialDelaySeconds: {{ .Values.beat.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.beat.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.beat.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.beat.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.beat.livenessProbe.failureThreshold }}
+          {{- end }}
           volumeMounts:
             - name: media
               mountPath: /app/private_media
@@ -260,13 +273,35 @@ spec:
             {{- end }}
           {{- if .Values.worker.livenessProbe.enabled }}
           livenessProbe:
-            exec: 
-            {{- toYaml .Values.worker.livenessProbe.exec | nindent 14 }}
+            exec:
+            {{- with .Values.worker.livenessProbe.maykinCommonHealthCheck }}
+            {{- if .enabled }}
+              command:
+                - /bin/sh
+                - -c
+                - maykin-common worker-health-check --broker="${CELERY_BROKER_URL}" --liveness-file=/app/tmp/celery_worker_event_loop.live --max-age={{ .maxAge }}{{ if .skipPing }} --skip-ping{{ end }}
+            {{- else }}
+            {{- toYaml $.Values.worker.livenessProbe.exec | nindent 14 }}
+            {{- end }}
+            {{- end }}
             initialDelaySeconds: {{ .Values.worker.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.worker.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.worker.livenessProbe.timeoutSeconds }}
             successThreshold: {{ .Values.worker.livenessProbe.successThreshold }}
             failureThreshold: {{ .Values.worker.livenessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.worker.readinessProbe.enabled }}
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - maykin-common worker-health-check --skip-ping --skip-event-loop-liveness --no-skip-readiness --readiness-file=/app/tmp/celery_worker.ready
+            initialDelaySeconds: {{ .Values.worker.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.worker.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.worker.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.worker.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.worker.readinessProbe.failureThreshold }}
           {{- end }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}

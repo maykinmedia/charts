@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.14.0-rc.1 (2026-11-06)
+
+- Bumped the application version to 3.5.15. Please review the upgrade notes of [Open Forms 3.4.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-340.html) and [Open Forms 3.5.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-350.html) before upgrading.
+- Added container health checks using `maykin-common`, including liveness and readiness probes to monitor application health and ensure that unhealthy containers are detected and restarted when necessary.
+  These require Open Forms >= 3.5.0 and are disabled by default:
+
+  - `worker.livenessProbe.maykinCommonHealthCheck.enabled`: use `maykin-common worker-health-check` instead of `celery inspect active` for the worker liveness probe. Configurable with `maxAge` (default: `90`) and `skipPing` (default: `false`).
+  - `worker.readinessProbe.enabled`: worker readiness probe based on the readiness file.
+  - `beat.livenessProbe.enabled`: beat liveness probe using `maykin-common beat-health-check`. Configurable with `maxAge` (default: `120`).
+
+  **Note**: the worker liveness probe does not detect dead pool child processes while the main worker process is still alive.
+
 ## 1.13.0 (2026-08-24)
 
 - Add Helm hooks to ensure the `job-config` runs at the correct stage of the release lifecycle.

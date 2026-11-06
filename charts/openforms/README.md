@@ -2,7 +2,7 @@
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
-![Version: 1.13.0](https://img.shields.io/badge/Version-1.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.9](https://img.shields.io/badge/AppVersion-3.3.9-informational?style=flat-square)
+![Version: 1.14.0-rc.1](https://img.shields.io/badge/Version-1.14.0--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.15](https://img.shields.io/badge/AppVersion-3.5.15-informational?style=flat-square)
 
 ## Introduction
 
@@ -140,6 +140,13 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
+| beat.livenessProbe.enabled | bool | `false` | Enable the beat liveness probe using `maykin-common beat-health-check` (requires OpenForms >= 3.5.0) |
+| beat.livenessProbe.failureThreshold | int | `3` |  |
+| beat.livenessProbe.initialDelaySeconds | int | `120` | The liveness file will be present only once Open-Forms has scheduled a task. The most frequent task is scheduled every minute. We give time to the pod to start. |
+| beat.livenessProbe.maxAge | int | `120` | Maximum age in seconds of the beat liveness file |
+| beat.livenessProbe.periodSeconds | int | `60` |  |
+| beat.livenessProbe.successThreshold | int | `1` |  |
+| beat.livenessProbe.timeoutSeconds | int | `15` |  |
 | beat.podLabels | object | `{}` |  |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
@@ -356,15 +363,22 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
 | worker.livenessProbe.enabled | bool | `false` |  |
-| worker.livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
-| worker.livenessProbe.exec.command[1] | string | `"-c"` |  |
-| worker.livenessProbe.exec.command[2] | string | `"celery --workdir src --app openforms.celery inspect --destination celery@${HOSTNAME} active"` |  |
+| worker.livenessProbe.exec | object | `{"command":["/bin/sh","-c","celery --workdir src --app openforms.celery inspect --destination celery@${HOSTNAME} active"]}` | Liveness probe command, used when `maykinCommonHealthCheck.enabled` is false |
 | worker.livenessProbe.failureThreshold | int | `3` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
+| worker.livenessProbe.maykinCommonHealthCheck.enabled | bool | `false` | Use `maykin-common worker-health-check` instead of the `exec` command (requires OpenForms >= 3.5.0) |
+| worker.livenessProbe.maykinCommonHealthCheck.maxAge | int | `90` | Maximum age in seconds of the worker event loop liveness file |
+| worker.livenessProbe.maykinCommonHealthCheck.skipPing | bool | `false` | Skip pinging the worker via the broker and only check the liveness file |
 | worker.livenessProbe.periodSeconds | int | `50` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
 | worker.livenessProbe.timeoutSeconds | int | `15` |  |
 | worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
+| worker.readinessProbe.enabled | bool | `false` | Enable the worker readiness probe using `maykin-common worker-health-check` (requires OpenForms >= 3.5.0) |
+| worker.readinessProbe.failureThreshold | int | `3` |  |
+| worker.readinessProbe.initialDelaySeconds | int | `30` |  |
+| worker.readinessProbe.periodSeconds | int | `10` |  |
+| worker.readinessProbe.successThreshold | int | `1` |  |
+| worker.readinessProbe.timeoutSeconds | int | `10` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
