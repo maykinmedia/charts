@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.2.1 (2026-11-04)
+
+* Upgrade `redis` to 8.10
+
 ## 0.2.0 (2026-08-21)
 
 - Bumped the application version to 0.7.4

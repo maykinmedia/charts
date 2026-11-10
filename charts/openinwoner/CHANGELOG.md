@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.1 (2026-11-04)
+
+- Upgrade `redis` to 8.10
+
 ## 2.7.0 (2026-11-03)
 
 **Warning**
