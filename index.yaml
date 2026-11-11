@@ -55,6 +55,31 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/maykin-cg-stack-0.0.1/maykin-cg-stack-0.0.1.tgz
     version: 0.0.1
+  maykin-component:
+  - apiVersion: v2
+    created: "2026-11-11T14:18:16.562380564Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 17.3.14
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.27.0
+    description: Generic Helm chart for deploying Maykin applications on Kubernetes
+    digest: 9b70d2c132271a684b35f56d5775f796fcc19464097466cd065b7daaad1b5ca7
+    home: https://github.com/maykinmedia/charts/
+    maintainers:
+    - email: info@maykin.nl
+      name: maykinmedia
+    name: maykin-component
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/maykin-component-0.1.0/maykin-component-0.1.0.tgz
+    version: 0.1.0
   maykin-utils-lib:
   - apiVersion: v2
     created: "2025-07-25T13:27:22.901796232Z"
@@ -9036,4 +9061,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-11-10T10:10:30.938919886Z"
+generated: "2026-11-11T14:18:16.563054886Z"
