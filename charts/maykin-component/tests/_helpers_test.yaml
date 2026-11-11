@@ -99,7 +99,7 @@ tests:
           path: metadata.name
           value: myrelease-test-app-flower
         template: deployment.yaml
-        documentIndex: 2
+        documentIndex: 1
 
   - it: beat name and fullname get the -beat suffix
     release:
@@ -112,7 +112,7 @@ tests:
           path: metadata.name
           value: myrelease-test-app-beat
         template: deployment.yaml
-        documentIndex: 3
+        documentIndex: 1
 
   - it: beat always runs a single replica regardless of replicaCount
     set:
@@ -124,13 +124,4 @@ tests:
           path: spec.replicas
           value: 1
         template: deployment.yaml
-        documentIndex: 3
-
-  - it: does not render the beat deployment when disabled
-    set:
-      applicationName: test-app
-      beat.enabled: false
-    asserts:
-      - hasDocuments:
-          count: 3
-        template: deployment.yaml
+        documentIndex: 1

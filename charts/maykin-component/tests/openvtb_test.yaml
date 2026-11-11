@@ -1,0 +1,23 @@
+suite: Open VTB full output
+templates:
+  - azurekeyvaultsecrets.yaml
+  - configmap.yaml
+  - configuration-data.yaml
+  - configuration-secrets.yaml
+  - deployment.yaml
+  - hpa.yaml
+  - ingress.yaml
+  - job-config.yaml
+  - pdb.yaml
+  - pvc.yaml
+  - secret.yaml
+  - service.yaml
+  - serviceaccount.yaml
+
+values:
+  - ./fixtures/values-openvtb.yaml
+
+tests:
+  - it: matches the expected manifest for Open VTB
+    asserts:
+      - matchSnapshot: {}
