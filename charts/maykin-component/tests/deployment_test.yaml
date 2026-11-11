@@ -1,0 +1,269 @@
+suite: Deployment
+
+templates:
+  - deployment.yaml
+
+set:
+  applicationName: test-app
+  image.repository: test-repository/test-image
+  image.tag: "0.1.0"
+
+tests:
+  - it: renders the given image repository and tag
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: test-repository/test-image:0.1.0
+
+  - it: fails to render when image tag is not given
+    set:
+      image.tag: ""
+    asserts:
+        - failedTemplate:
+          errorMessage: "minLength: got 0, want 1" # check first values schema
+
+  - it: fails to render when image repository is not given
+    set:
+      image.repository: ""
+    asserts:
+        - failedTemplate:
+          errorMessage: "minLength: got 0, want 1" # check first values schema
+
+  - it: sets replicas when autoscaling is disabled
+    set:
+      autoscaling.enabled: false
+      replicaCount: 3
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 3
+        documentIndex: 0 # application deployment
+
+  - it: uses default http port when ports is not set
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports[0]
+          value:
+            name: http
+            containerPort: 8000
+            protocol: TCP
+        documentIndex: 0 # application deployment
+
+  - it: uses custom ports when given
+    set:
+      ports:
+        - name: http
+          containerPort: 9000
+          protocol: TCP
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports[0].containerPort
+          value: 9000
+        documentIndex: 0 # application deployment
+
+  - it: does not render startupProbe when disabled
+    documentIndex: 0
+    set:
+      startupProbe.enabled: false
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[0].startupProbe
+
+  - it: startupProbe always has exactly one handler when enabled
+    documentIndex: 0
+    set:
+      startupProbe.enabled: true
+    asserts:
+      - isNotNullOrEmpty:
+          path: spec.template.spec.containers[0].startupProbe.httpGet
+      - isNull:
+          path: spec.template.spec.containers[0].startupProbe.exec
+      - isNull:
+          path: spec.template.spec.containers[0].startupProbe.tcpSocket
+      - isNull:
+          path: spec.template.spec.containers[0].startupProbe.grpc
+  - it: does not render startupProbe when disabled
+    documentIndex: 0
+    set:
+      startupProbe.enabled: false
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[0].startupProbe
+      
+  - it: startupProbe always has exactly one handler when enabled
+    documentIndex: 0
+    set:
+      startupProbe.enabled: true
+    asserts:
+      - isNotNullOrEmpty:
+          path: spec.template.spec.containers[0].startupProbe.httpGet
+      - isNull:
+          path: spec.template.spec.containers[0].startupProbe.exec
+      - isNull:
+          path: spec.template.spec.containers[0].startupProbe.tcpSocket
+      - isNull:
+          path: spec.template.spec.containers[0].startupProbe.grpc
+
+  - it: does not render livenessProbe when disabled
+    documentIndex: 0
+    set:
+      livenessProbe.enabled: false
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[0].livenessProbe
+
+  - it: livenessProbe always has exactly one handler when enabled
+    documentIndex: 0
+    set:
+      livenessProbe.enabled: true
+    asserts:
+      - isNotNullOrEmpty:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet
+      - isNull:
+          path: spec.template.spec.containers[0].livenessProbe.exec
+      - isNull:
+          path: spec.template.spec.containers[0].livenessProbe.tcpSocket
+      - isNull:
+          path: spec.template.spec.containers[0].livenessProbe.grpc
+
+  - it: does not render readinessProbe when disabled
+    documentIndex: 0
+    set:
+      readinessProbe.enabled: false
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[0].readinessProbe
+        
+
+  - it: readinessProbe always has exactly one handler when enabled
+    documentIndex: 0
+    set:
+      readinessProbe.enabled: true
+    asserts:
+      - isNotNullOrEmpty:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet
+      - isNull:
+          path: spec.template.spec.containers[0].readinessProbe.exec
+      - isNull:
+          path: spec.template.spec.containers[0].readinessProbe.tcpSocket
+      - isNull:
+          path: spec.template.spec.containers[0].readinessProbe.grpc
+  
+  - it: renders extra environment variables
+    documentIndex: 0
+    set:
+      extraEnvVars:
+        - name: FOO
+          value: bar
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: FOO
+            value: bar
+   
+  - it: mounts extra volumes and volumeMounts
+    documentIndex: 0
+    set:
+      extraVolumes:
+        - name: verify-certs
+          configMap:
+            name: verify-certs
+      extraVolumeMounts:
+        - name: verify-certs
+          mountPath: /etc/ssl/certs/extra-certs/
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: verify-certs
+            configMap:
+              name: verify-certs
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: verify-certs
+            mountPath: /etc/ssl/certs/extra-certs/
+
+  - it: uses emptyDir for media when persistence is disabled
+    documentIndex: 0
+    set:
+      persistence.enabled: false
+    asserts:
+      - exists:
+          path: spec.template.spec.volumes[0].emptyDir
+      - equal:
+          path: spec.template.spec.volumes[0].persistentVolumeClaim
+          value: null
+
+  - it: uses the generated PVC name for media when persistence is enabled without an existing claim
+    documentIndex: 0
+    release:
+      name: myrelease
+    set:
+      persistence.enabled: true
+      persistence.existingClaim: null
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: myrelease-test-app
+      - isNull:
+          path: spec.template.spec.volumes[0].emptyDir
+
+  - it: uses the existing claim name when persistence.existingClaim is set
+    documentIndex: 0
+    set:
+      persistence.enabled: true
+      persistence.existingClaim: my-existing-pvc
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: my-existing-pvc
+      - isNull:
+          path: spec.template.spec.volumes[0].emptyDir
+   
+  - it: sets the media and private_media subPaths to the application name by default
+    documentIndex: 0
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[0].subPath
+          value: test-app/media
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[1].subPath
+          value: test-app/private_media
+
+   
+  - it: uses a custom mediaMountSubpath when given
+    documentIndex: 0
+    set:
+      persistence.mediaMountSubpath: custom/media/path
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[0].subPath
+          value: custom/media/path
+   
+  - it: references the fullname secret and configmap by default
+    release:
+      name: myrelease
+    documentIndex: 0
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: myrelease-test-app
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: myrelease-test-app
+
+  - it: uses existingSecret name when given, instead of the generated fullname
+    set:
+      existingSecret: my-external-secret
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: my-external-secret
