@@ -3,14 +3,17 @@
 ## 1.14.0-rc.1 (2026-11-06)
 
 - Bumped the application version to 3.5.15. Please review the upgrade notes of [Open Forms 3.4.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-340.html) and [Open Forms 3.5.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-350.html) before upgrading.
-- Added container health checks using `maykin-common`, including liveness and readiness probes to monitor application health and ensure that unhealthy containers are detected and restarted when necessary.
-  These require Open Forms >= 3.5.0 and are disabled by default:
+- Updated the container health checks to use the new health checks of Open Forms 3.5.0 (using maykin-common). See the "Probes" section of the README for details.
 
-  - `worker.livenessProbe.maykinCommonHealthCheck.enabled`: use `maykin-common worker-health-check` instead of `celery inspect active` for the worker liveness probe. Configurable with `maxAge` (default: `90`) and `skipPing` (default: `false`).
-  - `worker.readinessProbe.enabled`: worker readiness probe based on the readiness file.
-  - `beat.livenessProbe.enabled`: beat liveness probe using `maykin-common beat-health-check`. Configurable with `maxAge` (default: `120`).
+  - Web: the startup, liveness and readiness probes now use the `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` endpoints. Nginx returns 404 for `/_healthz/` so these are not reachable from outside the cluster.
+  - Worker: added a startup probe ('worker.startupProbe') based on the readiness file. The liveness probe now uses 'maykin-common worker-health-check'. Both are enabled by default.
+  - Beat: added startup and liveness probes using 'maykin-common beat-health-check'. These are disabled by default and can be enabled with 'beat.probesEnabled: true'.
+  - Flower: the liveness and readiness probes now use 'maykin-common health-check' instead of a TCP check.
 
-  **Note**: the worker liveness probe does not detect dead pool child processes while the main worker process is still alive.
+  **Breaking changes**:
+
+  - The `worker.livenessProbe.exec` value has been removed, the command is now defined in the chart.
+  - The `worker.maxWorkerLivenessDelta` value and the `MAX_WORKER_LIVENESS_DELTA` environment variable have been removed, they are no longer used by Open Forms.
 
 ## 1.13.1 (2026-11-04)
 

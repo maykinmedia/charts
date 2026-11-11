@@ -537,35 +537,20 @@ worker:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
-  # Defaults to 60s
-  maxWorkerLivenessDelta: ""
-  livenessProbe:
-    enabled: false
-    maykinCommonHealthCheck:
-      # -- Use `maykin-common worker-health-check` instead of the `exec` command (requires OpenForms >= 3.5.0)
-      enabled: false
-      # -- Maximum age in seconds of the worker event loop liveness file
-      maxAge: 90
-      # -- Skip pinging the worker via the broker and only check the liveness file
-      skipPing: false
-    # -- Liveness probe command, used when `maykinCommonHealthCheck.enabled` is false
-    exec:
-      command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app openforms.celery inspect --destination celery@${HOSTNAME} active
+  startupProbe:
+    # -- Enable the worker startup probe, which checks the presence of the readiness file
+    enabled: true
     initialDelaySeconds: 60
-    # Periodeseconds should not exceed maxWorkerLivenessDelta
     periodSeconds: 50
-    timeoutSeconds: 15
+    timeoutSeconds: 10
     failureThreshold: 3
     successThreshold: 1
-  readinessProbe:
-    # -- Enable the worker readiness probe using `maykin-common worker-health-check` (requires OpenForms >= 3.5.0)
-    enabled: false
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 10
+  livenessProbe:
+    # -- Enable the worker liveness probe, which checks the event loop liveness file and pings the worker via the broker
+    enabled: true
+    initialDelaySeconds: 60
+    periodSeconds: 50
+    timeoutSeconds: 15
     failureThreshold: 3
     successThreshold: 1
   autoscaling:
@@ -677,13 +662,17 @@ beat:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
-  livenessProbe:
-    # -- Enable the beat liveness probe using `maykin-common beat-health-check` (requires OpenForms >= 3.5.0)
-    enabled: false
-    # -- Maximum age in seconds of the beat liveness file
-    maxAge: 120
-    # -- The liveness file will be present only once Open-Forms has scheduled a task.
+  # -- Enable the startup and liveness probes for Celery Beat, using `maykin-common beat-health-check`
+  probesEnabled: false
+  startupProbe:
+    # -- The liveness file will be present only once Open Forms has scheduled a task.
     # The most frequent task is scheduled every minute. We give time to the pod to start.
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
+    successThreshold: 1
+  livenessProbe:
     initialDelaySeconds: 120
     periodSeconds: 60
     timeoutSeconds: 15

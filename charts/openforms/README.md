@@ -90,6 +90,38 @@ telemetry. Alternatively, you can use any vendor that speaks the OTLP protocol.
 
 The environment variables that the Open Telemetry SDK supports can be found [here](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#general-sdk-configuration).
 
+### Probes
+
+Open Forms 3.5.0 added new functionality to improve the container health checks for the web application, the Celery worker, Celery Beat and the Flower container. Below you can find additional information about the various checks. See also the Open Forms [health checks documentation](https://open-forms.readthedocs.io/en/stable/installation/health_checks.html).
+
+**Web application**
+
+The endpoints `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` are used for the startup, liveness and readiness probe respectively.
+
+Important to note: these endpoints are not reachable from outside the cluster, Nginx is configured to return 404 for these endpoints.
+
+**Celery worker**
+
+You can read more about the worker health checks in the `maykin-common` documentation [here](https://maykin-django-common.readthedocs.io/en/latest/health_checks.html#celery-worker-health-checks). Things to note here are:
+
+* For the startup probe, we only check the presence of the readiness file. This is created when the worker is ready to accept work. Then it is no longer updated and it is cleaned up when the worker shuts down.
+* For the liveness probe, we check the liveness file, which is touched by the internal event loop of the worker every `60 s` (not a configurable value). We check that the file is not older than `70 s`. We also ping the worker through the broker to check the connection with the broker.
+
+The worker name used for the ping is built in the same way as in the worker start script: `CELERY_WORKER_NAME` if set, otherwise `<CELERY_WORKER_QUEUE>@<hostname>` (the queue defaults to `celery`). Custom queue names set with `extraEnvVars` are therefore supported.
+
+**Celery Beat**
+
+You can read more about the Beat health checks in the `maykin-common` documentation [here](https://maykin-django-common.readthedocs.io/en/latest/health_checks.html#celery-beat-health-checks).
+
+* For the startup probe, we check the presence of a liveness file. This is created when a new beat task is published. In Open Forms, the activate-form/deactivate-form tasks are published every minute. With the startup probe we aim to check that Beat has started and can schedule tasks, so the age of the file is not particularly important.
+* For the liveness probe we also check the liveness file. However, here we check that it is not older than 2 min, to be sure that Beat can still publish new tasks.
+
+The probes for Beat can be enabled by setting `beat.probesEnabled: true`.
+
+**Celery Flower**
+
+For both the liveness and readiness probes, we perform an HTTP health check against the Flower web interface (`http://localhost:5555/`) using the `maykin-common health-check` command.
+
 ### Static File Serving
 
 The OpenForms Helm chart supports nginx-based static file serving for improved performance and reduced load on the application server. This feature allows nginx to serve static files (CSS, JavaScript, images) directly without proxying requests to the uWSGI application.
@@ -140,16 +172,20 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | azureVaultSecret.objectName | string | `""` |  |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` |  |
 | azureVaultSecret.vaultName | string | `nil` |  |
-| beat.livenessProbe.enabled | bool | `false` | Enable the beat liveness probe using `maykin-common beat-health-check` (requires OpenForms >= 3.5.0) |
 | beat.livenessProbe.failureThreshold | int | `3` |  |
-| beat.livenessProbe.initialDelaySeconds | int | `120` | The liveness file will be present only once Open-Forms has scheduled a task. The most frequent task is scheduled every minute. We give time to the pod to start. |
-| beat.livenessProbe.maxAge | int | `120` | Maximum age in seconds of the beat liveness file |
+| beat.livenessProbe.initialDelaySeconds | int | `120` |  |
 | beat.livenessProbe.periodSeconds | int | `60` |  |
 | beat.livenessProbe.successThreshold | int | `1` |  |
 | beat.livenessProbe.timeoutSeconds | int | `15` |  |
 | beat.podLabels | object | `{}` |  |
+| beat.probesEnabled | bool | `false` | Enable the startup and liveness probes for Celery Beat, using `maykin-common beat-health-check` |
 | beat.replicaCount | int | `1` |  |
 | beat.resources | object | `{}` |  |
+| beat.startupProbe.failureThreshold | int | `3` |  |
+| beat.startupProbe.initialDelaySeconds | int | `60` | The liveness file will be present only once Open Forms has scheduled a task. The most frequent task is scheduled every minute. We give time to the pod to start. |
+| beat.startupProbe.periodSeconds | int | `60` |  |
+| beat.startupProbe.successThreshold | int | `1` |  |
+| beat.startupProbe.timeoutSeconds | int | `15` |  |
 | configuration.data | string | `""` |  |
 | configuration.enabled | bool | `false` |  |
 | configuration.job.backoffLimit | int | `0` |  |
@@ -362,23 +398,18 @@ The static file serving feature uses the existing media PVC with subPaths to org
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.concurrency | int | `4` |  |
-| worker.livenessProbe.enabled | bool | `false` |  |
-| worker.livenessProbe.exec | object | `{"command":["/bin/sh","-c","celery --workdir src --app openforms.celery inspect --destination celery@${HOSTNAME} active"]}` | Liveness probe command, used when `maykinCommonHealthCheck.enabled` is false |
+| worker.livenessProbe.enabled | bool | `true` | Enable the worker liveness probe, which checks the event loop liveness file and pings the worker via the broker |
 | worker.livenessProbe.failureThreshold | int | `3` |  |
 | worker.livenessProbe.initialDelaySeconds | int | `60` |  |
-| worker.livenessProbe.maykinCommonHealthCheck.enabled | bool | `false` | Use `maykin-common worker-health-check` instead of the `exec` command (requires OpenForms >= 3.5.0) |
-| worker.livenessProbe.maykinCommonHealthCheck.maxAge | int | `90` | Maximum age in seconds of the worker event loop liveness file |
-| worker.livenessProbe.maykinCommonHealthCheck.skipPing | bool | `false` | Skip pinging the worker via the broker and only check the liveness file |
 | worker.livenessProbe.periodSeconds | int | `50` |  |
 | worker.livenessProbe.successThreshold | int | `1` |  |
 | worker.livenessProbe.timeoutSeconds | int | `15` |  |
-| worker.maxWorkerLivenessDelta | string | `""` |  |
 | worker.podLabels | object | `{}` |  |
-| worker.readinessProbe.enabled | bool | `false` | Enable the worker readiness probe using `maykin-common worker-health-check` (requires OpenForms >= 3.5.0) |
-| worker.readinessProbe.failureThreshold | int | `3` |  |
-| worker.readinessProbe.initialDelaySeconds | int | `30` |  |
-| worker.readinessProbe.periodSeconds | int | `10` |  |
-| worker.readinessProbe.successThreshold | int | `1` |  |
-| worker.readinessProbe.timeoutSeconds | int | `10` |  |
 | worker.replicaCount | int | `2` |  |
 | worker.resources | object | `{}` |  |
+| worker.startupProbe.enabled | bool | `true` | Enable the worker startup probe, which checks the presence of the readiness file |
+| worker.startupProbe.failureThreshold | int | `3` |  |
+| worker.startupProbe.initialDelaySeconds | int | `60` |  |
+| worker.startupProbe.periodSeconds | int | `50` |  |
+| worker.startupProbe.successThreshold | int | `1` |  |
+| worker.startupProbe.timeoutSeconds | int | `10` |  |
