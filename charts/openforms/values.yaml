@@ -537,17 +537,18 @@ worker:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
-  # Defaults to 60s
-  maxWorkerLivenessDelta: ""
-  livenessProbe: 
-    enabled: false
-    exec:
-      command:
-        - /bin/sh
-        - -c
-        - celery --workdir src --app openforms.celery inspect --destination celery@${HOSTNAME} active
+  startupProbe:
+    # -- Enable the worker startup probe, which checks the presence of the readiness file
+    enabled: true
     initialDelaySeconds: 60
-    # Periodeseconds should not exceed maxWorkerLivenessDelta
+    periodSeconds: 50
+    timeoutSeconds: 10
+    failureThreshold: 3
+    successThreshold: 1
+  livenessProbe:
+    # -- Enable the worker liveness probe, which checks the event loop liveness file and pings the worker via the broker
+    enabled: true
+    initialDelaySeconds: 60
     periodSeconds: 50
     timeoutSeconds: 15
     failureThreshold: 3
@@ -661,6 +662,22 @@ beat:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
+  # -- Enable the startup and liveness probes for Celery Beat, using `maykin-common beat-health-check`
+  probesEnabled: false
+  startupProbe:
+    # -- The liveness file will be present only once Open Forms has scheduled a task.
+    # The most frequent task is scheduled every minute. We give time to the pod to start.
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
+    successThreshold: 1
+  livenessProbe:
+    initialDelaySeconds: 120
+    periodSeconds: 60
+    timeoutSeconds: 15
+    failureThreshold: 3
+    successThreshold: 1
 
 ##################
 # Redis subchart #
