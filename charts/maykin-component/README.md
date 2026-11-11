@@ -47,6 +47,15 @@ helm lint maykin-component
 | https://charts.bitnami.com/bitnami | common | 2.27.0 |
 | https://charts.bitnami.com/bitnami | redis | 17.3.14 |
 
+## Chart Migrations
+
+- Use the same `values.yaml` as the app, and remove the fields the generic chart no longer uses
+- For reference, see the example in `charts/maykin-component/tests/fixtures/values-<application-name>.yaml`
+- Set the required fields: `applicationName`, `image.repository`, `image.tag`
+- Move app-specific env vars into `settings.extraSettings`
+- Verify with `helm lint` and `helm template`
+- Compare the old and new manifests (resource names, `spec.selector.matchLabels`, PVC)
+
 ## Values
 
 | Key | Type | Default | Description |
