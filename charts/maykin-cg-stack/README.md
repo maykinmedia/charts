@@ -273,7 +273,7 @@ Maykin Common Ground components
 | openzaak.nginx.autoscaling.enabled | bool | `false` |  |
 | openzaak.nginx.existingConfigmap | string | `nil` | mount existing nginx vhost config |
 | openzaak.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| openzaak.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
+| openzaak.nginx.image.repository | string | `"nginx/nginx-unprivileged"` |  |
 | openzaak.nginx.image.tag | string | `"stable"` |  |
 | openzaak.nginx.livenessProbe.failureThreshold | int | `3` |  |
 | openzaak.nginx.livenessProbe.initialDelaySeconds | int | `60` |  |

@@ -128,7 +128,7 @@ with the value `existingConfigurationSecret` so that it is added to the environm
 | nginx.extraVolumeMounts | list | `[]` |  |
 | nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
+| nginx.image.repository | string | `"nginx/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |
 | nginx.livenessProbe | object | `{}` |  |
 | nginx.podLabels | object | `{}` |  |
