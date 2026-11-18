@@ -115,7 +115,7 @@ The probes for Beat can be enabled by setting `beat.probesEnabled: true`.
 
 **Celery Flower**
 
-For both the liveness and readiness probes, we perform an HTTP health check against the Flower web interface (`http://localhost:5555/`) using the `maykin-common health-check` command.
+For both the liveness and readiness probes, we perform an HTTP health check against Flower's `/healthcheck` endpoint (`http://localhost:5555/healthcheck`, prefixed with `settings.flower.urlPrefix` if set) using the `maykin-common health-check` command. This endpoint doesn't require authentication, so the probes also work when `FLOWER_BASIC_AUTH` is configured.
 
 ### Static File Serving
 
