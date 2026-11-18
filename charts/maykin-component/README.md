@@ -76,11 +76,13 @@ helm lint maykin-component
 | azureVaultSecret.objectName | string | `""` | Name of the Multi Key Value Secret in the vault |
 | azureVaultSecret.secretName | string | `"{{ .Values.existingSecret }}"` | Target secret name; you must also set .Values.existingSecret |
 | azureVaultSecret.vaultName | string | `nil` | Name of the Azure Key Vault; setting this creates the AzureVaultSecret resource |
-| beat.enabled | bool | `true` | Enable the Celery beat (scheduler) deployment |
+| beat.additionalLabels | object | `{}` |  |
+| beat.annotations | object | `{}` |  |
+| beat.enabled | bool | `false` | Enable the Celery beat (scheduler) deployment |
 | beat.livenessProbe | object | `{}` |  |
 | beat.podLabels | object | `{}` |  |
 | beat.readinessProbe | object | `{}` |  |
-| beat.replicaCount | int | `1` |  |
+| beat.replicaCount | int | `1` | Number of beat replicas. Celery beat is a singleton scheduler: keep this at 1, otherwise every periodic task will be scheduled multiple times. |
 | beat.resources | object | `{}` |  |
 | chartVersionOverride | string | `""` | Override the chart version label used on resources |
 | componentOverride | string | `""` | Override the "app.kubernetes.io/component" label value |
@@ -114,7 +116,7 @@ helm lint maykin-component
 | flower.autoscaling.minReplicas | int | `1` |  |
 | flower.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | flower.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
-| flower.enabled | bool | `true` | Enable the Flower (Celery monitoring UI) deployment |
+| flower.enabled | bool | `false` | Enable the Flower (Celery monitoring UI) deployment |
 | flower.livenessProbe.failureThreshold | int | `6` |  |
 | flower.livenessProbe.initialDelaySeconds | int | `60` |  |
 | flower.livenessProbe.periodSeconds | int | `10` |  |
@@ -248,13 +250,13 @@ helm lint maykin-component
 | settings.environment | string | `""` | Sets the 'ENVIRONMENT' variable (e.g. staging, production) |
 | settings.extraSettings | object | `{}` | Extra arbitrary key/value environment variables injected as Django settings |
 | settings.isHttps | bool | `true` | Whether the app is served over HTTPS (affects secure cookie / redirect settings) |
-| settings.logging.level | string | `""` | Root log level (e.g. DEBUG, INFO, WARNING) |
+| settings.logging.level | string | `"INFO"` | Root log level (e.g. DEBUG, INFO, WARNING) |
 | settings.logging.outgoingRequests | bool | `false` | Log outgoing requests |
 | settings.logging.outgoingRequestsDBSave | bool | `false` | Persist outgoing request logs to the database |
 | settings.logging.outgoingRequestsDBSaveBody | bool | `false` | Include request/response body when saving outgoing request logs |
-| settings.logging.outgoingRequestsMaxAge | string | `nil` | Max age (days) of outgoing request logs kept in the database |
-| settings.logging.outgoingRequestsResetDBSaveAfter | string | `nil` | Days after which saved outgoing request logs are purged; null disables purging |
-| settings.logging.requests | bool | `false` | Log incoming requests |
+| settings.logging.outgoingRequestsMaxAge | int | `7` | Max age (days) of outgoing request logs kept in the database |
+| settings.logging.outgoingRequestsResetDBSaveAfter | int | `60` | Days after which saved outgoing request logs are purged; null disables purging |
+| settings.logging.requests | bool | `true` | Log incoming requests |
 | settings.notifications.disabled | bool | `true` | Disable the notifications (NRC) integration |
 | settings.notifications.logInDb | bool | `false` | Log notifications to the database |
 | settings.notifications.numberOfDaysRetained | string | `nil` | Retention period (days) for logged notifications; null keeps them indefinitely |
@@ -263,9 +265,9 @@ helm lint maykin-component
 | settings.otel.exporterOtlpEndpoint | string | `""` | OTLP exporter endpoint |
 | settings.otel.exporterOtlpHeaders | list | `[]` | Any additional HTTP headers, for example if you need Basic auth. This is used in the secret.yaml, as it can contain credentials.  |
 | settings.otel.exporterOtlpMetricsInsecure | bool | `false` | Disable TLS for the OTLP metrics exporter |
-| settings.otel.exporterOtlpProtocol | string | `""` | OTLP exporter protocol (e.g. grpc, http/protobuf) |
-| settings.otel.metricExportInterval | string | `""` | Metric export interval |
-| settings.otel.metricExportTimeout | string | `""` | Metric export timeout |
+| settings.otel.exporterOtlpProtocol | string | `"grpc"` | OTLP exporter protocol (e.g. grpc, http/protobuf) |
+| settings.otel.metricExportInterval | int | `60000` | Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application.  |
+| settings.otel.metricExportTimeout | int | `10000` | Controls the timeout of the requests to the collector (in milliseconds) |
 | settings.otel.resourceAttributes | list | `[]` | Extra OTEL resource attributes (list of "key=value" strings) |
 | settings.secretKey | string | `""` | Django SECRET_KEY. Generate one at https://djecrety.ir/ |
 | settings.sentry.dsn | string | `""` | Sentry DSN for error tracking; leave empty to disable |
@@ -295,7 +297,7 @@ helm lint maykin-component
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | worker.command | string | `""` | Override the default worker start command |
 | worker.concurrency | int | `4` | Celery worker concurrency (number of child processes/threads) |
-| worker.enabled | bool | `true` | Enable the Celery worker deployment |
+| worker.enabled | bool | `false` | Enable the Celery worker deployment |
 | worker.label | string | `"celery"` | Label used to identify this worker (e.g. for celery queue routing) |
 | worker.livenessProbe.enabled | bool | `false` |  |
 | worker.livenessProbe.exec.command[0] | string | `"/app/liveness/liveness-probe.sh"` |  |

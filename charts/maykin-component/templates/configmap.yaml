@@ -15,11 +15,15 @@ metadata:
 data:
   {{- /* Django core settings */}}
   DJANGO_SETTINGS_MODULE: {{ .Values.settings.djangoSettingsModule | default (printf "%s.conf.docker" (include "application.name" .)) | quote }}
-  {{- if .Values.settings.useXForwardedHost }}
-  USE_X_FORWARDED_HOST: "True"
+  {{- with include "application.boolValue" .Values.settings.useXForwardedHost }}
+  USE_X_FORWARDED_HOST: {{ . | quote }}
   {{- end }}
   ENVIRONMENT: {{ .Values.settings.environment | default (include "application.fullname" .) | quote }}
-  ALLOWED_HOSTS: "{{ include "application.fullname" . }},{{ include "application.fullname" . }}.{{ .Release.Namespace }},{{ .Values.settings.allowedHosts | replace " " "" | toString }}"
+  {{- $allowedHosts := list (include "application.fullname" .) (printf "%s.%s" (include "application.fullname" .) .Release.Namespace) }}
+  {{- with .Values.settings.allowedHosts }}
+  {{- $allowedHosts = append $allowedHosts (toString . | replace " " "") }}
+  {{- end }}
+  ALLOWED_HOSTS: {{ join "," $allowedHosts | quote }}
 
   {{- /* Redis host for cache and celery */}}
   {{- $redisHost := "" }}
@@ -33,9 +37,15 @@ data:
   CACHE_AXES: {{ printf "%s:6379/0" $redisHost | quote }}
   CACHE_OIDC: {{ printf "%s:6379/0" $redisHost | quote }}
   {{- else }}
-  CACHE_DEFAULT: {{ .Values.settings.cache.default | toString | quote }}
-  CACHE_AXES: {{ .Values.settings.cache.axes | toString | quote }}
-  CACHE_OIDC: {{ .Values.settings.cache.oidc | toString | quote }}
+  {{- with .Values.settings.cache.default }}
+  CACHE_DEFAULT: {{ . | toString | quote }}
+  {{- end }}
+  {{- with .Values.settings.cache.axes }}
+  CACHE_AXES: {{ . | toString | quote }}
+  {{- end }}
+  {{- with .Values.settings.cache.oidc }}
+  CACHE_OIDC: {{ . | toString | quote }}
+  {{- end }}
   {{- end }}
 
   {{- /* Celery: broker/backend (Redis subchart or explicit values) */}}
@@ -43,34 +53,38 @@ data:
   CELERY_BROKER_URL: {{ printf "redis://%s:6379/1" $redisHost | quote }}
   CELERY_RESULT_BACKEND: {{ printf "redis://%s:6379/1" $redisHost | quote }}
   {{- else }}
-  CELERY_BROKER_URL: {{ .Values.settings.celery.brokerUrl | toString | quote }}
-  CELERY_RESULT_BACKEND: {{ .Values.settings.celery.resultBackend | toString | quote }}
+  {{- with .Values.settings.celery.brokerUrl }}
+  CELERY_BROKER_URL: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.celery.logLevel }}
-  CELERY_LOGLEVEL: {{ .Values.settings.celery.logLevel | upper | toString | quote }}
+  {{- with .Values.settings.celery.resultBackend }}
+  CELERY_RESULT_BACKEND: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.celery.resultExpires }}
-  CELERY_RESULT_EXPIRES: {{ .Values.settings.celery.resultExpires | toString | quote }}
   {{- end }}
-  {{- if .Values.worker.maxWorkerLivenessDelta }}
-  MAX_WORKER_LIVENESS_DELTA: {{ .Values.worker.maxWorkerLivenessDelta | toString | quote }}
+  {{- with .Values.settings.celery.logLevel }}
+  CELERY_LOGLEVEL: {{ . | toString | upper | quote }}
+  {{- end }}
+  {{- with .Values.settings.celery.resultExpires }}
+  CELERY_RESULT_EXPIRES: {{ . | toString | quote }}
+  {{- end }}
+  {{- with .Values.worker.maxWorkerLivenessDelta }}
+  MAX_WORKER_LIVENESS_DELTA: {{ . | toString | quote }}
   {{- end }}
 
   {{- /* Application logging */}}
-  {{- if .Values.settings.logging.level }}
-  LOG_LEVEL: {{ .Values.settings.logging.level | toString | quote }}
+  {{- with .Values.settings.logging.level }}
+  LOG_LEVEL: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.logging.requests }}
-  LOG_REQUESTS: "True"
+  {{- with include "application.boolValue" .Values.settings.logging.requests }}
+  LOG_REQUESTS: {{ . | quote }}
   {{- end }}
-  {{- if .Values.settings.logging.outgoingRequests }}
-  LOG_OUTGOING_REQUESTS: "True"
+  {{- with include "application.boolValue" .Values.settings.logging.outgoingRequests }}
+  LOG_OUTGOING_REQUESTS: {{ . | quote }}
   {{- end }}
-  {{- if .Values.settings.logging.outgoingRequestsDBSave }}
-  LOG_OUTGOING_REQUESTS_DB_SAVE: "True"
+  {{- with include "application.boolValue" .Values.settings.logging.outgoingRequestsDBSave }}
+  LOG_OUTGOING_REQUESTS_DB_SAVE: {{ . | quote }}
   {{- end }}
-  {{- if .Values.settings.logging.outgoingRequestsDBSaveBody }}
-  LOG_OUTGOING_REQUESTS_DB_SAVE_BODY: "True"
+  {{- with include "application.boolValue" .Values.settings.logging.outgoingRequestsDBSaveBody }}
+  LOG_OUTGOING_REQUESTS_DB_SAVE_BODY: {{ . | quote }}
   {{- end }}
   {{- if ne .Values.settings.logging.outgoingRequestsResetDBSaveAfter nil }}
   LOG_OUTGOING_REQUESTS_RESET_DB_SAVE_AFTER: {{ int .Values.settings.logging.outgoingRequestsResetDBSaveAfter | quote }}
@@ -79,130 +93,153 @@ data:
   LOG_OUTGOING_REQUESTS_MAX_AGE: {{ int .Values.settings.logging.outgoingRequestsMaxAge | quote }}
   {{- end }}
 
-  {{- /* Database connection and connection pooling */}}
-  DB_NAME: {{ .Values.settings.database.name | toString | quote }}
-  DB_HOST: {{ .Values.global.settings.databaseHost | default .Values.settings.database.host | toString | quote }}
-  DB_USER: {{ .Values.settings.database.username | toString | quote }}
-  DB_PORT: {{ .Values.settings.database.port | toString | quote }}
-  PGSSLMODE: {{ .Values.settings.database.sslmode | toString | quote }}
-  {{- with .Values.settings.database.db_pool }}
-  {{- if .enabled }}
-  DB_POOL_ENABLED: {{ .enabled | toString | title | quote }}
-  {{- if ne .db_pool_min_size nil }}
-  DB_POOL_MIN_SIZE: {{ int .db_pool_min_size | quote }}
+  {{- /* Database connection */}}
+  {{- with .Values.settings.database.name }}
+  DB_NAME: {{ . | toString | quote }}
   {{- end }}
-  {{- if ne .db_pool_max_size nil }}
-  DB_POOL_MAX_SIZE: {{ int .db_pool_max_size | quote }}
+  {{- $dbHost := dig "settings" "databaseHost" "" (.Values.global | default dict) | default .Values.settings.database.host }}
+  {{- with $dbHost }}
+  DB_HOST: {{ . | toString | quote }}
   {{- end }}
-  {{- if ne .db_pool_timeout nil }}
-  DB_POOL_TIMEOUT: {{ int .db_pool_timeout | quote }}
+  {{- with .Values.settings.database.username }}
+  DB_USER: {{ . | toString | quote }}
   {{- end }}
-  {{- if ne .db_pool_max_waiting nil }}
-  DB_POOL_MAX_WAITING: {{ int .db_pool_max_waiting | quote }}
+  {{- with .Values.settings.database.port }}
+  DB_PORT: {{ . | toString | quote }}
   {{- end }}
-  {{- if ne .db_pool_max_lifetime nil }}
-  DB_POOL_MAX_LIFETIME: {{ int .db_pool_max_lifetime | quote }}
+  {{- with .Values.settings.database.sslmode }}
+  PGSSLMODE: {{ . | toString | quote }}
   {{- end }}
-  {{- if ne .db_pool_max_idle nil }}
-  DB_POOL_MAX_IDLE: {{ int .db_pool_max_idle | quote }}
+
+  {{- /* Database connection pooling (pool and DB_CONN_MAX_AGE are mutually exclusive) */}}
+  {{- $pool := .Values.settings.database.db_pool | default dict }}
+  {{- $poolEnabled := include "application.boolValue" $pool.enabled }}
+  {{- with $poolEnabled }}
+  DB_POOL_ENABLED: {{ . | quote }}
   {{- end }}
-  {{- if ne .db_pool_reconnect_timeout nil }}
-  DB_POOL_RECONNECT_TIMEOUT: {{ int .db_pool_reconnect_timeout | quote }}
+  {{- if eq $poolEnabled "True" }}
+  {{- if ne $pool.db_pool_min_size nil }}
+  DB_POOL_MIN_SIZE: {{ int $pool.db_pool_min_size | quote }}
   {{- end }}
-  {{- if ne .db_pool_num_workers nil }}
-  DB_POOL_NUM_WORKERS: {{ int .db_pool_num_workers | quote }}
+  {{- if ne $pool.db_pool_max_size nil }}
+  DB_POOL_MAX_SIZE: {{ int $pool.db_pool_max_size | quote }}
   {{- end }}
-  {{- else }}
-  {{- if ne $.Values.settings.database.db_conn_max_age nil }}
-  DB_CONN_MAX_AGE: {{ int $.Values.settings.database.db_conn_max_age | quote }}
+  {{- if ne $pool.db_pool_timeout nil }}
+  DB_POOL_TIMEOUT: {{ int $pool.db_pool_timeout | quote }}
   {{- end }}
+  {{- if ne $pool.db_pool_max_waiting nil }}
+  DB_POOL_MAX_WAITING: {{ int $pool.db_pool_max_waiting | quote }}
   {{- end }}
+  {{- if ne $pool.db_pool_max_lifetime nil }}
+  DB_POOL_MAX_LIFETIME: {{ int $pool.db_pool_max_lifetime | quote }}
+  {{- end }}
+  {{- if ne $pool.db_pool_max_idle nil }}
+  DB_POOL_MAX_IDLE: {{ int $pool.db_pool_max_idle | quote }}
+  {{- end }}
+  {{- if ne $pool.db_pool_reconnect_timeout nil }}
+  DB_POOL_RECONNECT_TIMEOUT: {{ int $pool.db_pool_reconnect_timeout | quote }}
+  {{- end }}
+  {{- if ne $pool.db_pool_num_workers nil }}
+  DB_POOL_NUM_WORKERS: {{ int $pool.db_pool_num_workers | quote }}
+  {{- end }}
+  {{- else if ne .Values.settings.database.db_conn_max_age nil }}
+  DB_CONN_MAX_AGE: {{ int .Values.settings.database.db_conn_max_age | quote }}
   {{- end }}
 
   {{- /* Debug and security flags */}}
-  {{- if .Values.settings.debug }}
-  DEBUG: "True"
+  {{- with include "application.boolValue" .Values.settings.debug }}
+  DEBUG: {{ . | quote }}
   {{- end }}
-  {{- if .Values.settings.disable2fa }}
-  DISABLE_2FA: "True"
+  {{- with include "application.boolValue" .Values.settings.disable2fa }}
+  DISABLE_2FA: {{ . | quote }}
   {{- end }}
-  IS_HTTPS: {{ if .Values.settings.isHttps }}"True"{{ else }}"False"{{ end }}
+  {{- with include "application.boolValue" .Values.settings.isHttps }}
+  IS_HTTPS: {{ . | quote }}
+  {{- end }}
 
   {{- /* Email */}}
-  EMAIL_HOST: {{ .Values.settings.email.host | toString | quote }}
-  EMAIL_PORT: {{ .Values.settings.email.port | toString | quote }}
-  {{- if .Values.settings.email.username }}
-  EMAIL_HOST_USER: {{ .Values.settings.email.username | toString | quote }}
+  {{- with .Values.settings.email.host }}
+  EMAIL_HOST: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.email.useTLS }}
-  EMAIL_USE_TLS: "True"
+  {{- with .Values.settings.email.port }}
+  EMAIL_PORT: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.email.defaultFrom }}
-  DEFAULT_FROM_EMAIL: {{ .Values.settings.email.defaultFrom | toString | quote }}
+  {{- with .Values.settings.email.username }}
+  EMAIL_HOST_USER: {{ . | toString | quote }}
+  {{- end }}
+  {{- with include "application.boolValue" .Values.settings.email.useTLS }}
+  EMAIL_USE_TLS: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.settings.email.defaultFrom }}
+  DEFAULT_FROM_EMAIL: {{ . | toString | quote }}
   {{- end }}
 
   {{- /* Elastic APM */}}
   {{- if .Values.settings.elasticapm.url }}
-  ELASTIC_APM_SERVICE_NAME: {{ .Values.settings.elasticapm.serviceName | toString | quote }}
+  {{- with .Values.settings.elasticapm.serviceName }}
+  ELASTIC_APM_SERVICE_NAME: {{ . | toString | quote }}
+  {{- end }}
   {{- end }}
 
-  {{- /* uWSGI tuning */}}
-  {{- if .Values.settings.uwsgi.master }}
-  UWSGI_MASTER: "1"
+  {{- /* uWSGI tuning: only emitted when set, otherwise /uwsgi.ini applies */}}
+  {{- with .Values.settings.uwsgi.master }}
+  UWSGI_MASTER: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.uwsgi.threads }}
-  UWSGI_THREADS: {{ .Values.settings.uwsgi.threads | toString | quote }}
+  {{- with .Values.settings.uwsgi.threads }}
+  UWSGI_THREADS: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.uwsgi.processes }}
-  UWSGI_PROCESSES: {{ .Values.settings.uwsgi.processes | toString | quote }}
+  {{- with .Values.settings.uwsgi.processes }}
+  UWSGI_PROCESSES: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.uwsgi.maxRequests }}
-  UWSGI_MAX_REQUESTS: {{ .Values.settings.uwsgi.maxRequests | toString | quote }}
+  {{- with .Values.settings.uwsgi.maxRequests }}
+  UWSGI_MAX_REQUESTS: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.uwsgi.harakiri }}
-  UWSGI_HARAKIRI: {{ .Values.settings.uwsgi.harakiri | toString | quote }}
+  {{- with .Values.settings.uwsgi.harakiri }}
+  UWSGI_HARAKIRI: {{ . | toString | quote }}
   {{- end }}
 
   {{- /* Notifications */}}
-  {{- if .Values.settings.notifications.disabled }}
-  NOTIFICATIONS_DISABLED: "True"
+  {{- with include "application.boolValue" .Values.settings.notifications.disabled }}
+  NOTIFICATIONS_DISABLED: {{ . | quote }}
   {{- end }}
-  {{- if .Values.settings.notifications.logInDb }}
-  LOG_NOTIFICATIONS_IN_DB: "True"
+  {{- with include "application.boolValue" .Values.settings.notifications.logInDb }}
+  LOG_NOTIFICATIONS_IN_DB: {{ . | quote }}
   {{- end }}
   {{- if ne .Values.settings.notifications.numberOfDaysRetained nil }}
   NOTIFICATION_NUMBER_OF_DAYS_RETAINED: {{ int .Values.settings.notifications.numberOfDaysRetained | quote }}
   {{- end }}
-  {{- if .Values.settings.notifications.source }}
-  NOTIFICATIONS_SOURCE: {{ .Values.settings.notifications.source | toString | quote }}
+  {{- with .Values.settings.notifications.source }}
+  NOTIFICATIONS_SOURCE: {{ . | toString | quote }}
   {{- end }}
 
   {{- /* Application core settings */}}
-  {{- if .Values.settings.siteDomain }}
-  SITE_DOMAIN: {{ .Values.settings.siteDomain | toString | quote }}
+  {{- with .Values.settings.siteDomain }}
+  SITE_DOMAIN: {{ . | toString | quote }}
   {{- end }}
 
   {{- /* OpenTelemetry */}}
-  {{- if .Values.settings.otel.disabled }}
-  OTEL_SDK_DISABLED: "True"
-  {{- else }}
-  {{- if .Values.settings.otel.resourceAttributes }}
-  OTEL_RESOURCE_ATTRIBUTES: "{{ range $index, $item := .Values.settings.otel.resourceAttributes }}{{ if $index }},{{ end }}{{ $item.key }}={{ $item.value }}{{ end }}"
+  {{- $otelDisabled := include "application.boolValue" .Values.settings.otel.disabled }}
+  {{- with $otelDisabled }}
+  OTEL_SDK_DISABLED: {{ . | quote }}
   {{- end }}
-  {{- if .Values.settings.otel.exporterOtlpEndpoint }}
-  OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.settings.otel.exporterOtlpEndpoint | toString | quote }}
+  {{- if ne $otelDisabled "True" }}
+  {{- with .Values.settings.otel.resourceAttributes }}
+  OTEL_RESOURCE_ATTRIBUTES: "{{ range $index, $item := . }}{{ if $index }},{{ end }}{{ $item.key }}={{ $item.value }}{{ end }}"
   {{- end }}
-  {{- if .Values.settings.otel.exporterOtlpMetricsInsecure }}
-  OTEL_EXPORTER_OTLP_METRICS_INSECURE: "True"
+  {{- with .Values.settings.otel.exporterOtlpEndpoint }}
+  OTEL_EXPORTER_OTLP_ENDPOINT: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.otel.exporterOtlpProtocol }}
-  OTEL_EXPORTER_OTLP_PROTOCOL: {{ .Values.settings.otel.exporterOtlpProtocol | toString | quote }}
+  {{- with include "application.boolValue" .Values.settings.otel.exporterOtlpMetricsInsecure }}
+  OTEL_EXPORTER_OTLP_METRICS_INSECURE: {{ . | quote }}
   {{- end }}
-  {{- if .Values.settings.otel.metricExportInterval }}
-  OTEL_METRIC_EXPORT_INTERVAL: {{ .Values.settings.otel.metricExportInterval | toString | quote }}
+  {{- with .Values.settings.otel.exporterOtlpProtocol }}
+  OTEL_EXPORTER_OTLP_PROTOCOL: {{ . | toString | quote }}
   {{- end }}
-  {{- if .Values.settings.otel.metricExportTimeout }}
-  OTEL_METRIC_EXPORT_TIMEOUT: {{ .Values.settings.otel.metricExportTimeout | toString | quote }}
+  {{- with .Values.settings.otel.metricExportInterval }}
+  OTEL_METRIC_EXPORT_INTERVAL: {{ . | toString | quote }}
+  {{- end }}
+  {{- with .Values.settings.otel.metricExportTimeout }}
+  OTEL_METRIC_EXPORT_TIMEOUT: {{ . | toString | quote }}
   {{- end }}
   {{- end }}
 

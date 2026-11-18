@@ -806,10 +806,10 @@
               ]
             },
             "metricExportInterval": {
-              "type": "string"
+              "type": "integer"
             },
             "metricExportTimeout": {
-              "type": "string"
+              "type": "integer"
             }
           }
         },
