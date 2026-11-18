@@ -1,10 +1,6 @@
 # Changelog
 
-## 1.14.0-rc.2 (2026-11-18)
-
-- Fixed the Flower liveness and readiness probes: they now use Flower's `/healthcheck` endpoint.
-
-## 1.14.0-rc.1 (2026-11-06)
+## 1.14.0 (2026-11-18)
 
 - Bumped the application version to 3.5.15. Please review the upgrade notes of [Open Forms 3.4.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-340.html) and [Open Forms 3.5.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-350.html) before upgrading.
 - Updated the container health checks to use the new health checks of Open Forms 3.5.0 (using maykin-common). See the "Probes" section of the README for details.
@@ -12,7 +8,7 @@
   - Web: the startup, liveness and readiness probes still use the `/admin/` endpoint. The `/_healthz/` endpoints of Open Forms 3.5 don't work with Kubernetes probes (fixed in maykin-common 0.20.1, which Open Forms 3.5 doesn't use yet). Nginx returns 404 for `/_healthz/` so these are not reachable from outside the cluster.
   - Worker: added a startup probe ('worker.startupProbe') based on the readiness file. The liveness probe now uses 'maykin-common worker-health-check'. Both are enabled by default.
   - Beat: added startup and liveness probes using 'maykin-common beat-health-check'. These are disabled by default and can be enabled with 'beat.probesEnabled: true'.
-  - Flower: the liveness and readiness probes now use 'maykin-common health-check' instead of a TCP check.
+  - Flower: the liveness and readiness probes now use 'maykin-common health-check' against Flower's `/healthcheck` endpoint (prefixed with `settings.flower.urlPrefix` if set) instead of a TCP check. This endpoint doesn't require authentication, so the probes also work when `FLOWER_BASIC_AUTH` is set.
 
   **Breaking changes**:
 
