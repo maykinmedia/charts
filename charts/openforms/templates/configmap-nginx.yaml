@@ -100,6 +100,11 @@ data:
         include conf.d/proxy;
       }
 
+      # Health check endpoints should not be accessible from outside the cluster
+      location ^~ /_healthz/ {
+        return 404;
+      }
+
       {{- if and .Values.nginx.staticFileServing.enabled (include "openforms.staticFileServingSupported" .) }}
 
       # Serve collected static files directly from Nginx
