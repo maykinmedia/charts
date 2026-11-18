@@ -2068,6 +2068,28 @@ entries:
     version: 0.1.0
   openforms:
   - apiVersion: v2
+    appVersion: 3.5.15
+    created: "2026-11-18T11:41:48.792944563Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Snel en eenvoudig slimme formulieren bouwen en publiceren
+    digest: 797c6c7bbe061d6a07510b1fe8b451036fe868515133f182c9fe092d41c2ac6a
+    icon: https://open-forms.readthedocs.io/en/stable/_static/logo.svg
+    name: openforms
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openforms-1.14.0-rc.1/openforms-1.14.0-rc.1.tgz
+    version: 1.14.0-rc.1
+  - apiVersion: v2
     appVersion: 3.3.9
     created: "2026-11-10T10:10:29.8918031Z"
     dependencies:
@@ -9061,4 +9083,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-11-11T14:18:16.563054886Z"
+generated: "2026-11-18T11:41:48.793712181Z"
