@@ -200,7 +200,7 @@ You can find more information in the Open Zaak documentation for both the [Azure
 | nginx.extraVolumeMounts | list | `[]` |  |
 | nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
+| nginx.image.repository | string | `"nginx/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |
 | nginx.livenessProbe.failureThreshold | int | `3` |  |
 | nginx.livenessProbe.initialDelaySeconds | int | `60` |  |

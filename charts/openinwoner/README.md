@@ -343,7 +343,7 @@ The value of the `DSN` is considered sensitive, so it should be handled as a sec
 | nginx.extraVolumeMounts | list | `[]` |  |
 | nginx.extraVolumes | list | `[]` |  |
 | nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
+| nginx.image.repository | string | `"nginx/nginx-unprivileged"` |  |
 | nginx.image.tag | string | `"stable"` |  |
 | nginx.livenessProbe.failureThreshold | int | `3` |  |
 | nginx.livenessProbe.initialDelaySeconds | int | `60` |  |

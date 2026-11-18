@@ -342,7 +342,7 @@ settings:
 
 nginx:
   image:
-    repository: nginxinc/nginx-unprivileged
+    repository: nginx/nginx-unprivileged
     pullPolicy: IfNotPresent
     tag: stable
   existingConfigmap: null
