@@ -1044,6 +1044,28 @@ entries:
     version: 2.1.1-rc.1
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2026-11-18T14:29:50.273479977Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Opstellen, beheren en uitvoeren van vernietigingslijsten, voor gebruik
+      met Zaakgericht werken
+    digest: baaab3f0aed73ad4f432ea3f7eba6a26769db259acc166aabb809c9b884e97d7
+    name: openarchiefbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openarchiefbeheer-2.1.1-rc.1/openarchiefbeheer-2.1.1-rc.1.tgz
+    version: 2.1.1-rc.1
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2026-08-27T13:26:56.865291485Z"
     dependencies:
     - name: redis
@@ -1935,6 +1957,27 @@ entries:
       version: 2.31.4
     description: A Helm chart to deploy Open Beheer
     digest: c1fcd59617252bee1c7fbbd3c2c7789d42355d8ab01882495e3c0b89338c1c5f
+    name: openbeheer
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openbeheer-0.2.1-rc.1/openbeheer-0.2.1-rc.1.tgz
+    version: 0.2.1-rc.1
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-11-18T14:29:50.632841972Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: A Helm chart to deploy Open Beheer
+    digest: 778eaab5df42dedd79026c0188fc037bc2e1d2942053f49092afcfcd34453a8c
     name: openbeheer
     type: application
     urls:
@@ -3256,6 +3299,39 @@ entries:
     description: Platform voor gemeenten en overheden om producten inzichtelijker
       en toegankelijker te maken voor inwoners.
     digest: c45d8e329187849229d129dab2d4976c6c2c2392a0f72d4730a8ee3e1569252f
+    icon: https://docs.openinwoner.nl/en/latest/_static/logo.png
+    name: openinwoner
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openinwoner-2.7.1-rc.1/openinwoner-2.7.1-rc.1.tgz
+    version: 2.7.1-rc.1
+  - apiVersion: v2
+    appVersion: 2.5.0
+    created: "2026-11-18T14:29:51.294463923Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: eck-operator
+      repository: https://helm.elastic.co
+      tags:
+      - eck-operator.enabled
+      version: 3.2.0
+    - name: eck-elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - eck-elasticsearch.enabled
+      version: 0.17.0
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Platform voor gemeenten en overheden om producten inzichtelijker
+      en toegankelijker te maken voor inwoners.
+    digest: 7a518212d5d627b4dd06c3056ce38aab170017fb788d36ad6cc0c00ec78d3b14
     icon: https://docs.openinwoner.nl/en/latest/_static/logo.png
     name: openinwoner
     type: application
@@ -4899,6 +4975,28 @@ entries:
     description: Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index
       en Contactgegevens API in een enkele applicatie combineert.
     digest: 1b477f2dcfe7dbc07d66f7954c664250773c5faae62172da875698514e34a899
+    name: openklant
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openklant-1.14.3-rc.1/openklant-1.14.3-rc.1.tgz
+    version: 1.14.3-rc.1
+  - apiVersion: v2
+    appVersion: 2.18.1
+    created: "2026-11-18T14:29:51.549787916Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Project dat de Klantinteracties API | https://vng-realisatie.github.io/gemma-zaken/standaard/klantinteracties/index
+      en Contactgegevens API in een enkele applicatie combineert.
+    digest: 2f60c32458841a1006934df45f8f8ce153235319ddea240052cd80e9eedcfe1b
     name: openklant
     type: application
     urls:
@@ -7884,6 +7982,27 @@ entries:
     version: 1.16.1-rc.1
   - apiVersion: v2
     appVersion: 1.31.1
+    created: "2026-11-18T14:29:51.834568152Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - redis
+      version: 22.0.1
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.4
+    description: Productiewaardige API's voor Zaakgericht Werken
+    digest: 8be7fa41335efdac0e4637aecf44ecd50e447eac407073e22b31f8882015d474
+    name: openzaak
+    type: application
+    urls:
+    - https://github.com/maykinmedia/charts/releases/download/openzaak-1.16.1-rc.1/openzaak-1.16.1-rc.1.tgz
+    version: 1.16.1-rc.1
+  - apiVersion: v2
+    appVersion: 1.31.1
     created: "2026-10-29T14:01:41.305314044Z"
     dependencies:
     - name: redis
@@ -9127,4 +9246,4 @@ entries:
     urls:
     - https://github.com/maykinmedia/charts/releases/download/referentielijsten-0.1.0/referentielijsten-0.1.0.tgz
     version: 0.1.0
-generated: "2026-11-18T13:58:22.114262575Z"
+generated: "2026-11-18T14:29:52.143363007Z"
