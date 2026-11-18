@@ -91,9 +91,9 @@ Open Forms 3.5.0 added new functionality to improve the container health checks 
 
 **Web application**
 
-The endpoints `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` are used for the startup, liveness and readiness probe respectively.
+The startup, liveness and readiness probes use the `/admin/` endpoint. The `/_healthz/` endpoints of Open Forms 3.5 are not used, because they don't work with Kubernetes probes in the maykin-common version (0.18.0) that Open Forms 3.5 ships with. This was fixed in maykin-common 0.20.1.
 
-Important to note: these endpoints are not reachable from outside the cluster, Nginx is configured to return 404 for these endpoints.
+Important to note: the `/_healthz/` endpoints are not reachable from outside the cluster, Nginx is configured to return 404 for these endpoints.
 
 **Celery worker**
 
