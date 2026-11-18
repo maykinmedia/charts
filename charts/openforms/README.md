@@ -2,7 +2,7 @@
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
-![Version: 1.14.0-rc.1](https://img.shields.io/badge/Version-1.14.0--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.15](https://img.shields.io/badge/AppVersion-3.5.15-informational?style=flat-square)
+![Version: 1.14.0-rc.2](https://img.shields.io/badge/Version-1.14.0--rc.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.15](https://img.shields.io/badge/AppVersion-3.5.15-informational?style=flat-square)
 
 ## Introduction
 
@@ -120,7 +120,7 @@ The probes for Beat can be enabled by setting `beat.probesEnabled: true`.
 
 **Celery Flower**
 
-For both the liveness and readiness probes, we perform an HTTP health check against the Flower web interface (`http://localhost:5555/`) using the `maykin-common health-check` command.
+For both the liveness and readiness probes, we perform an HTTP health check against Flower's `/healthcheck` endpoint (`http://localhost:5555/healthcheck`, prefixed with `settings.flower.urlPrefix` if set) using the `maykin-common health-check` command. This endpoint doesn't require authentication, so the probes also work when `FLOWER_BASIC_AUTH` is configured.
 
 ### Static File Serving
 

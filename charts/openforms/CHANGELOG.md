@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.0-rc.2 (2026-11-18)
+
+- Fixed the Flower liveness and readiness probes: they now use Flower's `/healthcheck` endpoint.
+
 ## 1.14.0-rc.1 (2026-11-06)
 
 - Bumped the application version to 3.5.15. Please review the upgrade notes of [Open Forms 3.4.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-340.html) and [Open Forms 3.5.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-350.html) before upgrading.

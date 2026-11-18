@@ -503,7 +503,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - maykin-common health-check --endpoint=http://localhost:5555/
+                - maykin-common health-check --endpoint=http://localhost:5555{{ with trimAll "/" (toString .Values.settings.flower.urlPrefix) }}/{{ . }}{{ end }}/healthcheck
             initialDelaySeconds: {{ .Values.flower.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.flower.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.flower.livenessProbe.timeoutSeconds }}
@@ -514,7 +514,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - maykin-common health-check --endpoint=http://localhost:5555/
+                - maykin-common health-check --endpoint=http://localhost:5555{{ with trimAll "/" (toString .Values.settings.flower.urlPrefix) }}/{{ . }}{{ end }}/healthcheck
             initialDelaySeconds: {{ .Values.flower.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.flower.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.flower.readinessProbe.timeoutSeconds }}
