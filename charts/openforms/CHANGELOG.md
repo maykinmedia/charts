@@ -1,13 +1,15 @@
 # Changelog
 
-## 2.0.0-rc.1 (2026-11-18)
+## 2.0.0 (2026-11-20)
 
 - Bumped the application version to 4.0.7. Please review the upgrade notes of [Open Forms 4.0.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-400.html) before upgrading.
 - The web startup, liveness and readiness probes now use the `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` endpoints instead of `/admin/`. These work with Kubernetes probes since maykin-common 0.20.1, which is used by Open Forms 4.0. Nginx returns 404 for `/_healthz/` so these are not reachable from outside the cluster.
+- The default nginx image repository changed from `nginxinc/nginx-unprivileged` to `nginx/nginx-unprivileged` (`nginx.image.repository`). The new repository contains a security fix in the Brotli library.
 
   **Breaking changes**:
 
   - This chart version requires Open Forms 4.0 or newer, because the `/_healthz/` probes don't work with Open Forms 3.5.
+  - The lowest nginx version that works with this chart is `1.31.9-alpine`. If your `nginx.image.tag` points to an older version, set it to `1.31.9-alpine` or newer before upgrading.
 
 ## 1.14.0 (2026-11-18)
 
