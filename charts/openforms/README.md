@@ -2,7 +2,7 @@
 
 Snel en eenvoudig slimme formulieren bouwen en publiceren
 
-![Version: 1.14.0](https://img.shields.io/badge/Version-1.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.15](https://img.shields.io/badge/AppVersion-3.5.15-informational?style=flat-square)
+![Version: 2.0.0-rc.1](https://img.shields.io/badge/Version-2.0.0--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.7](https://img.shields.io/badge/AppVersion-4.0.7-informational?style=flat-square)
 
 ## Introduction
 
@@ -96,9 +96,9 @@ Open Forms 3.5.0 added new functionality to improve the container health checks 
 
 **Web application**
 
-The startup, liveness and readiness probes use the `/admin/` endpoint. The `/_healthz/` endpoints of Open Forms 3.5 are not used, because they don't work with Kubernetes probes in the maykin-common version (0.18.0) that Open Forms 3.5 ships with. This was fixed in maykin-common 0.20.1.
+The endpoints `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` are used for the startup, liveness and readiness probe respectively. These require Open Forms 4.0 or newer (maykin-common 0.20.1); the `/_healthz/` endpoints of Open Forms 3.5 do not work with Kubernetes probes.
 
-Important to note: the `/_healthz/` endpoints are not reachable from outside the cluster, Nginx is configured to return 404 for these endpoints.
+Important to note: these endpoints are not reachable from outside the cluster, Nginx is configured to return 404 for these endpoints.
 
 **Celery worker**
 

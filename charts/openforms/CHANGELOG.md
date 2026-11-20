@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.0-rc.1 (2026-11-18)
+
+- Bumped the application version to 4.0.7. Please review the upgrade notes of [Open Forms 4.0.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-400.html) before upgrading.
+- The web startup, liveness and readiness probes now use the `/_healthz/`, `/_healthz/livez/` and `/_healthz/readyz/` endpoints instead of `/admin/`. These work with Kubernetes probes since maykin-common 0.20.1, which is used by Open Forms 4.0. Nginx returns 404 for `/_healthz/` so these are not reachable from outside the cluster.
+
+  **Breaking changes**:
+
+  - This chart version requires Open Forms 4.0 or newer, because the `/_healthz/` probes don't work with Open Forms 3.5.
+
 ## 1.14.0 (2026-11-18)
 
 - Bumped the application version to 3.5.15. Please review the upgrade notes of [Open Forms 3.4.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-340.html) and [Open Forms 3.5.0](https://open-forms.readthedocs.io/en/stable/installation/upgrade-350.html) before upgrading.
