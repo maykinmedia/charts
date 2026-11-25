@@ -1,0 +1,89 @@
+applicationName: "openproduct"
+ 
+image:
+  repository: maykinmedia/open-product
+  tag: 1.10.0
+
+startupProbe:
+  enabled: true
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: true
+
+replicaCount: 1
+resources:
+  limits:
+    cpu: 500m
+    memory: 1Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    acme.cert-manager.io/http01-edit-in-place: "true"
+  className: "nginx"
+  hosts:
+   - host: "openproduct-dev.test.opengem.nl"
+     paths:
+       - path: /
+         pathType: ImplementationSpecific
+  tls:
+   - secretName: "openproduct-test-tls"
+     hosts:
+       - "openproduct-dev.test.opengem.nl"
+
+existingSecret: openproduct
+
+settings:
+  djangoSettingsModule: openproduct.conf.docker
+  allowedHosts: "openproduct-dev.test.opengem.nl"
+  secretKey: "openproduct-maykin-secret-key"
+  environment: "openproduct-maykin-test-aks"
+
+  database:
+    host: "openproduct-db-host"
+    port: 5432
+    username: openproduct
+    name: openproduct
+
+  elasticapm:
+    url: apm.maykinmedia.nl
+    serviceName: "openproduct-maykin-test-aks"
+
+  email:
+    host: smtp.sendgrid.net
+    port: 587
+    username: apikey
+    useTLS: true
+    defaultFrom: no-reply-on@opengem.nl
+
+  notifications:
+    logInDb: true
+  
+  extraSettings:
+    LOAD_UPL: "True"
+    RUN_SETUP_CONFIG: "True"
+    JSONSCHEMA_USE_FORMAT_CHECKER: "True"
+    OPENPRODUCT_SUPERUSER_USERNAME: ""
+    OPENPRODUCT_SUPERUSER_EMAIL: ""
+
+worker:
+  enabled: true
+
+flower:
+  enabled: true
+
+beat:
+  enabled: true
+
+persistence:
+  enabled: true
+  storageClassName: "azurefile-uuid1000"
+  mediaMountSubpath: openproduct/media
+  privateMediaMountSubpath: openproduct/private_media

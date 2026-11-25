@@ -448,9 +448,9 @@ settings:
 
   logging:
     # -- Root log level (e.g. DEBUG, INFO, WARNING)
-    level: ""
+    level: "INFO"
     # -- Log incoming requests
-    requests: false
+    requests: true
     # -- Log outgoing requests
     outgoingRequests: false
     # -- Persist outgoing request logs to the database
@@ -458,9 +458,9 @@ settings:
     # -- Include request/response body when saving outgoing request logs
     outgoingRequestsDBSaveBody: false
     # -- Days after which saved outgoing request logs are purged; null disables purging
-    outgoingRequestsResetDBSaveAfter: null
+    outgoingRequestsResetDBSaveAfter: 60
     # -- Max age (days) of outgoing request logs kept in the database
-    outgoingRequestsMaxAge: null
+    outgoingRequestsMaxAge: 7
 
   notifications:
     # -- Disable the notifications (NRC) integration
@@ -491,11 +491,11 @@ settings:
     #   value: Basic SomeSecretValue
     # -- Controls the wire protocol for the OTLP data. Available options: grpc and http/protobuf.
     # -- OTLP exporter protocol (e.g. grpc, http/protobuf)
-    exporterOtlpProtocol: ""
-    # -- Metric export interval
-    metricExportInterval: ""
-    # -- Metric export timeout
-    metricExportTimeout: ""
+    exporterOtlpProtocol: grpc
+    # -- Controls how often (in milliseconds) the metrics are exported. The exports run in a background thread and should not affect the performance of the application. 
+    metricExportInterval: 60000 # Once per minute
+    # -- Controls the timeout of the requests to the collector (in milliseconds)
+    metricExportTimeout: 10000
 
   # -- Whether the app is served over HTTPS (affects secure cookie / redirect settings)
   isHttps: true

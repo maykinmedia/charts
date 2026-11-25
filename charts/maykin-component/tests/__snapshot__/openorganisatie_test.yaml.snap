@@ -11,9 +11,12 @@ matches the expected manifest for Open Organisatie:
       CELERY_RESULT_BACKEND: redis://RELEASE-NAME-redis-master.NAMESPACE:6379/1
       DB_HOST: openorganisatie-db-host
       DB_NAME: openorganisatie
+      DB_POOL_ENABLED: "False"
       DB_PORT: "5432"
       DB_USER: openorganisatie
+      DEBUG: "False"
       DEFAULT_FROM_EMAIL: no-reply-on@opengem.nl
+      DISABLE_2FA: "False"
       DJANGO_SETTINGS_MODULE: openorganisatie.conf.docker
       ELASTIC_APM_SERVICE_NAME: openorganisatie-maykin-test-aks
       EMAIL_HOST: smtp.sendgrid.net
@@ -22,9 +25,18 @@ matches the expected manifest for Open Organisatie:
       EMAIL_USE_TLS: "True"
       ENVIRONMENT: openorganisatie-maykin-test-aks
       IS_HTTPS: "True"
+      LOG_LEVEL: INFO
+      LOG_NOTIFICATIONS_IN_DB: "False"
+      LOG_OUTGOING_REQUESTS: "False"
+      LOG_OUTGOING_REQUESTS_DB_SAVE: "False"
+      LOG_OUTGOING_REQUESTS_DB_SAVE_BODY: "False"
+      LOG_OUTGOING_REQUESTS_MAX_AGE: "7"
+      LOG_OUTGOING_REQUESTS_RESET_DB_SAVE_AFTER: "60"
+      LOG_REQUESTS: "True"
       NOTIFICATIONS_DISABLED: "True"
       OTEL_SDK_DISABLED: "True"
       PGSSLMODE: prefer
+      USE_X_FORWARDED_HOST: "False"
     kind: ConfigMap
     metadata:
       labels:
