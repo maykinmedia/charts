@@ -15,12 +15,20 @@ This repository contains Helm charts for:
 - [openproduct](./charts/openproduct/README.md)
 - [openobject](./charts/openobject/README.md)
 - [referentielijsten](./charts/referentielijsten/README.md)
+- [maykin-component](./charts/maykin-component/README.md)
+
 
 ```bash
 helm repo add maykinmedia https://maykinmedia.github.io/charts/
 helm search repo maykinmedia
 helm install my-release maykinmedia/<chart>
 ```
+
+> [!WARNING]
+>
+> The `openvtb` and `openorganisatie` Helm charts are no longer available.
+> To deploy Open VTB or Open Organisatie, use the generic
+> [`maykin-component`](#maykin-component-chart) Helm chart instead.
 
 ## Contributing
 
@@ -36,9 +44,10 @@ To generate the charts readmes, we use [helm-docs](https://github.com/norwoodj/h
 To use it, first install Go and then follow their instructions on how to install it.
 Then, within a chart directory you can run:
 
-```bash 
+```bash
 helm-docs .
 ```
+
 ## Deprecated Helm charts
 
 > [!WARNING]
@@ -47,23 +56,21 @@ helm-docs .
 > For Open Object `4.0` and later, use the `openobject` Helm chart instead.
 
 
-# Maykin Component Chart
+## Maykin Component Chart
 
 Generic Helm chart for deploying Maykin applications on Kubernetes
 
-## Tested applications
+```bash
+helm install my-release maykinmedia/maykin-component -f values.yaml
+```
+
+### Tested applications
 
 This chart has been tested against the following Maykin applications:
 
 - [Open VTB](https://github.com/maykinmedia/open-vtb)
 - [Open Organisatie](https://github.com/maykinmedia/open-organisatie)
 
-> [!WARNING]
->
-> The individual Helm charts for these applications are no longer available.
-> Use this generic chart if you want to deploy them.
-
-## Documentation
+### Documentation
 
 Full parameter documentation (all `values.yaml` options, defaults, and descriptions) lives in [`./charts/maykin-component/README.md`](./charts/maykin-component/README.md) and is auto-generated with [helm-docs](https://github.com/norwoodj/helm-docs).
-
