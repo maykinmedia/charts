@@ -25,11 +25,14 @@ matches the expected manifest for Open VTB:
       EMAIL_USE_TLS: "True"
       ENVIRONMENT: openvtb-maykin-test-aks
       IS_HTTPS: "True"
+      LOG_LEVEL: INFO
       LOG_NOTIFICATIONS_IN_DB: "False"
       LOG_OUTGOING_REQUESTS: "False"
       LOG_OUTGOING_REQUESTS_DB_SAVE: "False"
       LOG_OUTGOING_REQUESTS_DB_SAVE_BODY: "False"
-      LOG_REQUESTS: "False"
+      LOG_OUTGOING_REQUESTS_MAX_AGE: "7"
+      LOG_OUTGOING_REQUESTS_RESET_DB_SAVE_AFTER: "60"
+      LOG_REQUESTS: "True"
       NOTIFICATIONS_DISABLED: "True"
       OTEL_SDK_DISABLED: "True"
       PGSSLMODE: prefer
